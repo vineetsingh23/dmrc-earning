@@ -1,0 +1,1 @@
+export const cardClass = 'bg-cyan-950 hover:cyan-950/80 min-w-72 min-h-28 border-2 border-green-700 rounded-2xl p-5 text-2xl text-pink-600 hover:-translate-y-0.5 duration-300'

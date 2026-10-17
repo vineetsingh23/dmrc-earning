@@ -1,6 +1,10 @@
 import type { ReactNode } from 'react';
 import { collectLeafColumns, columnDepth, isColumnGroup, type ColumnNode } from '../lib/earningColumns';
-import type { RegisterRow } from '../lib/registerTypes';
+
+
+
+
+
 
 const headerCellClass = 'border border-white px-2 py-1 text-center text-xs font-semibold';
 // each top-level group gets one colour, and its sub-headers share it
@@ -29,9 +33,14 @@ function buildHeaderRows(columns: ColumnNode[]): ReactNode[][] {
   return headerRows;
 }
 
-interface EarningSheetTableProps { columns: ColumnNode[]; rows: RegisterRow[] }
+interface EarningSheetTableProps {
+  columns: ColumnNode[];
+  rowCount: number;
+  readEntryValue: (rowIndex: number, fieldKey: string) => string;
+  writeEntryValue: (rowIndex: number, fieldKey: string, newValue: string) => void;
+}
 
-export default function EarningSheetTable({ columns, rows }: EarningSheetTableProps) {
+export default function EarningSheetTable({ columns, rowCount, readEntryValue, writeEntryValue }: EarningSheetTableProps) {
   const leafColumns = columns.flatMap(collectLeafColumns);
   return (
     <div className="overflow-auto rounded-xl border border-slate-300 bg-white">
@@ -40,11 +49,16 @@ export default function EarningSheetTable({ columns, rows }: EarningSheetTablePr
           {buildHeaderRows(columns).map((headerRow, headerRowIndex) => <tr key={headerRowIndex}>{headerRow}</tr>)}
         </thead>
         <tbody>
-          {rows.map((row, rowIndex) => (
+          {Array.from({ length: rowCount }, (_, rowIndex) => (
             <tr key={rowIndex} className="even:bg-slate-100">
               {leafColumns.map(column => (
-                <td key={column.fieldKey} className={`border border-slate-200 px-2 py-1 text-sm ${column.kind === 'number' ? 'text-right' : 'text-left'}`}>
-                  {row[column.fieldKey] ?? ''}
+                <td key={column.fieldKey} className="border border-slate-200 p-0">
+                  <input
+                    value={readEntryValue(rowIndex, column.fieldKey)}
+                    onChange={event => writeEntryValue(rowIndex, column.fieldKey, event.target.value)}
+                    inputMode={column.kind === 'number' ? 'decimal' : 'text'}
+                    className={`w-full min-w-[70px] bg-transparent p-1.5 text-sm outline-none focus:bg-blue-50 ${column.kind === 'number' ? 'text-right' : 'text-left'}`}
+                  />
                 </td>
               ))}
             </tr>

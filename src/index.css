@@ -1,2 +1,9 @@
 
 @import 'tailwindcss';
+
+
+
+@theme {
+
+    --color-brandSoft: var(--color-gray-200)
+}

@@ -45,7 +45,24 @@ export const totalCashDeposited =(row:RegisterRow) =>
 
 // Defining table structure
 
-export interface ColumnLeaf {fieldKey:string; label:string; kind:'text' | 'number'}
+export interface ColumnLeaf {
+    fieldKey:string; 
+    label:string; 
+    kind:'text' | 'number' | 'calculated';
+    formula?: (row:RegisterRow) => number;
+}
+export const calculatedColumn = (
+    fieldKey:string, 
+    label:string,
+    formula: (row:RegisterRow) =>number
+): ColumnLeaf =>
+({fieldKey,label,kind:'calculated',formula})
+
+//formula for sample sheet
+
+export const qrNetAmount = (row:RegisterRow) => sumOfFields (row, 'qrSaleAmount')-sumOfFields(row, 'qrRefundAmount');
+export const totalEarningSample = (row:RegisterRow) => qrNetAmount(row) + sumOfFields(row, 'addValueAmount')
+
 export interface ColumnGroup { label: string; children: ColumnNode[] }
 export type ColumnNode = ColumnLeaf | ColumnGroup;
 
@@ -74,7 +91,9 @@ export const sampleColumns: ColumnNode[] = [
     columnGroup( 'Tour Refund',numberColumn('tourRefundQuantity','Qty'),numberColumn('tourRefundAmount','Amt'))),
 columnGroup('Add Value',
     columnGroup('SV2',numberColumn('sv2Quantity','Qty'),numberColumn('sv2AddValueAmount','Amt')),
-)
+    calculatedColumn('qrNetAmount','QR net amount',qrNetAmount),
+    calculatedColumn('totalEarning','Total Earning',totalEarningSample)
 
+)
     // ) numberColumn('addValueQuantity', 'Qty'), numberColumn('addValueAmount', 'Amt')),
 ];

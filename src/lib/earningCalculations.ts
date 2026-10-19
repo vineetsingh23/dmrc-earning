@@ -21,8 +21,25 @@ export const totalEarningOfDate = (state: RegisterState, date: string) =>
   Object.values(state.shiftEntries[date] ?? {}).reduce((total, row) => total + totalEarningSample(row), 0);
 
 // cash in hand = previous day earning + current day earning
+// export const cashInHandOfDate = (state: RegisterState, date: string) =>
+//   Math.round(totalEarningOfDate(state, addDays(date, -1)) + totalEarningOfDate(state, date));
+
+// all dates that have earning or a bank transfer
+const datesWithData = (state:RegisterState) =>
+[...new Set([...Object.keys(state.shiftEntries), ...Object.keys(state.bankTransfers ?? {})])];
+
+// cash from earlier days that was not yet sent to bank (current day is not included)
+export const cashFromPreviousDays = (state: RegisterState, date: string) => {
+  const earlierDates = datesWithData(state).filter(entryDate => entryDate < date);
+  const totalEarned = earlierDates.reduce((total, entryDate)=> total + totalEarningOfDate(state,entryDate), 0);
+  const totalSendToBank = earlierDates.reduce((total, entryDate) => total + (state.bankTransfers?.[entryDate]?.amount ?? 0), 0);
+  return Math.round(totalEarned - totalSendToBank);
+}
+
+// cash in hand before any transfer of this date : unsent earlier cash + current day earning
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
-  Math.round(totalEarningOfDate(state, addDays(date, -1)) + totalEarningOfDate(state, date));
+  cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date));
+
 
 export interface DenominationRow { key: string; value: number; label: string }
 

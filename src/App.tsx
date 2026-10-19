@@ -45,11 +45,15 @@ export default function App() {
       </span>
 
       <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
-        <CashInHandCard totalCashInHand={figures.totalCashInHand} previousDayEarning={figures.previousDayEarning} currentDayEarning={figures.currentDayEarning}
+        <CashInHandCard totalCashInHand={figures.totalCashInHand} previousDayCash={figures.previousDaysCash} currentDayEarning={figures.currentDayEarning}
           amountDueToBank={figures.amountDueToBank} existingTransfer={figures.existingTransfer} canSendToBank={canSendToBank}
           onSendToBankClick={() => setIsSendDialogOpen(true)} />
-        <CashInPossessionCard cashCountsInHand={figures.cashCountsInHand} denominationTotalAmount={figures.denominationTotalAmount}
-          totalCashInHand={figures.totalCashInHand} onCountChange={changeCashCount} />
+        <CashInPossessionCard 
+        cashCountsInHand={figures.cashCountsInHand}
+        looseCoinAmount={figures.looseCoinsAmount} 
+        denominationTotalAmount={figures.denominationTotalAmount}
+        totalCashInHand={figures.totalCashInHand} 
+        onCountChange={changeCashCount} />
         <CashToBankCard existingTransfer={figures.existingTransfer} amountDueToBank={figures.amountDueToBank} noteDraft={noteDraft} />
       </div>
 

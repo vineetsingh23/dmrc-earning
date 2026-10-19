@@ -2,6 +2,7 @@ import { parseNumber, type ColumnLeaf } from './earningColumns';
 import type { RegisterState } from './registerTypes';
 import { totalEarningSample } from './earningColumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
+import { imprestAmountPerTom, imprestTomNumbers } from './businessRules';
 
 // quantity columns show plain numbers, amounts show rupees
 export const formatCellValue = (column: ColumnLeaf, value: number) =>
@@ -38,14 +39,16 @@ export const cashFromPreviousDays = (state: RegisterState, date: string) => {
 
 // cash in hand before any transfer of this date : unsent earlier cash + current day earning
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
-  cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date));
+  cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date))
+  + imprestIssuedTotalForDate(state, date) + advanceReceivedTotalForDate(state,date);
 
 
-export interface DenominationRow { key: string; value: number; label: string }
+export interface DenominationRow { key: string; value: number | string; label: string }
 
 export const noteRows: DenominationRow[] = [500, 200, 100, 50, 20, 10].map(value => ({ key: String(value), value, label: `₹${value} note` }));
 export const coinRows: DenominationRow[] = [20, 10, 5, 2, 1].map(value => ({ key: `coin${value}`, value, label: `₹${value} coin` }));
 export const allDenominationRows: DenominationRow[] = [...noteRows, ...coinRows];
+export const looseCoinsKey = 'looseCoins';
 
 // splits an amount into notes and coins, largest first
 export const breakIntoDenominations = (amount: number): Record<string, number> => {
@@ -59,3 +62,11 @@ export const breakIntoDenominations = (amount: number): Record<string, number> =
   });
   return counts;
 };
+
+export const imprestIssuedTotalForDate =(state: RegisterState, date: string) =>
+  imprestTomNumbers.reduce((total, _tomNumer, rowIndex) =>
+    total + imprestAmountPerTom + parseNumber(state.detailLists?.[date]?.imprestIssue?.[rowIndex]?.[2]),0);
+
+export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =>
+  imprestTomNumbers.reduce((total, _tomNumber, rowIndex) =>
+    total + parseNumber(state.detailLists?.[date]?.advanceReceived?.[rowIndex]?.[1]),0);

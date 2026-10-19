@@ -26,3 +26,5 @@ export const createEmptyRegisterState =() : RegisterState =>({
     cashCounts:{},
     bankTransfers:{},
 })
+
+export type DetailListKind = 'imprestIssue' | 'advanceReceived'

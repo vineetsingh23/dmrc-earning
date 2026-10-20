@@ -2,6 +2,7 @@ import type { BankTransfer } from '../../lib/registerTypes';
 import type { useBankNoteDraft } from '../../hooks/useBankNoteDraft';
 import { bankNoteValues } from '../../lib/businessRules';
 import { formatRupees } from '../../lib/earningCalculations';
+import { cardClass } from '../../globalStyles';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -9,9 +10,10 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
   const { noteCountsToSend, noteTotalToSend, notesExceedingStock, inputValueFor, changeNoteCount, resetToSuggestedCounts } = noteDraft;
   const matchesAmountDue = noteTotalToSend === amountDueToBank && notesExceedingStock.length === 0;
   const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
+
   return (
     // <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm">
-      <div className="mb-2 flex justify-between flex-col mt-2 border border-slate-200 rounded-2xl p-2 shadow-md">
+      <div className={cardClass}>
         <div className='flex justify-between items-center'>
 
         <h2 className="font-semibold text-blue-600">Cash to bank</h2>
@@ -43,10 +45,11 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
           </tr>
         </tfoot>
       </table>
+      
       {existingTransfer ? (
-        <small className="text-green-600">✓ Sent · slip {existingTransfer.slipNumber}</small>
+        <small className='text-green-600 font-semibold my-2'>✓ Sent · slip {existingTransfer.slipNumber}</small>
       ) : (
-        <small className={matchesAmountDue ? 'text-green-600' : 'text-red-600'}>
+        <small className={matchesAmountDue ? 'text-green-600 font-semibold my-2' : 'text-red-600 font-semibold my-2'}>
           {notesExceedingStock.length
             ? `Count is more than cash in hand for ₹${notesExceedingStock.join(', ₹')}`
             : noteTotalToSend === amountDueToBank
@@ -54,6 +57,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
               : `Enter notes totalling ${formatRupees(amountDueToBank)} (entered ${formatRupees(noteTotalToSend)})`}
         </small>
       )}
-    </div>
+      </div>
+   
   );
 }

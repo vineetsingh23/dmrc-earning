@@ -41,8 +41,9 @@ export const cashFromPreviousDays = (state: RegisterState, date: string) => {
 // cash in hand before any transfer of this date : unsent earlier cash + current day earning
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
   cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date))
-  + advanceReceivedTotalForDate(state,date) - imprestIssuedTotalForDate(state, date)
-
+  + advanceReceivedTotalForDate(state,date) - imprestIssuedTotalForDate(state, date);
+export const cashWithTomOperatorsForDate =(state: RegisterState, date: string) =>
+   imprestIssuedTotalForDate(state, date)+advanceReceivedTotalForDate(state,date)
 
 export interface DenominationRow { key: string; value: number | string; label: string }
 
@@ -75,3 +76,4 @@ export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =
 
 export const tvmFinalTotalOfDate = (state: RegisterState, date: string) =>
   Object.values(state.tvmEntries?.[date] ?? {}).reduce((total, row) => total + tvmFinalTotal(row), 0);
+

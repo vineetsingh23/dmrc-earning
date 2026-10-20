@@ -1,3 +1,4 @@
+import { cardClass } from '../../globalStyles';
 import { allDenominationRows, formatRupees,looseCoinsKey, type DenominationRow } from '../../lib/earningCalculations';
 
 interface CashInPossessionCardProps {
@@ -19,7 +20,7 @@ export default function CashInPossessionCard({
   const countInputClass ='w-20 rounded border border-slate-300 px-1.5 py-0.5 text-right outline-none focus:ring-2 focus:ring-blue-400';
   return (
     <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-sm">
-      <div className='border border-slate-200 rounded-2xl p-2 shadow-md'>
+      <div className={cardClass}>
 
       <h2 className="mb-2 font-semibold">Cash in possession</h2>
       <table className="w-full border-collapse">
@@ -64,7 +65,7 @@ export default function CashInPossessionCard({
       </table>
      
      </div>
-      <small className={matchesCashInHand ? 'text-green-600' : 'text-red-600'}>
+      <small className={matchesCashInHand ? 'text-green-600 font-semibold py-4' : 'text-red-600 font-semibold py-4'}>
         {matchesCashInHand ? '✓ Matches total cash in hand' : `Differs from cash in hand by ${formatRupees(denominationTotalAmount - totalCashInHand)}`}
       </small>
      

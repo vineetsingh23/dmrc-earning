@@ -15,6 +15,8 @@ export interface RegisterState {
     detailLists: Record<string, Record<string, string[][]>>;
     cashCounts: Record<string, Record<string, number>>;
     bankTransfers: Record<string, BankTransfer>;
+    imprestIssued:Record<string, Record<number,RegisterRow>>
+    advanceReceived:Record<string, Record<number,RegisterRow>>
 }
 
 export const createEmptyRegisterState =() : RegisterState =>({
@@ -25,6 +27,7 @@ export const createEmptyRegisterState =() : RegisterState =>({
     detailLists:{},
     cashCounts:{},
     bankTransfers:{},
+    imprestIssued:{},
+    advanceReceived:{}
 })
 
-export type DetailListKind = 'imprestIssue' | 'advanceReceived'

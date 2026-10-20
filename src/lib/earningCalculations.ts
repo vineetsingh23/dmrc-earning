@@ -41,7 +41,7 @@ export const cashFromPreviousDays = (state: RegisterState, date: string) => {
 // cash in hand before any transfer of this date : unsent earlier cash + current day earning
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
   cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date))
-  + imprestIssuedTotalForDate(state, date) + advanceReceivedTotalForDate(state,date);
+  + advanceReceivedTotalForDate(state,date) - imprestIssuedTotalForDate(state, date)
 
 
 export interface DenominationRow { key: string; value: number | string; label: string }

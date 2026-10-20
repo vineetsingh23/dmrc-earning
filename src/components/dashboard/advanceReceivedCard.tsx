@@ -15,7 +15,7 @@ export default function AdvanceReceivedCard({listRows, onAdvanceChange}:AdvanceR
     const cellClass ='border border-slate-200 px-2 py-1 text-right text-sm';
 
     return (
-        <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm">
+        <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-md">
             <h2 className="mb-2 font-semibold">Advance Received from Each TOM</h2>
             <table className="w-full border-collapse">
                 <thead>

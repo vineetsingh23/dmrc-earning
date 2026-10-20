@@ -1,7 +1,7 @@
 import EarningSheetTable from './earningSheetTable';
 import type { RegisterState } from '../lib/registerTypes';
 import { tvmEarningColumns } from '../lib/earningColumns';
-import { updateEntryCell } from '../handlers/entryCellHandlers';
+import { updateEntryCell } from '../handlers/entryCellHandler';
 
 interface TvmEarningPageProps {
   registerState: RegisterState;
@@ -13,6 +13,7 @@ export default function TvmEarningPage({ registerState, updateRegisterState, dat
   const tvmRows = registerState.tvmEntries?.[date] ?? {};
   return (
     <>
+    
       <EarningSheetTable
         columns={tvmEarningColumns}
         rowCount={registerState.tvmRowCount}

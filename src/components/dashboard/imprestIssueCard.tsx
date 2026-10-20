@@ -18,7 +18,7 @@ export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssu
     const headerClass = 'border border-white px-2 py-1 text-xs0';
 
     return(
-        <div className ="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm">
+        <div className ="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-md">
             <h2 className="mb-2 font-semibold">Imprest Issued to each TOM</h2>
             <table>
                 <thead>

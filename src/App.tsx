@@ -69,28 +69,33 @@ export default function App() {
             currentDayEarning={figures.currentDayEarning}
             amountDueToBank={figures.amountDueToBank} 
             existingTransfer={figures.existingTransfer} 
+            noteDraft={noteDraft}
             canSendToBank={canSendToBank}
             imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
             advanceReceivedTotal={figures.advanceReceivedTotal}
             onSendToBankClick={() => setIsSendDialogOpen(true)} />
+
         <CashInPossessionCard 
         cashCountsInHand={figures.cashCountsInHand}
         looseCoinAmount={figures.looseCoinsAmount} 
         denominationTotalAmount={figures.denominationTotalAmount}
         totalCashInHand={figures.totalCashInHand} 
         onCountChange={changeCashCount} />
-        <CashToBankCard existingTransfer={figures.existingTransfer} amountDueToBank={figures.amountDueToBank} noteDraft={noteDraft} />
+        {/* <CashToBankCard existingTransfer={figures.existingTransfer} amountDueToBank={figures.amountDueToBank} noteDraft={noteDraft} /> */}
       </div>
 
-      <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
-  <ImprestIssueCard listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
-    onAdvanceChange={(rowIndex, typedValue) =>
-      updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
+      <div className="mb-2 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+  <ImprestIssueCard 
+  listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
+  onAdvanceChange={(rowIndex, typedValue) =>
+  updateRegisterState(draftState => 
+    updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
+
   <AdvanceReceivedCard listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
     onAdvanceChange={(rowIndex, typedValue) =>
       updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
 </div>
-
+      {activePageIndex === 1 && 
       <EarningSheetTable
         columns={sampleColumns}
         rowCount={registerState.shiftRowCount}
@@ -99,7 +104,8 @@ export default function App() {
         writeEntryValue={(rowIndex, fieldKey, newValue) =>
           updateRegisterState(draftState => updateEntryCell(draftState.shiftEntries, selectedDate, rowIndex, fieldKey, newValue))}
       />
-
+        }
+      {activePageIndex === 2 && <TvmEarningPage registerState={registerState} updateRegisterState={updateRegisterState} date={selectedDate} />}
       {isSendDialogOpen && (
         <SendToBankDialog amountDueToBank={figures.amountDueToBank} totalCashInHand={figures.totalCashInHand}
           noteTotalToSend={noteDraft.noteTotalToSend} onClose={() => setIsSendDialogOpen(false)} onConfirm={confirmBankTransfer} />

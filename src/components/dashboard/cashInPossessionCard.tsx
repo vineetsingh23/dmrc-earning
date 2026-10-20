@@ -18,7 +18,7 @@ export default function CashInPossessionCard({
   const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
   const countInputClass ='w-20 rounded border border-slate-300 px-1.5 py-0.5 text-right outline-none focus:ring-2 focus:ring-blue-400';
   return (
-    <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm">
+    <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-md">
       <h2 className="mb-2 font-semibold">Cash in possession</h2>
       <table className="w-full border-collapse">
         <thead>

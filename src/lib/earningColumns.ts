@@ -48,3 +48,23 @@ export const sampleColumns: ColumnNode[] = [
   calculatedColumn('qrNetAmount', 'QR net amount', qrNetAmount),
   calculatedColumn('totalEarning', 'Total Earning', totalEarningSample),
 ];
+
+
+// ---- TVM (ticket vending machine) earning sheet ----
+// total = all four amounts; final total = total minus POS, UPI and outstanding (cash left in the machine)
+export const tvmTotal = (row: RegisterRow) =>
+  sumOfFields(row, 'tvmQrSaleAmount tvmAddValueAmount tvmNcmcAddValueAmount tvmRctmAddValueAmount');
+export const tvmFinalTotal = (row: RegisterRow) =>
+  tvmTotal(row) - sumOfFields(row, 'tvmPaymentByPos tvmPaymentByUpi tvmOutstandingCurrent');
+
+export const tvmEarningColumns: ColumnNode[] = [
+  textColumn('tvmNumber', 'TVM No.'),
+  columnGroup('QR Sales', numberColumn('tvmQrSaleQuantity', 'Qty'), numberColumn('tvmQrSaleAmount', 'Amount')),
+  columnGroup('Add Value', numberColumn('tvmAddValueQuantity', 'Qty'), numberColumn('tvmAddValueAmount', 'Amount')),
+  columnGroup('Add Value NCMC', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amount')),
+  columnGroup('RCTM Add Value', numberColumn('tvmRctmAddValueQuantity', 'Qty'), numberColumn('tvmRctmAddValueAmount', 'Amount')),
+  calculatedColumn('tvmTotal', 'Total', tvmTotal),
+  columnGroup('Cashless Transaction', numberColumn('tvmPaymentByPos', 'Payment by POS'), numberColumn('tvmPaymentByUpi', 'Payment by UPI')),
+  numberColumn('tvmOutstandingCurrent', 'Outstanding (current)'),
+  calculatedColumn('tvmFinalTotal', 'Final Total', tvmFinalTotal),
+];

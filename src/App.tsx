@@ -15,12 +15,16 @@ import { useBankNoteDraft } from './hooks/useBankNoteDraft';
 import ImprestIssueCard from './components/dashboard/imprestIssueCard';
 import AdvanceReceivedCard from './components/dashboard/advanceReceivedCard';
 import { updateDetailListCell } from './handlers/detailListHandlers';
+import TvmEarningPage from './components/tvmEarningPage';
+
+const pageTitles =['Dashboard', 'shift Entry', 'TVM Earning']
 
 export default function App() {
   const { registerState, updateRegisterState, syncStatus } = useRegisterData();
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().slice(0, 10));
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const rowsOfSelectedDate = registerState.shiftEntries[selectedDate] ?? {};
+  const [activePageIndex, setActivePageIndex] = useState(0);
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(selectedDate, figures.cashCountsInHand, figures.amountDueToBank, figures.existingTransfer);
@@ -38,9 +42,20 @@ export default function App() {
     setIsSendDialogOpen(false);
   };
 
+  
+
   return (
     <div className="min-h-screen bg-slate-100 p-6">
       <h1 className="mb-4 text-3xl font-extrabold text-blue-600">Earning Register</h1>
+      <nav className="mb-4 flex flex-wrap gap-2">
+  {pageTitles.map((pageTitle, pageIndex) => (
+    <button key={pageTitle} onClick={() => setActivePageIndex(pageIndex)}
+      className={`rounded-xl border px-3.5 py-1.5 font-medium transition ${
+        activePageIndex === pageIndex ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white hover:border-blue-500'}`}>
+      {pageTitle}
+    </button>
+  ))}
+</nav>
       <input type="date" value={selectedDate} onChange={event => setSelectedDate(event.target.value)}
         className="mb-4 rounded-lg border border-slate-300 bg-white px-2 py-1.5" />
       <span className="mb-4 ml-3 text-sm text-slate-600">

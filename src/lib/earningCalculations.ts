@@ -3,6 +3,7 @@ import type { RegisterState } from './registerTypes';
 import { totalEarningSample } from './earningColumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
+import { tvmFinalTotal } from './earningColumns';
 
 // quantity columns show plain numbers, amounts show rupees
 export const formatCellValue = (column: ColumnLeaf, value: number) =>
@@ -70,3 +71,7 @@ export const imprestIssuedTotalForDate =(state: RegisterState, date: string) =>
 export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =>
   tomOperators.reduce((total, _tomOperator, rowIndex) =>
     total + parseNumber(state.detailLists?.[date]?.advanceReceived?.[rowIndex]?.[1]),0);
+
+
+export const tvmFinalTotalOfDate = (state: RegisterState, date: string) =>
+  Object.values(state.tvmEntries?.[date] ?? {}).reduce((total, row) => total + tvmFinalTotal(row), 0);

@@ -18,7 +18,9 @@ export default function CashInPossessionCard({
   const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
   const countInputClass ='w-20 rounded border border-slate-300 px-1.5 py-0.5 text-right outline-none focus:ring-2 focus:ring-blue-400';
   return (
-    <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-md">
+    <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm max-w-sm">
+      <div className='border border-slate-200 rounded-2xl p-2 shadow-md'>
+
       <h2 className="mb-2 font-semibold">Cash in possession</h2>
       <table className="w-full border-collapse">
         <thead>
@@ -32,7 +34,7 @@ export default function CashInPossessionCard({
                 <input value={cashCountsInHand[row.key] || ''} placeholder="0" inputMode="numeric"
                   onChange={event => onCountChange(row.key, event.target.value)}
                   className={countInputClass} 
-                />
+                  />
               </td>
               <td className={cellClass}>{formatRupees(row.value * (cashCountsInHand[row.key] ?? 0))}</td>
             </tr>
@@ -47,7 +49,7 @@ export default function CashInPossessionCard({
                   inputMode='decimal'
                   onChange={event => onCountChange(looseCoinsKey, event.target.value)}
                   className={countInputClass}
-              />
+                  />
             </td>
             <td className={cellClass}>{formatRupees(looseCoinAmount)}</td>
 
@@ -60,9 +62,12 @@ export default function CashInPossessionCard({
           </tr>
         </tfoot>
       </table>
+     
+     </div>
       <small className={matchesCashInHand ? 'text-green-600' : 'text-red-600'}>
         {matchesCashInHand ? '✓ Matches total cash in hand' : `Differs from cash in hand by ${formatRupees(denominationTotalAmount - totalCashInHand)}`}
       </small>
+     
     </div>
   );
 }

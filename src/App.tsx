@@ -2,7 +2,6 @@ import { useState } from 'react';
 import EarningSheetTable from './components/earningSheetTable';
 import CashInHandCard from './components/dashboard/cashInHandCard';
 import CashInPossessionCard from './components/dashboard/cashInPossessionCard';
-import CashToBankCard from './components/dashboard/cashToBankCard';
 import SendToBankDialog from './components/dashboard/sentToBankDialog';
 import { sampleColumns } from './lib/earningColumns';
 import { bankRoundingAmount } from './lib/businessRules';
@@ -62,7 +61,7 @@ export default function App() {
         {syncStatus === 'synced' ? '☁ Synced' : syncStatus === 'saving' ? '☁ Saving…' : syncStatus === 'loading' ? '☁ Loading…' : syncStatus === 'error' ? '⚠ Cloud error' : 'Local only'}
       </span>
 
-      <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+      <div className="mb-4 grid grid-cols-3">
         <CashInHandCard 
             totalCashInHand={figures.totalCashInHand} 
             previousDaysCash={figures.previousDaysCash} 
@@ -81,20 +80,23 @@ export default function App() {
         denominationTotalAmount={figures.denominationTotalAmount}
         totalCashInHand={figures.totalCashInHand} 
         onCountChange={changeCashCount} />
-        {/* <CashToBankCard existingTransfer={figures.existingTransfer} amountDueToBank={figures.amountDueToBank} noteDraft={noteDraft} /> */}
-      </div>
 
-      <div className="mb-2 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+<div className="mb-2 grid grid-col-1 max-w-sm gap-3 border border-slate-300 rounded-2xl p-3 bg-white">
   <ImprestIssueCard 
   listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
   onAdvanceChange={(rowIndex, typedValue) =>
   updateRegisterState(draftState => 
-    updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
+  updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
 
   <AdvanceReceivedCard listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
     onAdvanceChange={(rowIndex, typedValue) =>
-      updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
+    updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
 </div>
+        
+       
+      </div>
+
+
       {activePageIndex === 1 && 
       <EarningSheetTable
         columns={sampleColumns}

@@ -11,11 +11,14 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
   const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
   return (
     // <div className="rounded-2xl border border-slate-300 bg-white p-4 shadow-sm">
-      <div className="mb-2 flex justify-between flex-col mt-2">
-        <h2 className="font-semibold">Cash to bank</h2>
+      <div className="mb-2 flex justify-between flex-col mt-2 border border-slate-200 rounded-2xl p-2 shadow-md">
+        <div className='flex justify-between items-center'>
+
+        <h2 className="font-semibold text-blue-600">Cash to bank</h2>
         {!existingTransfer && (
-          <button className="rounded-lg border border-slate-300 px-3 py-1 text-sm hover:border-blue-500 hover:text-blue-600" onClick={resetToSuggestedCounts}>Auto calculate</button>
+          <button className="rounded-lg border max-w-40 bg-blue-100  border-slate-300 px-3 py-1 text-sm hover:border-blue-500 hover:text-blue-600 my-1" onClick={resetToSuggestedCounts}>Auto calculate</button>
         )}
+        </div>
     
       <table className="w-full border-collapse">
         <thead><tr className="bg-blue-100 text-xs"><th className="px-2 py-1">Note</th><th className="px-2 py-1">Count</th><th className="px-2 py-1">Amount</th></tr></thead>

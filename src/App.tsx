@@ -12,6 +12,9 @@ import { recordBankTransfer } from './handlers/cashToBankHandlers';
 import { useRegisterData } from './hooks/useRegisterData';
 import { useDashboardFigures } from './hooks/useDashboardFigures';
 import { useBankNoteDraft } from './hooks/useBankNoteDraft';
+import ImprestIssueCard from './components/dashboard/imprestIssueCard';
+import AdvanceReceivedCard from './components/dashboard/advanceReceivedCard';
+import { updateDetailListCell } from './handlers/detailListHandlers';
 
 export default function App() {
   const { registerState, updateRegisterState, syncStatus } = useRegisterData();
@@ -45,9 +48,16 @@ export default function App() {
       </span>
 
       <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
-        <CashInHandCard totalCashInHand={figures.totalCashInHand} previousDayCash={figures.previousDaysCash} currentDayEarning={figures.currentDayEarning}
-          amountDueToBank={figures.amountDueToBank} existingTransfer={figures.existingTransfer} canSendToBank={canSendToBank}
-          onSendToBankClick={() => setIsSendDialogOpen(true)} />
+        <CashInHandCard 
+            totalCashInHand={figures.totalCashInHand} 
+            previousDaysCash={figures.previousDaysCash} 
+            currentDayEarning={figures.currentDayEarning}
+            amountDueToBank={figures.amountDueToBank} 
+            existingTransfer={figures.existingTransfer} 
+            canSendToBank={canSendToBank}
+            imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
+            advanceReceivedTotal={figures.advanceReceivedTotal}
+            onSendToBankClick={() => setIsSendDialogOpen(true)} />
         <CashInPossessionCard 
         cashCountsInHand={figures.cashCountsInHand}
         looseCoinAmount={figures.looseCoinsAmount} 
@@ -56,6 +66,15 @@ export default function App() {
         onCountChange={changeCashCount} />
         <CashToBankCard existingTransfer={figures.existingTransfer} amountDueToBank={figures.amountDueToBank} noteDraft={noteDraft} />
       </div>
+
+      <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+  <ImprestIssueCard listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
+    onAdvanceChange={(rowIndex, typedValue) =>
+      updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
+  <AdvanceReceivedCard listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
+    onAdvanceChange={(rowIndex, typedValue) =>
+      updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
+</div>
 
       <EarningSheetTable
         columns={sampleColumns}

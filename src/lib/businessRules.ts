@@ -2,5 +2,10 @@
 export const bankNoteValues = [500, 200, 100];
 export const bankRoundingAmount = 100;
 
-export const imprestTomNumbers = ['80', '81', '51', '52'];
-export const imprestAmountPerTom = 500;
+// TOM operators: imprest is issued only to 80 and 81, the others get advance only
+export const tomOperators = [
+  { tomNumber: '80', imprestAmount: 500 },
+  { tomNumber: '81', imprestAmount: 500 },
+  { tomNumber: '51', imprestAmount: 0 },
+  { tomNumber: '52', imprestAmount: 0 },
+];

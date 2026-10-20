@@ -1,4 +1,4 @@
-import { imprestAmountPerTom, imprestTomNumbers } from "../../lib/businessRules";
+import { tomOperators } from "../../lib/businessRules";
 import { parseNumber } from "../../lib/earningColumns";
 import { formatRupees } from "../../lib/earningCalculations";
 
@@ -11,8 +11,8 @@ const advanceColumnIndex = 2;
 
 export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssueCardProps) {
     const advanceOfRow = (rowIndex:number) => parseNumber(listRows[rowIndex]?.[advanceColumnIndex]);
-    const totalImprestAmount = imprestTomNumbers.length * imprestAmountPerTom;
-    const totalAdvanceAmount = imprestTomNumbers.reduce((total,_tomNumber, rowIndex)=>total + advanceOfRow(rowIndex),0)
+    const totalImprestAmount = tomOperators.reduce((total, tomOperator)=>total + tomOperator.imprestAmount,0)
+    const totalAdvanceAmount = tomOperators.reduce((total,_tomOperator, rowIndex)=>total + advanceOfRow(rowIndex),0)
 
     const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
     const headerClass = 'border border-white px-2 py-1 text-xs0';
@@ -31,10 +31,10 @@ export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssu
                     </tr>
                 </thead>
                 <tbody>
-                    {imprestTomNumbers.map((tomNumber, rowIndex)=> (
-                        <tr key={tomNumber} className="even:bg-slate-100">
-                            <td className={`${cellClass} !text-left`}>{tomNumber}</td>
-                            <td className={cellClass}>{formatRupees(imprestAmountPerTom)}</td>
+                    {tomOperators.map((tomOperator, rowIndex)=> (
+                        <tr key={tomOperator.tomNumber} className="even:bg-slate-100">
+                            <td className={`${cellClass} !text-left`}>{tomOperator.tomNumber}</td>
+                            <td className={cellClass}>{formatRupees(tomOperator.imprestAmount)}</td>
                             <td className={cellClass}>
                                 <input
                                         value={listRows[rowIndex]?.[advanceColumnIndex]?? ''}
@@ -45,7 +45,7 @@ export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssu
                                         className='w-20 rounded border border-slate-300 px-1.5 py-0.5 text-right outline-none focus-ring-2 focus:ring-blue-400'
                                 />
                             </td>
-                            <td className={cellClass}>{formatRupees(imprestAmountPerTom + advanceOfRow(rowIndex))}</td>
+                            <td className={cellClass}>{formatRupees(tomOperator.imprestAmount + advanceOfRow(rowIndex))}</td>
                         </tr>
                     ))}
                 </tbody>

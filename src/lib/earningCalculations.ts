@@ -2,7 +2,7 @@ import { parseNumber, type ColumnLeaf } from './earningColumns';
 import type { RegisterState } from './registerTypes';
 import { totalEarningSample } from './earningColumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
-import { imprestAmountPerTom, imprestTomNumbers } from './businessRules';
+import { tomOperators } from './businessRules';
 
 // quantity columns show plain numbers, amounts show rupees
 export const formatCellValue = (column: ColumnLeaf, value: number) =>
@@ -64,9 +64,9 @@ export const breakIntoDenominations = (amount: number): Record<string, number> =
 };
 
 export const imprestIssuedTotalForDate =(state: RegisterState, date: string) =>
-  imprestTomNumbers.reduce((total, _tomNumer, rowIndex) =>
-    total + imprestAmountPerTom + parseNumber(state.detailLists?.[date]?.imprestIssue?.[rowIndex]?.[2]),0);
+  tomOperators.reduce((total, tomOperator, rowIndex) =>
+    total + tomOperator.imprestAmount + parseNumber(state.detailLists?.[date]?.imprestIssue?.[rowIndex]?.[2]),0);
 
 export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =>
-  imprestTomNumbers.reduce((total, _tomNumber, rowIndex) =>
+  tomOperators.reduce((total, _tomOperator, rowIndex) =>
     total + parseNumber(state.detailLists?.[date]?.advanceReceived?.[rowIndex]?.[1]),0);

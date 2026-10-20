@@ -1,14 +1,9 @@
-import type { DetailListKind, RegisterState} from '../lib/registerTypes';
+import type { DetailListKind, RegisterState } from '../lib/registerTypes';
 
-export function updateDetailListCell(   state: RegisterState, 
-                                        date: string, 
-                                        listKind: DetailListKind, 
-                                        roeIndex: number,
-                                        columnIndex:number,
-                                        newValue:string
-                                    ){
-                                        state.detailLists ?? = {};
-                                        const listOfDate =(state.detailLists[date] ?? = {});
-                                        const listRows = (listOfDate[listKind] ?? = []);
-                                        (listRows[rowIndex] ?? = [])[columnIndex]= newValue;
-                                    }
+// writes one typed value into a list: [date][listKind][rowIndex][columnIndex]
+export function updateDetailListCell(state: RegisterState, date: string, listKind: DetailListKind, rowIndex: number, columnIndex: number, newValue: string) {
+  state.detailLists ??= {};
+  const listsOfDate = (state.detailLists[date] ??= {});
+  const listRows = (listsOfDate[listKind] ??= []);
+  (listRows[rowIndex] ??= [])[columnIndex] = newValue;
+}

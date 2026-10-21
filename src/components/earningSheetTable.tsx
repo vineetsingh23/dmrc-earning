@@ -5,7 +5,7 @@ import type { RegisterRow } from '../lib/registerTypes';
 
 const headerCellClass = 'border border-white px-2 py-1 text-center text-xs font-semibold';
 // each top-level group gets one colour, and its sub-headers share it
-const headerColorClasses = ['bg-blue-100', 'bg-violet-100', 'bg-green-100', 'bg-amber-100'];
+const headerColorClasses = ['bg-blue-100', 'bg-violet-100', 'bg-green-100','bg-teal-100', 'bg-amber-100'];
 
 // turns the nested column list into rows of <th> cells (one row per header level)
 function buildHeaderRows(columns: ColumnNode[]): ReactNode[][] {
@@ -38,13 +38,15 @@ interface EarningSheetTableProps {
   columns: ColumnNode[];
   rowCount: number;
   readRow: (rowIndex: number) => RegisterRow;
-  readEntryValue: (rowIndex: number, fieldKey: string) => string;
-  writeEntryValue: (rowIndex: number, fieldKey: string, newValue: string) => void;
+  readEntryValue?: (rowIndex: number, fieldKey: string) => string;
+  writeEntryValue?: (rowIndex: number, fieldKey: string, newValue: string) => void;
+  showTotalRow?: boolean;
 }
 
-export default function EarningSheetTable({ columns, rowCount, readRow, readEntryValue, writeEntryValue }: EarningSheetTableProps) {
+export default function EarningSheetTable({ columns, rowCount, readRow, readEntryValue, writeEntryValue,showTotalRow = true }: EarningSheetTableProps) {
   const leafColumns = columns.flatMap(collectLeafColumns);
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) => readRow(rowIndex));
+  const isEditable = Boolean(readEntryValue && writeEntryValue)
 
   // total of one column over all rows (calculated columns add up their formula results)
   const totalOfColumn = (column: ColumnLeaf) =>
@@ -60,30 +62,42 @@ export default function EarningSheetTable({ columns, rowCount, readRow, readEntr
         </thead>
 
         <tbody>
-          {Array.from({ length: rowCount }, (_, rowIndex) => (
+          {allRows.map((row, rowIndex) => (
             <tr key={rowIndex} className="even:bg-slate-100">
-              {leafColumns.map(column =>
-                column.kind === 'calculated' ? (
-                  <td key={column.fieldKey} className="border border-slate-200 bg-blue-50 px-2 py-1 text-right text-sm font-semibold">
-                    {formatRupees(column.formula!(readRow(rowIndex)))}
+              {leafColumns.map(column => {
+              if (column.kind === 'calculated') {
+                  return (
+                    <td key={column.fieldKey} className="border border-slate-200 bg-blue-50 px-2 py-1 text-right text-sm font-semibold">
+                    {formatRupees(column.formula!(row))}
                   </td>
-                ) : (
+                  );
+              }
+                
+              if (isEditable){
+                  return (
                   <td key={column.fieldKey} className="border border-slate-200 p-0">
                     <input
-                      value={readEntryValue(rowIndex, column.fieldKey)}
-                      onChange={event => writeEntryValue(rowIndex, column.fieldKey, event.target.value)}
+                      value={readEntryValue!(rowIndex, column.fieldKey)}
+                      onChange={event => writeEntryValue!(rowIndex, column.fieldKey, event.target.value)}
                       inputMode={column.kind === 'number' ? 'decimal' : 'text'}
                       className={`w-full min-w-[70px] bg-transparent p-1.5 text-sm outline-none focus:bg-blue-50 ${
                         column.kind === 'number' ? 'text-right' : 'text-left'
                       }`}
                     />
                   </td>
-                ),
-              )}
+                )
+              } 
+
+              return (
+                <td>
+                  {column.kind === 'number' ? formatCellValue(column,parseNumber(row[column.fieldKey])):row[column.fieldKey]?? ''}
+                </td>
+              );  
+              })}
             </tr>
           ))}
         </tbody>
-
+          {showTotalRow && (
         <tfoot>
           <tr className="bg-blue-100 font-bold">
             {leafColumns.map((column, columnIndex) => (
@@ -93,7 +107,9 @@ export default function EarningSheetTable({ columns, rowCount, readRow, readEntr
             ))}
           </tr>
         </tfoot>
+      )}
       </table>
+      
     </div>
   );
 }

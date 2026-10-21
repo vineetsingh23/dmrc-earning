@@ -1,5 +1,5 @@
 import { parseNumber, type ColumnLeaf } from './earningColumns';
-import type { RegisterState } from './registerTypes';
+import type { RegisterRow, RegisterState } from './registerTypes';
 import { totalEarningSample } from './earningColumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
@@ -78,3 +78,10 @@ export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =
 export const tvmFinalTotalOfDate = (state: RegisterState, date: string) =>
   Object.values(state.tvmEntries?.[date] ?? {}).reduce((total, row) => total + tvmFinalTotal(row), 0);
 
+export const sumRowsByField =(rows: RegisterRow[]): RegisterRow => {
+  const totals : Record<string, number> ={};
+  rows.forEach(row => Object.entries(row).forEach(([fieldKey, typedValue]) => { 
+    totals[fieldKey] = (totals[fieldKey] ?? 0) + parseNumber(typedValue);
+  }));
+  return Object.fromEntries(Object.entries(totals).map(([fieldKey, total])=>[fieldKey,String(total)]))
+}

@@ -15,8 +15,9 @@ import ImprestIssueCard from './components/dashboard/imprestIssueCard';
 import AdvanceReceivedCard from './components/dashboard/advanceReceivedCard';
 import { updateDetailListCell } from './handlers/detailListHandlers';
 import TvmEarningPage from './components/tvmEarningPage';
+import FinalEarningPage from './components/fianlEarningPage';
 
-const pageTitles =['Dashboard', 'shift Entry', 'TVM Earning']
+const pageTitles =['Dashboard', 'shift Entry', 'TVM Earning','Final Earning']
 
 export default function App() {
   const { registerState, updateRegisterState, syncStatus } = useRegisterData();
@@ -110,6 +111,8 @@ export default function App() {
         <SendToBankDialog amountDueToBank={figures.amountDueToBank} totalCashInHand={figures.totalCashInHand}
           noteTotalToSend={noteDraft.noteTotalToSend} onClose={() => setIsSendDialogOpen(false)} onConfirm={confirmBankTransfer} />
       )}
+
+      {activePageIndex === 3 && <FinalEarningPage registerState={registerState} date={selectedDate}/>}
     </div>
   );
 }

@@ -92,3 +92,30 @@ export const tvmEarningColumns: ColumnNode[] = [
   numberColumn('tvmOutstandingCurrent', 'Outstanding (current)'),
   calculatedColumn('tvmFinalTotal', 'Final Total', tvmFinalTotal),
 ];
+
+export const totalAfcEarning =(row: RegisterRow) => 
+  sumOfFields(row,'tvmFinalTotal totalEarning')
+
+export const finalEarningColumns:ColumnNode[] = [
+  textColumn('totaFinalEarning','Grand Total'),
+ 
+  columnGroup('QR Tickets',
+     columnGroup('QR Free Exit', numberColumn('qrFreeExitQuantity', 'Qty')),
+    columnGroup('QR Tickets Sale', numberColumn('qrSaleQuantity', 'Qty'), numberColumn('qrSaleAmount', 'Amt')),
+    columnGroup('QR Paid Exit', numberColumn('qrPaidExitQuantity', 'Qty'), numberColumn('qrPaidExitAmount', 'Amt')),
+    columnGroup('QR Refund', numberColumn('qrRefundQuantity', 'Qty'), numberColumn('qrRefundAmount', 'Amt'))),
+  columnGroup('Card Sale',
+    columnGroup('SV2 Sale', numberColumn('sv2SaleQuantity', 'Qty')),
+    columnGroup('T1 & T2 Sale', numberColumn('t1&t2Quantity', 'Qty'), numberColumn('sv2&TourTotalAmount', 'Amt')),
+    columnGroup('T1 & T2 Refund', numberColumn('tourRefundQuantity', 'Qty'), numberColumn('tourRefundAmount', 'Amt')),
+    columnGroup('Add Value', numberColumn('addValueQuantity', 'Qty'), numberColumn('addValueAmount', 'Amt')),
+    columnGroup('NCMC Add Value', numberColumn('ncmcAddValueQuantity', 'Qty'), numberColumn('ncmcAddValueAmount', 'Amt'))),
+  columnGroup('Surcharge',
+    columnGroup('Surcharge By Cash/Cashless', numberColumn('surCashQty', 'Qty'), numberColumn('surCashAmt', 'Amt')),
+    columnGroup('Surcharge By Purse', numberColumn('surPurseQty', 'Qty'), numberColumn('surPurseAmt', 'Amt')),
+    columnGroup('NCMC Surcharge By Cash/Cashless', numberColumn('surNcmcCashQty', 'Qty'), numberColumn('surNcmcCashAmt', 'Amt')),
+    columnGroup('Surcharge By NCMC Purse', numberColumn('surNcmcPurseQty', 'Qty'), numberColumn('surNcmcPurseAmt', 'Amt')),
+  ),
+   
+
+]

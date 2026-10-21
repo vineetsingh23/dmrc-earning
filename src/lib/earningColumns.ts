@@ -97,11 +97,12 @@ export const totalAfcEarning =(row: RegisterRow) =>
   sumOfFields(row,'tvmFinalTotal totalEarning')
 
 export const finalEarningColumns:ColumnNode[] = [
-  textColumn('totaFinalEarning','Grand Total'),
+  textColumn('totalFinalEarning','Grand Total'),
  
   columnGroup('QR Tickets',
      columnGroup('QR Free Exit', numberColumn('qrFreeExitQuantity', 'Qty')),
     columnGroup('QR Tickets Sale', numberColumn('qrSaleQuantity', 'Qty'), numberColumn('qrSaleAmount', 'Amt')),
+    columnGroup('QR Tickets Sale (TVM) ', numberColumn('tvmQrSaleQuantity', 'Qty'), numberColumn('tvmQrSaleAmount', 'Amt')),
     columnGroup('QR Paid Exit', numberColumn('qrPaidExitQuantity', 'Qty'), numberColumn('qrPaidExitAmount', 'Amt')),
     columnGroup('QR Refund', numberColumn('qrRefundQuantity', 'Qty'), numberColumn('qrRefundAmount', 'Amt'))),
   columnGroup('Card Sale',

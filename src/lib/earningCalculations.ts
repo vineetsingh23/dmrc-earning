@@ -41,9 +41,9 @@ export const cashFromPreviousDays = (state: RegisterState, date: string) => {
 // cash in hand before any transfer of this date : unsent earlier cash + current day earning
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
   cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date))
-  + advanceReceivedTotalForDate(state,date) - imprestIssuedTotalForDate(state, date);
+  + advanceReceivedTotalForDate(state,date);
 export const cashWithTomOperatorsForDate =(state: RegisterState, date: string) =>
-   imprestIssuedTotalForDate(state, date)+advanceReceivedTotalForDate(state,date)
+   imprestIssuedTotalForDate(state, date)
 
 export interface DenominationRow { key: string; value: number | string; label: string }
 
@@ -51,6 +51,7 @@ export const noteRows: DenominationRow[] = [500, 200, 100, 50, 20, 10].map(value
 export const coinRows: DenominationRow[] = [20, 10, 5, 2, 1].map(value => ({ key: `coin${value}`, value, label: `₹${value} coin` }));
 export const allDenominationRows: DenominationRow[] = [...noteRows, ...coinRows];
 export const looseCoinsKey = 'looseCoins';
+
 
 // splits an amount into notes and coins, largest first
 export const breakIntoDenominations = (amount: number): Record<string, number> => {

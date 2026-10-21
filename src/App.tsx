@@ -60,7 +60,7 @@ export default function App() {
       <span className="mb-4 ml-3 text-sm text-slate-600">
         {syncStatus === 'synced' ? '☁ Synced' : syncStatus === 'saving' ? '☁ Saving…' : syncStatus === 'loading' ? '☁ Loading…' : syncStatus === 'error' ? '⚠ Cloud error' : 'Local only'}
       </span>
-
+    { activePageIndex === 0 &&
       <div className="mb-4 grid grid-cols-3">
         <CashInHandCard 
             totalCashInHand={figures.totalCashInHand} 
@@ -70,14 +70,14 @@ export default function App() {
             existingTransfer={figures.existingTransfer} 
             noteDraft={noteDraft}
             canSendToBank={canSendToBank}
-            imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
             advanceReceivedTotal={figures.advanceReceivedTotal}
             onSendToBankClick={() => setIsSendDialogOpen(true)} />
 
-        <CashInPossessionCard 
+        <CashInPossessionCard
         cashCountsInHand={figures.cashCountsInHand}
         looseCoinAmount={figures.looseCoinsAmount} 
         denominationTotalAmount={figures.denominationTotalAmount}
+        imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
         totalCashInHand={figures.totalCashInHand} 
         onCountChange={changeCashCount} />
 
@@ -91,11 +91,9 @@ export default function App() {
   <AdvanceReceivedCard listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
     onAdvanceChange={(rowIndex, typedValue) =>
     updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
-</div>
-        
-       
-      </div>
-
+</div>      
+ </div>
+}
 
       {activePageIndex === 1 && 
       <EarningSheetTable

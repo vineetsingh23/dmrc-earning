@@ -64,8 +64,8 @@ export const sampleColumns: ColumnNode[] = [
   columnGroup('Surcharge',
     columnGroup('Surcharge By Cash/Cashless', numberColumn('surCashQty', 'Qty'), numberColumn('surCashAmt', 'Amt')),
     columnGroup('Surcharge By Purse', numberColumn('surPurseQty', 'Qty'), numberColumn('surPurseAmt', 'Amt')),
+    columnGroup('NCMC Surcharge By Cash/Cashless', numberColumn('surNcmcCashQty', 'Qty'), numberColumn('surNcmcCashAmt', 'Amt')),
     columnGroup('Surcharge By NCMC Purse', numberColumn('surNcmcPurseQty', 'Qty'), numberColumn('surNcmcPurseAmt', 'Amt')),
-    columnGroup('Surcharge By Cash/Cashless', numberColumn('surCashQty', 'Qty'), numberColumn('surCashAmt', 'Amt')),
   ),
    
   

@@ -6,6 +6,8 @@ interface CashInPossessionCardProps {
   looseCoinAmount:number;
   denominationTotalAmount: number;
   totalCashInHand: number;
+  imprestAndAdvanceIssuedTotal:number;
+
   onCountChange: (countKey: string, typedValue: string) => void;
 }
 
@@ -14,8 +16,10 @@ export default function CashInPossessionCard({
                                         denominationTotalAmount, 
                                         totalCashInHand,
                                         looseCoinAmount, 
+                                        imprestAndAdvanceIssuedTotal,
                                         onCountChange }: CashInPossessionCardProps) {
-  const matchesCashInHand = denominationTotalAmount === totalCashInHand;
+  const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal
+  const matchesCashInHand = cardTotalAmount === totalCashInHand;
   const cellClass = 'border border-slate-200 px-2 py-1 text-right text-sm';
   const countInputClass ='w-20 rounded border border-slate-300 px-1.5 py-0.5 text-right outline-none focus:ring-2 focus:ring-blue-400';
   return (
@@ -42,7 +46,7 @@ export default function CashInPossessionCard({
           ))}
           {/* loose coins typed as rupee amount */}
           <tr className='even:bg-slate-100'>
-            <td className={`${cellClass} !text-left`}>Loose Coins (amount )</td>
+            <td className={`${cellClass} !text-left`}>Loose Coins</td>
             <td className={cellClass}>
               <input 
                   value={looseCoinAmount || ''} 
@@ -55,18 +59,25 @@ export default function CashInPossessionCard({
             <td className={cellClass}>{formatRupees(looseCoinAmount)}</td>
 
           </tr>
+           {/* loose coins typed as rupee amount */}
+          <tr className='even:bg-slate-100'>
+            <td className={`${cellClass} !text-left`}>Imprest Issued</td>
+            <td className={cellClass}>-</td>
+            <td className={cellClass}>{formatRupees(imprestAndAdvanceIssuedTotal)}</td>
+
+          </tr>
         </tbody>
         <tfoot>
           <tr className="bg-blue-100 font-bold">
             <td className={`${cellClass} !text-left`} colSpan={2}>Total</td>
-            <td className={cellClass}>{formatRupees(denominationTotalAmount)}</td>
+            <td className={cellClass}>{formatRupees(cardTotalAmount)}</td>
           </tr>
         </tfoot>
       </table>
      
      </div>
       <small className={matchesCashInHand ? 'text-green-600 font-semibold py-4' : 'text-red-600 font-semibold py-4'}>
-        {matchesCashInHand ? '✓ Matches total cash in hand' : `Differs from cash in hand by ${formatRupees(denominationTotalAmount - totalCashInHand)}`}
+        {matchesCashInHand ? '✓ Matches total cash in hand' : `Differs from cash in hand by ${formatRupees(totalCashInHand-cardTotalAmount)}`}
       </small>
      
     </div>

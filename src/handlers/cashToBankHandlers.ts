@@ -10,12 +10,6 @@ export function suggestBankNoteCounts(cashCountsInHand: Record<string, number>, 
     suggestedCounts[noteValue] = notesTaken;
     remainingAmount -= notesTaken * noteValue;
   });
-  // not enough notes in hand: the rest is still shown in 500 / 200 / 100
-  bankNoteValues.forEach(noteValue => {
-    const extraNotes = Math.floor(remainingAmount / noteValue);
-    suggestedCounts[noteValue] += extraNotes;
-    remainingAmount -= extraNotes * noteValue;
-  });
   return suggestedCounts;
 }
 

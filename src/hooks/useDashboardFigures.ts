@@ -27,16 +27,16 @@ import { allDenominationRows,
         const totalCashInHand = previousDaysCash +Math.round(currentDayEarning) + advanceReceivedFromTomOperators
 
         const amountDueToBank =Math.floor(Math.max(0,previousDaysCash) / bankRoundingAmount) * bankRoundingAmount;
-        const cashCountsInHand:Record<string, number> = registerState.cashCounts?.[date] ?? breakIntoDenominations(Math.max(0,totalCashInHand));
+        const cashCountsInHand:Record<string, number> = registerState.cashCounts?.[date] ?? breakIntoDenominations(0);
         const looseCoinsAmount =cashCountsInHand[looseCoinsKey] ?? 0;
         const denominationTotalAmount= allDenominationRows.reduce((total:number, row:DenominationRow) => 
-            total + row.value * (cashCountsInHand[row.key] ?? 0), 0) +looseCoinsAmount;
+            total + Number(row.value) * (cashCountsInHand[row.key] ?? 0), 0) +looseCoinsAmount;
             // loose coins
         return {
             currentDayEarning : totalEarningOfDate(registerState,date),
             // totalEarning,
             imprestAndAdvanceIssuedTotal:imprestIssuedTotalForDate(registerState, date),
-            advanceReceivedTotal: advanceReceivedTotalForDate(registerState, date),
+          advanceReceivedFromTomOperators,
             previousDaysCash,
             existingTransfer,
             totalCashInHand,amountDueToBank,

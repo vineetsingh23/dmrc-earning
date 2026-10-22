@@ -41,7 +41,7 @@ export default function CashInPossessionCard({
                   className={countInputClass} 
                   />
               </td>
-              <td className={cellClass}>{formatRupees(row.value * (cashCountsInHand[row.key] ?? 0))}</td>
+              <td className={cellClass}>{formatRupees(Number(row.value) * (cashCountsInHand[row.key] ?? 0))}</td>
             </tr>
           ))}
           {/* loose coins typed as rupee amount */}

@@ -9,3 +9,8 @@ export const tomOperators = [
   { tomNumber: '51', imprestAmount: 0 },
   { tomNumber: '52', imprestAmount: 0 },
 ];
+
+// replace with the sections defined in your business rule
+export const penaltySections = [
+  'Travelling without valid ticket', 'Unauthorised entry / exit', 'Misuse of concession card', 'Excess travel / overstay', 'Other',
+];

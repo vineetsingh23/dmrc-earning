@@ -33,6 +33,8 @@ import {
   syncStatusClass,
   themeButtonClass,
 } from './globalStyles';
+import DetailListCard from './components/dashboard/detailListCard';
+import type { DetailListKind } from './lib/registerTypes';
 
 const pages = [
   { label: 'Dashboard', path: '/' },
@@ -55,6 +57,13 @@ export default function App() {
     document.documentElement.classList.toggle('dark', isDarkMode);
     localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
   }, [isDarkMode]);
+
+  const renderDetailList = (title: string, listKind: DetailListKind, columnTitles: string[]) => (
+  <DetailListCard title={title} listKind={listKind} columnTitles={columnTitles}
+    listRows={registerState.detailLists?.[selectedDate]?.[listKind] ?? []}
+    onCellChange={(rowIndex, columnIndex, newValue) =>
+      updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, listKind, rowIndex, columnIndex, newValue))} />
+);
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(selectedDate, figures.cashCountsInHand, figures.amountDueToBank, figures.existingTransfer);
@@ -172,7 +181,16 @@ export default function App() {
                         updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
                   />
                 </div>
+                <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+  {renderDetailList('Details of out-source earning', 'outsourceEarning', ['Item', 'Amount'])}
+  {renderDetailList('Details of misc earning', 'miscEarning', ['Reason', 'Amount'])}
+</div>
+<div className="mb-4">
+  {renderDetailList('Penalty details', 'penaltyDetails',
+    ['ID', 'Date & time', 'Penalty section', 'Passenger name', 'Passenger contact no.', 'Address of passenger', 'Penalty amount'])}
+</div>
               </div>
+              
             }
           />
           <Route

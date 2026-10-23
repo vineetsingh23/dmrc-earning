@@ -1,5 +1,5 @@
 export type RegisterRow = Record<string,string>;
-export type DetailListKind = 'imprestIssue' | 'advanceReceived';
+// export type DetailListKind = 'imprestIssue' | 'advanceReceived';
 
 export interface BankTransfer{
     amount:number;
@@ -31,3 +31,7 @@ export const createEmptyRegisterState =() : RegisterState =>({
     imprestIssued:{},
     advanceReceived:{}
 })
+
+export type DetailListKind =
+  | 'imprestIssue' | 'advanceReceived'
+  | 'outsourceEarning' | 'miscEarning' | 'penaltyDetails';

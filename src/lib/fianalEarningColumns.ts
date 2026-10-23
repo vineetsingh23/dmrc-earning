@@ -1,6 +1,6 @@
 import type { RegisterRow } from './registerTypes';
 import { calculatedColumn, columnGroup, numberColumn, sumOfFields, textColumn, type ColumnNode } from './earningColumns';
-import { afcCollectionTotal, surchargeTotal } from './shiftEntryColumns';
+import { afcCollectionTotal, surchargeTotal } from './shiftEntrycolumns';
 
 // total AFC earning of the day = AFC collection of the shift sheet + every TVM sale and add value amount
 // (the final row holds the totals of both sheets, so the shift formula works on it unchanged)

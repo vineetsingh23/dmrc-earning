@@ -1,5 +1,11 @@
 # React + TypeScript + Vite
 
+## Run the build without a server
+
+Run `npm run build:file`, then open `dist/index.html` directly in a browser. This creates a self-contained HTML file and uses hash-based routing for local file access. Keep using `npm run build` for the normal web-hosted build.
+
+Register data is stored in IndexedDB in the current browser. It is not shared across devices or browsers. The first launch imports previously saved data from this browser's local storage. Data that exists only in the old Supabase database is not migrated by this change and remains in Supabase.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 ## Navigation and appearance

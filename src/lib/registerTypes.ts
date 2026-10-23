@@ -1,4 +1,5 @@
 export type RegisterRow = Record<string,string>;
+export type DetailListKind = 'imprestIssue' | 'advanceReceived';
 
 export interface BankTransfer{
     amount:number;
@@ -12,7 +13,7 @@ export interface RegisterState {
     tvmRowCount:number;
     shiftEntries:Record<string, Record<number, RegisterRow>>;
     tvmEntries: Record<string, Record<number, RegisterRow>>;
-    detailLists: Record<string, Record<string, string[][]>>;
+    detailLists: Record<string, Partial<Record<DetailListKind, string[][]>>>;
     cashCounts: Record<string, Record<string, number>>;
     bankTransfers: Record<string, BankTransfer>;
     imprestIssued:Record<string, Record<number,RegisterRow>>
@@ -30,4 +31,3 @@ export const createEmptyRegisterState =() : RegisterState =>({
     imprestIssued:{},
     advanceReceived:{}
 })
-

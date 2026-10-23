@@ -42,7 +42,7 @@ const pages = [
 ];
 
 export default function App() {
-  const { registerState, updateRegisterState, syncStatus } = useRegisterData();
+  const { registerState, updateRegisterState, storageStatus, storageError, isLoaded } = useRegisterData();
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().slice(0, 10));
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(() => {
@@ -71,10 +71,24 @@ export default function App() {
     setIsSendDialogOpen(false);
   };
 
-  const syncLabel = syncStatus === 'synced' ? '☁ Synced'
-    : syncStatus === 'saving' ? '☁ Saving…'
-      : syncStatus === 'loading' ? '☁ Loading…'
-        : syncStatus === 'error' ? '⚠ Cloud error' : 'Local only';
+  const storageLabel = storageStatus === 'saved' ? 'IndexedDB: Saved'
+    : storageStatus === 'saving' ? 'IndexedDB: Saving…'
+      : storageStatus === 'loading' ? 'IndexedDB: Loading…'
+        : '⚠ IndexedDB error';
+
+  if (storageStatus === 'loading') {
+    return <main className="p-6 text-slate-700 dark:text-slate-200">Loading locally saved register data…</main>;
+  }
+
+  if (!isLoaded) {
+    return (
+      <main role="alert" className="p-6 text-red-700 dark:text-red-300">
+        <h1 className="font-bold">Could not load local register data.</h1>
+        <p>Check that this browser allows IndexedDB for this page, then reload the app.</p>
+        {storageError && <p className="mt-2">{storageError}</p>}
+      </main>
+    );
+  }
 
   return (
     <div className={appShellClass}>
@@ -106,7 +120,7 @@ export default function App() {
               onChange={event => setSelectedDate(event.target.value)}
               className={dateInputClass}
             />
-            <span role="status" className={syncStatusClass}>{syncLabel}</span>
+            <span role="status" className={syncStatusClass} title={storageError || undefined}>{storageLabel}</span>
             <button
               type="button"
               onClick={() => setIsDarkMode(theme => !theme)}

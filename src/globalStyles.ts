@@ -1,14 +1,14 @@
 export const appShellClass = 'min-h-screen bg-slate-50 text-slate-800 transition-colors dark:bg-slate-950 dark:text-slate-100';
-export const appHeaderClass = 'sticky top-0 z-50 border-b border-slate-200 bg-white/95 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/95';
+export const appHeaderClass = 'sticky top-0 z-50 border-b border-slate-200 bg-blue-50 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/95';
 export const appHeaderContentClass = 'mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6';
 export const appHeaderGroupClass = 'flex flex-wrap items-center gap-4';
 export const navigationClass = 'flex flex-wrap gap-2';
-export const navLinkClass = 'rounded-xl border border-slate-200 bg-white px-3.5 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
+export const navLinkClass = 'rounded-md border border-slate-200 px-3.5 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const navLinkActiveClass = 'border-blue-600 bg-blue-600 text-white hover:border-blue-700 hover:bg-blue-700 dark:border-blue-500 dark:bg-blue-600 dark:text-white dark:hover:border-blue-400 dark:hover:bg-blue-500';
 export const appHeaderControlsClass = 'flex flex-wrap items-center gap-3';
 export const dateInputClass = 'rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus-visible:outline-blue-400';
 export const syncStatusClass = 'text-sm text-slate-600 dark:text-slate-400';
-export const themeButtonClass = 'rounded-xl border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
+export const themeButtonClass = 'rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const mainContentClass = 'mx-auto max-w-screen-2xl p-4 md:p-6';
 export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3';
 export const stackedCardsClass = 'flex flex-col gap-4';

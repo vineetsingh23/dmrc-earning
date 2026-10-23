@@ -1,59 +1,79 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { createEmptyRegisterState, type RegisterState } from '../lib/registerTypes';
-import { pullShiftEntries, pushShiftEntries, supabaseClient } from '../lib/supabaseSync';
+import { readRegisterState, writeRegisterState } from '../lib/registerDatabase';
 
 const browserStorageKey = 'earning-register-data';
-export type SyncStatus = 'localOnly' | 'loading' | 'saving' | 'synced' | 'error';
+export type StorageStatus = 'loading' | 'saving' | 'saved' | 'error';
+
+function readLegacyState(): RegisterState {
+  const serializedState = localStorage.getItem(browserStorageKey);
+  if (!serializedState) return createEmptyRegisterState();
+
+  const parsedState: unknown = JSON.parse(serializedState);
+  if (!parsedState || typeof parsedState !== 'object' || Array.isArray(parsedState)) {
+    throw new Error('The saved browser data has an invalid format.');
+  }
+
+  return { ...createEmptyRegisterState(), ...parsedState } as RegisterState;
+}
 
 export function useRegisterData() {
-  const [registerState, setRegisterState] = useState<RegisterState>(() => {
-    try {
-      return { ...createEmptyRegisterState(), ...JSON.parse(localStorage.getItem(browserStorageKey) || '{}') };
-    } catch {
-      return createEmptyRegisterState();
-    }
-  });
-  const [syncStatus, setSyncStatus] = useState<SyncStatus>(supabaseClient ? 'loading' : 'localOnly');
-  const latestStateReference = useRef(registerState);
-  latestStateReference.current = registerState;
-  const firstLoadFinished = useRef(!supabaseClient);   // nothing is sent before the first load ends
+  const [registerState, setRegisterState] = useState<RegisterState>(createEmptyRegisterState);
+  const [storageStatus, setStorageStatus] = useState<StorageStatus>('loading');
+  const [storageError, setStorageError] = useState('');
+  const [isLoaded, setIsLoaded] = useState(false);
+  const saveVersion = useRef(0);
 
-  // 1. load from Supabase once, when the app opens
   useEffect(() => {
-    if (!supabaseClient) return;
-    (async () => {
+    let cancelled = false;
+
+    async function load() {
       try {
-        const pulledEntries = await pullShiftEntries();
-        if (Object.keys(pulledEntries).length) {
-          setRegisterState(previousState => ({ ...previousState, shiftEntries: pulledEntries }));
-        } else {
-          await pushShiftEntries(latestStateReference.current.shiftEntries);   // empty database: upload this device's data
+        const savedState = await readRegisterState();
+        const state = savedState ?? readLegacyState();
+
+        if (!savedState) {
+          await writeRegisterState(state);
         }
-        firstLoadFinished.current = true;
-        setSyncStatus('synced');
+
+        if (cancelled) return;
+        setRegisterState(state);
+        setIsLoaded(true);
+        setStorageStatus('saved');
       } catch (error) {
-        console.error(error);
-        setSyncStatus('error');
+        console.error('Failed to load local register data:', error);
+        if (cancelled) return;
+        setStorageError(error instanceof Error ? error.message : String(error));
+        setStorageStatus('error');
       }
-    })();
+    }
+
+    void load();
+    return () => {
+      cancelled = true;
+    };
   }, []);
 
-  // 2. after every change: save in the browser now, send to Supabase 1 second later
   useEffect(() => {
-    localStorage.setItem(browserStorageKey, JSON.stringify(registerState));
-    if (!supabaseClient || !firstLoadFinished.current) return;
-    setSyncStatus('saving');
-    const delayedSend = setTimeout(async () => {
+    if (!isLoaded) return;
+
+    const version = ++saveVersion.current;
+    const delayedSave = setTimeout(async () => {
+      setStorageStatus('saving');
+      setStorageError('');
       try {
-        await pushShiftEntries(registerState.shiftEntries);
-        setSyncStatus('synced');
+        await writeRegisterState(registerState);
+        if (version === saveVersion.current) setStorageStatus('saved');
       } catch (error) {
-        console.error(error);
-        setSyncStatus('error');
+        console.error('Failed to save local register data:', error);
+        if (version !== saveVersion.current) return;
+        setStorageError(error instanceof Error ? error.message : String(error));
+        setStorageStatus('error');
       }
-    }, 1000);
-    return () => clearTimeout(delayedSend);
-  }, [registerState]);
+    }, 400);
+
+    return () => clearTimeout(delayedSave);
+  }, [isLoaded, registerState]);
 
   const updateRegisterState = useCallback((applyChange: (draftState: RegisterState) => void) => {
     setRegisterState(previousState => {
@@ -63,5 +83,5 @@ export function useRegisterData() {
     });
   }, []);
 
-  return { registerState, updateRegisterState, syncStatus };
+  return { registerState, updateRegisterState, storageStatus, storageError, isLoaded };
 }

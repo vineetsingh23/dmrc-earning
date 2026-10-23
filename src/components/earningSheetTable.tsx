@@ -2,6 +2,17 @@ import type { ReactNode } from 'react';
 import { collectLeafColumns, columnDepth, isColumnGroup, parseNumber, type ColumnLeaf, type ColumnNode } from '../lib/earningColumns';
 import { formatCellValue, formatRupees } from '../lib/earningCalculations';
 import type { RegisterRow } from '../lib/registerTypes';
+import {
+  tableCalculatedCellClass,
+  tableCellClass,
+  tableClass,
+  tableHeaderCellClass,
+  tableHeaderGroupClasses,
+  tableInputClass,
+  tableRowClass,
+  tableTotalCellClass,
+  tableWrapperClass,
+} from '../globalStyles';
 
 export interface SheetStyle {
   headerCellClass: string;          // padding, text alignment and font of every header cell
@@ -10,11 +21,11 @@ export interface SheetStyle {
   footerCellClass: string;          // cells of the total row
 }
 
-export const defaultSheetStyle: SheetStyle = {
-  headerCellClass: 'border border-white px-2 py-1 text-center text-xs font-semibold',
-  headerColorClasses: ['bg-blue-100', 'bg-violet-100', 'bg-green-100', 'bg-amber-100', 'bg-rose-100', 'bg-teal-100'],
-  bodyCellClass: 'border border-slate-200 px-2 py-1 text-right text-sm',
-  footerCellClass: 'border border-slate-200 bg-blue-100 px-2 py-1 text-right text-sm font-bold',
+const defaultSheetStyle: SheetStyle = {
+  headerCellClass: tableHeaderCellClass,
+  headerColorClasses: tableHeaderGroupClasses,
+  bodyCellClass: tableCellClass,
+  footerCellClass: tableTotalCellClass,
 };
 
 // turns the nested column list into rows of <th> cells (one row per header level)
@@ -67,8 +78,8 @@ export default function EarningSheetTable({
     allRows.reduce((runningTotal, row) => runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
 
   return (
-    <div className="overflow-auto rounded-xl border border-slate-300 bg-white">
-      <table className="w-full border-collapse">
+    <div className={tableWrapperClass}>
+      <table className={tableClass}>
         <thead>
           {buildHeaderRows(columns, sheetStyle).map((headerRow, headerRowIndex) => (
             <tr key={headerRowIndex}>{headerRow}</tr>
@@ -77,23 +88,23 @@ export default function EarningSheetTable({
 
         <tbody>
           {allRows.map((row, rowIndex) => (
-            <tr key={rowIndex} className="even:bg-slate-100">
+            <tr key={rowIndex} className={tableRowClass}>
               {leafColumns.map(column => {
                 if (column.kind === 'calculated') {
                   return (
-                    <td key={column.fieldKey} className={`${sheetStyle.bodyCellClass} bg-blue-50 font-semibold`}>
+                    <td key={column.fieldKey} className={`${sheetStyle.bodyCellClass} ${tableCalculatedCellClass}`}>
                       {formatRupees(column.formula!(row))}
                     </td>
                   );
                 }
                 if (isEditable) {
                   return (
-                    <td key={column.fieldKey} className="border border-slate-200 p-0">
+                    <td key={column.fieldKey} className={`${tableCellClass} p-0`}>
                       <input
                         value={readEntryValue!(rowIndex, column.fieldKey)}
                         onChange={event => writeEntryValue!(rowIndex, column.fieldKey, event.target.value)}
                         inputMode={column.kind === 'number' ? 'decimal' : 'text'}
-                        className={`w-full min-w-[70px] bg-transparent p-1.5 text-sm outline-none focus:bg-blue-50 ${
+                        className={`${tableInputClass} ${
                           column.kind === 'number' ? 'text-right' : 'text-left'
                         }`}
                       />

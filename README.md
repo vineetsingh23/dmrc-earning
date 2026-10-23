@@ -2,6 +2,10 @@
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
+## Navigation and appearance
+
+The app uses React Router for the Dashboard, Shift Entry, TVM Earning, and Final Earning pages. The navigation bar stays at the top while scrolling. Use the theme control in the navigation bar to switch between light and dark mode; the selected theme is saved in the browser.
+
 Currently, two official plugins are available:
 
 - [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)

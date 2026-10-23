@@ -3,11 +3,9 @@ import type { RegisterState } from "../lib/registerTypes";
 import { bankRoundingAmount } from "../lib/businessRules";
 import { allDenominationRows,
         advanceReceivedTotalForDate,
-        cashWithTomOperatorsForDate,
         imprestIssuedTotalForDate,
         breakIntoDenominations,
         cashFromPreviousDays,
-        cashInHandOfDate,
         totalEarningOfDate,
         looseCoinsKey,
         type DenominationRow,
@@ -20,11 +18,8 @@ import { allDenominationRows,
         const existingTransfer = registerState.bankTransfers?.[date];
         const previousDaysCash = cashFromPreviousDays(registerState,date)-(existingTransfer ? existingTransfer.amount : 0);
         const currentDayEarning = totalEarningOfDate(registerState,date) ;
-        const advanceReceivedFromTomOperators = advanceReceivedTotalForDate(registerState,date)
-        // const totalEarning = cashFromPreviousDays(registerState,date) + totalEarningOfDate(registerState,date) + advanceReceivedFromTomOperators
-        // const cashBeforeBankTransfer = cashInHandOfDate(registerState,date);
-        const cashWithTomOperators = cashWithTomOperatorsForDate(registerState,date);
-        const totalCashInHand = previousDaysCash +Math.round(currentDayEarning) + advanceReceivedFromTomOperators
+        const advanceReceivedTotal = advanceReceivedTotalForDate(registerState,date);
+        const totalCashInHand = previousDaysCash + Math.round(currentDayEarning) + advanceReceivedTotal;
 
         const amountDueToBank =Math.floor(Math.max(0,previousDaysCash) / bankRoundingAmount) * bankRoundingAmount;
         const cashCountsInHand:Record<string, number> = registerState.cashCounts?.[date] ?? breakIntoDenominations(0);
@@ -34,9 +29,8 @@ import { allDenominationRows,
             // loose coins
         return {
             currentDayEarning : totalEarningOfDate(registerState,date),
-            // totalEarning,
             imprestAndAdvanceIssuedTotal:imprestIssuedTotalForDate(registerState, date),
-          advanceReceivedFromTomOperators,
+            advanceReceivedTotal,
             previousDaysCash,
             existingTransfer,
             totalCashInHand,amountDueToBank,

@@ -1,9 +1,23 @@
-
 @import 'tailwindcss';
+@custom-variant dark (&:where(.dark, .dark *));
 
+html {
+    color-scheme: light;
+}
 
+html.dark {
+    color-scheme: dark;
+}
 
-@theme {
+body {
+    margin: 0;
+}
 
-    --color-brandSoft: var(--color-gray-200)
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+    }
 }

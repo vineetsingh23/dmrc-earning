@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import EarningSheetTable from './components/earningSheetTable';
 import CashInHandCard from './components/dashboard/cashInHandCard';
 import CashInPossessionCard from './components/dashboard/cashInPossessionCard';
@@ -16,19 +17,47 @@ import AdvanceReceivedCard from './components/dashboard/advanceReceivedCard';
 import { updateDetailListCell } from './handlers/detailListHandlers';
 import TvmEarningPage from './components/tvmEarningPage';
 import FinalEarningPage from './components/fianlEarningPage';
+import {
+  appHeaderClass,
+  appHeaderContentClass,
+  appHeaderControlsClass,
+  appHeaderGroupClass,
+  appShellClass,
+  dashboardGridClass,
+  dateInputClass,
+  mainContentClass,
+  navLinkActiveClass,
+  navLinkClass,
+  navigationClass,
+  stackedCardsClass,
+  syncStatusClass,
+  themeButtonClass,
+} from './globalStyles';
 
-const pageTitles =['Dashboard', 'shift Entry', 'TVM Earning','Final Earning']
+const pages = [
+  { label: 'Dashboard', path: '/' },
+  { label: 'Shift Entry', path: '/shift-entry' },
+  { label: 'TVM Earning', path: '/tvm-earning' },
+  { label: 'Final Earning', path: '/final-earning' },
+];
 
 export default function App() {
   const { registerState, updateRegisterState, syncStatus } = useRegisterData();
   const [selectedDate, setSelectedDate] = useState(new Date().toISOString().slice(0, 10));
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
+  const [isDarkMode, setIsDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem('theme');
+    return savedTheme ? savedTheme === 'dark' : window.matchMedia('(prefers-color-scheme: dark)').matches;
+  });
   const rowsOfSelectedDate = registerState.shiftEntries[selectedDate] ?? {};
-  const [activePageIndex, setActivePageIndex] = useState(0);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle('dark', isDarkMode);
+    localStorage.setItem('theme', isDarkMode ? 'dark' : 'light');
+  }, [isDarkMode]);
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(selectedDate, figures.cashCountsInHand, figures.amountDueToBank, figures.existingTransfer);
-  // enabled when 100 or more is due and nothing was sent to the bank that day
   const canSendToBank = !figures.existingTransfer && figures.amountDueToBank >= bankRoundingAmount;
 
   const changeCashCount = (countKey: string, typedValue: string) =>
@@ -42,77 +71,126 @@ export default function App() {
     setIsSendDialogOpen(false);
   };
 
-  
+  const syncLabel = syncStatus === 'synced' ? '☁ Synced'
+    : syncStatus === 'saving' ? '☁ Saving…'
+      : syncStatus === 'loading' ? '☁ Loading…'
+        : syncStatus === 'error' ? '⚠ Cloud error' : 'Local only';
 
   return (
-    <div className="min-h-screen bg-slate-100 p-6">
-      <h1 className="mb-4 text-3xl font-extrabold text-blue-600">Earning Register</h1>
-      <nav className="mb-4 flex flex-wrap gap-2">
-  {pageTitles.map((pageTitle, pageIndex) => (
-    <button key={pageTitle} onClick={() => setActivePageIndex(pageIndex)}
-      className={`rounded-xl border px-3.5 py-1.5 font-medium transition ${
-        activePageIndex === pageIndex ? 'border-blue-600 bg-blue-600 text-white' : 'border-slate-300 bg-white hover:border-blue-500'}`}>
-      {pageTitle}
-    </button>
-  ))}
-</nav>
-      <input type="date" value={selectedDate} onChange={event => setSelectedDate(event.target.value)}
-        className="mb-4 rounded-lg border border-slate-300 bg-white px-2 py-1.5" />
-      <span className="mb-4 ml-3 text-sm text-slate-600">
-        {syncStatus === 'synced' ? '☁ Synced' : syncStatus === 'saving' ? '☁ Saving…' : syncStatus === 'loading' ? '☁ Loading…' : syncStatus === 'error' ? '⚠ Cloud error' : 'Local only'}
-      </span>
-    { activePageIndex === 0 &&
-      <div className="mb-4 grid grid-cols-3">
-        <CashInHandCard 
-            totalCashInHand={figures.totalCashInHand} 
-            previousDaysCash={figures.previousDaysCash} 
-            currentDayEarning={figures.currentDayEarning}
-            amountDueToBank={figures.amountDueToBank} 
-            existingTransfer={figures.existingTransfer} 
-            noteDraft={noteDraft}
-            canSendToBank={canSendToBank}
-            advanceReceivedTotal={figures.advanceReceivedTotal}
-            onSendToBankClick={() => setIsSendDialogOpen(true)} />
+    <div className={appShellClass}>
+      <header className={appHeaderClass}>
+        <div className={appHeaderContentClass}>
+          <div className={appHeaderGroupClass}>
+            <h1 className="text-xl font-extrabold text-blue-600">Earning Register</h1>
+            <nav aria-label="Main navigation" className={navigationClass}>
+              {pages.map(page => (
+                <NavLink
+                  key={page.path}
+                  to={page.path}
+                  end={page.path === '/'}
+                  className={({ isActive }) =>
+                    `${navLinkClass} ${isActive ? navLinkActiveClass : ''}`
+                  }
+                >
+                  {page.label}
+                </NavLink>
+              ))}
+            </nav>
+          </div>
+          <div className={appHeaderControlsClass}>
+            <label className="sr-only" htmlFor="selected-date">Selected date</label>
+            <input
+              id="selected-date"
+              type="date"
+              value={selectedDate}
+              onChange={event => setSelectedDate(event.target.value)}
+              className={dateInputClass}
+            />
+            <span role="status" className={syncStatusClass}>{syncLabel}</span>
+            <button
+              type="button"
+              onClick={() => setIsDarkMode(theme => !theme)}
+              aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
+              className={themeButtonClass}
+            >
+              {isDarkMode ? '☀ Light' : '☾ Dark'}
+            </button>
+          </div>
+        </div>
+      </header>
 
-        <CashInPossessionCard
-        cashCountsInHand={figures.cashCountsInHand}
-        looseCoinAmount={figures.looseCoinsAmount} 
-        denominationTotalAmount={figures.denominationTotalAmount}
-        imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
-        totalCashInHand={figures.totalCashInHand} 
-        onCountChange={changeCashCount} />
-
-<div className="mb-2 grid grid-col-1 max-w-sm gap-3 border border-slate-300 rounded-2xl p-3 bg-white">
-  <ImprestIssueCard 
-  listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
-  onAdvanceChange={(rowIndex, typedValue) =>
-  updateRegisterState(draftState => 
-  updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))} />
-
-  <AdvanceReceivedCard listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
-    onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState(draftState => updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))} />
-</div>      
- </div>
-}
-
-      {activePageIndex === 1 && 
-      <EarningSheetTable
-        columns={sampleColumns}
-        rowCount={registerState.shiftRowCount}
-        readRow={rowIndex => rowsOfSelectedDate[rowIndex] ?? {}}
-        readEntryValue={(rowIndex, fieldKey) => rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ''}
-        writeEntryValue={(rowIndex, fieldKey, newValue) =>
-          updateRegisterState(draftState => updateEntryCell(draftState.shiftEntries, selectedDate, rowIndex, fieldKey, newValue))}
-      />
-        }
-      {activePageIndex === 2 && <TvmEarningPage registerState={registerState} updateRegisterState={updateRegisterState} date={selectedDate} />}
-      {isSendDialogOpen && (
-        <SendToBankDialog amountDueToBank={figures.amountDueToBank} totalCashInHand={figures.totalCashInHand}
-          noteTotalToSend={noteDraft.noteTotalToSend} onClose={() => setIsSendDialogOpen(false)} onConfirm={confirmBankTransfer} />
-      )}
-
-      {activePageIndex === 3 && <FinalEarningPage registerState={registerState} date={selectedDate}/>}
+      <main className={mainContentClass}>
+        <Routes>
+          <Route
+            path="/"
+            element={
+              <div className={dashboardGridClass}>
+                <CashInHandCard
+                  totalCashInHand={figures.totalCashInHand}
+                  previousDaysCash={figures.previousDaysCash}
+                  currentDayEarning={figures.currentDayEarning}
+                  amountDueToBank={figures.amountDueToBank}
+                  existingTransfer={figures.existingTransfer}
+                  noteDraft={noteDraft}
+                  canSendToBank={canSendToBank}
+                  advanceReceivedTotal={figures.advanceReceivedTotal}
+                  onSendToBankClick={() => setIsSendDialogOpen(true)}
+                />
+                <CashInPossessionCard
+                  cashCountsInHand={figures.cashCountsInHand}
+                  looseCoinAmount={figures.looseCoinsAmount}
+                  denominationTotalAmount={figures.denominationTotalAmount}
+                  imprestAndAdvanceIssuedTotal={figures.imprestAndAdvanceIssuedTotal}
+                  totalCashInHand={figures.totalCashInHand}
+                  onCountChange={changeCashCount}
+                />
+                <div className={stackedCardsClass}>
+                  <ImprestIssueCard
+                    listRows={registerState.detailLists?.[selectedDate]?.imprestIssue ?? []}
+                    onAdvanceChange={(rowIndex, typedValue) =>
+                      updateRegisterState(draftState =>
+                        updateDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))}
+                  />
+                  <AdvanceReceivedCard
+                    listRows={registerState.detailLists?.[selectedDate]?.advanceReceived ?? []}
+                    onAdvanceChange={(rowIndex, typedValue) =>
+                      updateRegisterState(draftState =>
+                        updateDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
+                  />
+                </div>
+              </div>
+            }
+          />
+          <Route
+            path="/shift-entry"
+            element={
+              <EarningSheetTable
+                columns={sampleColumns}
+                rowCount={registerState.shiftRowCount}
+                readRow={rowIndex => rowsOfSelectedDate[rowIndex] ?? {}}
+                readEntryValue={(rowIndex, fieldKey) => rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ''}
+                writeEntryValue={(rowIndex, fieldKey, newValue) =>
+                  updateRegisterState(draftState => updateEntryCell(draftState.shiftEntries, selectedDate, rowIndex, fieldKey, newValue))}
+              />
+            }
+          />
+          <Route
+            path="/tvm-earning"
+            element={<TvmEarningPage registerState={registerState} updateRegisterState={updateRegisterState} date={selectedDate} />}
+          />
+          <Route path="/final-earning" element={<FinalEarningPage registerState={registerState} date={selectedDate} />} />
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
+        {isSendDialogOpen && (
+          <SendToBankDialog
+            amountDueToBank={figures.amountDueToBank}
+            totalCashInHand={figures.totalCashInHand}
+            noteTotalToSend={noteDraft.noteTotalToSend}
+            onClose={() => setIsSendDialogOpen(false)}
+            onConfirm={confirmBankTransfer}
+          />
+        )}
+      </main>
     </div>
   );
 }

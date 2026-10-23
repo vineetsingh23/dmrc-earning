@@ -2,6 +2,7 @@ import EarningSheetTable from './earningSheetTable';
 import type { RegisterState } from '../lib/registerTypes';
 import { tvmEarningColumns } from '../lib/earningColumns';
 import { updateEntryCell } from '../handlers/entryCellHandler';
+import { primaryButtonClass } from '../globalStyles';
 
 interface TvmEarningPageProps {
   registerState: RegisterState;
@@ -25,7 +26,7 @@ export default function TvmEarningPage({ registerState, updateRegisterState, dat
             updateEntryCell(draftState.tvmEntries, date, rowIndex, fieldKey, newValue);
           })}
       />
-      <button className="mt-3 rounded-xl border border-slate-300 bg-white px-3.5 py-1.5 font-medium hover:border-blue-500"
+      <button className={`${primaryButtonClass} mt-3`}
         onClick={() => updateRegisterState(draftState => { draftState.tvmRowCount++; })}>
         + Add row
       </button>

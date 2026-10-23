@@ -4,7 +4,7 @@ import EarningSheetTable from './components/earningSheetTable';
 import CashInHandCard from './components/dashboard/cashInHandCard';
 import CashInPossessionCard from './components/dashboard/cashInPossessionCard';
 import SendToBankDialog from './components/dashboard/sentToBankDialog';
-import { sampleColumns } from './lib/earningColumns';
+import { shiftEntryColumns } from './lib/shiftEntrycolumns';
 import { bankRoundingAmount } from './lib/businessRules';
 import { updateEntryCell } from './handlers/entryCellHandler';
 import { updateCashCount } from './handlers/cashcountHandlers';
@@ -179,7 +179,7 @@ export default function App() {
             path="/shift-entry"
             element={
               <EarningSheetTable
-                columns={sampleColumns}
+                columns={shiftEntryColumns}
                 rowCount={registerState.shiftRowCount}
                 readRow={rowIndex => rowsOfSelectedDate[rowIndex] ?? {}}
                 readEntryValue={(rowIndex, fieldKey) => rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ''}

@@ -1,6 +1,6 @@
 import { parseNumber, type ColumnLeaf } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
-import { totalEarningSample } from './earningColumns';
+import { cashDepositedByOperator } from './shiftEntrycolumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
@@ -19,12 +19,10 @@ export const addDays = (isoDate:string, dayCount:number) => {
 
 
 // total earning of one day = sum of the Total Earning formula over every row of that date
-export const totalEarningOfDate = (state: RegisterState, date: string) =>
-  Object.values(state.shiftEntries[date] ?? {}).reduce((total, row) => total + totalEarningSample(row), 0);
-
-// cash in hand = previous day earning + current day earning
-// export const cashInHandOfDate = (state: RegisterState, date: string) =>
-//   Math.round(totalEarningOfDate(state, addDays(date, -1)) + totalEarningOfDate(state, date));
+     // earning of one day in cash: cash deposited by the shift operators + TVM final total
+     export const totalEarningOfDate = (state: RegisterState, date: string) =>
+       Object.values(state.shiftEntries[date] ?? {}).reduce((total, row) => total + cashDepositedByOperator(row), 0)
+       + tvmFinalTotalOfDate(state, date);
 
 // all dates that have earning or a bank transfer
 const datesWithData = (state:RegisterState) =>

@@ -7,7 +7,7 @@ export const parseNumber = (value: unknown): number => {
 };
 
 // adds several fields of one row, e.g. sumOfFields(row, 'qrSaleAmount addValueAmount')
-const sumOfFields = (row: RegisterRow, fieldKeys: string): number =>
+export const sumOfFields = (row: RegisterRow, fieldKeys: string): number =>
   fieldKeys.split(' ').reduce((total, fieldKey) => total + parseNumber(row[fieldKey]), 0);
 
 export interface ColumnLeaf {
@@ -34,46 +34,6 @@ export const numberColumn = (fieldKey: string, label: string): ColumnLeaf => ({ 
 export const calculatedColumn = (fieldKey: string, label: string, formula: (row: RegisterRow) => number): ColumnLeaf =>
   ({ fieldKey, label, kind: 'calculated', formula });
 export const columnGroup = (label: string, ...children: ColumnNode[]): ColumnGroup => ({ label, children });
-
-// formulas for the sample sheet
-export const qrNetAmount = (row: RegisterRow) => 
-  sumOfFields(row, 'qrSaleAmount qrPaidExitAmount') 
-- sumOfFields(row, 'qrRefundAmount')
-
-export const cardNetAmount = (row:RegisterRow) =>
-  sumOfFields(row, 'sv2&TourTotalAmount addValueAmount ncmcAddValueAmount')
-   - sumOfFields(row, 'tourRefundAmount')
-export const surchargeAmount = (row: RegisterRow) => 
-  sumOfFields(row,'surCashAmt surPurseAmt surNcmcPurseAmt')
-
-export const totalEarningSample = (row: RegisterRow) => qrNetAmount(row) + cardNetAmount(row) + surchargeAmount(row);
-
-export const sampleColumns: ColumnNode[] = [
-  textColumn('operatorName', 'Name of Operator'),
-  columnGroup('QR Tickets',
-     columnGroup('QR Free Exit', numberColumn('qrFreeExitQuantity', 'Qty')),
-    columnGroup('QR Tickets Sale', numberColumn('qrSaleQuantity', 'Qty'), numberColumn('qrSaleAmount', 'Amt')),
-    columnGroup('QR Paid Exit', numberColumn('qrPaidExitQuantity', 'Qty'), numberColumn('qrPaidExitAmount', 'Amt')),
-    columnGroup('QR Refund', numberColumn('qrRefundQuantity', 'Qty'), numberColumn('qrRefundAmount', 'Amt'))),
-  columnGroup('Card Sale',
-    columnGroup('SV2 Sale', numberColumn('sv2SaleQuantity', 'Qty')),
-    columnGroup('T1 & T2 Sale', numberColumn('t1&t2Quantity', 'Qty'), numberColumn('sv2&TourTotalAmount', 'Amt')),
-    columnGroup('T1 & T2 Refund', numberColumn('tourRefundQuantity', 'Qty'), numberColumn('tourRefundAmount', 'Amt')),
-    columnGroup('Add Value', numberColumn('addValueQuantity', 'Qty'), numberColumn('addValueAmount', 'Amt')),
-    columnGroup('NCMC Add Value', numberColumn('ncmcAddValueQuantity', 'Qty'), numberColumn('ncmcAddValueAmount', 'Amt'))),
-  columnGroup('Surcharge',
-    columnGroup('Surcharge By Cash/Cashless', numberColumn('surCashQty', 'Qty'), numberColumn('surCashAmt', 'Amt')),
-    columnGroup('Surcharge By Purse', numberColumn('surPurseQty', 'Qty'), numberColumn('surPurseAmt', 'Amt')),
-    columnGroup('NCMC Surcharge By Cash/Cashless', numberColumn('surNcmcCashQty', 'Qty'), numberColumn('surNcmcCashAmt', 'Amt')),
-    columnGroup('Surcharge By NCMC Purse', numberColumn('surNcmcPurseQty', 'Qty'), numberColumn('surNcmcPurseAmt', 'Amt')),
-  ),
-   
-  
-  // calculatedColumn('qrNetAmount', 'QR net amount', qrNetAmount),
-  calculatedColumn('totalEarning', 'Total AFC Earning', totalEarningSample),
-];
-
-
 // ---- TVM (ticket vending machine) earning sheet ----
 // total = all four amounts; final total = total minus POS, UPI and outstanding (cash left in the machine)
 export const tvmTotal = (row: RegisterRow) =>
@@ -96,27 +56,3 @@ export const tvmEarningColumns: ColumnNode[] = [
 export const totalAfcEarning =(row: RegisterRow) => 
   sumOfFields(row,'tvmFinalTotal totalEarning')
 
-export const finalEarningColumns:ColumnNode[] = [
-  textColumn('finalRowLabel','Grand Total'),
- 
-  columnGroup('QR Tickets',
-     columnGroup('QR Free Exit', numberColumn('qrFreeExitQuantity', 'Qty')),
-    columnGroup('QR Tickets Sale', numberColumn('qrSaleQuantity', 'Qty'), numberColumn('qrSaleAmount', 'Amt')),
-    columnGroup('QR Tickets Sale (TVM) ', numberColumn('tvmQrSaleQuantity', 'Qty'), numberColumn('tvmQrSaleAmount', 'Amt')),
-    columnGroup('QR Paid Exit', numberColumn('qrPaidExitQuantity', 'Qty'), numberColumn('qrPaidExitAmount', 'Amt')),
-    columnGroup('QR Refund', numberColumn('qrRefundQuantity', 'Qty'), numberColumn('qrRefundAmount', 'Amt'))),
-  columnGroup('Card Sale',
-    columnGroup('SV2 Sale', numberColumn('sv2SaleQuantity', 'Qty')),
-    columnGroup('T1 & T2 Sale', numberColumn('t1&t2Quantity', 'Qty'), numberColumn('sv2&TourTotalAmount', 'Amt')),
-    columnGroup('T1 & T2 Refund', numberColumn('tourRefundQuantity', 'Qty'), numberColumn('tourRefundAmount', 'Amt')),
-    columnGroup('Add Value', numberColumn('addValueQuantity', 'Qty'), numberColumn('addValueAmount', 'Amt')),
-    columnGroup('NCMC Add Value', numberColumn('ncmcAddValueQuantity', 'Qty'), numberColumn('ncmcAddValueAmount', 'Amt'))),
-  columnGroup('Surcharge',
-    columnGroup('Surcharge By Cash/Cashless', numberColumn('surCashQty', 'Qty'), numberColumn('surCashAmt', 'Amt')),
-    columnGroup('Surcharge By Purse', numberColumn('surPurseQty', 'Qty'), numberColumn('surPurseAmt', 'Amt')),
-    columnGroup('NCMC Surcharge By Cash/Cashless', numberColumn('surNcmcCashQty', 'Qty'), numberColumn('surNcmcCashAmt', 'Amt')),
-    columnGroup('Surcharge By NCMC Purse', numberColumn('surNcmcPurseQty', 'Qty'), numberColumn('surNcmcPurseAmt', 'Amt')),
-  ),
-   
-
-]

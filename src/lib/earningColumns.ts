@@ -56,3 +56,19 @@ export const tvmEarningColumns: ColumnNode[] = [
 export const totalAfcEarning =(row: RegisterRow) => 
   sumOfFields(row,'tvmFinalTotal totalEarning')
 
+
+export interface StationFacilities { hasSv4Recharge: boolean; hasParking: boolean }
+
+// stations without SV-4 recharge or parking do not show those columns
+export const filterByFacilities = (columns: ColumnNode[], facilities: StationFacilities): ColumnNode[] => {
+  const hiddenLabels = [
+    ...(facilities.hasSv4Recharge ? [] : ['Top-up in SV-4 Cards (o)']),
+    ...(facilities.hasParking ? [] : ['Parking (Y)', 'HHT Parking Purse (w4)']),
+  ];
+  const keepVisible = (nodes: ColumnNode[]): ColumnNode[] =>
+    nodes
+      .filter(node => !hiddenLabels.includes(node.label))
+      .map(node => (isColumnGroup(node) ? { ...node, children: keepVisible(node.children) } : node));
+  return keepVisible(columns);
+};
+

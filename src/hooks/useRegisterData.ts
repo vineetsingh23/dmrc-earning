@@ -1,79 +1,63 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { createEmptyRegisterState, type RegisterState } from '../lib/registerTypes';
 import { readRegisterState, writeRegisterState } from '../lib/registerDatabase';
 
-const browserStorageKey = 'earning-register-data';
-export type StorageStatus = 'loading' | 'saving' | 'saved' | 'error';
+export type SaveStatus = 'loading' | 'saving' | 'saved' | 'error';
 
-function readLegacyState(): RegisterState {
-  const serializedState = localStorage.getItem(browserStorageKey);
-  if (!serializedState) return createEmptyRegisterState();
-
-  const parsedState: unknown = JSON.parse(serializedState);
-  if (!parsedState || typeof parsedState !== 'object' || Array.isArray(parsedState)) {
-    throw new Error('The saved browser data has an invalid format.');
-  }
-
-  return { ...createEmptyRegisterState(), ...parsedState } as RegisterState;
-}
-
-export function useRegisterData() {
+// data of one station, kept in IndexedDB
+export function useRegisterData(stationName: string) {
   const [registerState, setRegisterState] = useState<RegisterState>(createEmptyRegisterState);
-  const [storageStatus, setStorageStatus] = useState<StorageStatus>('loading');
-  const [storageError, setStorageError] = useState('');
-  const [isLoaded, setIsLoaded] = useState(false);
-  const saveVersion = useRef(0);
+  const [saveStatus, setSaveStatus] = useState<SaveStatus>('loading');
+  const [storageError, setStorageError] = useState<string>();
+  const [loadedStationName, setLoadedStationName] = useState<string>();
+  const [hasLoadedState, setHasLoadedState] = useState(false);
+  const isLoaded = loadedStationName === stationName && hasLoadedState;
+  const storageStatus = loadedStationName === stationName ? saveStatus : 'loading';
 
+  // 1. load this station's data when the station opens
   useEffect(() => {
-    let cancelled = false;
-
-    async function load() {
+    let isStillCurrent = true;
+    (async () => {
       try {
-        const savedState = await readRegisterState();
-        const state = savedState ?? readLegacyState();
-
-        if (!savedState) {
-          await writeRegisterState(state);
-        }
-
-        if (cancelled) return;
-        setRegisterState(state);
-        setIsLoaded(true);
-        setStorageStatus('saved');
+        const savedState = await readRegisterState(stationName);
+        if (!isStillCurrent) return;
+        setRegisterState(savedState ? { ...createEmptyRegisterState(), ...savedState } : createEmptyRegisterState());
+        setStorageError(undefined);
+        setLoadedStationName(stationName);
+        setHasLoadedState(true);
+        setSaveStatus('saved');
       } catch (error) {
-        console.error('Failed to load local register data:', error);
-        if (cancelled) return;
-        setStorageError(error instanceof Error ? error.message : String(error));
-        setStorageStatus('error');
+        console.error(error);
+        if (isStillCurrent) {
+          setStorageError(error instanceof Error ? error.message : String(error));
+          setLoadedStationName(stationName);
+          setHasLoadedState(false);
+          setSaveStatus('error');
+        }
       }
-    }
+    })();
+    // browsers may delete site data when disk space is low; this asks them to keep it
+    navigator.storage?.persist?.();
+    return () => { isStillCurrent = false; };
+  }, [stationName]);
 
-    void load();
-    return () => {
-      cancelled = true;
-    };
-  }, []);
-
+  // 2. save half a second after the last change
   useEffect(() => {
     if (!isLoaded) return;
-
-    const version = ++saveVersion.current;
     const delayedSave = setTimeout(async () => {
-      setStorageStatus('saving');
-      setStorageError('');
+      setSaveStatus('saving');
       try {
-        await writeRegisterState(registerState);
-        if (version === saveVersion.current) setStorageStatus('saved');
+        await writeRegisterState(stationName, registerState);
+        setStorageError(undefined);
+        setSaveStatus('saved');
       } catch (error) {
-        console.error('Failed to save local register data:', error);
-        if (version !== saveVersion.current) return;
+        console.error(error);
         setStorageError(error instanceof Error ? error.message : String(error));
-        setStorageStatus('error');
+        setSaveStatus('error');
       }
-    }, 400);
-
+    }, 500);
     return () => clearTimeout(delayedSave);
-  }, [isLoaded, registerState]);
+  }, [isLoaded, registerState, stationName]);
 
   const updateRegisterState = useCallback((applyChange: (draftState: RegisterState) => void) => {
     setRegisterState(previousState => {
@@ -83,5 +67,11 @@ export function useRegisterData() {
     });
   }, []);
 
-  return { registerState, updateRegisterState, storageStatus, storageError, isLoaded };
+  return {
+    registerState,
+    updateRegisterState,
+    storageStatus,
+    storageError,
+    isLoaded,
+  };
 }

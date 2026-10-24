@@ -35,3 +35,11 @@ export const createEmptyRegisterState =() : RegisterState =>({
 export type DetailListKind =
   | 'imprestIssue' | 'advanceReceived'
   | 'outsourceEarning' | 'miscEarning' | 'penaltyDetails';
+
+
+export interface StationRecord { name: string; hasSv4Recharge: boolean; hasParking: boolean }
+
+export const stations: StationRecord[] = [
+  { name: 'Noida Electronic City', hasSv4Recharge: true, hasParking: true },
+  { name: 'Sector 62 Noida', hasSv4Recharge: false, hasParking: false },
+];

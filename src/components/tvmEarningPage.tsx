@@ -10,13 +10,14 @@ interface TvmEarningPageProps {
   date: string;
 }
 
-export default function TvmEarningPage({ registerState, updateRegisterState, date }: TvmEarningPageProps) {
+export default function TvmEarningPage({ registerState,updateRegisterState, date }: TvmEarningPageProps) {
   const tvmRows = registerState.tvmEntries?.[date] ?? {};
   return (
     <>
     
       <EarningSheetTable
         columns={tvmEarningColumns}
+        gridName='tvm'
         rowCount={registerState.tvmRowCount}
         readRow={rowIndex => tvmRows[rowIndex] ?? {}}
         readEntryValue={(rowIndex, fieldKey) => tvmRows[rowIndex]?.[fieldKey] ?? ''}

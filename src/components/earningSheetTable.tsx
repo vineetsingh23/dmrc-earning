@@ -13,12 +13,14 @@ import {
   tableTotalCellClass,
   tableWrapperClass,
 } from '../globalStyles';
+import { handleSheetKeyDown } from '../handlers/sheetKeyboardHandlers';
 
 export interface SheetStyle {
   headerCellClass: string;          // padding, text alignment and font of every header cell
   headerColorClasses: string[];     // one colour per top-level header group; sub-headers share it
   bodyCellClass: string;            // read-only value cells and calculated cells
-  footerCellClass: string;          // cells of the total row
+  footerCellClass: string;  
+         // cells of the total row
 }
 
 const defaultSheetStyle: SheetStyle = {
@@ -63,22 +65,26 @@ interface EarningSheetTableProps {
   readEntryValue?: (rowIndex: number, fieldKey: string) => string;
   writeEntryValue?: (rowIndex: number, fieldKey: string, newValue: string) => void;
   showTotalRow?: boolean;           // default true
-  sheetStyle?: SheetStyle;          // default: the look of the Shift and TVM sheets
+  sheetStyle?: SheetStyle;  
+  gridName?:string;         // default: the look of the Shift and TVM sheets
 }
 
 export default function EarningSheetTable({
   columns, rowCount, readRow, readEntryValue, writeEntryValue, showTotalRow = true, sheetStyle = defaultSheetStyle,
+  gridName='sheet',
 }: EarningSheetTableProps) {
   const leafColumns = columns.flatMap(collectLeafColumns);
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) => readRow(rowIndex));
   const isEditable = Boolean(readEntryValue && writeEntryValue);
-
+  const typedColumnIndexByFieldKey = new Map (
+    leafColumns.filter(column => column.kind !== 'calculated').map((column, typedColumnIndex) => [column.fieldKey, typedColumnIndex]),
+  )
   // total of one column over all rows (calculated columns add up their formula results)
   const totalOfColumn = (column: ColumnLeaf) =>
     allRows.reduce((runningTotal, row) => runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
 
   return (
-    <div className={tableWrapperClass}>
+    <div className={tableWrapperClass} onKeyDown={handleSheetKeyDown} tabIndex={isEditable ? undefined : 0}>
       <table className={tableClass}>
         <thead>
           {buildHeaderRows(columns, sheetStyle).map((headerRow, headerRowIndex) => (
@@ -101,6 +107,10 @@ export default function EarningSheetTable({
                   return (
                     <td key={column.fieldKey} className={`${tableCellClass} p-0`}>
                       <input
+                        data-grid={gridName}
+                        data-row={rowIndex}
+                        data-column={typedColumnIndexByFieldKey.get(column.fieldKey)}
+                        onFocus={event => event.target.select()}
                         value={readEntryValue!(rowIndex, column.fieldKey)}
                         onChange={event => writeEntryValue!(rowIndex, column.fieldKey, event.target.value)}
                         inputMode={column.kind === 'number' ? 'decimal' : 'text'}

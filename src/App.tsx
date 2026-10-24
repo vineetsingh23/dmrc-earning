@@ -1,3 +1,5 @@
+import { registerSW } from 'virtual:pwa-register';
+if (import.meta.env.MODE !== 'file') registerSW({ immediate: true });
 import { useEffect, useState } from 'react';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
 import EarningSheetTable from './components/earningSheetTable';
@@ -198,6 +200,7 @@ export default function App() {
             element={
               <EarningSheetTable
                 columns={shiftEntryColumns}
+                gridName="shift"
                 rowCount={registerState.shiftRowCount}
                 readRow={rowIndex => rowsOfSelectedDate[rowIndex] ?? {}}
                 readEntryValue={(rowIndex, fieldKey) => rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ''}
@@ -208,7 +211,12 @@ export default function App() {
           />
           <Route
             path="/tvm-earning"
-            element={<TvmEarningPage registerState={registerState} updateRegisterState={updateRegisterState} date={selectedDate} />}
+            element={
+            <TvmEarningPage 
+              registerState={registerState}
+              updateRegisterState={updateRegisterState} 
+              date={selectedDate}
+            />}
           />
           <Route path="/final-earning" element={<FinalEarningPage registerState={registerState} date={selectedDate} />} />
           <Route path="*" element={<Navigate to="/" replace />} />

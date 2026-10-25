@@ -1,6 +1,6 @@
-import { parseNumber, type ColumnLeaf } from './earningColumns';
+import { parseNumber, type ColumnLeaf, tvmTotal } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
-import { cashDepositedByOperator } from './shiftEntrycolumns';
+import { cashDepositedByOperator, cashlessTotal, totalEarning } from './shiftEntrycolumns';
 export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
@@ -23,6 +23,8 @@ export const addDays = (isoDate:string, dayCount:number) => {
      export const totalEarningOfDate = (state: RegisterState, date: string) =>
        Object.values(state.shiftEntries[date] ?? {}).reduce((total, row) => total + cashDepositedByOperator(row), 0)
        + tvmFinalTotalOfDate(state, date);
+
+    export const highestEarningSoFar = (state: RegisterState, date: string) =>Math.max(totalEarningOfDate(state,date),0)
 
 // all dates that have earning or a bank transfer
 const datesWithData = (state:RegisterState) =>
@@ -83,3 +85,35 @@ export const sumRowsByField =(rows: RegisterRow[]): RegisterRow => {
   }));
   return Object.fromEntries(Object.entries(totals).map(([fieldKey, total])=>[fieldKey,String(total)]))
 }
+
+
+
+
+
+// merge with the type import you already have
+
+const shiftRowsOfDate = (state: RegisterState, date: string): RegisterRow[] => Object.values(state.shiftEntries[date] ?? {});
+const tvmRowsOfDate = (state: RegisterState, date: string): RegisterRow[] => Object.values(state.tvmEntries?.[date] ?? {});
+const sumOverRows = (rows: RegisterRow[], valueOfRow: (row: RegisterRow) => number) => rows.reduce((total, row) => total + valueOfRow(row), 0);
+
+// total earning (Z) of the shift sheet plus the TVM total
+export const dailyEarningOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(shiftRowsOfDate(state, date), totalEarning) + sumOverRows(tvmRowsOfDate(state, date), tvmTotal);
+
+// cashless: shift cashless details plus TVM payments by POS and UPI
+export const dailyCashlessOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(shiftRowsOfDate(state, date), cashlessTotal)
+  + sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmPaymentByPos) + parseNumber(row.tvmPaymentByUpi));
+
+export const tvmQrSaleOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmQrSaleAmount));
+export const tvmAddValueOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmAddValueAmount));
+
+// QR sale amount of the shift sheet plus TVM
+export const dailyQrSaleOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(shiftRowsOfDate(state, date), row => parseNumber(row.qrSaleAmount)) + tvmQrSaleOfDate(state, date);
+
+// every date that has shift or TVM entries, up to and including the given date, oldest first
+export const datesWithEntriesUpTo = (state: RegisterState, lastDate: string) =>
+  [...new Set([...Object.keys(state.shiftEntries), ...Object.keys(state.tvmEntries ?? {})])].filter(entryDate => entryDate <= lastDate).sort();

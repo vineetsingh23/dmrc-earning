@@ -3,7 +3,7 @@ import { registerSW } from 'virtual:pwa-register';
 if (import.meta.env.MODE !== 'file') registerSW({ immediate: true });
 import { useEffect, useState } from 'react';
 import { Navigate, NavLink, Route, Routes } from 'react-router-dom';
-import EarningSheetTable from './earningSheetTable';
+import EarningSheetTable from './stationEarning/earningSheetTable';
 import CashInHandCard from './dashboard/cashInHandCard';
 import CashInPossessionCard from './dashboard/cashInPossessionCard';
 import SendToBankDialog from './dashboard/sentToBankDialog';
@@ -18,9 +18,9 @@ import { useBankNoteDraft } from '../hooks/useBankNoteDraft';
 import ImprestIssueCard from './dashboard/imprestIssueCard';
 import AdvanceReceivedCard from './dashboard/advanceReceivedCard';
 import { updateDetailListCell } from '../handlers/detailListHandlers';
-import TvmEarningPage from './tvmEarningPage';
-import FinalEarningPage from './fianlEarningPage';
-import StationLoginPage from './stationLoginPage';
+import TvmEarningPage from './stationEarning/tvmEarningPage';
+import FinalEarningPage from './stationEarning/finalEarningPage';
+// import StationLoginPage from './stationLoginPage';
 import {
   appHeaderClass,
   appHeaderContentClass,
@@ -39,6 +39,9 @@ import {
 } from '../globalStyles';
 import DetailListCard from './dashboard/detailListCard';
 import type { DetailListKind } from '../lib/registerTypes';
+import StationStatisticsCard from './stationOverview/stationStatistics';
+import type { StationRecord } from '../lib/registerTypes';
+import { filterByFacilities } from '../lib/earningColumns';
 
 const pages = [
   { label: 'Dashboard', path: '/' },
@@ -47,10 +50,6 @@ const pages = [
   { label: 'Final Earning', path: '/final-earning' },
   { label: 'Station Overview', path: '/station-overview' },
 ]
-
-import type { StationRecord } from '../lib/registerTypes';
-import { filterByFacilities } from '../lib/earningColumns';
-
 interface RegisterWorkspaceProps { station: StationRecord; onLogout: () => void }
 
 export default function RegisterWorkspace({ station, onLogout }: RegisterWorkspaceProps) {
@@ -244,7 +243,11 @@ export default function RegisterWorkspace({ station, onLogout }: RegisterWorkspa
             />}
           />
           <Route path="/final-earning" element={<FinalEarningPage registerState={registerState} date={selectedDate} />} />
+          
           <Route path="*" element={<Navigate to="/" replace />} />
+          <Route path='/station-overview' element={
+            <StationStatisticsCard registerState={registerState} date={selectedDate}/>
+          }/>
         </Routes>
         {isSendDialogOpen && (
           <SendToBankDialog
@@ -255,6 +258,8 @@ export default function RegisterWorkspace({ station, onLogout }: RegisterWorkspa
             onConfirm={confirmBankTransfer}
           />
         )}
+
+
       </main>
     </div>
   );

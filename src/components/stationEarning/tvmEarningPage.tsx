@@ -1,8 +1,8 @@
 import EarningSheetTable from './earningSheetTable';
-import type { RegisterState } from '../lib/registerTypes';
-import { tvmEarningColumns } from '../lib/earningColumns';
-import { updateEntryCell } from '../handlers/entryCellHandler';
-import { primaryButtonClass } from '../globalStyles';
+import type { RegisterState } from '../../lib/registerTypes';
+import { tvmEarningColumns } from '../../lib/earningColumns';
+import { updateEntryCell } from '../../handlers/entryCellHandler';
+import { primaryButtonClass } from '../../globalStyles';
 
 interface TvmEarningPageProps {
   registerState: RegisterState;

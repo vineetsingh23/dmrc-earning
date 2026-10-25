@@ -1,7 +1,7 @@
 import type { ReactNode } from 'react';
-import { collectLeafColumns, columnDepth, isColumnGroup, parseNumber, type ColumnLeaf, type ColumnNode } from '../lib/earningColumns';
-import { formatCellValue, formatRupees } from '../lib/earningCalculations';
-import type { RegisterRow } from '../lib/registerTypes';
+import { collectLeafColumns, columnDepth, isColumnGroup, parseNumber, type ColumnLeaf, type ColumnNode } from '../../lib/earningColumns';
+import { formatCellValue, formatRupees } from '../../lib/earningCalculations';
+import type { RegisterRow } from '../../lib/registerTypes';
 import {
   tableCalculatedCellClass,
   tableCellClass,
@@ -12,8 +12,8 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableWrapperClass,
-} from '../globalStyles';
-import { handleSheetKeyDown } from '../handlers/sheetKeyboardHandlers';
+} from '../../globalStyles';
+import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 
 export interface SheetStyle {
   headerCellClass: string;          // padding, text alignment and font of every header cell

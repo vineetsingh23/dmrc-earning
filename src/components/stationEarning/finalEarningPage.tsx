@@ -1,14 +1,14 @@
 import { useMemo } from 'react';
 import EarningSheetTable, { type SheetStyle } from './earningSheetTable';
-import type { RegisterState } from '../lib/registerTypes';
-import { finalEarningColumns } from '../lib/fianalEarningColumns';
-import { sumRowsByField } from '../lib/earningCalculations';
+import type { RegisterState } from '../../lib/registerTypes';
+import { finalEarningColumns } from '../../lib/finalEarningColumns';
+import { sumRowsByField } from '../../lib/earningCalculations';
 import {
   pageHeadingClass,
   tableCellClass,
   tableHeaderCellClass,
   tableHeaderGroupClasses,
-} from '../globalStyles';
+} from '../../globalStyles';
 
 interface FinalEarningPageProps { registerState: RegisterState; date: string }
 

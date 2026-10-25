@@ -1,4 +1,6 @@
-import type { ReactNode } from 'react';
+import { useRef, type ReactNode } from 'react';
+import EditableSheetCell from '../editableSheetCell';
+
 import { collectLeafColumns, columnDepth, isColumnGroup, parseNumber, type ColumnLeaf, type ColumnNode } from '../../lib/earningColumns';
 import { formatCellValue, formatRupees } from '../../lib/earningCalculations';
 import type { RegisterRow } from '../../lib/registerTypes';
@@ -82,6 +84,8 @@ export default function EarningSheetTable({
   // total of one column over all rows (calculated columns add up their formula results)
   const totalOfColumn = (column: ColumnLeaf) =>
     allRows.reduce((runningTotal, row) => runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
+  const writeValueReference = useRef(writeEntryValue);
+  writeValueReference.current = writeEntryValue;
 
   return (
     <div className={tableWrapperClass} onKeyDown={handleSheetKeyDown} tabIndex={isEditable ? undefined : 0}>
@@ -105,20 +109,12 @@ export default function EarningSheetTable({
                 }
                 if (isEditable) {
                   return (
-                    <td key={column.fieldKey} className={`${tableCellClass} p-0`}>
-                      <input
-                        data-grid={gridName}
-                        data-row={rowIndex}
-                        data-column={typedColumnIndexByFieldKey.get(column.fieldKey)}
-                        onFocus={event => event.target.select()}
-                        value={readEntryValue!(rowIndex, column.fieldKey)}
-                        onChange={event => writeEntryValue!(rowIndex, column.fieldKey, event.target.value)}
-                        inputMode={column.kind === 'number' ? 'decimal' : 'text'}
-                        className={`${tableInputClass} ${
-                          column.kind === 'number' ? 'text-right' : 'text-left'
-                        }`}
-                      />
-                    </td>
+                      <EditableSheetCell
+    key={column.fieldKey} gridName={gridName} rowIndex={rowIndex}
+    columnIndex={typedColumnIndexByFieldKey.get(column.fieldKey) ?? 0}
+    fieldKey={column.fieldKey} isNumeric={column.kind === 'number'}
+    value={readEntryValue!(rowIndex, column.fieldKey)} writeValueReference={writeValueReference}
+  />
                   );
                 }
                 // read-only: just show the value

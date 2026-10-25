@@ -1,9 +1,10 @@
 import type { RegisterState } from '../../lib/registerTypes';
 import { addDays, dailyCashlessOfDate, dailyEarningOfDate, formatRupees } from '../../lib/earningCalculations';
+import { cardClass, cardContainer } from '../../globalStyles';
 
 interface EarningHistogramCardProps { registerState: RegisterState; date: string }
 
-const daysShown = 14, chartWidth = 600, chartHeight = 180;
+const daysShown = 30, chartWidth = 1800, chartHeight = 180;
 
 // bars for the 14 days up to the selected date: total earning and cashless earning side by side
 export default function EarningHistogramCard({ registerState, date }: EarningHistogramCardProps) {
@@ -12,13 +13,20 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
     return { dayDate, earning: dailyEarningOfDate(registerState, dayDate), cashless: dailyCashlessOfDate(registerState, dayDate) };
   });
   const highestValue = Math.max(1, ...dailyFigures.map(figures => Math.max(figures.earning, figures.cashless)));
-  const slotWidth = chartWidth / daysShown, barWidth = (slotWidth - 10) / 2, barAreaHeight = chartHeight - 30;
+  const slotWidth = chartWidth / daysShown, barWidth = (slotWidth - 10) / 4, barAreaHeight = chartHeight - 30;
 
   return (
-    <div className="rounded-2xl border border-bd bg-card p-4 shadow-sm">
-      <h2 className="font-semibold">Daily earning histogram ({daysShown} days to {date})</h2>
-      <small className="text-mu">
-        <span className="text-ac2">■</span> Total earning · <span className="text-ac">■</span> selected day · <span className="text-ok">■</span> Cashless
+    <>
+      <h2 className="font-semibold bottom-0">Daily earning histogram ({daysShown} days to {date})</h2>
+    <div className={`${cardContainer} max-h-40 top-0`}>
+      <small className="text-mu flex flex-col">
+        <ul className='flex flex-col min-w-30 text-nowrap'>
+          <li className="text-ac ">■<span> Total earning</span></li>
+          <li className="text-ac2 ">■<span> Selected Day</span></li>
+          <li className="text-ok ">■<span> Cashless</span></li>
+        </ul>
+     
+        {/* <span className="text-ac">■</span> selected day · <span className="text-ok">■</span> Cashless */}
       </small>
       <svg viewBox={`0 0 ${chartWidth} ${chartHeight}`} width="100%" role="img" aria-label="Daily earning histogram">
         {dailyFigures.map(({ dayDate, earning, cashless }, dayIndex) => {
@@ -36,5 +44,6 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
         })}
       </svg>
     </div>
+          </>
   );
 }

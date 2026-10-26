@@ -1,6 +1,7 @@
 import { tomOperators } from "../../lib/businessRules";
 import { parseNumber } from "../../lib/earningColumns";
 import { formatRupees } from "../../lib/earningCalculations";
+import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import {
     cardClass,
     cardHeadingClass,
@@ -26,7 +27,7 @@ export default function AdvanceReceivedCard({listRows, onAdvanceChange}:AdvanceR
     const totalAdvanceReceived = tomOperators.reduce((total, _tomNumber, rowIndex)=> 
         total + parseNumber(listRows[rowIndex]?.[advanceColumnIndex]),0);
     return (
-        <div className={cardClass}>
+        <div className={cardClass} onKeyDown={handleSheetKeyDown}>
             <h2 className={cardHeadingClass}>Advance Received from Each TOM</h2>
             <table className={tableClass}>
                 <thead>
@@ -40,9 +41,10 @@ export default function AdvanceReceivedCard({listRows, onAdvanceChange}:AdvanceR
             <tr key={tomOperator.tomNumber} className={tableRowClass}>
               <td className={tableCellLeftClass}>{tomOperator.tomNumber}</td>
               <td className={tableCellClass}>
-                <input value={listRows[rowIndex]?.[advanceColumnIndex] ?? ''} placeholder="0" inputMode="decimal"
-                  onFocus={event => event.target.select()} onChange={event => onAdvanceChange(rowIndex, event.target.value)}
-                  className={`${tableInputClass} w-24 text-right`} />
+                <input data-grid="advanceReceived" data-row={rowIndex} data-column={0}
+                    value={listRows[rowIndex]?.[advanceColumnIndex] ?? ''} placeholder="0" inputMode="decimal"
+                    onFocus={event => event.target.select()} onChange={event => onAdvanceChange(rowIndex, event.target.value)}
+                    className={`${tableInputClass} w-24 text-right`} />
               </td>
             </tr>
           ))}

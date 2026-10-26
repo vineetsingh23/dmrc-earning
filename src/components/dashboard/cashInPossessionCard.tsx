@@ -11,6 +11,7 @@ import {
   tableTotalCellClass,
   tableTotalRowClass,
 } from '../../globalStyles';
+import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 import { allDenominationRows, formatRupees,looseCoinsKey, type DenominationRow } from '../../lib/earningCalculations';
 
 interface CashInPossessionCardProps {
@@ -33,7 +34,7 @@ export default function CashInPossessionCard({
   const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal
   const matchesCashInHand = cardTotalAmount === totalCashInHand;
   return (
-    <div className={cardClass}>
+    <div className={cardClass} onKeyDown={handleSheetKeyDown}>
 
       <h2 className={cardHeadingClass}>Cash in possession</h2>
       <table className={tableClass}>
@@ -45,11 +46,12 @@ export default function CashInPossessionCard({
           </tr>
         </thead>
         <tbody>
-          {allDenominationRows.map((row:DenominationRow) => (
+          {allDenominationRows.map((row:DenominationRow, rowIndex) => (
             <tr key={row.key} className={tableRowClass}>
               <td className={tableCellLeftClass}>{row.label}</td>
               <td className={tableCellClass}>
-                <input value={cashCountsInHand[row.key] || ''} placeholder="0" inputMode="numeric"
+                <input data-grid="cashPossession" data-row={rowIndex} data-column={0}
+                  value={cashCountsInHand[row.key] || ''} placeholder="0" inputMode="numeric"
                   onChange={event => onCountChange(row.key, event.target.value)}
                   className={`${tableInputClass} w-20 text-right`}
                   />

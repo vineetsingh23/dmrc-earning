@@ -1,6 +1,7 @@
 import { tomOperators } from "../../lib/businessRules";
 import { parseNumber } from "../../lib/earningColumns";
 import { formatRupees } from "../../lib/earningCalculations";
+import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import {
     cardClass,
     cardHeadingClass,
@@ -28,7 +29,7 @@ export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssu
     const totalAdvanceAmount = tomOperators.reduce((total,_tomOperator, rowIndex)=>total + advanceOfRow(rowIndex),0)
 
     return(
-        <div className ={cardClass}>
+        <div className ={cardClass} onKeyDown={handleSheetKeyDown}>
             <h2 className={cardHeadingClass}>Imprest Issued to each TOM</h2>
             <table className={tableClass}>
                 <thead>
@@ -46,7 +47,7 @@ export default function ImprestIssueCard({listRows, onAdvanceChange}:ImprestIssu
                             <td className={tableCellLeftClass}>{tomOperator.tomNumber}</td>
                             <td className={tableCellClass}>{formatRupees(tomOperator.imprestAmount)}</td>
                             <td className={tableCellClass}>
-                                <input
+                                <input  data-grid ="imprestIssued" data-row={rowIndex} data-column={0}
                                         value={listRows[rowIndex]?.[advanceColumnIndex]?? ''}
                                         placeholder='0'
                                         inputMode='decimal'

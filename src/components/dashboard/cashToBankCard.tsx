@@ -16,6 +16,7 @@ import {
   tableTotalCellClass,
   tableTotalRowClass,
 } from '../../globalStyles';
+import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -33,20 +34,21 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
         )}
         </div>
     
-      <table className={tableClass}>
+      <table className={tableClass} onKeyDown={handleSheetKeyDown}>
         <thead><tr className={tableHeaderRowClass}>
           <th className={tableHeaderCellClass}>Note</th>
           <th className={tableHeaderCellClass}>Count</th>
           <th className={tableHeaderCellClass}>Amount</th>
         </tr></thead>
         <tbody>
-          {bankNoteValues.map(noteValue => (
+          {bankNoteValues.map((noteValue,rowIndex) => (
             <tr key={noteValue} className={tableRowClass}>
               <td className={tableCellLeftClass}>₹{noteValue} note</td>
               <td className={tableCellClass}>
                 {existingTransfer
                   ? noteCountsToSend[noteValue] ?? 0
-                  : <input value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
+                  : <input data-grid="cashToBank" data-row={rowIndex} data-column={0} 
+                      value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
                       className={`${tableInputClass} w-20 text-right`} />}
               </td>
               <td className={tableCellClass}>{formatRupees(noteValue * (noteCountsToSend[noteValue] ?? 0))}</td>

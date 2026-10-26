@@ -2,7 +2,7 @@ import type { RegisterRow } from './registerTypes';
 import { calculatedColumn, columnGroup, numberColumn, sumOfFields, textColumn, type ColumnLeaf, type ColumnNode } from './earningColumns';
 
 // a Qty column and an Amt column; the amount code is the letter printed on the register
-const quantityAmountColumns = (quantityKey: string, amountKey: string, amountCode: string): ColumnLeaf[] =>
+export const quantityAmountColumns = (quantityKey: string, amountKey: string, amountCode: string): ColumnLeaf[] =>
   [numberColumn(quantityKey, 'Qty'), numberColumn(amountKey, `Amt (${amountCode})`)];
 
 // ---- formulas ----

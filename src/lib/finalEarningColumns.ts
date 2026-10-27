@@ -68,7 +68,13 @@ export const finalEarningColumns: ColumnNode[] = [
       columnGroup('Current', numberColumn('outstandingCurrentAfc', 'AFC (aj)'), numberColumn('outstandingCurrentMisc', 'Misc (ak)'), numberColumn('tvmMutilatedFakeNotes', 'TVM Mutilated/Fake Notes')),
       columnGroup('Paid', numberColumn('outstandingPaidAfc', 'AFC (al)'), numberColumn('outstandingPaidMisc', 'Misc (am)'))),
   
-    calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),
+  calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),
+
+  columnGroup('Cash position',
+    numberColumn('previousDayCashOnHand', 'Previous day cash on hand'),
+    numberColumn('totalCashToBank', 'Total cash to bank'),
+    textColumn('bankSlipNumber', 'Bank slip no.'),
+    numberColumn('todayCashOnHand', "Today's cash on hand")),
   
   
 ];

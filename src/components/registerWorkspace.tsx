@@ -1,6 +1,4 @@
 import { useMemo } from "react";
-import { registerSW } from "virtual:pwa-register";
-if (import.meta.env.MODE !== "file") registerSW({ immediate: true });
 import { useEffect, useState } from "react";
 import { Navigate, NavLink, Route, Routes } from "react-router-dom";
 import EarningSheetTable from "./stationEarning/earningSheetTable";
@@ -39,11 +37,19 @@ import {
   themeButtonClass,
 } from "../globalStyles";
 import DetailListCard from "./dashboard/detailListCard";
-import type { DetailListKind } from "../lib/registerTypes";
+import {type DetailListKind } from "../lib/registerTypes";
 import StationStatisticsCard from "./stationOverview/stationStatistics";
 import type { StationRecord } from "../lib/registerTypes";
 import { filterByFacilities } from "../lib/earningColumns";
 import EarningHistogramCard from "./stationOverview/earningHistogram";
+import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
+import BackupFolderCard from "./dashboard/backupFolderCard";
+import BackupToolbar from "./dashboard/backupToolbar";
+
+
+// const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
+
+
 
 const pages = [
   { label: "Dashboard", path: "/" },
@@ -79,6 +85,7 @@ export default function RegisterWorkspace({
     storageError,
     isLoaded,
   } = useRegisterData(station.name);
+  const weeklyBackup = useWeeklyBackup(station.name, registerState, isLoaded);
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().slice(0, 10),
   );
@@ -187,10 +194,10 @@ export default function RegisterWorkspace({
       </main>
     );
   }
-
   return (
     <div className={appShellClass}>
       <header className={appHeaderClass}>
+
         <div className={appHeaderContentClass}>
           <div className={appHeaderGroupClass}>
             <h1 className="text-2xl font-extrabold text-blue-600">
@@ -332,6 +339,26 @@ export default function RegisterWorkspace({
                     "Penalty amount",
                   ])}
                 </div>
+                <section className="col-span-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
+                  <h2 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
+                    Data tools and backups
+                  </h2>
+                  <BackupToolbar
+                    stationName={station.name}
+                    date={selectedDate}
+                    registerState={registerState}
+                    updateRegisterState={updateRegisterState}
+                    facilities={{
+                      hasSv4Recharge: station.hasSv4Recharge,
+                      hasParking: station.hasParking,
+                    }}
+                  />
+                  <BackupFolderCard
+                    {...weeklyBackup}
+                    onChooseFolder={weeklyBackup.chooseFolder}
+                    onBackUpNow={weeklyBackup.backUpNow}
+                  />
+                </section>
               </div>
             }
           />

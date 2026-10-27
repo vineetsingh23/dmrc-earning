@@ -6,8 +6,6 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "build:file": "tsc -b && vite build --mode file",
-    "lint": "eslint .",
     "preview": "vite preview"
   },
   "dependencies": {
@@ -30,7 +28,6 @@
     "typescript": "~6.0.2",
     "typescript-eslint": "^8.69.0",
     "vite": "^8.3.0",
-    "vite-plugin-pwa": "^2.0.0",
     "vite-plugin-singlefile": "^2.3.4"
   }
 }

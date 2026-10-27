@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { createEmptyRegisterState, type RegisterState } from '../lib/registerTypes';
 import { readRegisterState, writeRegisterState } from '../lib/registerDatabase';
 
@@ -13,6 +13,21 @@ export function useRegisterData(stationName: string) {
   const [hasLoadedState, setHasLoadedState] = useState(false);
   const isLoaded = loadedStationName === stationName && hasLoadedState;
   const storageStatus = loadedStationName === stationName ? saveStatus : 'loading';
+  const latestStateReference = useRef(registerState);
+  latestStateReference.current = registerState;
+
+  useEffect(() => {
+  if (!isLoaded) return;
+  const saveBeforeLeaving = () => {
+    if (document.visibilityState === 'hidden') void writeRegisterState(stationName, latestStateReference.current);
+  };
+  document.addEventListener('visibilitychange', saveBeforeLeaving);
+  window.addEventListener('pagehide', saveBeforeLeaving);
+  return () => {
+    document.removeEventListener('visibilitychange', saveBeforeLeaving);
+    window.removeEventListener('pagehide', saveBeforeLeaving);
+  };
+}, [isLoaded, stationName]);
 
   // 1. load this station's data when the station opens
   useEffect(() => {
@@ -75,3 +90,4 @@ export function useRegisterData(stationName: string) {
     isLoaded,
   };
 }
+

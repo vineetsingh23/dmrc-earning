@@ -9,6 +9,7 @@ import {
   tableHeaderCellClass,
   tableHeaderGroupClasses,
 } from '../../globalStyles';
+import { useDashboardFigures } from '../../hooks/useDashboardFigures';
 
 interface FinalEarningPageProps { registerState: RegisterState; date: string }
 
@@ -22,11 +23,20 @@ const finalEarningSheetStyle: SheetStyle = {
 
 // one row of totals: Shift Entry and TVM Earning of the selected date, side by side under shared headers
 export default function FinalEarningPage({ registerState, date }: FinalEarningPageProps) {
+    // inside the component
+const figures = useDashboardFigures(registerState, date);
+const sentToBankToday = figures.existingTransfer?.amount ?? 0;
   const finalRow = useMemo(() => ({
     finalRowLabel: 'Total',
     ...sumRowsByField(Object.values(registerState.shiftEntries[date] ?? {})),
     ...sumRowsByField(Object.values(registerState.tvmEntries?.[date] ?? {})),
-  }), [registerState, date]);
+      previousDayCashOnHand: String(figures.previousDaysCash + sentToBankToday),
+  totalCashToBank: String(sentToBankToday),
+  bankSlipNumber: figures.existingTransfer?.slipNumber ?? '',
+  todayCashOnHand: String(figures.totalCashInHand), 
+  }), [registerState, date,figures, sentToBankToday]);
+
+
 
   return (
     <div className="space-y-3">

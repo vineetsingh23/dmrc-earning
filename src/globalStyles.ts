@@ -19,8 +19,8 @@ export const cardHeadingClass = 'mb-2 font-semibold text-slate-800 dark:text-sla
 export const tableWrapperClass = 'overflow-auto rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900';
 export const tableClass = 'w-full border-collapse';
 export const tableHeaderRowClass = 'bg-slate-100 text-xs dark:bg-slate-800 dark:text-slate-200';
-export const tableHeaderCellClass = 'border border-slate-200 px-2 py-1 text-center text-md font-semibold dark:border-slate-700 dark:text-slate-200';
-export const tableCellClass = 'border border-slate-200 px-2 py-1 text-right text-sm text-slate-700 transition-colors hover:bg-blue-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700/60';
+export const tableHeaderCellClass = 'border border-slate-200 px-2 py-1 text-center text-xs font-semibold dark:border-slate-700 dark:text-slate-200';
+export const tableCellClass = 'border border-slate-200 px-2 py-1 text-right text-xs font-medium text-slate-700 transition-colors hover:bg-blue-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700/60';
 export const tableCellLeftClass = `${tableCellClass} !text-left`;
 export const tableTotalRowClass = 'bg-blue-50 font-bold text-slate-800 dark:bg-blue-950/50 dark:text-slate-100';
 export const tableTotalCellClass = `${tableCellClass} ${tableTotalRowClass}`;
@@ -45,8 +45,8 @@ export const dialogClass = 'w-[min(360px,90%)] rounded-2xl border border-slate-2
 // ];
 
 export const tableHeaderGroupClasses = [
-  'bg-blue-700 text-blue-100 dark:bg-green-950/30 dark:text-green-100',
-  'bg-blue-700/90 text-blue-100 dark:bg-green-950/60 dark:text-green-100',
+  'bg-blue-700 text-blue-100 dark:bg-blue-950/20 dark:text-green-100',
+  'bg-blue-700/90 text-blue-100 dark:bg-blue-950/30 dark:text-green-100',
 
 ];
 

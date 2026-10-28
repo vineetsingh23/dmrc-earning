@@ -62,10 +62,11 @@ export const shiftEntryColumns: ColumnNode[] = [
   calculatedColumn('afcCollectionTotal', 'Total Collection by AFC System (X)', afcCollectionTotal),
   numberColumn('eibAmount', 'E.I.B. (n)'),
   columnGroup('Top-up in SV-4 Cards (o)', ...quantityAmountColumns('sv4TopUpQuantity', 'sv4TopUpAmount', 'o')),
-
-  columnGroup('Refund Readable CSC (CR)', ...quantityAmountColumns('readableCscRefundQuantity', 'readableCscRefundAmount', 'r')),
-  columnGroup('Manual Refund of Tour Card', ...quantityAmountColumns('tourCardRefundQuantity', 'tourCardRefundAmount', 's1')),
-  columnGroup('Manual Refund of Security Deposit', ...quantityAmountColumns('securityDepositRefundQuantity', 'securityDepositRefundAmount', 's2')),
+  
+  columnGroup('Manual Refunds',  
+    columnGroup('Refund Readable CSC (CR)', ...quantityAmountColumns('readableCscRefundQuantity', 'readableCscRefundAmount', 'r')),
+    columnGroup('Manual Refund of Tour Card', ...quantityAmountColumns('tourCardRefundQuantity', 'tourCardRefundAmount', 's1')),
+    columnGroup('Manual Refund of Security Deposit Against OK URC', ...quantityAmountColumns('securityDepositRefundQuantity', 'securityDepositRefundAmount', 's2'))),
 
   columnGroup('Penalty',
     columnGroup('Manual Receipt Penalty', ...quantityAmountColumns('manualPenaltyQuantity', 'manualPenaltyAmount', 't')),
@@ -79,8 +80,8 @@ export const shiftEntryColumns: ColumnNode[] = [
   calculatedColumn('totalEarning', 'Total Earning (Z)', totalEarning),
 
   columnGroup('Cashless Details (CD)',
-    numberColumn('posAtCcc', 'POS at CCC (aa1)'), numberColumn('posAtTvm', 'POS at TVM (ab1)'), numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
-    numberColumn('posAtRctm', 'POS at RCTM (ad)'), numberColumn('posAtScvm', 'POS at SCVM (ae)'), numberColumn('upiAtTvm', 'UPI at TVM (ab2)'),
+    numberColumn('posAtCcc', 'POS at CCC (aa1)'), numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
+   
     numberColumn('upiAtTomCc', 'UPI at TOM/CC (aa2)'), numberColumn('hhtPenaltyPurseCashless', 'HHT Penalty Purse (af)'), numberColumn('hhtParkingPurse', 'HHT Parking Purse (w4)'),
     columnGroup('Surcharge Adjustment', numberColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)'), numberColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)'))),
 

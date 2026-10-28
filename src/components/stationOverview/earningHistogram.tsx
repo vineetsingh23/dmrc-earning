@@ -1,6 +1,6 @@
 import type { RegisterState } from '../../lib/registerTypes';
 import { addDays, dailyCashlessOfDate, dailyEarningOfDate, formatRupees } from '../../lib/earningCalculations';
-import { cardClass, cardContainer } from '../../globalStyles';
+import { cardContainer } from '../../globalStyles';
 
 interface EarningHistogramCardProps { registerState: RegisterState; date: string }
 

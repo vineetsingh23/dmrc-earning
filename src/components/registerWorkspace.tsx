@@ -25,7 +25,6 @@ import {
   appHeaderControlsClass,
   appHeaderGroupClass,
   appShellClass,
-  cardClass,
   dashboardGridClass,
   dateInputClass,
   mainContentClass,
@@ -230,13 +229,13 @@ export default function RegisterWorkspace({
               onChange={(event) => setSelectedDate(event.target.value)}
               className={dateInputClass}
             />
-            {/* <span
+            <span
               role="status"
               className={syncStatusClass}
               title={storageError || undefined}
             >
               {storageLabel}
-            </span> */}
+            </span>
             <button
               type="button"
               onClick={() => setIsDarkMode((theme) => !theme)}

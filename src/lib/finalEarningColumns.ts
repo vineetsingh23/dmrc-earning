@@ -1,6 +1,6 @@
 import type { RegisterRow } from './registerTypes';
 import { calculatedColumn, columnGroup, numberColumn, sumOfFields, textColumn, type ColumnNode } from './earningColumns';
-import { afcCollectionTotal, surchargeTotal } from './shiftEntrycolumns';
+import { afcCollectionTotal } from './shiftEntrycolumns';
 import { quantityAmountColumns,totalEarning, cashDepositedByOperator } from './shiftEntrycolumns';
 
 // total AFC earning of the day = AFC collection of the shift sheet + every TVM sale and add value amount

@@ -28,7 +28,7 @@ export const addDays = (isoDate:string, dayCount:number) => {
 
 // all dates that have earning or a bank transfer
 const datesWithData = (state:RegisterState) =>
-[...new Set([...Object.keys(state.shiftEntries), ...Object.keys(state.bankTransfers ?? {})])];
+[...new Set([...Object.keys(state.shiftEntries),...Object.keys(state.tvmEntries), ...Object.keys(state.bankTransfers ?? {})])];
 
 // cash from earlier days that was not yet sent to bank (current day is not included)
 export const cashFromPreviousDays = (state: RegisterState, date: string) => {

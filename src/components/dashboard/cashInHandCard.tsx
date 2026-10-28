@@ -3,13 +3,13 @@ import { formatRupees } from '../../lib/earningCalculations';
 import CashToBankCard from './cashToBankCard';
 import { useBankNoteDraft } from '../../hooks/useBankNoteDraft';
 import { cardClass, primaryButtonClass, summaryRowClass } from '../../globalStyles';
-import { cashInHandOfDate } from '../../lib/earningCalculations';
+import { cashInHandOfDate, cashFromPreviousDays } from '../../lib/earningCalculations';
 
 
 
 interface CashInHandCardProps {
   totalCashInHand: ReturnType<typeof cashInHandOfDate>; 
-  previousDaysCash: number; 
+  previousDaysCash: ReturnType<typeof cashFromPreviousDays>; 
   currentDayEarning: number;
   advanceReceivedTotal: number; 
   amountDueToBank: number;

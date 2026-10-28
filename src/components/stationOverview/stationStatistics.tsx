@@ -1,8 +1,8 @@
-import { cardClass, cardContainer } from "../../globalStyles";
+import {cardContainer } from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import {type  RegisterState } from "../../lib/registerTypes";
 import {
-  dailyEarningOfDate, dailyQrSaleOfDate, datesWithEntriesUpTo, formatRupees, tvmAddValueOfDate, tvmQrSaleOfDate,dailyCashlessOfDate,tvmFinalTotalOfDate
+  dailyEarningOfDate, dailyQrSaleOfDate, datesWithEntriesUpTo, formatRupees, tvmAddValueOfDate, tvmQrSaleOfDate,
 } from '../../lib/earningCalculations';
 
 

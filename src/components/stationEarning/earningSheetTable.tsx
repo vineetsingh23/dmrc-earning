@@ -10,7 +10,7 @@ import {
   tableClass,
   tableHeaderCellClass,
   tableHeaderGroupClasses,
-  tableInputClass,
+  // tableInputClass,
   tableRowClass,
   tableTotalCellClass,
   tableWrapperClass,

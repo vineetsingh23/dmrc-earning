@@ -20,6 +20,7 @@ interface CashInPossessionCardProps {
   denominationTotalAmount: number;
   totalCashInHand: number;
   imprestAndAdvanceIssuedTotal:number;
+  cashCountsSource: 'saved' | 'carried' | 'none';
 
   onCountChange: (countKey: string, typedValue: string) => void;
 }
@@ -29,6 +30,7 @@ export default function CashInPossessionCard({
                                         denominationTotalAmount, 
                                         totalCashInHand,
                                         looseCoinAmount, 
+                                        cashCountsSource,
                                         imprestAndAdvanceIssuedTotal,
                                         onCountChange }: CashInPossessionCardProps) {
   const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal
@@ -37,6 +39,12 @@ export default function CashInPossessionCard({
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
 
       <h2 className={cardHeadingClass}>Cash in possession</h2>
+
+      <p className="mb-2 text-xs text-mu">
+  {cashCountsSource === 'saved' && 'Counts saved for this date.'}
+  {cashCountsSource === 'carried' && 'Counts carried over from the last counted date. Update them if the cash in your drawer is different.'}
+  {cashCountsSource === 'none' && 'No counts yet. Enter the notes and coins you hold.'}
+</p>
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>

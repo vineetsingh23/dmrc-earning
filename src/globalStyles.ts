@@ -10,7 +10,7 @@ export const dateInputClass = 'rounded-lg border border-slate-300 bg-white px-2 
 export const syncStatusClass = 'text-sm text-slate-600 dark:text-slate-400';
 export const themeButtonClass = 'rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const mainContentClass = 'mx-auto max-w-screen-2xl p-4 md:p-6';
-export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3';
+export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3 ';
 export const stackedCardsClass = 'flex flex-col gap-4';
 
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-teal-800/10'

@@ -42,6 +42,7 @@ export const cashFromPreviousDays = (state: RegisterState, date: string) => {
 export const cashInHandOfDate = (state: RegisterState, date: string) =>
   cashFromPreviousDays(state, date) + Math.round(totalEarningOfDate(state,date))
   + advanceReceivedTotalForDate(state,date);
+  
 export const cashWithTomOperatorsForDate =(state: RegisterState, date: string) =>
    imprestIssuedTotalForDate(state, date)
 
@@ -117,3 +118,26 @@ export const dailyQrSaleOfDate = (state: RegisterState, date: string) =>
 // every date that has shift or TVM entries, up to and including the given date, oldest first
 export const datesWithEntriesUpTo = (state: RegisterState, lastDate: string) =>
   [...new Set([...Object.keys(state.shiftEntries), ...Object.keys(state.tvmEntries ?? {})])].filter(entryDate => entryDate <= lastDate).sort();
+
+
+// the counts of the most recent earlier date that has saved counts
+export const latestEarlierCashCounts = (state: RegisterState, date: string): Record<string, number> | undefined => {
+  const earlierDates = Object.keys(state.cashCounts ?? {}).filter(savedDate => savedDate < date).sort();
+  const latestDate = earlierDates[earlierDates.length - 1];
+  return latestDate ? state.cashCounts[latestDate] : undefined;
+};
+
+// value of notes, coins and loose coins together
+export const countsTotalAmount = (counts: Record<string, number>) =>
+  allDenominationRows.reduce((total, row) => total + Number(row.value) * (counts[row.key] ?? 0), 0) + (counts[looseCoinsKey] ?? 0);
+
+// carried counts, plus notes and coins for any extra cash (for example today's earning); counted cash is never removed
+export const carryForwardCashCounts = (carriedCounts: Record<string, number>, expectedTotalAmount: number): Record<string, number> => {
+  const result = { ...carriedCounts };
+  const missingAmount = Math.round(expectedTotalAmount - countsTotalAmount(carriedCounts));
+  if (missingAmount <= 0) return result;
+  Object.entries(breakIntoDenominations(missingAmount)).forEach(([countKey, extraCount]) => {
+    result[countKey] = (result[countKey] ?? 0) + extraCount;
+  });
+  return result;
+};

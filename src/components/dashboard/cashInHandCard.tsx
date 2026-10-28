@@ -3,11 +3,12 @@ import { formatRupees } from '../../lib/earningCalculations';
 import CashToBankCard from './cashToBankCard';
 import { useBankNoteDraft } from '../../hooks/useBankNoteDraft';
 import { cardClass, primaryButtonClass, summaryRowClass } from '../../globalStyles';
+import { cashInHandOfDate } from '../../lib/earningCalculations';
 
 
 
 interface CashInHandCardProps {
-  totalCashInHand: number; 
+  totalCashInHand: ReturnType<typeof cashInHandOfDate>; 
   previousDaysCash: number; 
   currentDayEarning: number;
   advanceReceivedTotal: number; 
@@ -15,6 +16,7 @@ interface CashInHandCardProps {
   existingTransfer: BankTransfer | undefined; 
   canSendToBank: boolean; onSendToBankClick: () => void;
   noteDraft: ReturnType<typeof useBankNoteDraft>
+  
  
 }
 
@@ -22,6 +24,8 @@ export default function CashInHandCard({
   totalCashInHand, previousDaysCash, currentDayEarning,advanceReceivedTotal,
   amountDueToBank, existingTransfer, canSendToBank, onSendToBankClick, noteDraft
 }: CashInHandCardProps) {
+
+  
   return (
     <div className={cardClass}>
 

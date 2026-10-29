@@ -18,6 +18,7 @@ import AdvanceReceivedCard from "./dashboard/advanceReceivedCard";
 import { updateDetailListCell } from "../handlers/detailListHandlers";
 import TvmEarningPage from "./stationEarning/tvmEarningPage";
 import FinalEarningPage from "./stationEarning/finalEarningPage";
+import DailyReportPage from "./dailyReportPage";
 // import StationLoginPage from './stationLoginPage';
 import {
   appHeaderClass,
@@ -45,10 +46,7 @@ import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
 import BackupFolderCard from "./dashboard/backupFolderCard";
 import BackupToolbar from "./dashboard/backupToolbar";
 
-
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
-
-
 
 const pages = [
   { label: "Dashboard", path: "/" },
@@ -56,6 +54,7 @@ const pages = [
   { label: "TVM Earning", path: "/tvm-earning" },
   { label: "Final Earning", path: "/final-earning" },
   { label: "Station Overview", path: "/station-overview" },
+  { label: "WhatsApp Report", path: "/daily-report" },
 ];
 interface RegisterWorkspaceProps {
   station: StationRecord;
@@ -196,7 +195,6 @@ export default function RegisterWorkspace({
   return (
     <div className={appShellClass}>
       <header className={appHeaderClass}>
-
         <div className={appHeaderContentClass}>
           <div className={appHeaderGroupClass}>
             <h1 className="text-2xl font-extrabold text-blue-600">
@@ -268,7 +266,7 @@ export default function RegisterWorkspace({
                   advanceReceivedTotal={figures.advanceReceivedTotal}
                   onSendToBankClick={() => setIsSendDialogOpen(true)}
                 />
-                <CashInPossessionCard 
+                <CashInPossessionCard
                   cashCountsInHand={figures.cashCountsInHand}
                   looseCoinAmount={figures.looseCoinsAmount}
                   cashCountsSource={figures.cashCountsSource}
@@ -404,6 +402,17 @@ export default function RegisterWorkspace({
               <FinalEarningPage
                 registerState={registerState}
                 date={selectedDate}
+              />
+            }
+          />
+          <Route
+            path="/daily-report"
+            element={
+              <DailyReportPage
+                registerState={registerState}
+                updateRegisterState={updateRegisterState}
+                date={selectedDate}
+                stationName={station.name}
               />
             }
           />

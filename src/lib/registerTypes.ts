@@ -18,6 +18,7 @@ export interface RegisterState {
     bankTransfers: Record<string, BankTransfer>;
     imprestIssued:Record<string, Record<number,RegisterRow>>
     advanceReceived:Record<string, Record<number,RegisterRow>>
+    reportFields?:Record<string, Record<string, string>>;
 }
 
 export const createEmptyRegisterState =() : RegisterState =>({
@@ -29,7 +30,8 @@ export const createEmptyRegisterState =() : RegisterState =>({
     cashCounts:{},
     bankTransfers:{},
     imprestIssued:{},
-    advanceReceived:{}
+    advanceReceived:{},
+    reportFields:{}
 })
 
 export type DetailListKind =
@@ -43,3 +45,4 @@ export const stations: StationRecord[] = [
   { name: 'Noida Electronic City', hasSv4Recharge: true, hasParking: true },
   { name: 'Sector 62 Noida', hasSv4Recharge: false, hasParking: false },
 ];
+

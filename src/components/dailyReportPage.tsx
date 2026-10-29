@@ -59,7 +59,10 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
         <h2 className="mb-2 font-semibold">Message</h2>
         <pre className="max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-lg border border-bd bg-inp p-3 text-sm">{message}</pre>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <button className="rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-onac transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>Send on WhatsApp</button>
+          <button className="inline-flex items-center gap-2 rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-onac transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
+            <i className="fi fi-rr-comment-alt" aria-hidden="true" />
+            Send report on WhatsApp
+          </button>
           <button className={buttonClass} onClick={copyMessage}>Copy message</button>
           <span className="text-sm text-mu">{feedback}</span>
         </div>

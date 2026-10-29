@@ -34,7 +34,8 @@ export default function CashInPossessionCard({
                                         imprestAndAdvanceIssuedTotal,
                                         onCountChange }: CashInPossessionCardProps) {
   const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal
-  const matchesCashInHand = cardTotalAmount === totalCashInHand;
+  const cashDifference = Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
+  const matchesCashInHand = cashDifference === 0;
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
 
@@ -98,8 +99,11 @@ export default function CashInPossessionCard({
         </tfoot>
       </table>
      
-      <small className={matchesCashInHand ? 'text-green-600 font-semibold py-4' : 'text-red-600 font-semibold py-4'}>
-        {matchesCashInHand ? '✓ Matches total cash in hand' : `Differs from cash in hand by ${formatRupees(totalCashInHand-cardTotalAmount)}`}
+      <small className={`cash-status ${matchesCashInHand ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
+        <i className={`fi ${matchesCashInHand ? 'fi-rr-check' : 'fi-rr-exclamation'} cash-status-icon`} aria-hidden="true" />
+        {matchesCashInHand
+          ? 'Cash in possession matches total cash in hand'
+          : `Cash in possession ${cashDifference > 0 ? 'exceeds' : 'is below'} total cash in hand by ${formatRupees(Math.abs(cashDifference))}`}
       </small>
     </div>
   );

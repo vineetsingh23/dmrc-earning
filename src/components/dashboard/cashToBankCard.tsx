@@ -64,15 +64,19 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
       </table>
       
       {existingTransfer ? (
-        <small className='text-green-600 font-semibold my-2'>✓ Sent · slip {existingTransfer.slipNumber}</small>
-      ) : (
-        <small className={matchesAmountDue ? 'text-green-600 font-semibold my-2' : 'text-red-600 font-semibold my-2'}>
-          {notesExceedingStock.length
-            ? `Count is more than cash in hand for ₹${notesExceedingStock.join(', ₹')}`
-            : noteTotalToSend === amountDueToBank
-              ? `✓ Matches amount due ${formatRupees(amountDueToBank)}`
-              : `Enter notes totalling ${formatRupees(amountDueToBank)} (entered ${formatRupees(noteTotalToSend)})`}
+        <small className='cash-status cash-status-success' role="status" aria-live="polite">
+          <span className="bank-success-icon" aria-hidden="true"><i className="fi fi-rr-check" /></span>
+          Successfully sent to bank · Slip {existingTransfer.slipNumber}
         </small>
+      ) : (
+      <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
+        <i className={`fi ${matchesAmountDue ? 'fi-rr-check' : 'fi-rr-exclamation'} cash-status-icon`} aria-hidden="true" />
+        {notesExceedingStock.length
+          ? `Count exceeds cash in hand for ₹${notesExceedingStock.join(', ₹')}`
+          : matchesAmountDue
+            ? `Cash count matches amount due: ${formatRupees(amountDueToBank)}`
+            : `Enter notes totaling ${formatRupees(amountDueToBank)} (currently ${formatRupees(noteTotalToSend)})`}
+      </small>
       )}
       </div>
    

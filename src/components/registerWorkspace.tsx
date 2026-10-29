@@ -1,6 +1,6 @@
-import { useMemo } from "react";
-import { useEffect, useState } from "react";
-import { Navigate, NavLink, Route, Routes } from "react-router-dom";
+import { useEffect, useMemo, useState } from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
+import AppSidebar from "./appSidebar";
 import EarningSheetTable from "./stationEarning/earningSheetTable";
 import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
@@ -22,18 +22,11 @@ import DailyReportPage from "./dailyReportPage";
 // import StationLoginPage from './stationLoginPage';
 import {
   appHeaderClass,
-  appHeaderContentClass,
   appHeaderControlsClass,
-  appHeaderGroupClass,
   appShellClass,
   dashboardGridClass,
   dateInputClass,
-  mainContentClass,
-  navLinkActiveClass,
-  navLinkClass,
-  navigationClass,
   stackedCardsClass,
-  syncStatusClass,
   themeButtonClass,
 } from "../globalStyles";
 // import DetailListCard from "./dashboard/detailListCard";
@@ -48,14 +41,6 @@ import BackupToolbar from "./dashboard/backupToolbar";
 
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
-const pages = [
-  { label: "Dashboard", path: "/" },
-  { label: "Shifts Earning", path: "/shift-entry" },
-  { label: "TVM Earning", path: "/tvm-earning" },
-  { label: "Final Earning", path: "/final-earning" },
-  { label: "Station Overview", path: "/station-overview" },
-  { label: "WhatsApp Report", path: "/daily-report" },
-];
 interface RegisterWorkspaceProps {
   station: StationRecord;
   onLogout: () => void;
@@ -194,29 +179,12 @@ export default function RegisterWorkspace({
   }
   return (
     <div className={appShellClass}>
-      <header className={appHeaderClass}>
-        <div className={appHeaderContentClass}>
-          <div className={appHeaderGroupClass}>
-            <h1 className="text-2xl font-extrabold text-blue-600">
-              {station.name}{" "}
-              <span className="px-3 text-4xl font-light text-gray-500">|</span>
-            </h1>
-            <nav aria-label="Main navigation" className={navigationClass}>
-              {pages.map((page) => (
-                <NavLink
-                  key={page.path}
-                  to={page.path}
-                  end={page.path === "/"}
-                  className={({ isActive }) =>
-                    `${isActive ? navLinkActiveClass : navLinkClass}`
-                  }
-                >
-                  {page.label}
-                </NavLink>
-              ))}
-            </nav>
-          </div>
-          <div className={appHeaderControlsClass}>
+      <header className={`${appHeaderClass} max-md:static`}>
+        <div className="mx-auto flex min-h-[68px] max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-4 py-2 md:px-6">
+          <h1 className="truncate text-xl font-extrabold text-blue-600 dark:text-blue-400">
+            {station.name}
+          </h1>
+          <div className={`${appHeaderControlsClass} ml-auto`}>
             <label className="sr-only" htmlFor="selected-date">
               Selected date
             </label>
@@ -227,29 +195,22 @@ export default function RegisterWorkspace({
               onChange={(event) => setSelectedDate(event.target.value)}
               className={dateInputClass}
             />
-            <span
-              role="status"
-              className={syncStatusClass}
-              title={storageError || undefined}
-            >
-              {storageLabel}
-            </span>
             <button
               type="button"
               onClick={() => setIsDarkMode((theme) => !theme)}
               aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
               className={themeButtonClass}
             >
-              {isDarkMode ? "☀ Light" : "☾ Dark"}
-            </button>
-            <button onClick={onLogout} className={themeButtonClass}>
-              ⏏ Logout
+              <i className={`fi ${isDarkMode ? "fi-rr-sun" : "fi-rr-moon"} mr-2`} aria-hidden="true" />
+              {isDarkMode ? "Light" : "Dark"}
             </button>
           </div>
         </div>
       </header>
 
-      <main className={mainContentClass}>
+      <div className="flex min-h-[calc(100vh-68px)]">
+        <AppSidebar onLogout={onLogout} storageLabel={storageLabel} storageError={storageError} />
+        <main className="min-w-0 flex-1 p-4 md:p-6">
         <Routes>
           <Route
             path="/"
@@ -443,7 +404,8 @@ export default function RegisterWorkspace({
             onConfirm={confirmBankTransfer}
           />
         )}
-      </main>
+        </main>
+      </div>
     </div>
   );
 }

@@ -1,12 +1,12 @@
-export const appShellClass = 'min-h-screen bg-slate-50 text-slate-800 transition-colors dark:bg-slate-950 dark:text-slate-100';
-export const appHeaderClass = 'sticky top-0 z-50 border-b border-slate-200 bg-blue-50 shadow-sm backdrop-blur dark:border-slate-800 dark:bg-slate-900/95';
+export const appShellClass = 'min-h-screen bg-bg text-tx transition-colors';
+export const appHeaderClass = 'sticky top-0 z-50 border-b border-bd bg-card/95 shadow-sm backdrop-blur';
 export const appHeaderContentClass = 'mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-4 py-3 md:px-6';
 export const appHeaderGroupClass = 'flex flex-wrap items-center gap-4';
 export const navigationClass = 'flex flex-wrap gap-2';
 export const navLinkClass = 'rounded-md border border-slate-200 px-3.5 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const navLinkActiveClass = 'rounded-md px-3.5 py-1.5 text-sm font-medium border-blue-600 bg-blue-600 hover:bg-blue-700 text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white dark:hover:border-blue-400 dark:hover:bg-blue-500';
 export const appHeaderControlsClass = 'flex flex-wrap items-center gap-3';
-export const dateInputClass = 'rounded-lg border border-slate-300 bg-white px-2 py-1.5 text-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus-visible:outline-blue-400';
+export const dateInputClass = 'rounded-lg border border-slate-300 bg-white px-2 text-lg py-1.5 text-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus-visible:outline-blue-400';
 export const syncStatusClass = 'text-sm text-slate-600 dark:text-slate-400';
 export const themeButtonClass = 'rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const mainContentClass = 'mx-auto max-w-screen-2xl p-4 md:p-6';
@@ -14,8 +14,8 @@ export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-co
 export const stackedCardsClass = 'flex flex-col gap-4';
 
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
-export const cardClass = 'w-full max-w-none rounded-2xl border border-slate-200 p-4 text-slate-800 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-slate-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:shadow-lg';
-export const cardHeadingClass = 'mb-2 font-semibold text-slate-800 dark:text-slate-100';
+export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md';
+export const cardHeadingClass = 'mb-2 font-semibold text-tx';
 export const tableWrapperClass = 'overflow-auto rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900';
 export const tableClass = 'w-full border-collapse';
 export const tableHeaderRowClass = 'bg-slate-100 text-xs dark:bg-slate-800 dark:text-slate-200';
@@ -50,4 +50,3 @@ export const tableHeaderGroupClasses = [
   'bg-slate-300 text-slate-700 text-sm font-semibold dark:bg-blue-950/30 dark:text-green-100',
 
 ];
-

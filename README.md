@@ -6,11 +6,19 @@ Run `npm run build:file`, then open `dist/index.html` directly in a browser. Thi
 
 Register data is stored in IndexedDB in the current browser. It is not shared across devices or browsers. The first launch imports previously saved data from this browser's local storage. Data that exists only in the old Supabase database is not migrated by this change and remains in Supabase.
 
+## Offline app
+
+The web build is installable as a PWA and caches the application shell for offline use after its first successful online load. Register data continues to be stored locally in IndexedDB. A secure HTTPS origin is required for installation and service-worker features (localhost is supported during development). Updates are offered in the app so you can choose when to reload.
+
+The Flaticon icon font is cached after it has loaded online once. A browser's file-based HTML mode cannot register a service worker, so offline PWA support is available from the web build.
+
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
 ## Navigation and appearance
 
-The app uses React Router for the Dashboard, Shift Entry, TVM Earning, and Final Earning pages. The navigation bar stays at the top while scrolling. Use the theme control in the navigation bar to switch between light and dark mode; the selected theme is saved in the browser.
+The app uses a collapsible sidebar for Dashboard, register tables, Earning, and the WhatsApp report. The header keeps the selected station, date selector, and light/dark mode control visible. The selected theme is saved in the browser.
+
+Sidebar and report icons use Flaticon UIcons from its CDN; the sidebar includes a Flaticon attribution link. The icon font requires an internet connection.
 
 Currently, two official plugins are available:
 

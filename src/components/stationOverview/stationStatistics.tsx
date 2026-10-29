@@ -28,7 +28,7 @@ function findBestDay(dates: string[], measureOfDate:(entryDate:string)=> number)
   return bestDay
 
 } 
-const staticCardClass = 'w-full max-w-none flex flex-col gap-3 bg-blue-100 hover:bg-blue-200 transition-colors duration-200 text-center rounded-2xl border border-slate-200  p-4 text-slate-800 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-slate-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-teal-800/40 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:shadow-lg';
+const staticCardClass = 'w-full max-w-none flex flex-col gap-3 bg-blue-100 hover:bg-blue-200 transition-colors duration-200 text-center rounded-2xl border border-slate-200  p-4 text-slate-800 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-slate-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700/40 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:shadow-lg';
 
 export default function StationStatisticsCard({registerState,date}: StationStatisticsCardProps) {
     const datesTillDate = datesWithEntriesUpTo(registerState, date);

@@ -1,7 +1,7 @@
 import { parseNumber, type ColumnLeaf, tvmTotal } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
 import { cashDepositedByOperator, cashlessTotal, totalEarning } from './shiftEntrycolumns';
-export const formatRupees = (amount: unknown) => '₹' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
+export const formatRupees = (amount: unknown) => '₹\u00A0\u00A0' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
 

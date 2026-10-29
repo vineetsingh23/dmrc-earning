@@ -9,6 +9,7 @@ import {
   tableCellClass,
   tableClass,
   tableHeaderCellClass,
+  tableMirrorCellClass,
   tableHeaderGroupClasses,
   // tableInputClass,
   tableRowClass,
@@ -116,7 +117,7 @@ export default function EarningSheetTable({
                 if (column.kind === 'mirror') {
   // looks like a typed number cell, but is read-only and follows another column
   return (
-    <td key={column.fieldKey} className="sheet-input-cell">
+    <td key={column.fieldKey} className={tableMirrorCellClass}>
       <div className="min-w-[70px] p-1.5 text-right text-sm">{row[column.sourceFieldKey!] ?? ''}</div>
     </td>
   );

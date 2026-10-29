@@ -1,4 +1,5 @@
 import { memo } from 'react';
+import { tableInputClass } from '../globalStyles';
 
 type WriteEntryValue = (rowIndex: number, fieldKey: string, newValue: string) => void;
 
@@ -18,7 +19,7 @@ const EditableSheetCell = memo(function EditableSheetCell({
         value={value} inputMode={isNumeric ? 'decimal' : 'text'}
         onFocus={event => event.target.select()}
         onChange={event => writeValueReference.current?.(rowIndex, fieldKey, event.target.value)}
-        className={`w-full bg-transparent p-1.5 text-sm outline-hidden focus:bg-card focus:ring-2 focus:ring-ac ${isNumeric ? 'min-w-[70px] text-right' : 'min-w-[110px] text-left'}`}
+        className={`${tableInputClass} ${isNumeric ? 'min-w-[70px] text-right' : 'min-w-[110px] text-left'}`}
       />
     </td>
   );

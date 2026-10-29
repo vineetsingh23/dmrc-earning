@@ -35,8 +35,8 @@ import {
   syncStatusClass,
   themeButtonClass,
 } from "../globalStyles";
-import DetailListCard from "./dashboard/detailListCard";
-import {type DetailListKind } from "../lib/registerTypes";
+// import DetailListCard from "./dashboard/detailListCard";
+// import {type DetailListKind } from "../lib/registerTypes";
 import StationStatisticsCard from "./stationOverview/stationStatistics";
 import type { StationRecord } from "../lib/registerTypes";
 import { filterByFacilities } from "../lib/earningColumns";
@@ -102,30 +102,30 @@ export default function RegisterWorkspace({
     localStorage.setItem("theme", isDarkMode ? "dark" : "light");
   }, [isDarkMode]);
 
-  const renderDetailList = (
-    title: string,
-    listKind: DetailListKind,
-    columnTitles: string[],
-  ) => (
-    <DetailListCard
-      title={title}
-      listKind={listKind}
-      columnTitles={columnTitles}
-      listRows={registerState.detailLists?.[selectedDate]?.[listKind] ?? []}
-      onCellChange={(rowIndex, columnIndex, newValue) =>
-        updateRegisterState((draftState) =>
-          updateDetailListCell(
-            draftState,
-            selectedDate,
-            listKind,
-            rowIndex,
-            columnIndex,
-            newValue,
-          ),
-        )
-      }
-    />
-  );
+  // const renderDetailList = (
+  //   title: string,
+  //   listKind: DetailListKind,
+  //   columnTitles: string[],
+  // ) => (
+  //   <DetailListCard
+  //     title={title}
+  //     listKind={listKind}
+  //     columnTitles={columnTitles}
+  //     listRows={registerState.detailLists?.[selectedDate]?.[listKind] ?? []}
+  //     onCellChange={(rowIndex, columnIndex, newValue) =>
+  //       updateRegisterState((draftState) =>
+  //         updateDetailListCell(
+  //           draftState,
+  //           selectedDate,
+  //           listKind,
+  //           rowIndex,
+  //           columnIndex,
+  //           newValue,
+  //         ),
+  //       )
+  //     }
+  //   />
+  // );
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(
@@ -318,7 +318,7 @@ export default function RegisterWorkspace({
                   />
                 </div>
 
-                <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+                {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
                     "Details of out-source earning",
                     "outsourceEarning",
@@ -339,7 +339,7 @@ export default function RegisterWorkspace({
                     "Address of passenger",
                     "Penalty amount",
                   ])}
-                </div>
+                </div> */}
                 <section className="col-span-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
                   <h2 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
                     Data tools and backups

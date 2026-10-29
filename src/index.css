@@ -64,8 +64,8 @@ body{background-color:var(--bg);color:var(--tx);font-size:15px;-webkit-font-smoo
   .sheet-header-cell { @apply border border-bl px-2 py-1 text-center text-xs font-semibold; }
   .sheet-header-0 { background: var(--h0); } .sheet-header-1 { background: var(--h1); } .sheet-header-2 { background: var(--h2); }
   .sheet-header-3 { background: var(--h3); } .sheet-header-4 { background: var(--h4); } .sheet-header-5 { background: var(--h5); }
-  .sheet-cell { @apply border border-bl bg-tg px-2 py-1 text-right text-sm transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-pink-500; }
-  .sheet-input-cell { @apply border border-bl bg-tg p-0 transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-pink-500; }
+  .sheet-cell { @apply border border-bl bg-tg px-2 py-1 text-right text-sm transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-slate-400; }
+  .sheet-input-cell { @apply border border-bl bg-tg p-0 transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-slate-400; }
   .sheet-cell-calculated { background: var(--ca) !important; font-weight: 600; }
   .sheet-footer-cell { @apply border border-bl bg-ca px-2 py-1 text-right text-sm font-bold; }
   /* alternate rows */

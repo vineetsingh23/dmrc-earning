@@ -13,8 +13,9 @@ export const sumOfFields = (row: RegisterRow, fieldKeys: string): number =>
 export interface ColumnLeaf {
   fieldKey: string;
   label: string;
-  kind: 'text' | 'number' | 'calculated';
+  kind: 'text' | 'number' | 'calculated' | 'mirror';
   formula?: (row: RegisterRow) => number;   // only calculated columns have one
+  sourceFieldKey?: string;
 }
 export interface ColumnGroup { label: string; children: ColumnNode[] }
 export type ColumnNode = ColumnLeaf | ColumnGroup;
@@ -24,6 +25,9 @@ export const isColumnGroup = (node: ColumnNode): node is ColumnGroup => 'childre
 // how many header rows a node needs: a plain column = 1, a group = 1 + its deepest child
 export const columnDepth = (node: ColumnNode): number =>
   isColumnGroup(node) ? 1 + Math.max(...node.children.map(columnDepth)) : 1;
+// a read-only cell that shows the value typed in another column of the same row
+export const mirrorColumn = (fieldKey: string, label: string, sourceFieldKey: string): ColumnLeaf =>
+  ({ fieldKey, label, kind: 'mirror', sourceFieldKey });
 
 // the real data columns under a node
 export const collectLeafColumns = (node: ColumnNode): ColumnLeaf[] =>

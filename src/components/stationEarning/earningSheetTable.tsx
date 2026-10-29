@@ -79,11 +79,17 @@ export default function EarningSheetTable({
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) => readRow(rowIndex));
   const isEditable = Boolean(readEntryValue && writeEntryValue);
   const typedColumnIndexByFieldKey = new Map (
-    leafColumns.filter(column => column.kind !== 'calculated').map((column, typedColumnIndex) => [column.fieldKey, typedColumnIndex]),
+    leafColumns.filter(column => column.kind !== 'calculated' && column.kind !=='mirror').map((column, typedColumnIndex) => [column.fieldKey, typedColumnIndex]),
   )
   // total of one column over all rows (calculated columns add up their formula results)
   const totalOfColumn = (column: ColumnLeaf) =>
-    allRows.reduce((runningTotal, row) => runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
+    allRows.reduce((runningTotal, row) => {
+      if (column.kind === 'calculated') return runningTotal + column.formula!(row);
+      if (column.kind === 'mirror') return runningTotal + parseNumber(row[column.sourceFieldKey!]);
+      return runningTotal + parseNumber(row[column.fieldKey]);
+
+    },0)
+  //     runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
   const writeValueReference = useRef(writeEntryValue);
   writeValueReference.current = writeEntryValue;
 
@@ -107,6 +113,14 @@ export default function EarningSheetTable({
                     </td>
                   );
                 }
+                if (column.kind === 'mirror') {
+  // looks like a typed number cell, but is read-only and follows another column
+  return (
+    <td key={column.fieldKey} className="sheet-input-cell">
+      <div className="min-w-[70px] p-1.5 text-right text-sm">{row[column.sourceFieldKey!] ?? ''}</div>
+    </td>
+  );
+}
                 if (isEditable) {
                   return (
                       <EditableSheetCell

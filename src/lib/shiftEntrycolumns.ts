@@ -1,5 +1,5 @@
 import type { RegisterRow } from './registerTypes';
-import { calculatedColumn, columnGroup, numberColumn, sumOfFields, textColumn, type ColumnLeaf, type ColumnNode } from './earningColumns';
+import { calculatedColumn, columnGroup,mirrorColumn, numberColumn, sumOfFields, textColumn, type ColumnLeaf, type ColumnNode } from './earningColumns';
 
 // a Qty column and an Amt column; the amount code is the letter printed on the register
 export const quantityAmountColumns = (quantityKey: string, amountKey: string, amountCode: string): ColumnLeaf[] =>
@@ -16,8 +16,12 @@ export const surchargeTotal = (row: RegisterRow) =>
   sumOfFields(row, 'surchargeCashAmount surchargePurseAmount ncmcCashAmount ncmcPurseAmount');
 export const penaltyTotal = (row: RegisterRow) =>
   sumOfFields(row, 'manualPenaltyAmount hhtPenaltyCashAmount hhtPenaltyPurseAmount');
+
+
 export const cashlessTotal = (row: RegisterRow) =>
-  sumOfFields(row, 'posAtCcc posAtTvm staticQrAtCcc posAtRctm posAtScvm upiAtTvm upiAtTomCc hhtPenaltyPurseCashless hhtParkingPurse');
+  sumOfFields(row, 'posAtCcc posAtTvm staticQrAtCcc posAtRctm posAtScvm upiAtTvm upiAtTomCc hhtPenaltyPurseAmount');
+
+// export const cscPurse = (row: RegisterRow) => sumOfFields(row,'surchargePurseAmount')
 
 // Total Collection by AFC System (X)
 export const afcCollectionTotal = (row: RegisterRow) => ticketSaleNet(row) + addValueNet(row) + surchargeTotal(row);
@@ -25,14 +29,18 @@ export const afcCollectionTotal = (row: RegisterRow) => ticketSaleNet(row) + add
 // Total Earning (Z): AFC collection + other earnings, minus manual refunds
 export const totalEarning = (row: RegisterRow) =>
   afcCollectionTotal(row)
-  + sumOfFields(row, 'eibAmount sv4TopUpAmount miscEarningAmount parkingManualCash parkingHhtCash parkingHhtPurse manualPenaltyAmount hhtPenaltyCashAmount hhtPenaltyPurseAmount')
+  + sumOfFields(row, 'eibAmount sv4TopUpAmount miscEarningAmount parkingManualCash parkingHhtCash manualPenaltyAmount hhtPenaltyCashAmount hhtPenaltyPurseAmount hhtParkingPurseAmount')
   - sumOfFields(row, 'readableCscRefundAmount tourCardRefundAmount securityDepositRefundAmount manualQrRefundAmount');
 
 // Total Cash Deposited by Operator
 export const cashDepositedByOperator = (row: RegisterRow) =>
   totalEarning(row) - cashlessTotal(row)
-  - sumOfFields(row, 'surchargeThroughPurseAfc surchargeThroughPurseNcmc outstandingCurrentAfc outstandingCurrentMisc')
+  - sumOfFields(row, 'surchargePurseAmount hhtParkingPurseAmount ncmcPurseAmount outstandingCurrentAfc outstandingCurrentMisc ')
   + sumOfFields(row, 'outsourceEarningAmount outstandingPaidAfc outstandingPaidMisc');
+
+  // surcharge paid by purse is typed once, in the Surcharge head; the cashless Surcharge Adjustment columns only show it
+// export const surchargeThroughPurseAfc = (row: RegisterRow) => sumOfFields(row, 'surchargePurseAmount');
+// export const surchargeThroughPurseNcmc = (row: RegisterRow) => sumOfFields(row, 'ncmcPurseAmount');
 
 // ---- columns, in the order of the printed register ----
 export const shiftEntryColumns: ColumnNode[] = [
@@ -75,15 +83,26 @@ export const shiftEntryColumns: ColumnNode[] = [
 
   numberColumn('miscEarningAmount', 'Miscellaneous Earning (w)'),
   columnGroup('Manual Refund (if any) QR', ...quantityAmountColumns('manualQrRefundQuantity', 'manualQrRefundAmount', 'x')),
-  columnGroup('Parking (Y)', numberColumn('parkingManualCash', 'Manual Cash (y1)'), numberColumn('parkingHhtCash', 'HHT Cash (y2)'), numberColumn('parkingHhtPurse', 'HHT Purse (y3)')),
+  
+  columnGroup('Parking (Y)', 
+    numberColumn('parkingManualCash', 'Manual Cash (y1)'), 
+    numberColumn('parkingHhtCash', 'HHT Cash (y2)'), 
+    numberColumn('hhtParkingPurseAmount', 'HHT Purse (y3)')),
 
   calculatedColumn('totalEarning', 'Total Earning (Z)', totalEarning),
 
   columnGroup('Cashless Details (CD)',
-    numberColumn('posAtCcc', 'POS at CCC (aa1)'), numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
+    numberColumn('posAtCcc', 'POS at CCC (aa1)'), 
+    numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
    
-    numberColumn('upiAtTomCc', 'UPI at TOM/CC (aa2)'), numberColumn('hhtPenaltyPurseCashless', 'HHT Penalty Purse (af)'), numberColumn('hhtParkingPurse', 'HHT Parking Purse (w4)'),
-    columnGroup('Surcharge Adjustment', numberColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)'), numberColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)'))),
+    numberColumn('upiAtTomCc', 'UPI at TOM/CC (aa2)'), 
+    mirrorColumn('penaltyThroughHhtPurse', 'HHT Penalty Purse (af)','hhtPenaltyPurseAmount'), 
+    mirrorColumn('parkingThroughHhtPurse', 'HHT Parking Purse (y3)','hhtParkingPurseAmount'),
+
+  columnGroup('Surcharge Adjustment',
+      mirrorColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)', 'surchargePurseAmount'),
+      mirrorColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)', 'ncmcPurseAmount'))),
+    // columnGroup('Surcharge Adjustment', numberColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)'), numberColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)'))),
 
   numberColumn('outsourceEarningAmount', 'Outsource Earning (OE)'),
   columnGroup('Outstanding Details',

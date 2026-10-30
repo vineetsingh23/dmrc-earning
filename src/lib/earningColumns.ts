@@ -2,7 +2,7 @@ import type { RegisterRow } from './registerTypes';
 
 // "1,200" -> 1200, "" -> 0, "abc" -> 0
 export const parseNumber = (value: unknown): number => {
-  const parsed = parseFloat(String(value ?? '').replace(/[^0-9.\-]/g, ''));
+  const parsed = parseFloat(String(value ?? '').replace(/[^0-9.-]/g, ''));
   return Number.isNaN(parsed) ? 0 : parsed;
 };
 
@@ -75,4 +75,3 @@ export const filterByFacilities = (columns: ColumnNode[], facilities: StationFac
       .map(node => (isColumnGroup(node) ? { ...node, children: keepVisible(node.children) } : node));
   return keepVisible(columns);
 };
-

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { createEmptyRegisterState, type RegisterState } from '../lib/registerTypes';
 import { readRegisterState, writeRegisterState } from '../lib/registerDatabase';
 
@@ -14,7 +14,9 @@ export function useRegisterData(stationName: string) {
   const isLoaded = loadedStationName === stationName && hasLoadedState;
   const storageStatus = loadedStationName === stationName ? saveStatus : 'loading';
   const latestStateReference = useRef(registerState);
-  latestStateReference.current = registerState;
+  useLayoutEffect(() => {
+    latestStateReference.current = registerState;
+  }, [registerState]);
 
   useEffect(() => {
   if (!isLoaded) return;
@@ -90,4 +92,3 @@ export function useRegisterData(stationName: string) {
     isLoaded,
   };
 }
-

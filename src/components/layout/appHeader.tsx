@@ -29,9 +29,9 @@ export default function AppHeader({
   return (
     <header className="sticky top-0 z-10 border-b border-bd bg-card/95 shadow-sm backdrop-blur">
       <div className="mx-auto grid max-w-screen-2xl grid-cols-[1fr_auto] items-center gap-x-4 gap-y-2 px-4 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-6">
-        <div className="flex w-80 justify-between items-center gap-2">
+        <div className="flex max-w-60 items-center gap-6">
           {/* <TrainFront className="size-7 shrink-0 text-ac" aria-hidden="true" /> */}
-            <img src='/Delhi_Metro.png' className='size-10 w-25'/>
+            <img src='/Delhi_Metro.png' className='size-10 w-23'/>
           <div className="min-w-0">
             <p className="truncate text-md font-bold text-tx">Earning Register</p>
             <p className="truncate text-sm text-mu">{stationName}</p>
@@ -39,7 +39,7 @@ export default function AppHeader({
         </div>
 
         {showNavigation && (
-          <nav aria-label="Main navigation" className="col-span-2 flex w-full items-center justify-center gap-1 overflow-x-auto pb-1 md:col-span-1 md:col-start-2 md:row-start-1 md:w-auto md:pb-0 hidden  md:block">
+          <nav aria-label="Main navigation" className="w-full flex gap-4">
             {navigationPages.map(({ label, path }) => (
               <NavLink
                 key={path}

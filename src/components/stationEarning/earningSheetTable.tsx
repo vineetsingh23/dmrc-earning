@@ -1,4 +1,4 @@
-import { useRef, type ReactNode } from "react";
+import { useLayoutEffect, useRef, type ReactNode } from "react";
 import EditableSheetCell from "../editableSheetCell";
 
 import {
@@ -55,6 +55,7 @@ function buildHeaderRows(
     nodes: ColumnNode[],
     levelIndex: number,
     parentColorIndex: number,
+    parentKey: string,
   ) {
     nodes.forEach((node, nodeIndex) => {
       const colorIndex =
@@ -62,7 +63,7 @@ function buildHeaderRows(
           ? nodeIndex % sheetStyle.headerColorClasses.length
           : parentColorIndex;
       const headerClass = `${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]}`;
-      const headerKey = `${levelIndex}-${nodeIndex}-${node.label}`;
+      const headerKey = `${parentKey}-${levelIndex}-${nodeIndex}-${node.label}`;
       if (isColumnGroup(node)) {
         headerRows[levelIndex].push(
           <th
@@ -73,7 +74,7 @@ function buildHeaderRows(
             {node.label}
           </th>,
         );
-        addHeaders(node.children, levelIndex + 1, colorIndex);
+        addHeaders(node.children, levelIndex + 1, colorIndex, headerKey);
       } else {
         headerRows[levelIndex].push(
           <th
@@ -88,7 +89,7 @@ function buildHeaderRows(
     });
   }
 
-  addHeaders(columns, 0, 0);
+  addHeaders(columns, 0, 0, 'root');
   return headerRows;
 }
 
@@ -141,7 +142,9 @@ export default function EarningSheetTable({
     }, 0);
   //     runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
   const writeValueReference = useRef(writeEntryValue);
-  writeValueReference.current = writeEntryValue;
+  useLayoutEffect(() => {
+    writeValueReference.current = writeEntryValue;
+  }, [writeEntryValue]);
 
   return (
     <div

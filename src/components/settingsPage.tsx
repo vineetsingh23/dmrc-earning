@@ -25,13 +25,16 @@ export default function SettingsPage({
   return (
     <section className="mx-auto w-full max-w-2xl space-y-6">
       <div>
-        <h1 className="text-2xl font-bold text-tx">Settings</h1>
+        
       <section className="rounded-2xl border border-bd bg-card p-5 shadow-sm" aria-labelledby="database-status-heading">
         
         <div className="flex items-start gap-3">
-          <ContactIcon stroke='violet'/>
+          <div className="rounded-xl bg-ca p-2 text-ac">
+
+          <ContactIcon  className='size-5' aria-hidden="true"/>
+          </div>
+          <div className='text-mu text-sm flex flex-col'>
           <h1 id="database-status-heading" className="font-semibold text-tx flex gap-4">Created by</h1>
-          <div className='text-mu text-sm '>
           <p>Vineet Kumar Singh</p>
           <p>Sr. Head CRA</p>
           <p>Emp. ID - 12649</p>

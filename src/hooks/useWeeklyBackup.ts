@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react';
 import type { RegisterState } from '../lib/registerTypes';
 import {
   chooseBackupFolder, hasFolderPermission, isBackupDue, isFolderBackupSupported, readBackupFolder, readLastBackupTime, writeBackupFile,
@@ -13,7 +13,9 @@ export function useWeeklyBackup(stationName: string, registerState: RegisterStat
   const [lastBackupTime, setLastBackupTime] = useState('');
   const [backupMessage, setBackupMessage] = useState('');
   const latestStateReference = useRef(registerState);
-  latestStateReference.current = registerState;
+  useLayoutEffect(() => {
+    latestStateReference.current = registerState;
+  }, [registerState]);
 
   // askUser: this call comes from a click, so the browser may ask for permission; onlyIfDue: skip when a backup is recent
   const runBackup = useCallback(async (askUser: boolean, onlyIfDue: boolean) => {
@@ -38,7 +40,11 @@ export function useWeeklyBackup(stationName: string, registerState: RegisterStat
   }, [stationName]);
 
   // once the register has loaded: back up silently if a week has passed
-  useEffect(() => { if (isFolderBackupSupported && isLoaded) void runBackup(false, true); }, [isLoaded, runBackup]);
+  useEffect(() => {
+    if (!isFolderBackupSupported || !isLoaded) return;
+    const timeoutId = window.setTimeout(() => void runBackup(false, true), 0);
+    return () => window.clearTimeout(timeoutId);
+  }, [isLoaded, runBackup]);
 
   const chooseFolder = useCallback(async () => {
     try {

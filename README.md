@@ -1,24 +1,16 @@
 # React + TypeScript + Vite
 
-## Run the build without a server
+## Desktop installation and offline use
 
-Run `npm run build:file`, then open `dist/index.html` directly in a browser. This creates a self-contained HTML file and uses hash-based routing for local file access. Keep using `npm run build` for the normal web-hosted build.
+Build the production web app with `npm run build`, then deploy the contents of `dist` to a secure HTTPS origin. Open that URL in a supported desktop browser (for example, Chrome or Edge) and use the browser's Install app action to install DMRC Station Earnings as a desktop app. Localhost is also a secure origin for testing.
 
-Register data is stored in IndexedDB in the current browser. It is not shared across devices or browsers. The first launch imports previously saved data from this browser's local storage. Data that exists only in the old Supabase database is not migrated by this change and remains in Supabase.
+The service worker caches the application shell after its first successful online load. Register data is stored separately in the browser's IndexedDB and remains available to the installed app on that device. Updates are offered in the app so you can choose when to reload. A `file://` page cannot register a service worker and is not the desktop PWA installation path.
 
-## Offline app
+The manifest includes 192×192 and 512×512 PNG icons for desktop installation. No Dexie dependency is needed; the app uses the browser's native IndexedDB API.
 
-The web build is installable as a PWA and caches the application shell for offline use after its first successful online load. Register data continues to be stored locally in IndexedDB. A secure HTTPS origin is required for installation and service-worker features (localhost is supported during development). Updates are offered in the app so you can choose when to reload.
+## Data and appearance
 
-The Flaticon icon font is cached after it has loaded online once. A browser's file-based HTML mode cannot register a service worker, so offline PWA support is available from the web build.
-
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-## Navigation and appearance
-
-The app uses a collapsible sidebar for Dashboard, register tables, Earning, and the WhatsApp report. The header keeps the selected station, date selector, and light/dark mode control visible. The selected theme is saved in the browser.
-
-Sidebar and report icons use Flaticon UIcons from its CDN; the sidebar includes a Flaticon attribution link. The icon font requires an internet connection.
+Register data is stored in the current browser and is not shared across devices or browsers. The first launch imports previously saved data from this browser's local storage. Data that exists only in the old Supabase database is not migrated by this change and remains in Supabase. The selected light/dark theme is saved in the browser.
 
 Currently, two official plugins are available:
 

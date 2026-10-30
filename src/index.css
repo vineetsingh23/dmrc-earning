@@ -30,14 +30,14 @@
   --h4: #fbdde6;
   --h5: #d4f0f0;
   --table-row-alt: #eef0f5;
-  --table-row-hover: #eef4f3;
+  --table-row-hover: #f8f8f8;
 }
 
 .dark {
   color-scheme: dark;
   --bg: #0e1420;
   --card: #161e2c;
-  --tx: #e5e9f0;
+  --tx: #f6f9fe;
   --mu: #94a3b8;
   --bd: #263043;
   --ac: #60a5fa;

@@ -49,7 +49,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
                   ? noteCountsToSend[noteValue] ?? 0
                   : <input data-grid="cashToBank" data-row={rowIndex} data-column={0} 
                       value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
-                      className={`${tableInputClass} w-20 text-right`} />}
+                      className={`${tableInputClass} text-right`} />}
               </td>
               <td className={tableCellClass}>{formatRupees(noteValue * (noteCountsToSend[noteValue] ?? 0))}</td>
             </tr>

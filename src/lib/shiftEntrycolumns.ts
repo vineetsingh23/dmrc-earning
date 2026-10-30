@@ -44,7 +44,7 @@ export const cashDepositedByOperator = (row: RegisterRow) =>
 
 // ---- columns, in the order of the printed register ----
 export const shiftEntryColumns: ColumnNode[] = [
-  textColumn('cccNumber', 'CCC/TOM/RCTM/SCVM No.'), textColumn('operatorName', 'Name of Operator'), textColumn('employeeNumber', 'Employee No.'),
+  textColumn('cccNumber', 'CCC/TOM No.'), textColumn('operatorName', 'Name of Operator'), textColumn('employeeNumber', 'Employee No.'),
   textColumn('shiftStartTime', 'Start of Shift Time'), textColumn('shiftEndTime', 'End of Shift Time'), textColumn('shiftNumber', 'Shift No.'),
 
   columnGroup('QR Tickets',

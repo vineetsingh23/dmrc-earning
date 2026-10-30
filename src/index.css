@@ -29,6 +29,8 @@
   --h3: #fdebc8;
   --h4: #fbdde6;
   --h5: #d4f0f0;
+  --table-row-alt: #eef0f5;
+  --table-row-hover: #eef4f3;
 }
 
 .dark {
@@ -55,6 +57,8 @@
   --h3: #54411b;
   --h4: #5a2a3d;
   --h5: #1d4a4b;
+  --table-row-alt: #222c3d;
+  --table-row-hover: #2b3a50;
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
@@ -220,16 +224,20 @@ textarea:focus-visible {
   .bank-success-icon { animation: none; }
 }
 
-/* sheet utility classes */
 @layer components {
-  .sheet-header-cell { @apply border border-bl px-2 py-1 text-center text-xs font-semibold; }
-  .sheet-header-0 { background: var(--h0); } .sheet-header-1 { background: var(--h1); } .sheet-header-2 { background: var(--h2); }
-  .sheet-header-3 { background: var(--h3); } .sheet-header-4 { background: var(--h4); } .sheet-header-5 { background: var(--h5); }
-  .sheet-cell { @apply border border-bl bg-tg px-2 py-1 text-right text-sm transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-slate-400; }
-  .sheet-input-cell { @apply border border-bl bg-tg p-0 transition-shadow duration-300 hover:ring-2 hover:ring-inset hover:ring-slate-400; }
-  .sheet-cell-calculated { background: var(--ca) !important; font-weight: 600; }
-  .sheet-footer-cell { @apply border border-bl bg-ca px-2 py-1 text-right text-sm font-bold; }
-  /* alternate rows */
-  tbody tr:nth-child(even) .sheet-cell, tbody tr:nth-child(even) .sheet-input-cell { background: var(--tz); }
-  tbody tr:nth-child(even) .sheet-cell-calculated { background: var(--cz) !important; }
+  .enterprise-table :is(th, td) { border: 1px solid var(--bd); }
+  .enterprise-table tbody tr { @apply transition-colors duration-150; }
+  .enterprise-table tbody td { height: 3rem; padding: 0; vertical-align: middle; }
+  .enterprise-table tbody tr:nth-child(even) { background-color: var(--table-row-alt); }
+  .enterprise-table tbody tr:hover { background-color: var(--table-row-hover); }
+  .enterprise-table tfoot td { height: 3rem; padding: 0; vertical-align: middle; }
+  .enterprise-table--sheet tbody td { height: 1.75rem; }
+  .enterprise-table--sheet tfoot td { height: 3.5rem; }
+}
+
+
+/* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
+.date-input { position: relative; }
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
 }

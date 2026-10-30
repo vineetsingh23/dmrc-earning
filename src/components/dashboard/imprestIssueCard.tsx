@@ -27,7 +27,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
             <th className={tableHeaderCellClass}>Advance issued</th><th className={tableHeaderCellClass}>Total issued amount</th>
           </tr>
         </thead>
-        <tbody className={tableClass}>
+        <tbody>
           {tomOperators.map((tomOperator, rowIndex) => (
             <tr key={tomOperator.tomNumber} className={tableRowClass}>
               <td className={`${tableCellLeftClass} text-left!`}>{tomOperator.tomNumber}</td>

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AppSidebar from "./appSidebar";
+import AppHeader from "./layout/appHeader";
 import EarningSheetTable from "./stationEarning/earningSheetTable";
 import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
@@ -19,15 +19,9 @@ import { updateDetailListCell } from "../handlers/detailListHandlers";
 import TvmEarningPage from "./stationEarning/tvmEarningPage";
 import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";
-// import StationLoginPage from './stationLoginPage';
 import {
-  appHeaderClass,
-  appHeaderControlsClass,
-  appShellClass,
   dashboardGridClass,
-  dateInputClass,
   stackedCardsClass,
-  themeButtonClass,
 } from "../globalStyles";
 // import DetailListCard from "./dashboard/detailListCard";
 // import {type DetailListKind } from "../lib/registerTypes";
@@ -38,6 +32,7 @@ import EarningHistogramCard from "./stationOverview/earningHistogram";
 import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
 import BackupFolderCard from "./dashboard/backupFolderCard";
 import BackupToolbar from "./dashboard/backupToolbar";
+import SettingsPage from "./settingsPage";
 
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
@@ -58,6 +53,7 @@ export default function RegisterWorkspace({
       }),
     [station],
   );
+
   // <EarningSheetTable columns={visibleShiftColumns} ... />
   // ...all of your old App code goes here...
 
@@ -69,6 +65,7 @@ export default function RegisterWorkspace({
     isLoaded,
   } = useRegisterData(station.name);
   const weeklyBackup = useWeeklyBackup(station.name, registerState, isLoaded);
+
   const [selectedDate, setSelectedDate] = useState(
     new Date().toISOString().slice(0, 10),
   );
@@ -145,15 +142,6 @@ export default function RegisterWorkspace({
     setIsSendDialogOpen(false);
   };
 
-  const storageLabel =
-    storageStatus === "saved"
-      ? "IndexedDB: Saved"
-      : storageStatus === "saving"
-        ? "IndexedDB: Saving…"
-        : storageStatus === "loading"
-          ? "IndexedDB: Loading…"
-          : "⚠ IndexedDB error";
-
   if (storageStatus === "loading") {
     return (
       <main className="p-6 text-slate-700 dark:text-slate-200">
@@ -164,53 +152,39 @@ export default function RegisterWorkspace({
 
   if (!isLoaded) {
     return (
-      <main role="alert" className="p-6 text-red-700 dark:text-red-300">
-        <h1 className="font-bold">Could not load local register data.</h1>
-        <p>
-          Check that this browser allows IndexedDB for this page, then reload
-          the app.
-        </p>
-        <p className="mt-2 font-mono text-sm">
-          Reason: {storageError || "(none reported)"} · status: {storageStatus}{" "}
-          · station: {station.name}
-        </p>
-      </main>
+      <div className="min-h-screen bg-bg text-tx transition-colors">
+        <AppHeader
+          stationName={station.name}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
+          showNavigation={false}
+        />
+        <main className="mx-auto max-w-screen-2xl p-4 md:p-6">
+          <SettingsPage
+            storageStatus={storageStatus}
+            storageError={storageError}
+            onLogout={onLogout}
+          />
+          <p className="mx-auto mt-4 max-w-2xl text-sm text-mu">
+            Register data could not be loaded. Check that this browser allows IndexedDB before continuing.
+          </p>
+        </main>
+      </div>
     );
   }
   return (
-    <div className={appShellClass}>
-      <header className={`${appHeaderClass} max-md:static`}>
-        <div className="mx-auto flex min-h-[68px] max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-4 py-2 md:px-6">
-          <h1 className="truncate text-xl font-extrabold text-blue-600 dark:text-blue-400">
-            {station.name}
-          </h1>
-          <div className={`${appHeaderControlsClass} ml-auto`}>
-            <label className="sr-only" htmlFor="selected-date">
-              Selected date
-            </label>
-            <input
-              id="selected-date"
-              type="date"
-              value={selectedDate}
-              onChange={(event) => setSelectedDate(event.target.value)}
-              className={dateInputClass}
-            />
-            <button
-              type="button"
-              onClick={() => setIsDarkMode((theme) => !theme)}
-              aria-label={`Switch to ${isDarkMode ? "light" : "dark"} mode`}
-              className={themeButtonClass}
-            >
-              <i className={`fi ${isDarkMode ? "fi-rr-sun" : "fi-rr-moon"} mr-2`} aria-hidden="true" />
-              {isDarkMode ? "Light" : "Dark"}
-            </button>
-          </div>
-        </div>
-      </header>
+    <div className="min-h-screen bg-bg text-tx transition-colors">
+        <AppHeader
+          stationName={station.name}
+          selectedDate={selectedDate}
+          onDateChange={setSelectedDate}
+          isDarkMode={isDarkMode}
+          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
+        />
 
-      <div className="flex min-h-[calc(100vh-68px)]">
-        <AppSidebar onLogout={onLogout} storageLabel={storageLabel} storageError={storageError} />
-        <main className="min-w-0 flex-1 p-4 md:p-6">
+      <main className="mx-auto min-h-[calc(100vh-68px)] max-w-screen-2xl p-4 md:p-6">
         <Routes>
           <Route
             path="/"
@@ -377,6 +351,16 @@ export default function RegisterWorkspace({
               />
             }
           />
+          <Route
+            path="/settings"
+            element={
+              <SettingsPage
+                storageStatus={storageStatus}
+                storageError={storageError}
+                onLogout={onLogout}
+              />
+            }
+          />
 
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route
@@ -404,8 +388,7 @@ export default function RegisterWorkspace({
             onConfirm={confirmBankTransfer}
           />
         )}
-        </main>
-      </div>
+      </main>
     </div>
   );
 }

@@ -16,18 +16,19 @@ export const stackedCardsClass = 'flex flex-col gap-4';
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
 export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md';
 export const cardHeadingClass = 'mb-2 font-semibold text-tx';
-export const tableWrapperClass = 'overflow-auto rounded-xl border border-slate-200 bg-white dark:border-slate-700 dark:bg-slate-900';
-export const tableClass = 'w-full border-collapse';
-export const tableHeaderRowClass = 'bg-slate-100 text-xs dark:bg-slate-800 dark:text-slate-200';
-export const tableHeaderCellClass = 'border border-slate-200 px-2 py-1 text-center text-xs font-semibold dark:border-slate-700 dark:text-slate-200';
-export const tableCellClass = 'border border-slate-200 px-2 py-1 text-right text-xs text-nowrap font-medium text-slate-700 transition-colors duration-150  hover:bg-blue-50 dark:border-slate-700 dark:text-slate-200 dark:hover:bg-slate-700/60';
+export const tableWrapperClass = 'overflow-auto rounded-xl border border-bd bg-card';
+export const tableClass = 'enterprise-table w-full border-collapse';
+export const sheetTableClass = 'enterprise-table enterprise-table--sheet w-full border-collapse';
+export const tableHeaderRowClass = 'text-xs text-tx';
+export const tableHeaderCellClass = 'border border-slate-100 bg-slate-600/20 px-2 py-1 text-center text-sm font-semibold text-slate-700 dark:bg-slate-800 dark:text-slate-100';
+export const tableCellClass = 'border border-bd text-right text-xs py-1.5 text-nowrap font-medium text-tx transition-colors duration-150';
 export const tableCellLeftClass = `${tableCellClass} !text-left`;
-export const tableTotalRowClass = 'bg-blue-50 font-bold text-slate-800 dark:bg-blue-950/20 dark:text-slate-100 py-4';
-export const tableTotalCellClass = `${tableCellClass} ${tableTotalRowClass}`;
-export const tableCalculatedCellClass = `${tableCellClass} bg-amber-200 font-semibold dark:bg-amber-950`;
-export const tableMirrorCellClass = `${tableCellClass} bg-bue-200 font-semibold dark:bg-slate-700/30`;
-export const tableRowClass = 'even:bg-slate-50 hover:bg-blue-50/70 dark:even:bg-slate-800/70 dark:hover:bg-slate-700/60';
-export const tableInputClass = 'w-full min-w-[50px] rounded-sm bg-transparent p-1.5 text-sm text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus:bg-blue-50 focus:ring-2 focus:ring-inset focus:ring-blue-500 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus:bg-slate-700 dark:focus:ring-blue-400';
+export const tableTotalRowClass = 'font-bold text-tx';
+export const tableTotalCellClass = `${tableCellClass} bg-gray-400/50 font-bold dark:bg-slate-700`;
+export const tableCalculatedCellClass = `${tableCellClass} font-semibold`;
+export const tableMirrorCellClass = `${tableCellClass} font-semibold`;
+export const tableRowClass = 'transition-colors duration-200';
+export const tableInputClass = 'box-border h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-1 text-sm text-tx outline-none transition-colors placeholder:text-mu focus:bg-blue-50 focus:ring-2 focus:ring-inset focus:ring-ac dark:focus:bg-slate-700';
 export const amountInputClass = 'rounded-md border border-slate-300 bg-white px-1.5 py-0.5 text-right text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:ring-blue-400';
 export const summaryRowClass = 'flex justify-between border-b border-dashed border-slate-200 py-1 text-slate-700 dark:border-slate-700 dark:text-slate-200';
 export const primaryButtonClass = 'rounded-lg bg-blue-600 px-3 py-1.5 font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-500 dark:focus-visible:outline-blue-400';
@@ -46,7 +47,7 @@ export const dialogClass = 'w-[min(360px,90%)] rounded-2xl border border-slate-2
 // ];
 
 export const tableHeaderGroupClasses = [
-  'bg-slate-300 text-slate-700 text-sm font-semibold dark:bg-blue-950/20 dark:text-green-100',
-  'bg-slate-300 text-slate-700 text-sm font-semibold dark:bg-blue-950/30 dark:text-green-100',
+  'bg-slate-100 text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
+  'bg-slate-100 text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
 
 ];

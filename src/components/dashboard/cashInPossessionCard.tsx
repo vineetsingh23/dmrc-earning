@@ -62,7 +62,7 @@ export default function CashInPossessionCard({
                 <input data-grid="cashPossession" data-row={rowIndex} data-column={0}
                   value={cashCountsInHand[row.key] || ''} placeholder="0" inputMode="numeric"
                   onChange={event => onCountChange(row.key, event.target.value)}
-                  className={`${tableInputClass} w-20 text-right`}
+                  className={`${tableInputClass} text-right`}
                   />
               </td>
               <td className={tableCellClass}>{formatRupees(Number(row.value) * (cashCountsInHand[row.key] ?? 0))}</td>
@@ -77,7 +77,7 @@ export default function CashInPossessionCard({
                   placeholder='0' 
                   inputMode='decimal'
                   onChange={event => onCountChange(looseCoinsKey, event.target.value)}
-                  className={`${tableInputClass} w-20 text-right`}
+                  className={`${tableInputClass} text-right`}
                   />
             </td>
             <td className={tableCellClass}>{formatRupees(looseCoinAmount)}</td>

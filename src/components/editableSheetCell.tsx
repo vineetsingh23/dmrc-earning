@@ -1,5 +1,5 @@
 import { memo } from 'react';
-import { tableInputClass } from '../globalStyles';
+import { tableCellClass, tableInputClass } from '../globalStyles';
 
 type WriteEntryValue = (rowIndex: number, fieldKey: string, newValue: string) => void;
 
@@ -13,7 +13,7 @@ const EditableSheetCell = memo(function EditableSheetCell({
   gridName, rowIndex, columnIndex, fieldKey, isNumeric, value, writeValueReference,
 }: EditableSheetCellProps) {
   return (
-    <td className="sheet-input-cell">
+    <td className={tableCellClass}>
       <input
         data-grid={gridName} data-row={rowIndex} data-column={columnIndex}
         value={value} inputMode={isNumeric ? 'decimal' : 'text'}

@@ -17,14 +17,14 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
       <h2 className="mb-2 font-semibold">Advance received from each TOM</h2>
-      <table className="w-full border-collapse">
+      <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
             <th className={tableHeaderCellClass}>TOM No.</th>
             <th className={tableHeaderCellClass}>Advance received</th>
           </tr>
         </thead>
-        <tbody className={tableClass}>
+        <tbody>
           {tomOperators.map((tomOperator, rowIndex) => (
             <tr key={tomOperator.tomNumber} className={tableRowClass}>
               <td className={`${tableCellLeftClass} text-center! min-w-40`}>{tomOperator.tomNumber}</td>

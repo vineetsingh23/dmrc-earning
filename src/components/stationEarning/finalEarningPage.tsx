@@ -13,11 +13,11 @@ import { useDashboardFigures } from '../../hooks/useDashboardFigures';
 
 interface FinalEarningPageProps { registerState: RegisterState; date: string }
 
-// roomier cells, centred text, a strong colour for each header group
+// Roomier cells and centered text while preserving the shared table palette.
 const finalEarningSheetStyle: SheetStyle = {
   headerCellClass: `${tableHeaderCellClass} px-4 py-3 text-sm font-bold`,
   headerColorClasses: tableHeaderGroupClasses,
-  bodyCellClass: `${tableCellClass} bg-slate-50 px-4 py-6 text-center font-bold dark:bg-slate-800`,
+  bodyCellClass: `${tableCellClass} px-4 py-6 text-center font-bold`,
   footerCellClass: '',
 };
 

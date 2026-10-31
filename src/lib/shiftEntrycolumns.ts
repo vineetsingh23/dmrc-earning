@@ -45,7 +45,7 @@ export const cashDepositedByOperator = (row: RegisterRow) =>
 // total paid outstanding
 
 export const osTotalPaidAmount = (row: RegisterRow) => 
-  sumOfFields(row,'outstandingPaidAfc osMiscAmount, outstandingPaidMisc')
+  sumOfFields(row, 'outstandingPaidAfc outstandingPaidMisc');
 
 // ---- columns, in the order of the printed register ----
 export const shiftEntryColumns: ColumnNode[] = [

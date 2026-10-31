@@ -1,6 +1,6 @@
 import { parseNumber, type ColumnLeaf, tvmTotal } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
-import { cashDepositedByOperator, cashlessTotal, totalEarning } from './shiftEntrycolumns';
+import { cashDepositedByOperator, cashlessTotal, osTotalPaidAmount, totalEarning } from './shiftEntrycolumns';
 export const formatRupees = (amount: unknown) => '₹\u00A0\u00A0' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
@@ -106,6 +106,51 @@ export const dailyCashlessOfDate = (state: RegisterState, date: string) =>
   sumOverRows(shiftRowsOfDate(state, date), cashlessTotal)
   + sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmPaymentByPos) + parseNumber(row.tvmPaymentByUpi));
 
+export interface DailyCashlessStatistics {
+  afcEarning: number;
+  upiTotal: number;
+  posTotal: number;
+  tom8081Upi: number;
+  tom5051Upi: number;
+  tvmUpi: number;
+}
+
+export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string): DailyCashlessStatistics => {
+  const statistics: DailyCashlessStatistics = {
+    afcEarning: 0,
+    upiTotal: 0,
+    posTotal: 0,
+    tom8081Upi: 0,
+    tom5051Upi: 0,
+    tvmUpi: 0,
+  };
+
+  shiftRowsOfDate(state, date).forEach(row => {
+    const tomUpi = parseNumber(row.upiAtTomCc);
+    const tvmUpi = parseNumber(row.upiAtTvm);
+    const pos = ['posAtCcc', 'posAtTvm', 'posAtRctm', 'posAtScvm']
+      .reduce((total, field) => total + parseNumber(row[field]), 0);
+
+    statistics.afcEarning += totalEarning(row);
+    statistics.upiTotal += tomUpi + tvmUpi;
+    statistics.posTotal += pos;
+    statistics.tvmUpi += tvmUpi;
+
+    const tomNumber = row.cccNumber?.match(/(?:^|\D)(80|81|50|51)(?:\D|$)/)?.[1];
+    if (tomNumber === '80' || tomNumber === '81') statistics.tom8081Upi += tomUpi;
+    if (tomNumber === '50' || tomNumber === '51') statistics.tom5051Upi += tomUpi;
+  });
+
+  tvmRowsOfDate(state, date).forEach(row => {
+    const upi = parseNumber(row.tvmPaymentByUpi);
+    statistics.upiTotal += upi;
+    statistics.tvmUpi += upi;
+    statistics.posTotal += parseNumber(row.tvmPaymentByPos);
+  });
+
+  return statistics;
+};
+
 export const tvmQrSaleOfDate = (state: RegisterState, date: string) =>
   sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmQrSaleAmount));
 export const tvmAddValueOfDate = (state: RegisterState, date: string) =>
@@ -143,4 +188,4 @@ export const carryForwardCashCounts = (carriedCounts: Record<string, number>, ex
 };
 
 export const totalOutStandingAmount = (state: RegisterState, date: string) =>
-  sumOverRows(shiftRowsOfDate(state,date), row => parseNumber(row.osTotalPaidAmount))
+  sumOverRows(shiftRowsOfDate(state, date), osTotalPaidAmount);

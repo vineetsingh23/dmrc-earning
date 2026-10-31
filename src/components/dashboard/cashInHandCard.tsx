@@ -10,6 +10,7 @@ import { cashInHandOfDate, cashFromPreviousDays } from '../../lib/earningCalcula
 interface CashInHandCardProps {
   totalCashInHand: ReturnType<typeof cashInHandOfDate>; 
   previousDaysCash: ReturnType<typeof cashFromPreviousDays>; 
+  osTotalPaidAmount:number
   currentDayEarning: number;
   advanceReceivedTotal: number; 
   amountDueToBank: number;
@@ -22,7 +23,7 @@ interface CashInHandCardProps {
 
 export default function CashInHandCard({
   totalCashInHand, previousDaysCash, currentDayEarning,advanceReceivedTotal,
-  amountDueToBank, existingTransfer, canSendToBank, onSendToBankClick, noteDraft
+  amountDueToBank, existingTransfer, canSendToBank, onSendToBankClick, noteDraft,osTotalPaidAmount
 }: CashInHandCardProps) {
 
   
@@ -36,6 +37,8 @@ export default function CashInHandCard({
       <div className={summaryRowClass}><span>Previous days cash not yet sent</span><b>{formatRupees(previousDaysCash)}</b></div>
       <div className={summaryRowClass}><span>Current day earning</span><b>{formatRupees(currentDayEarning)}</b></div>
       <div className={summaryRowClass}><span>Advance received from TOMs</span><b>{formatRupees(advanceReceivedTotal)}</b></div>
+      <div className={summaryRowClass}><span>AFC+Misc Paid Amount</span><b>{formatRupees(osTotalPaidAmount)}</b></div>
+
       </div>
       <hr className='border-2 border-blue-300 my-2'/>
       <div className='py-2'>

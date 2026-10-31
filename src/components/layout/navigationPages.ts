@@ -7,5 +7,6 @@ export const navigationPages: NavigationPage[] = [
   { label: 'Shift Entry', path: '/shift-entry', Icon: ClipboardList },
   { label: 'TVM Earning', path: '/tvm-earning', Icon: Ticket },
   { label: 'Final Earning', path: '/final-earning', Icon: FileSpreadsheet },
+  { label: 'Station Overview', path: '/station-overview', Icon: FileSpreadsheet },
   { label: 'WhatsApp Report', path: '/daily-report', Icon: MessageCircleCheck },
 ];

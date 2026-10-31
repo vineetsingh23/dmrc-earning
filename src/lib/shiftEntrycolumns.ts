@@ -42,6 +42,11 @@ export const cashDepositedByOperator = (row: RegisterRow) =>
 // export const surchargeThroughPurseAfc = (row: RegisterRow) => sumOfFields(row, 'surchargePurseAmount');
 // export const surchargeThroughPurseNcmc = (row: RegisterRow) => sumOfFields(row, 'ncmcPurseAmount');
 
+// total paid outstanding
+
+export const osTotalPaidAmount = (row: RegisterRow) => 
+  sumOfFields(row,'outstandingPaidAfc osMiscAmount, outstandingPaidMisc')
+
 // ---- columns, in the order of the printed register ----
 export const shiftEntryColumns: ColumnNode[] = [
   textColumn('cccNumber', 'CCC/TOM No.'), textColumn('operatorName', 'Name of Operator'), textColumn('employeeNumber', 'Employee No.'),

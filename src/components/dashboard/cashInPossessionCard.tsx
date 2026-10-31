@@ -19,6 +19,8 @@ interface CashInPossessionCardProps {
   looseCoinAmount:number;
   denominationTotalAmount: number;
   totalCashInHand: number;
+  miscDebitTotal:number;
+  miscCreditTotal:number;
   imprestAndAdvanceIssuedTotal:number;
   cashCountsSource: 'saved' | 'carried' | 'none';
 
@@ -31,9 +33,11 @@ export default function CashInPossessionCard({
                                         totalCashInHand,
                                         looseCoinAmount, 
                                         cashCountsSource,
+                                        miscCreditTotal,
+                                        miscDebitTotal,
                                         imprestAndAdvanceIssuedTotal,
                                         onCountChange }: CashInPossessionCardProps) {
-  const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal
+  const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal + miscCreditTotal - miscDebitTotal;
   const cashDifference = Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
   const matchesCashInHand = cashDifference === 0;
   return (
@@ -49,7 +53,7 @@ export default function CashInPossessionCard({
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={tableHeaderCellClass}>Note / coin</th>
+            <th className={tableHeaderCellClass}>Denominations</th>
             <th className={tableHeaderCellClass}>Count</th>
             <th className={tableHeaderCellClass}>Amount</th>
           </tr>
@@ -90,6 +94,19 @@ export default function CashInPossessionCard({
             <td className={tableCellClass}>{formatRupees(imprestAndAdvanceIssuedTotal)}</td>
 
           </tr>
+            <tr className={tableRowClass}>
+            <td className={tableCellLeftClass}>Misc Debit Total</td>
+            <td className={tableCellClass}>-</td>
+            <td className={tableCellClass}>{formatRupees(miscDebitTotal)}</td>
+
+          </tr>
+                <tr className={tableRowClass}>
+            <td className={tableCellLeftClass}>Misc Credit Total</td>
+            <td className={tableCellClass}>-</td>
+            <td className={tableCellClass}>{formatRupees(miscCreditTotal)}</td>
+
+          </tr>
+
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>

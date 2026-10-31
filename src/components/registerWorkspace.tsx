@@ -1,6 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppHeader from "./layout/appHeader";
+import MiscEntryCard from './dashboard/miscEntryCard';
+import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
+import type { MiscKind } from '../lib/miscEntries';
 import EarningSheetTable from "./stationEarning/earningSheetTable";
 import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
@@ -107,6 +110,14 @@ export default function RegisterWorkspace({
   //     }
   //   />
   // );
+  const renderMiscCard = (title: string, kind: MiscKind) => (
+  <MiscEntryCard
+    title={title} kind={kind} rows={registerState.detailLists?.[selectedDate]?.[kind] ?? []}
+    tillDateTotal={kind === 'miscDebit' ? figures.miscDebitTotal : figures.miscCreditTotal}
+    onCellChange={(rowIndex: number, columnIndex: number, newValue: string) =>
+      updateRegisterState(draftState => updateMiscEntryCell(draftState, selectedDate, kind, rowIndex, columnIndex, newValue))}
+  />
+);
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(
@@ -192,6 +203,7 @@ export default function RegisterWorkspace({
               <div className={dashboardGridClass}>
                 <CashInHandCard
                   totalCashInHand={figures.totalCashInHand}
+                  osTotalPaidAmount={figures.osTotalPaidAmount}
                   previousDaysCash={figures.previousDaysCash}
                   currentDayEarning={figures.currentDayEarning}
                   amountDueToBank={figures.amountDueToBank}
@@ -203,6 +215,8 @@ export default function RegisterWorkspace({
                 />
                 <CashInPossessionCard
                   cashCountsInHand={figures.cashCountsInHand}
+                  miscCreditTotal={figures.miscCreditTotal}
+                  miscDebitTotal={figures.miscDebitTotal}
                   looseCoinAmount={figures.looseCoinsAmount}
                   cashCountsSource={figures.cashCountsSource}
                   denominationTotalAmount={figures.denominationTotalAmount}
@@ -250,6 +264,11 @@ export default function RegisterWorkspace({
                     }
                   />
                 </div>
+                  <div className="col-span-full grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-3">
+  {renderMiscCard('Misc debit', 'miscDebit')}
+  {renderMiscCard('Misc credit', 'miscCredit')}
+</div>
+                
 
                 {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(

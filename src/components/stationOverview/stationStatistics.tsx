@@ -2,7 +2,7 @@ import {cardContainer } from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import {type  RegisterState } from "../../lib/registerTypes";
 import {
-  dailyEarningOfDate, dailyQrSaleOfDate, datesWithEntriesUpTo, formatRupees, tvmAddValueOfDate, tvmQrSaleOfDate,
+  dailyEarningOfDate, dailyQrSaleOfDate, datesWithEntriesUpTo, formatRupees, tvmAddValueOfDate, tvmQrSaleOfDate,dailyCashlessOfDate
 } from '../../lib/earningCalculations';
 
 
@@ -44,10 +44,21 @@ export default function StationStatisticsCard({registerState,date}: StationStati
     { title: 'Highest Cashless Earning till date', bestDay: findBestDay(datesTillDate, entryDate => tvmAddValueOfDate(registerState, entryDate)) },
   ];
 
+    const cashlessTransactions: { title: string; bestDay: BestDay }[] = [
+    { title: 'Previous Day Cashless Earning', bestDay: findBestDay(datesInSelectedMonth, entryDate => dailyCashlessOfDate(registerState, entryDate)) },
+    { title: 'Highest earning till date', bestDay: findBestDay(datesTillDate, entryDate => dailyEarningOfDate(registerState, entryDate)) },
+    { title: 'Highest Earning TVM this month', bestDay: findBestDay(datesInSelectedMonth, entryDate => dailyQrSaleOfDate(registerState, entryDate)) },
+    { title: 'Highest Earning TVM till date', bestDay: findBestDay(datesTillDate, entryDate => dailyQrSaleOfDate(registerState, entryDate)) },
+    { title: 'Highest Earning TOM this month', bestDay: findBestDay(datesTillDate, entryDate => tvmQrSaleOfDate(registerState, entryDate)) },
+    { title: 'Highest Earning TOM till date', bestDay: findBestDay(datesTillDate, entryDate => tvmQrSaleOfDate(registerState, entryDate)) },
+    { title: 'Highest Cashless Earning this month', bestDay: findBestDay(datesTillDate, entryDate => tvmAddValueOfDate(registerState, entryDate)) },
+    { title: 'Highest Cashless Earning till date', bestDay: findBestDay(datesTillDate, entryDate => tvmAddValueOfDate(registerState, entryDate)) },
+  ];
+const cardSeparator = 'mt-4 text-blue-600 dark:text-blue-400 text-md font-extrabold'
   return (
     <div>
 
-    <h2 className="mb-2 font-semibold">Statistics</h2>
+    <h2 className={cardSeparator}>Statistics</h2>
    <div className={cardContainer}>
       <div className="flex gap-4">
         {statistics.map(({ title, bestDay }) => (
@@ -60,7 +71,23 @@ export default function StationStatisticsCard({registerState,date}: StationStati
         ))}
       </div>
     </div>
+
+     <h2 className={cardSeparator}>Cashless Transaction (previous day)</h2>
+   <div className={cardContainer}>
+      <div className="flex gap-4">
+        {cashlessTransactions.map(({ title, bestDay }) => (
+          <div key={title} className={staticCardClass}>
+            <small className="block text-mu">{title}</small>
+            {bestDay
+              ? <><b className="text-xl">{formatRupees(bestDay.amount)}</b><small className="block text-mu">{bestDay.date}</small></>
+              : <b>—</b>}
+          </div>
+        ))}
+      </div>
+    </div>
+
         </div>
+
   )
 }
 

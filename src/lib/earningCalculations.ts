@@ -141,3 +141,6 @@ export const carryForwardCashCounts = (carriedCounts: Record<string, number>, ex
   });
   return result;
 };
+
+export const totalOutStandingAmount = (state: RegisterState, date: string) =>
+  sumOverRows(shiftRowsOfDate(state,date), row => parseNumber(row.osTotalPaidAmount))

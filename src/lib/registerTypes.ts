@@ -36,7 +36,8 @@ export const createEmptyRegisterState =() : RegisterState =>({
 
 export type DetailListKind =
   | 'imprestIssue' | 'advanceReceived'
-  | 'outsourceEarning' | 'miscEarning' | 'penaltyDetails';
+  | 'outsourceEarning' | 'miscEarning' | 'penaltyDetails'
+  | 'miscDebit' | 'miscCredit';
 
 
 export interface StationRecord { name: string; hasSv4Recharge: boolean; hasParking: boolean }

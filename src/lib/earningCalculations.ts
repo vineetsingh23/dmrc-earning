@@ -6,6 +6,7 @@ import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
 import { effectiveDetailListRows } from './carriedLists';
 
+
 // quantity columns show plain numbers, amounts show rupees
 export const formatCellValue = (column: ColumnLeaf, value: number) =>
   /Qty/.test(column.label) ? String(value) : formatRupees(value);
@@ -108,7 +109,8 @@ export const dailyEarningOfDate = (state: RegisterState, date: string) =>
 export const dailyCashlessOfDate = (state: RegisterState, date: string) =>
   sumOverRows(shiftRowsOfDate(state, date), cashlessTotal)
   + sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmPaymentByPos) + parseNumber(row.tvmPaymentByUpi));
-
+export const dailyFinalCashDepositedOfDate = (state: RegisterState, date: string) =>
+  sumOverRows(shiftRowsOfDate(state, date),cashDepositedByOperator) + sumOverRows(tvmRowsOfDate(state, date), tvmFinalTotal)
 export interface DailyCashlessStatistics {
   afcEarning: number;
   upiTotal: number;

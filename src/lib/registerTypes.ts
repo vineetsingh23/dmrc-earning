@@ -31,13 +31,15 @@ export const createEmptyRegisterState =() : RegisterState =>({
     bankTransfers:{},
     imprestIssued:{},
     advanceReceived:{},
-    reportFields:{}
+    reportFields:{},
+    miscEntries: { miscDebit: [], miscCredit: [] },
+    miscRowCounts: { miscDebit: 6, miscCredit: 6 },
 })
 
 export type DetailListKind =
   | 'imprestIssue' | 'advanceReceived'
   | 'outsourceEarning' | 'miscEarning' | 'penaltyDetails'
-  | 'miscDebit' | 'miscCredit';
+
 
 
 export interface StationRecord { name: string; hasSv4Recharge: boolean; hasParking: boolean }
@@ -47,3 +49,10 @@ export const stations: StationRecord[] = [
   { name: 'Sector 62 Noida', hasSv4Recharge: false, hasParking: false },
 ];
 
+export type MiscKind = 'miscDebit' | 'miscCredit';
+
+export interface RegisterState {
+  // ...your existing properties...
+  miscEntries?: Record<MiscKind, string[][]>;      // misc debit / credit: every entry ever added, each with its own date
+  miscRowCounts?: Record<MiscKind, number>;        // rows shown in each card; the Add row button raises it
+}

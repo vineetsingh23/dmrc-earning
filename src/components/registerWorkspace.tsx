@@ -1,9 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppHeader from "./layout/appHeader";
+import { effectiveDetailListRows } from '../lib/carriedLists';
+import { updateCarriedDetailListCell } from '../handlers/carriedListsHandlers';
+import { addMiscRow, updateMiscEntryCell } from '../handlers/miscEntryHandlers';
+import { miscRowCountOf, miscRowsOf, type MiscKind } from '../lib/miscEntries';
 import MiscEntryCard from './dashboard/miscEntryCard';
-import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
-import type { MiscKind } from '../lib/miscEntries';
+// import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
+// import type { MiscKind } from '../lib/miscEntries';
 import EarningSheetTable from "./stationEarning/earningSheetTable";
 import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
@@ -110,12 +114,14 @@ export default function RegisterWorkspace({
   //     }
   //   />
   // );
-  const renderMiscCard = (title: string, kind: MiscKind) => (
+const renderMiscCard = (title: string, kind: MiscKind) => (
   <MiscEntryCard
-    title={title} kind={kind} rows={registerState.detailLists?.[selectedDate]?.[kind] ?? []}
-    tillDateTotal={kind === 'miscDebit' ? figures.miscDebitTotal : figures.miscCreditTotal}
-    onCellChange={(rowIndex: number, columnIndex: number, newValue: string) =>
+    title={title} kind={kind}
+    rows={miscRowsOf(registerState, kind)} rowCount={miscRowCountOf(registerState, kind)} selectedDate={selectedDate}
+    countedTotal={kind === 'miscDebit' ? figures.miscDebitTotal : figures.miscCreditTotal}
+    onCellChange={(rowIndex, columnIndex, newValue) =>
       updateRegisterState(draftState => updateMiscEntryCell(draftState, selectedDate, kind, rowIndex, columnIndex, newValue))}
+    onAddRow={() => updateRegisterState(draftState => addMiscRow(draftState, kind))}
   />
 );
 
@@ -227,42 +233,16 @@ export default function RegisterWorkspace({
                   onCountChange={changeCashCount}
                 />
                 <div className={stackedCardsClass}>
-                  <ImprestIssueCard
-                    listRows={
-                      registerState.detailLists?.[selectedDate]?.imprestIssue ??
-                      []
-                    }
-                    onAdvanceChange={(rowIndex, typedValue) =>
-                      updateRegisterState((draftState) =>
-                        updateDetailListCell(
-                          draftState,
-                          selectedDate,
-                          "imprestIssue",
-                          rowIndex,
-                          2,
-                          typedValue,
-                        ),
-                      )
-                    }
-                  />
-                  <AdvanceReceivedCard
-                    listRows={
-                      registerState.detailLists?.[selectedDate]
-                        ?.advanceReceived ?? []
-                    }
-                    onAdvanceChange={(rowIndex, typedValue) =>
-                      updateRegisterState((draftState) =>
-                        updateDetailListCell(
-                          draftState,
-                          selectedDate,
-                          "advanceReceived",
-                          rowIndex,
-                          1,
-                          typedValue,
-                        ),
-                      )
-                    }
-                  />
+                <ImprestIssueCard
+  listRows={effectiveDetailListRows(registerState, selectedDate, 'imprestIssue')}
+  onAdvanceChange={(rowIndex, typedValue) =>
+    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))}
+/>
+<AdvanceReceivedCard
+  listRows={effectiveDetailListRows(registerState, selectedDate, 'advanceReceived')}
+  onAdvanceChange={(rowIndex, typedValue) =>
+    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
+/>
                 </div>
                   <div className="col-span-full grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-3">
   {renderMiscCard('Misc debit', 'miscDebit')}

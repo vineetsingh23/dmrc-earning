@@ -14,7 +14,7 @@ export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-co
 export const stackedCardsClass = 'flex flex-col gap-4';
 
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
-export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:-translate-y-0.5 hover:shadow-md';
+export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md';
 export const cardHeadingClass = 'mb-2 font-semibold text-tx';
 export const tableWrapperClass = 'overflow-auto rounded-xl border border-bd bg-card';
 export const tableClass = 'enterprise-table w-full border-collapse px-2';

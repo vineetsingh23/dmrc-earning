@@ -4,6 +4,7 @@ import { cashDepositedByOperator, cashlessTotal, osTotalPaidAmount, totalEarning
 export const formatRupees = (amount: unknown) => '₹\u00A0\u00A0' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
+import { effectiveDetailListRows } from './carriedLists';
 
 // quantity columns show plain numbers, amounts show rupees
 export const formatCellValue = (column: ColumnLeaf, value: number) =>
@@ -67,13 +68,15 @@ export const breakIntoDenominations = (amount: number): Record<string, number> =
   return counts;
 };
 
-export const imprestIssuedTotalForDate =(state: RegisterState, date: string) =>
-  tomOperators.reduce((total, tomOperator, rowIndex) =>
-    total + tomOperator.imprestAmount + parseNumber(state.detailLists?.[date]?.imprestIssue?.[rowIndex]?.[2]),0);
+export const imprestIssuedTotalForDate = (state: RegisterState, date: string) => {
+  const issuedRows = effectiveDetailListRows(state, date, 'imprestIssue');
+  return tomOperators.reduce((total, tomOperator, rowIndex) => total + tomOperator.imprestAmount + parseNumber(issuedRows[rowIndex]?.[2]), 0);
+};
 
-export const advanceReceivedTotalForDate =(state: RegisterState, date: string) =>
-  tomOperators.reduce((total, _tomOperator, rowIndex) =>
-    total + parseNumber(state.detailLists?.[date]?.advanceReceived?.[rowIndex]?.[1]),0);
+export const advanceReceivedTotalForDate = (state: RegisterState, date: string) => {
+  const receivedRows = effectiveDetailListRows(state, date, 'advanceReceived');
+  return tomOperators.reduce((total, _tomOperator, rowIndex) => total + parseNumber(receivedRows[rowIndex]?.[1]), 0);
+};
 
 
 export const tvmFinalTotalOfDate = (state: RegisterState, date: string) =>

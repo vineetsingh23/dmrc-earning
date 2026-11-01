@@ -1,5 +1,5 @@
 import type { RegisterRow, RegisterState } from './registerTypes';
-import { parseNumber, sumOfFields, tvmTotal } from './earningColumns';
+import { parseNumber, sumOfFields, tvmAfcTotal } from './earningColumns';
 import { afcCollectionTotal } from './shiftEntrycolumns';
 
 // ---- fields typed by the user, once for each date ----
@@ -42,8 +42,8 @@ export function buildDailyReportFigures(state: RegisterState, date: string) {
   const shiftRows = Object.values(state.shiftEntries[date] ?? {});
   const tvmRows = Object.values(state.tvmEntries?.[date] ?? {});
 
-  const afcEarning = sumRows(shiftRows, afcCollectionTotal) + sumRows(tvmRows, tvmTotal);
-  const tvmAndRctmSale = sumRows(tvmRows, tvmTotal);
+  const afcEarning = sumRows(shiftRows, afcCollectionTotal) + sumRows(tvmRows, tvmAfcTotal);
+  const tvmAndRctmSale = sumRows(tvmRows, tvmAfcTotal);
   const tvmQrSaleQuantity = sumRows(tvmRows, row => parseNumber(row.tvmQrSaleQuantity));
   const tvmQrSaleAmount = sumRows(tvmRows, row => parseNumber(row.tvmQrSaleAmount));
   const shiftQrSaleQuantity = sumRows(shiftRows, row => parseNumber(row.qrSaleQuantity));

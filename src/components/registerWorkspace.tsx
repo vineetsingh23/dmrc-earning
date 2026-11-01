@@ -22,7 +22,6 @@ import { useDashboardFigures } from "../hooks/useDashboardFigures";
 import { useBankNoteDraft } from "../hooks/useBankNoteDraft";
 import ImprestIssueCard from "./dashboard/imprestIssueCard";
 import AdvanceReceivedCard from "./dashboard/advanceReceivedCard";
-import { updateDetailListCell } from "../handlers/detailListHandlers";
 import TvmEarningPage from "./stationEarning/tvmEarningPage";
 import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";

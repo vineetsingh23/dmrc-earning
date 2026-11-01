@@ -6,5 +6,5 @@ export function effectiveDetailListRows(state: RegisterState, date: string, kind
   if (ownRows) return ownRows;
   const earlierDates = Object.keys(state.detailLists ?? {}).filter(savedDate => savedDate < date && state.detailLists[savedDate][kind]).sort();
   const latestDate = earlierDates[earlierDates.length - 1];
-  return latestDate ? state.detailLists[latestDate][kind] : [];
+  return latestDate ? state.detailLists[latestDate][kind] ?? [] : [];
 }

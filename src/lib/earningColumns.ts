@@ -40,10 +40,14 @@ export const calculatedColumn = (fieldKey: string, label: string, formula: (row:
 export const columnGroup = (label: string, ...children: ColumnNode[]): ColumnGroup => ({ label, children });
 // ---- TVM (ticket vending machine) earning sheet ----
 // total = all four amounts; final total = total minus POS, UPI and outstanding (cash left in the machine)
-export const tvmTotal = (row: RegisterRow) =>
+export const tvmAfcTotal = (row: RegisterRow) =>
   sumOfFields(row, 'tvmQrSaleAmount tvmAddValueAmount tvmNcmcAddValueAmount tvmRctmAddValueAmount');
+
+export const tvmCashlessTotal = (row: RegisterRow) =>
+  sumOfFields(row, 'tvmPaymentByPos upiAtTvm tvmOutstandingCurrent')
+
 export const tvmFinalTotal = (row: RegisterRow) =>
-  tvmTotal(row) - sumOfFields(row, 'tvmPaymentByPos tvmPaymentByUpi tvmOutstandingCurrent');
+  tvmAfcTotal(row) - tvmCashlessTotal(row);
 
 export const tvmEarningColumns: ColumnNode[] = [
   textColumn('tvmNumber', 'TVM No.'),
@@ -51,14 +55,11 @@ export const tvmEarningColumns: ColumnNode[] = [
   columnGroup('Add Value', numberColumn('tvmAddValueQuantity', 'Qty'), numberColumn('tvmAddValueAmount', 'Amount')),
   columnGroup('Add Value NCMC', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amount')),
   columnGroup('RCTM Add Value', numberColumn('tvmRctmAddValueQuantity', 'Qty'), numberColumn('tvmRctmAddValueAmount', 'Amount')),
-  calculatedColumn('tvmTotal', 'Total', tvmTotal),
-  columnGroup('Cashless Transaction', numberColumn('tvmPaymentByPos', 'Payment by POS'), numberColumn('tvmPaymentByUpi', 'Payment by UPI')),
+  calculatedColumn('tvmTotal', 'Total', tvmAfcTotal),
+  columnGroup('Cashless Transaction', numberColumn('tvmPaymentByPos', 'Payment by POS'), numberColumn('upiAtTvm', 'Payment by UPI')),
   numberColumn('tvmOutstandingCurrent', 'Outstanding (current)'),
   calculatedColumn('tvmFinalTotal', 'Final Total', tvmFinalTotal),
 ];
-
-export const totalAfcEarning =(row: RegisterRow) => 
-  sumOfFields(row,'tvmFinalTotal totalEarning')
 
 
 export interface StationFacilities { hasSv4Recharge: boolean; hasParking: boolean }

@@ -1,12 +1,19 @@
 import type { RegisterRow } from './registerTypes';
-import { calculatedColumn, columnGroup, numberColumn, sumOfFields, textColumn, type ColumnNode } from './earningColumns';
-import { afcCollectionTotal } from './shiftEntrycolumns';
-import { quantityAmountColumns,totalEarning, cashDepositedByOperator } from './shiftEntrycolumns';
+import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, tvmCashlessTotal, type ColumnNode } from './earningColumns';
+import { afcCollectionTotal,totalEarning } from './shiftEntrycolumns';
+import { quantityAmountColumns, cashDepositedByOperator } from './shiftEntrycolumns';
 
 // total AFC earning of the day = AFC collection of the shift sheet + every TVM sale and add value amount
 // (the final row holds the totals of both sheets, so the shift formula works on it unchanged)
-export const totalAfcEarning = (row: RegisterRow) =>
-  afcCollectionTotal(row) + sumOfFields(row, 'tvmQrSaleAmount tvmAddValueAmount tvmNcmcAddValueAmount tvmRctmAddValueAmount');
+export const totalFinalAfcEarning = (row: RegisterRow) =>
+  afcCollectionTotal(row) + tvmAfcTotal(row);
+
+export const totalFinalEarning = (row:RegisterRow) => 
+  totalEarning(row) + tvmAfcTotal(row)
+
+export const totalFinalCashDeposited = (row: RegisterRow) => 
+  cashDepositedByOperator(row) +  tvmAfcTotal(row) - tvmCashlessTotal(row)
+  
 
 export const finalEarningColumns: ColumnNode[] = [
   textColumn('finalRowLabel', 'Particulars'),
@@ -30,12 +37,12 @@ export const finalEarningColumns: ColumnNode[] = [
     columnGroup('Add Value Cancel', numberColumn('addValueCancelQuantity', 'Qty'), numberColumn('addValueCancelAmount', 'Amt')))),
 
   columnGroup('Surcharge',
-    columnGroup('Surcharge by Cash/Cashless', numberColumn('surchargeByCashQuantity','Qty'), numberColumn('surchargeByCashAmount','Amt')),
-    columnGroup('SV2 Surcharge by Purse', numberColumn('surchargeByPurseQuantity','Qty'), numberColumn('surchargeByPurseAmount','Amt')),
-    columnGroup('NCMC Surcharge by Cash/Cashless', numberColumn('surchargeNcmcQuantity','Qty'), numberColumn('surchargeNcmcAmount','Amt')),
-    columnGroup('NCMC Surcharge by Purse', numberColumn('surchargeNcmcByPurseQuantity','Qty'), numberColumn('surchargeNcmcByPurseAmount','Amt'))),
+    columnGroup('Surcharge by Cash/Cashless', numberColumn('surchargeCashQuantity','Qty'), numberColumn('surchargeCashAmount','Amt')),
+    columnGroup('SV2 Surcharge by Purse', numberColumn('surchargePurseQuantity','Qty'), numberColumn('surchargePurseAmount','Amt')),
+    columnGroup('NCMC Surcharge by Cash/Cashless', numberColumn('ncmcCashQuantity','Qty'), numberColumn('ncmcCashAmount','Amt')),
+    columnGroup('NCMC Surcharge by Purse', numberColumn('ncmcPurseQuantity','Qty'), numberColumn('ncmcPurseAmount','Amt'))),
   
-  calculatedColumn('totalAfcEarning', 'Total AFC earning', totalAfcEarning),
+  calculatedColumn('totalAfcEarning', 'Total AFC earning', totalFinalAfcEarning),
 
   columnGroup('Other Earning Details',
     columnGroup('EIB', numberColumn('eib','Amt')),
@@ -55,7 +62,7 @@ export const finalEarningColumns: ColumnNode[] = [
     columnGroup('Manual Refund (if any) QR', ...quantityAmountColumns('manualQrRefundQuantity', 'manualQrRefundAmount', 'x')),
     columnGroup('Parking (Y)', numberColumn('parkingManualCash', 'Manual Cash (y1)'), numberColumn('parkingHhtCash', 'HHT Cash (y2)'), numberColumn('parkingHhtPurse', 'HHT Purse (y3)'))),
   
-    calculatedColumn('totalEarning', 'Total Earning (Z)', totalEarning),
+    calculatedColumn('totalEarning', 'Total Earning (Z)', totalFinalEarning),
   
     columnGroup('Cashless Details (CD)',
       numberColumn('posAtCcc', 'POS at CCC (aa1)'), numberColumn('posAtTvm', 'POS at TVM (ab1)'), numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
@@ -68,7 +75,7 @@ export const finalEarningColumns: ColumnNode[] = [
       columnGroup('Current', numberColumn('outstandingCurrentAfc', 'AFC (aj)'), numberColumn('outstandingCurrentMisc', 'Misc (ak)'), numberColumn('tvmMutilatedFakeNotes', 'TVM Mutilated/Fake Notes')),
       columnGroup('Paid', numberColumn('outstandingPaidAfc', 'AFC (al)'), numberColumn('outstandingPaidMisc', 'Misc (am)'))),
   
-  calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),
+  calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', totalFinalCashDeposited),
 
   columnGroup('Cash position',
     numberColumn('previousDayCashOnHand', 'Previous day cash on hand'),

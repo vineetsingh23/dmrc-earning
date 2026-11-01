@@ -1,4 +1,4 @@
-import { parseNumber, type ColumnLeaf, tvmTotal } from './earningColumns';
+import { parseNumber, type ColumnLeaf, tvmAfcTotal } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
 import { cashDepositedByOperator, cashlessTotal, osTotalPaidAmount, totalEarning } from './shiftEntrycolumns';
 export const formatRupees = (amount: unknown) => '₹\u00A0\u00A0' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
@@ -102,7 +102,7 @@ const sumOverRows = (rows: RegisterRow[], valueOfRow: (row: RegisterRow) => numb
 
 // total earning (Z) of the shift sheet plus the TVM total
 export const dailyEarningOfDate = (state: RegisterState, date: string) =>
-  sumOverRows(shiftRowsOfDate(state, date), totalEarning) + sumOverRows(tvmRowsOfDate(state, date), tvmTotal);
+  sumOverRows(shiftRowsOfDate(state, date), totalEarning) + sumOverRows(tvmRowsOfDate(state, date), tvmAfcTotal);
 
 // cashless: shift cashless details plus TVM payments by POS and UPI
 export const dailyCashlessOfDate = (state: RegisterState, date: string) =>

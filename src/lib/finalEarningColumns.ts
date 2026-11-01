@@ -1,6 +1,6 @@
 import type { RegisterRow } from './registerTypes';
-import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, type ColumnNode, sumOfFields } from './earningColumns';
-import { afcCollectionTotal,totalEarning } from './shiftEntrycolumns';
+import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, type ColumnNode, sumOfFields, tvmFinalTotal } from './earningColumns';
+import { afcCollectionTotal,cashDepositedByOperator,totalEarning } from './shiftEntrycolumns';
 import { quantityAmountColumns } from './shiftEntrycolumns';
 
 // total AFC earning of the day = AFC collection of the shift sheet + every TVM sale and add value amount
@@ -12,7 +12,7 @@ export const totalFinalEarning = (row:RegisterRow) =>
   totalEarning(row) + tvmAfcTotal(row)
 
 export const totalFinalCashDeposited = (row: RegisterRow) => 
-  sumOfFields(row, 'cashDepositedByOperator tvmFinalTotal')
+  cashDepositedByOperator(row) + tvmFinalTotal(row)
   
 
 export const finalEarningColumns: ColumnNode[] = [

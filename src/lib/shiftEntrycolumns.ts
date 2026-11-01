@@ -53,7 +53,7 @@ export const shiftEntryColumns: ColumnNode[] = [
   textColumn('shiftStartTime', 'Start of Shift Time'), textColumn('shiftEndTime', 'End of Shift Time'), textColumn('shiftNumber', 'Shift No.'),
 
   columnGroup('QR Tickets',
-    columnGroup('QR Tickets Sale', numberColumn('freeExitQuantity', 'Free Exit Qty'), ...quantityAmountColumns('qrSaleQuantity', 'qrSaleAmount', 'a')),
+    columnGroup('QR Tickets Sale', numberColumn('qrFreeExit', 'Free Exit Qty'), ...quantityAmountColumns('qrSaleQuantity', 'qrSaleAmount', 'a')),
     columnGroup('Paid Exit QR', ...quantityAmountColumns('paidExitQrQuantity', 'paidExitQrAmount', 'b')),
     columnGroup('QR Refund', ...quantityAmountColumns('qrRefundQuantity', 'qrRefundAmount', 'd'))),
 

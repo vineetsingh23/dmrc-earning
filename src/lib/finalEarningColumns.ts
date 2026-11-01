@@ -11,7 +11,7 @@ export const totalAfcEarning = (row: RegisterRow) =>
 export const finalEarningColumns: ColumnNode[] = [
   textColumn('finalRowLabel', 'Particulars'),
   columnGroup('QR Sale',
-    columnGroup('QR Free Exit',numberColumn('qrFreeExit', 'Qry')),
+    columnGroup('QR Free Exit',numberColumn('qrFreeExit', 'Qty')),
     columnGroup('TOM QR Sale', numberColumn('qrSaleQuantity', 'Qty'), numberColumn('qrSaleAmount', 'Amt')),
     columnGroup('TVM QR Sale', numberColumn('tvmQrSaleQuantity', 'Qty'), numberColumn('tvmQrSaleAmount', 'Amt')),
     columnGroup('Paid Exit QR', numberColumn('paidExitQrQuantity', 'Qty'), numberColumn('paidExitQrAmount', 'Amt')),
@@ -26,7 +26,7 @@ export const finalEarningColumns: ColumnNode[] = [
   columnGroup('Add Value NCMC',
     columnGroup('Add Value NCMC TOM', numberColumn('addValueNcmcTomQuantity', 'Qty'), numberColumn('addValueNcmcTomAmount', 'Amt')),
     columnGroup('Add Value NCMC TVM', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amt')),
-    columnGroup('RCTM Add Value',  numberColumn('RctmAddValueQuantity', 'Qty'), numberColumn('RctmAddValueAmount', 'Amt')),
+    columnGroup('RCTM Add Value',  numberColumn('tvmRctmAddValueQuantity', 'Qty'), numberColumn('tvmRctmAddValueAmount', 'Amt')),
     columnGroup('Add Value Cancel', numberColumn('addValueCancelQuantity', 'Qty'), numberColumn('addValueCancelAmount', 'Amt')))),
 
   columnGroup('Surcharge',

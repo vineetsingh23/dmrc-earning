@@ -1,5 +1,5 @@
 import type { RegisterRow } from './registerTypes';
-import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, tvmCashlessTotal, type ColumnNode } from './earningColumns';
+import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, type ColumnNode, tvmFinalTotal } from './earningColumns';
 import { afcCollectionTotal,totalEarning } from './shiftEntrycolumns';
 import { quantityAmountColumns, cashDepositedByOperator } from './shiftEntrycolumns';
 
@@ -12,7 +12,7 @@ export const totalFinalEarning = (row:RegisterRow) =>
   totalEarning(row) + tvmAfcTotal(row)
 
 export const totalFinalCashDeposited = (row: RegisterRow) => 
-  cashDepositedByOperator(row) +  tvmAfcTotal(row) - tvmCashlessTotal(row)
+  cashDepositedByOperator(row) + tvmFinalTotal(row)
   
 
 export const finalEarningColumns: ColumnNode[] = [

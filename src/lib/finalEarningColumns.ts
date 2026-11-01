@@ -1,5 +1,5 @@
 import type { RegisterRow } from './registerTypes';
-import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, type ColumnNode, tvmFinalTotal } from './earningColumns';
+import { calculatedColumn,tvmAfcTotal, columnGroup, numberColumn, textColumn, type ColumnNode } from './earningColumns';
 import { afcCollectionTotal,cashDepositedByOperator,totalEarning } from './shiftEntrycolumns';
 import { quantityAmountColumns } from './shiftEntrycolumns';
 

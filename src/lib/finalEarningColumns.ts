@@ -13,7 +13,7 @@ export const totalFinalEarning = (row:RegisterRow) =>
   totalEarning(row) + tvmAfcTotal(row)
 
 export const totalFinalCashDeposited = (row: RegisterRow) => 
-  cashDepositedByOperator(row) + tvmFinalTotal(row)
+  cashDepositedByOperator(row) 
   
 
 export const finalEarningColumns: ColumnNode[] = [

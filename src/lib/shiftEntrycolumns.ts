@@ -19,7 +19,7 @@ export const penaltyTotal = (row: RegisterRow) =>
 
 
 export const cashlessTotal = (row: RegisterRow) =>
-  sumOfFields(row, 'posAtCcc posAtTvm staticQrAtCcc posAtRctm posAtScvm upiAtTvm upiAtTomCc hhtPenaltyPurseAmount');
+  sumOfFields(row, 'posAtCcc staticQrAtCcc upiAtTomCc hhtPenaltyPurseAmount');
 
 // export const cscPurse = (row: RegisterRow) => sumOfFields(row,'surchargePurseAmount')
 

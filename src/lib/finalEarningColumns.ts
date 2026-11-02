@@ -46,7 +46,7 @@ export const finalEarningColumns: ColumnNode[] = [
   calculatedColumn('totalAfcEarning', 'Total AFC earning', totalFinalAfcEarning),
 
   columnGroup('Other Earning Details',
-    columnGroup('EIB', numberColumn('eib','Amt')),
+    columnGroup('EIB', numberColumn('eibAmount','Amt')),
 
   columnGroup('Top-up in SV-4 Cards (o)', ...quantityAmountColumns('sv4TopUpQuantity', 'sv4TopUpAmount', 'o')),
   

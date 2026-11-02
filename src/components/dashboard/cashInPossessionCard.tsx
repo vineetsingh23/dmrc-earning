@@ -12,11 +12,11 @@ import {
   tableTotalRowClass,
 } from '../../globalStyles';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { allDenominationRows, formatRupees,looseCoinsKey, type DenominationRow } from '../../lib/earningCalculations';
+import {formatRupees,looseCoinsKey,coinRows, noteRows } from '../../lib/earningCalculations';
 
 interface CashInPossessionCardProps {
   cashCountsInHand: Record<string, number>;
-  looseCoinAmount:number;
+  looseCoinAmount?:number;
   denominationTotalAmount: number;
   totalCashInHand: number;
   miscDebitTotal:number;
@@ -25,13 +25,20 @@ interface CashInPossessionCardProps {
   cashCountsSource: 'saved' | 'carried' | 'none';
 
   onCountChange: (countKey: string, typedValue: string) => void;
+
 }
+interface CountRow { countKey: string; label: string; unitValue: number; isRupeeAmount: boolean }
+const countRows: CountRow[] = [
+  ...noteRows.map(row => ({ countKey: row.key, label: row.label, unitValue: Number(row.value), isRupeeAmount: false })),
+  { countKey: looseCoinsKey, label: 'Loose coins (amount ₹)', unitValue: 1, isRupeeAmount: true },
+  ...coinRows.map(row => ({ countKey: row.key, label: row.label, unitValue: Number(row.value), isRupeeAmount: false })),
+];
+
 
 export default function CashInPossessionCard({ 
                                         cashCountsInHand, 
                                         denominationTotalAmount, 
                                         totalCashInHand,
-                                        looseCoinAmount, 
                                         cashCountsSource,
                                         miscCreditTotal,
                                         miscDebitTotal,
@@ -41,7 +48,7 @@ export default function CashInPossessionCard({
   const cashDifference = Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
   const matchesCashInHand = cashDifference === 0;
   return (
-    <div className={cardClass} onKeyDown={handleSheetKeyDown}>
+    <div className={`${cardClass} ${cashDifference === 0 ? '' : 'border-red-400 bg-errorCard'}`} onKeyDown={handleSheetKeyDown}>
 
       <h2 className={cardHeadingClass}>Cash in possession</h2>
 
@@ -59,35 +66,26 @@ export default function CashInPossessionCard({
           </tr>
         </thead>
         <tbody>
-          {allDenominationRows.map((row:DenominationRow, rowIndex) => (
-            <tr key={row.key} className={tableRowClass}>
-              <td className={tableCellLeftClass}>{row.label}</td>
+          {countRows.map((countRow, rowIndex) => (
+            <tr key={countRow.countKey} className={`${tableRowClass} ${cashDifference === 0 ? '' : 'even:bg-errorCard'}`}>
+              <td className={tableCellLeftClass}>{countRow.label}</td>
               <td className={tableCellClass}>
-                <input data-grid="cashPossession" data-row={rowIndex} data-column={0}
-                  value={cashCountsInHand[row.key] || ''} placeholder="0" inputMode="numeric"
-                  onChange={event => onCountChange(row.key, event.target.value)}
-                  className={`${tableInputClass} text-right`}
+                <input 
+                    data-grid="cashCounts" 
+                    data-row={rowIndex} 
+                    data-column={0}
+                    value={cashCountsInHand[countRow.countKey] || ''} 
+                    placeholder="0" 
+                    inputMode={countRow.isRupeeAmount ? 'decimal' : 'numeric'}
+                    onFocus={event =>  event.target.select()}
+                    onChange={event => onCountChange(countRow.countKey, event.target.value)}
+                    className={`${tableInputClass} text-right`}
                   />
               </td>
-              <td className={tableCellClass}>{formatRupees(Number(row.value) * (cashCountsInHand[row.key] ?? 0))}</td>
+              <td className={tableCellClass}>{formatRupees(Number(countRow.unitValue) * (cashCountsInHand[countRow.countKey] ?? 0))}</td>
             </tr>
           ))}
-          {/* loose coins typed as rupee amount */}
-          <tr className={tableRowClass}>
-            <td className={tableCellLeftClass}>Loose Coins</td>
-            <td className={tableCellClass}>
-              <input 
-                  value={looseCoinAmount || ''} 
-                  placeholder='0' 
-                  inputMode='decimal'
-                  onChange={event => onCountChange(looseCoinsKey, event.target.value)}
-                  className={`${tableInputClass} text-right`}
-                  />
-            </td>
-            <td className={tableCellClass}>{formatRupees(looseCoinAmount)}</td>
 
-          </tr>
-           {/* loose coins typed as rupee amount */}
           <tr className={tableRowClass}>
             <td className={tableCellLeftClass}>Imprest Issued</td>
             <td className={tableCellClass}>-</td>

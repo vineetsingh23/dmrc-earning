@@ -306,7 +306,7 @@ export default function EarningSheetTable({
           <tfoot>
             <tr>
               <td
-                className={sheetStyle.footerCellClass}
+                className='bg-blue-400 text-md font-bold !text-center px-0 py-4'
                 style={frozenCellStyle(0, 5)}
               >
                 Total
@@ -314,7 +314,7 @@ export default function EarningSheetTable({
               {leafColumns.map((column, leafIndex) => (
                 <td
                   key={column.fieldKey}
-                  className={sheetStyle.footerCellClass}
+                  className='bg-blue-400 text-md font-bold !text-right px-2 py-4'
                   style={frozenStyleOfLeaf(leafIndex, 5)}
                 >
                   {column.kind === "text"

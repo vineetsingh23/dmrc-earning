@@ -30,11 +30,11 @@
   --h3: #fdebc8;
   --h4: #fbdde6;
   --h5: #d4f0f0;
-  --sheet-header: #386ba9;
-  --sheet-footer:#5f7ca0;
+  --sheet-header: #7299c8;
+  --sheet-footer:#4e7aaf;
   --table-row-base: #d8d9dc;
-  --table-row-alt: #d9d9d9;
-  --table-row-hover: #5777a8;
+  --table-row-alt: #bcbdbe;
+  --table-row-hover: rgb(166, 185, 212);
 }
 
 .dark {

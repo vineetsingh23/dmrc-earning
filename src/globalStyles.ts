@@ -47,7 +47,7 @@ export const dialogClass = 'w-[min(360px,90%)] rounded-2xl border border-slate-2
 // ];
 
 export const tableHeaderGroupClasses = [
-  'bg-slate-100 text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
-  'bg-slate-100 text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
+  'sheet-header text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
+  'bg-sheet-header text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',
 
 ];

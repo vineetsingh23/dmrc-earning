@@ -28,6 +28,8 @@ import {
   tableTotalCellClass,
   tableWrapperClass,
   sheetTableClass,
+  tableHeaderRowClass,
+  tableClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import { frozenCellStyle, frozenColumnWidthsRem } from "../sheetFrozenColumns";
@@ -208,6 +210,7 @@ export default function EarningSheetTable({
                     rowSpan={Math.max(...columns.map(columnDepth))}
                     style={frozenCellStyle(0, 50)}
                     
+                    
                   >
                     S.No
                   </th>
@@ -215,10 +218,11 @@ export default function EarningSheetTable({
                 {headerRow}
               </tr>
             ),
-          )}
+            
+          ) }
         </thead>
 
-        <tbody className="sheet-table">
+        <tbody className={'sheet-table'}>
           {allRows.map((row, rowIndex) => (
             <tr key={rowIndex} className={tableRowClass}>
               <td

@@ -12,7 +12,7 @@
   --card: #ffffff;
   --tx: #1e2430;
   --mu: #625f58;
-  --bd: #d7dce4;
+  --bd: #ececec;
   --ac: #2563eb;
   --ac2: #818cf8;
   --in: #f1f3f6;
@@ -30,8 +30,11 @@
   --h3: #fdebc8;
   --h4: #fbdde6;
   --h5: #d4f0f0;
-  --table-row-alt: #eef0f5;
-  --table-row-hover: #f8f8f8;
+  --sheet-header: #386ba9;
+  --sheet-footer:#5f7ca0;
+  --table-row-base: #d8d9dc;
+  --table-row-alt: #d9d9d9;
+  --table-row-hover: #5777a8;
 }
 
 .dark {
@@ -59,15 +62,35 @@
   --h3: #54411b;
   --h4: #5a2a3d;
   --h5: #1d4a4b;
-  --table-row-alt: #222c3d;
-  --table-row-hover: #2b3a50;
+  --sheet-header: #374151;
+  --sheet-footer:#1d324b;
+  --table-row-base: #1f2937;
+  --table-row-alt: #293548;
+  --table-row-hover: #334155;
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
-  --color-bg: var(--bg); --color-errorCard:var(--errorCard); --color-card: var(--card); --color-tx: var(--tx); --color-mu: var(--mu); --color-bd: var(--bd);
-  --color-ac: var(--ac); --color-ac2: var(--ac2); --color-inp: var(--in); --color-ca: var(--ca); --color-tg: var(--tg);
-  --color-bl: var(--bl); --color-ok: var(--ok); --color-bad: var(--bad); --color-onac: var(--onac); --color-tz: var(--tz); --color-cz: var(--cz);
+  --color-bg: var(--bg); 
+  --color-errorCard:var(--errorCard); 
+  --color-card: var(--card); 
+  --color-tx: var(--tx);
+  --color-mu: var(--mu); 
+  --color-bd: var(--bd);
+  --color-ac: var(--ac); 
+  --color-ac2: var(--ac2); 
+  --color-inp: var(--in); 
+  --color-ca: var(--ca); 
+  
+  --color-tg: var(--tg); 
+  --color-sheet-footer: var(--sheet-footer);
+  --color-bl: var(--bl); 
+  --color-ok: var(--ok); 
+  --color-bad: var(--bad); 
+  --color-onac: var(--onac); 
+  --color-tz: var(--tz); 
+  --color-cz: var(--cz); 
+  --color-sheet-header: var(--sheet-header);
 }
 
 html {
@@ -232,10 +255,24 @@ textarea:focus-visible {
   .enterprise-table tbody td { height: 3rem; padding: 0; vertical-align: middle; }
   .enterprise-table tbody tr:nth-child(even) { background-color: var(--table-row-alt); }
   .enterprise-table tbody tr:hover { background-color: var(--table-row-hover); }
+  .sheet-table thead th { background-color: var(--sheet-header); }
+  .sheet-table tbody td { background-color: var(--table-row-base); }
+  .sheet-table tbody tr:nth-child(even) td { background-color: var(--table-row-alt); }
+  .sheet-table tbody tr:hover td { background-color: var(--table-row-hover); }
   .enterprise-table tfoot td { height: 3rem; padding: 0; vertical-align: middle; }
   .enterprise-table--sheet tbody td { height: 1.75rem; }
   .enterprise-table--sheet tfoot td { height: 3.5rem; }
+
+  /* scroll box of a sheet: the rows scroll inside it, the headers stay visible. Change 7rem if you add a toolbar above the sheet. */
+/* ---- sheets: sticky header, footer and first columns ---- */
+/* sticky parts need separate borders: with collapsed borders the lines scroll away and cells show through */
+.sheet-scroll-area { max-height: calc(100dvh - 7rem); overflow: auto; }
+.sheet-table { border-collapse: separate; border-spacing: 0; }
+.sheet-table th, .sheet-table td { border-width: 0 1px 1px 0; }   /* every cell draws its own right and bottom line */
+.sheet-table thead { position: sticky; top: 0; z-index: 20; }
+.sheet-table tfoot { position: sticky; bottom: 0; z-index: 20; }
 }
+
 
 
 /* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */

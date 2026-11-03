@@ -1,4 +1,10 @@
-import { useLayoutEffect, useRef, type ReactNode } from "react";
+import {
+  useLayoutEffect,
+  useRef,
+  type ReactNode,
+  useMemo,
+  type CSSProperties,
+} from "react";
 import EditableSheetCell from "../editableSheetCell";
 
 import {
@@ -24,6 +30,7 @@ import {
   sheetTableClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
+import { frozenCellStyle, frozenColumnWidthsRem } from "../sheetFrozenColumns";
 
 export interface SheetStyle {
   headerCellClass: string; // padding, text alignment and font of every header cell
@@ -40,16 +47,25 @@ const defaultSheetStyle: SheetStyle = {
   footerCellClass: tableTotalCellClass,
 };
 
+// how many columns at the start of the list are plain columns (not groups); only those can be frozen
+const leadingPlainColumnCount = (columns: ColumnNode[]) => {
+  const firstGroupIndex = columns.findIndex(isColumnGroup);
+  return firstGroupIndex === -1 ? columns.length : firstGroupIndex;
+};
+
 // turns the nested column list into rows of <th> cells (one row per header level)
 function buildHeaderRows(
   columns: ColumnNode[],
   sheetStyle: SheetStyle,
+  frozenDataColumnCount: number,
 ): ReactNode[][] {
   const headerLevelCount = Math.max(...columns.map(columnDepth));
   const headerRows: ReactNode[][] = Array.from(
     { length: headerLevelCount },
     () => [],
   );
+
+  let leafColumnCounter = 0;
 
   function addHeaders(
     nodes: ColumnNode[],
@@ -76,20 +92,27 @@ function buildHeaderRows(
         );
         addHeaders(node.children, levelIndex + 1, colorIndex, headerKey);
       } else {
+        const style: CSSProperties = {
+          ...(leafColumnCounter < frozenDataColumnCount
+            ? frozenCellStyle(1 + leafColumnCounter, 40)
+            : {}),
+        };
         headerRows[levelIndex].push(
           <th
             key={headerKey}
             rowSpan={headerLevelCount - levelIndex}
             className={headerClass}
+            style={style}
           >
             {node.label}
           </th>,
         );
+        leafColumnCounter++;
       }
     });
   }
 
-  addHeaders(columns, 0, 0, 'root');
+  addHeaders(columns, 0, 0, "root");
   return headerRows;
 }
 
@@ -106,6 +129,7 @@ interface EarningSheetTableProps {
   ) => void;
   showTotalRow?: boolean; // default true
   sheetStyle?: SheetStyle;
+  frozenDataColumnCount?: number;
   gridName?: string; // default: the look of the Shift and TVM sheets
 }
 
@@ -118,12 +142,32 @@ export default function EarningSheetTable({
   showTotalRow = true,
   sheetStyle = defaultSheetStyle,
   gridName = "sheet",
+  frozenDataColumnCount = 1,
 }: EarningSheetTableProps) {
-  const leafColumns = columns.flatMap(collectLeafColumns);
+  const leafColumns = useMemo(
+    () => columns.flatMap(collectLeafColumns),
+    [columns],
+  );
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) =>
     readRow(rowIndex),
   );
   const isEditable = Boolean(readEntryValue && writeEntryValue);
+
+  const writeValueReference = useRef(writeEntryValue);
+  writeValueReference.current = writeEntryValue;
+  const effectiveFrozenCount = Math.min(
+    frozenDataColumnCount,
+    leadingPlainColumnCount(columns),
+    frozenColumnWidthsRem.length - 1,
+  );
+  const frozenStyleOfLeaf = (
+    leafIndex: number,
+    zIndex: number,
+  ): CSSProperties | undefined =>
+    leafIndex < effectiveFrozenCount
+      ? frozenCellStyle(1 + leafIndex, zIndex)
+      : undefined;
+
   const typedColumnIndexByFieldKey = new Map(
     leafColumns
       .filter(
@@ -141,10 +185,10 @@ export default function EarningSheetTable({
       return runningTotal + parseNumber(row[column.fieldKey]);
     }, 0);
   //     runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
-  const writeValueReference = useRef(writeEntryValue);
-  useLayoutEffect(() => {
-    writeValueReference.current = writeEntryValue;
-  }, [writeEntryValue]);
+  // const writeValueReference = useRef(writeEntryValue);
+  // useLayoutEffect(() => {
+  //   writeValueReference.current = writeEntryValue;
+  // }, [writeEntryValue]);
 
   return (
     <div
@@ -152,24 +196,48 @@ export default function EarningSheetTable({
       onKeyDown={handleSheetKeyDown}
       tabIndex={isEditable ? undefined : 0}
     >
-      <table className={sheetTableClass}>
-        <thead>
-          {buildHeaderRows(columns, sheetStyle).map(
+      <table className={"sheet-table w-full"}>
+
+        {/* <thead style={{ position: "sticky", top: 0, zIndex: 60 }}> */}
+        <thead className="sticky top-0 z-60">
+          {buildHeaderRows(columns, sheetStyle, effectiveFrozenCount).map(
             (headerRow, headerRowIndex) => (
-              <tr key={headerRowIndex}>{headerRow}</tr>
+              <tr key={headerRowIndex} >
+                {headerRowIndex === 0 && (
+                  <th
+                    rowSpan={Math.max(...columns.map(columnDepth))}
+                    style={frozenCellStyle(0, 50)}
+                    
+                  >
+                    S.No
+                  </th>
+                )}
+                {headerRow}
+              </tr>
             ),
           )}
         </thead>
 
-        <tbody>
+        <tbody className="sheet-table">
           {allRows.map((row, rowIndex) => (
             <tr key={rowIndex} className={tableRowClass}>
-              {leafColumns.map((column) => {
+              <td
+                className={`${sheetStyle.bodyCellClass} sheet-frozen-cell`}
+                style={frozenCellStyle(0, 50)}
+              >
+                {rowIndex + 1}
+              </td>
+              {leafColumns.map((column, leafIndex) => {
+                const frozenStyle = frozenStyleOfLeaf(leafIndex, 5);
+                const frozenClass =
+                  leafIndex < effectiveFrozenCount ? "sheet-frozen-cell" : "";
+
                 if (column.kind === "calculated") {
                   return (
                     <td
                       key={column.fieldKey}
-                      className={`${sheetStyle.bodyCellClass} ${tableCalculatedCellClass}`}
+                      className={`${sheetStyle.bodyCellClass} sheet-cell-calculated ${tableCalculatedCellClass} ${frozenClass}`}
+                      style={frozenStyle}
                     >
                       {formatRupees(column.formula!(row))}
                     </td>
@@ -178,7 +246,11 @@ export default function EarningSheetTable({
                 if (column.kind === "mirror") {
                   // looks like a typed number cell, but is read-only and follows another column
                   return (
-                    <td key={column.fieldKey} className={tableMirrorCellClass}>
+                    <td
+                      key={column.fieldKey}
+                      className={`sheet-input-cell ${frozenClass}`}
+                      style={frozenStyle}
+                    >
                       <div className="min-w-[70px] p-1.5 text-right text-sm">
                         {row[column.sourceFieldKey!] ?? ""}
                       </div>
@@ -198,12 +270,21 @@ export default function EarningSheetTable({
                       isNumeric={column.kind === "number"}
                       value={readEntryValue!(rowIndex, column.fieldKey)}
                       writeValueReference={writeValueReference}
+                      frozenIndex={
+                        leafIndex < effectiveFrozenCount
+                          ? 1 + leafIndex
+                          : undefined
+                      }
                     />
                   );
                 }
                 // read-only: just show the value
                 return (
-                  <td key={column.fieldKey} className={tableCellClass}>
+                  <td
+                    key={column.fieldKey}
+                    className={`${sheetStyle.bodyCellClass} ${frozenClass}`}
+                    style={frozenStyle}
+                  >
                     {column.kind === "number"
                       ? formatCellValue(
                           column,
@@ -220,13 +301,21 @@ export default function EarningSheetTable({
         {showTotalRow && (
           <tfoot>
             <tr>
-              {leafColumns.map((column, columnIndex) => (
-                <td key={column.fieldKey} className={tableTotalCellClass}>
-                  {columnIndex === 0
-                    ? "Total"
-                    : column.kind === "text"
-                      ? ""
-                      : formatCellValue(column, totalOfColumn(column))}
+              <td
+                className={sheetStyle.footerCellClass}
+                style={frozenCellStyle(0, 5)}
+              >
+                Total
+              </td>
+              {leafColumns.map((column, leafIndex) => (
+                <td
+                  key={column.fieldKey}
+                  className={sheetStyle.footerCellClass}
+                  style={frozenStyleOfLeaf(leafIndex, 5)}
+                >
+                  {column.kind === "text"
+                    ? ""
+                    : formatCellValue(column, totalOfColumn(column))}
                 </td>
               ))}
             </tr>

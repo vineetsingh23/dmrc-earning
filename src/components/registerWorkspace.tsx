@@ -299,11 +299,12 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             element={
               <EarningSheetTable
                 columns={visibleShiftColumns}
+                frozenDataColumnCount={2}
                 gridName="shift"
                 rowCount={registerState.shiftRowCount}
                 readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
                 readEntryValue={(rowIndex, fieldKey) =>
-                  rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
+                rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
                 }
                 writeEntryValue={(rowIndex, fieldKey, newValue) =>
                   updateRegisterState((draftState) =>

@@ -42,8 +42,8 @@ export const sheetTableClass = 'w-full border-collapse';
 //design for card tables
 export const tableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
 export const tableClass = 'w-full border-collapse px-2';
-export const tableHeaderRowClass = 'text-sm text-tx';
-export const tableHeaderCellClass = 'border border-slate-200 bg-th-bg dark:border-slate-300 px-2 py-2 text-center text-sm font-semibold text-tx dark:bg-slate-800';
+export const tableHeaderRowClass = 'text-sm';
+export const tableHeaderCellClass = 'border border-tbr bg-tbg px-2 py-3 text-nowrap text-center text-sm font-semibold text-ttx';
 export const tableCellClass = 'sheet-input-cell border border-bd text-right text-xs py-1.5 px-2 text-nowrap font-medium text-tx transition-colors duration-150';
 export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
 export const tableTotalRowClass = 'font-bold text-tx';

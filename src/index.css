@@ -35,10 +35,14 @@
   --table-row-base: #d8d9dc;
   --table-row-alt: #bcbdbe;
   --table-row-hover: rgb(166, 185, 212);
-  --th-bg: var(--color-gray-300)
+  --tbg: var(--color-gray-300);
+  --ttx:var(--color-slate-700);
+  --tbr:var(--color-slate-200);
+  --tr-even: var(--color-slate-300)
 }
 
 .dark {
+
   color-scheme: dark;
   --errorCard: #1d0808;
   --bg: #0e1420;
@@ -73,9 +77,10 @@
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
-  --color-th-bg: var(--th-bg);
-  --color-th-text: var(--th-text);
-  --color-th-border: var(--th-border);
+  --color-tbg: var(--tbg);
+  --color-ttx: var(--ttx);
+  --color-tbr: var(--tbr);
+  --color-tr-even: var(--tr-even);
 
 
   --color-bg: var(--bg); 

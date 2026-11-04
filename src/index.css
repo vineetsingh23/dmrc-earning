@@ -35,6 +35,7 @@
   --table-row-base: #d8d9dc;
   --table-row-alt: #bcbdbe;
   --table-row-hover: rgb(166, 185, 212);
+  --th-bg: var(--color-gray-300)
 }
 
 .dark {
@@ -67,10 +68,16 @@
   --table-row-base: #1f2937;
   --table-row-alt: #293548;
   --table-row-hover: #334155;
+
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
+  --color-th-bg: var(--th-bg);
+  --color-th-text: var(--th-text);
+  --color-th-border: var(--th-border);
+
+
   --color-bg: var(--bg); 
   --color-errorCard:var(--errorCard); 
   --color-card: var(--card); 

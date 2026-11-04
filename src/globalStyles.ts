@@ -15,12 +15,35 @@ export const stackedCardsClass = 'flex flex-col gap-4';
 
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
 export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md';
-export const cardHeadingClass = 'mb-2 font-semibold text-tx';
+export const cardHeadingClass = 'mb-2 font-bold text-md tracking-widest text-blue-600';
+
+// export const cardTable = 'w-full border-collapse'
+// export const cardTableHeaders = 'text-xs bg-ac text-tx'
+
+// export const cardTableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
+// export const cardTableClass = 'w-full border-collapse px-2';
+// export const cardSheetTableClass = 'w-full border-collapse';
+// export const cardTableHeaderRowClass = 'text-xs text-tx';
+// export const cardTableHeaderCellClass = 'border border-slate-200  dark:border-slate-300 px-2 py-1 text-center text-sm font-semibold text-tx dark:bg-slate-800';
+// export const cardTableCellClass = 'sheet-input-cell border border-bd text-right text-xs py-1.5 px-2 text-nowrap font-medium text-tx transition-colors duration-150';
+// export const cardTableCellLeftClass = `${cardTableCellClass} !text-center px-0`;
+// export const cardTableTotalRowClass = 'font-bold text-tx';
+// export const cardTableTotalCellClass = `${cardTableCellClass} px-1 py-4 bg-sheet-footer text-md font-bold dark:bg-slate-700`;
+// export const cardTableCalculatedCellClass = `${cardTableCellClass} px-0 font-semibold`;
+// export const cardTableMirrorCellClass = `${cardTableCellClass} px-0 font-semibold`;
+// export const cardTableRowClass = 'transition-colors duration-200';
+// export const cardTableInputClass = 'box-border h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-1 text-sm text-tx outline-none transition-colors placeholder:text-mu  focus:ring-inset focus:ring-ac dark:focus:bg-slate-700';
+// export const cardAmountInputClass = 'rounded-md border border-slate-300 bg-white px-1.5 py-0.5 text-right text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:ring-blue-400';
+// export const cardSummaryRowClass = 'flex justify-between border-b border-dashed border-slate-200 py-1 text-slate-700 dark:border-slate-700 dark:text-slate-200';
+
+// design for sheet tables
+export const sheetTableClass = 'w-full border-collapse';
+
+//design for card tables
 export const tableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
 export const tableClass = 'w-full border-collapse px-2';
-export const sheetTableClass = 'w-full border-collapse';
-export const tableHeaderRowClass = 'text-xs text-tx';
-export const tableHeaderCellClass = 'border border-slate-200  dark:border-slate-300 px-2 py-1 text-center text-sm font-semibold text-tx dark:bg-slate-800';
+export const tableHeaderRowClass = 'text-sm text-tx';
+export const tableHeaderCellClass = 'border border-slate-200 bg-th-bg dark:border-slate-300 px-2 py-2 text-center text-sm font-semibold text-tx dark:bg-slate-800';
 export const tableCellClass = 'sheet-input-cell border border-bd text-right text-xs py-1.5 px-2 text-nowrap font-medium text-tx transition-colors duration-150';
 export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
 export const tableTotalRowClass = 'font-bold text-tx';
@@ -37,14 +60,7 @@ export const pageHeadingClass = 'text-xl font-bold text-blue-700 dark:text-blue-
 export const dialogOverlayClass = 'fixed inset-0 z-20 grid place-items-center bg-slate-950/50 p-4';
 export const dialogClass = 'w-[min(360px,90%)] rounded-2xl border border-slate-200 bg-white p-5 text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100';
 
-// export const tableHeaderGroupClasses = [
-//   'bg-blue-100 text-blue-900 dark:bg-blue-950 dark:text-blue-100',
-//   'bg-violet-100 text-violet-900 dark:bg-violet-950 dark:text-violet-100',
-//   'bg-emerald-100 text-emerald-900 dark:bg-emerald-950 dark:text-emerald-100',
-//   'bg-amber-100 text-amber-950 dark:bg-amber-950 dark:text-amber-100',
-//   'bg-rose-100 text-rose-900 dark:bg-rose-950 dark:text-rose-100',
-//   'bg-teal-100 text-teal-900 dark:bg-teal-950 dark:text-teal-100',
-// ];
+
 
 export const tableHeaderGroupClasses = [
   'sheet-header text-slate-700 text-sm font-semibold dark:bg-slate-800 dark:text-slate-100',

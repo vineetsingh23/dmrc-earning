@@ -1,5 +1,4 @@
 import {
-  useLayoutEffect,
   useRef,
   type ReactNode,
   useMemo,
@@ -21,15 +20,11 @@ import {
   tableCalculatedCellClass,
   tableCellClass,
   tableHeaderCellClass,
-  tableMirrorCellClass,
   tableHeaderGroupClasses,
   // tableInputClass,
   tableRowClass,
   tableTotalCellClass,
   tableWrapperClass,
-  sheetTableClass,
-  tableHeaderRowClass,
-  tableClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import { frozenCellStyle, frozenColumnWidthsRem } from "../sheetFrozenColumns";

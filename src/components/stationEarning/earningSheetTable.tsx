@@ -22,6 +22,7 @@ import {
   tableTotalCellClass,
   tableWrapperClass,
   sheetTableClass,
+  tableTotalRowClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 
@@ -147,13 +148,15 @@ export default function EarningSheetTable({
   }, [writeEntryValue]);
 
   return (
+    <div className="h-[calc(100vh-120px)] flex flex-col rounded-xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden bg-white dark:bg-slate-950">
+
     <div
-      className={tableWrapperClass}
+      className='flex-1 overflow-y-auto relative'
       onKeyDown={handleSheetKeyDown}
       tabIndex={isEditable ? undefined : 0}
-    >
-      <table className={sheetTableClass}>
-        <thead>
+      >
+      <table className=''>
+        <thead className="sticky top-0 z-10 bg-slate-100 dark:bg-slate-900 text-slate-700 dark:text-slate-200 uppercase text-xs tracking-wider shadow-sm">
           {buildHeaderRows(columns, sheetStyle).map(
             (headerRow, headerRowIndex) => (
               <tr key={headerRowIndex}>{headerRow}</tr>
@@ -161,15 +164,15 @@ export default function EarningSheetTable({
           )}
         </thead>
 
-        <tbody>
+        <tbody className="divide-y divide-slate-200 dark:divide-slate-800 bg-white dark:bg-slate-950 text-slate-800 dark:text-slate-200">
           {allRows.map((row, rowIndex) => (
-            <tr key={rowIndex} className={tableRowClass}>
+            <tr key={rowIndex} className='hover:bg-slate-50 dark:hover:bg-slate-900 transition-colors'>
               {leafColumns.map((column) => {
                 if (column.kind === "calculated") {
                   return (
                     <td
                       key={column.fieldKey}
-                      className={`${sheetStyle.bodyCellClass} ${tableCalculatedCellClass}`}
+                      className={``}
                     >
                       {formatRupees(column.formula!(row))}
                     </td>
@@ -188,8 +191,8 @@ export default function EarningSheetTable({
                 if (isEditable) {
                   return (
                     <EditableSheetCell
-                      key={column.fieldKey}
-                      gridName={gridName}
+                    key={column.fieldKey}
+                    gridName={gridName}
                       rowIndex={rowIndex}
                       columnIndex={
                         typedColumnIndexByFieldKey.get(column.fieldKey) ?? 0
@@ -198,12 +201,12 @@ export default function EarningSheetTable({
                       isNumeric={column.kind === "number"}
                       value={readEntryValue!(rowIndex, column.fieldKey)}
                       writeValueReference={writeValueReference}
-                    />
+                      />
                   );
                 }
                 // read-only: just show the value
                 return (
-                  <td key={column.fieldKey} className={tableCellClass}>
+                  <td key={column.fieldKey} className=''>
                     {column.kind === "number"
                       ? formatCellValue(
                           column,
@@ -218,15 +221,15 @@ export default function EarningSheetTable({
         </tbody>
 
         {showTotalRow && (
-          <tfoot>
+          <tfoot className={tableTotalRowClass}>
             <tr>
               {leafColumns.map((column, columnIndex) => (
                 <td key={column.fieldKey} className={tableTotalCellClass}>
-                  {columnIndex === 0
+                  {columnIndex === 3
                     ? "Total"
                     : column.kind === "text"
-                      ? ""
-                      : formatCellValue(column, totalOfColumn(column))}
+                    ? ""
+                    : formatCellValue(column, totalOfColumn(column))}
                 </td>
               ))}
             </tr>
@@ -234,5 +237,6 @@ export default function EarningSheetTable({
         )}
       </table>
     </div>
+  </div>
   );
 }

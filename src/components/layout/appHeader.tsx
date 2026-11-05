@@ -27,11 +27,11 @@ export default function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-10 border-b border-bd bg-card/95 shadow-sm backdrop-blur">
+    <header className="sticky top-0 z-10 min-h-[10vh] border-b border-bd bg-card/95 shadow-sm backdrop-blur">
       <div className="mx-auto grid max-w-screen grid-cols-[1fr_auto] items-center gap-x-2 gap-y-2 px-2 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-4">
         <div className="flex min-w-70 items-center gap-4">
           {/* <TrainFront className="size-7 shrink-0 text-ac" aria-hidden="true" /> */}
-            <img src='/Delhi_Metro.png' className='size-10 w-23'/>
+            <img src='/Delhi_Metro.png' className='size-12 w-25'/>
           <div className="min-w-0">
             <p className="truncate text-lg font-bold text-ac">Earning Register</p>
             <p className="truncate text-sm text-mu">{stationName}</p>

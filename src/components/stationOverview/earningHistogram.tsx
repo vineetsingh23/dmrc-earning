@@ -18,7 +18,7 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
   return (
     <>
       <h2 className="font-semibold bottom-0">Daily earning histogram ({daysShown} days to {date})</h2>
-    <div className={`${cardContainer} max-h-40 top-0`}>
+    <div className={`${cardContainer} min-h-44 items-center`}>
       <small className="text-mu flex flex-col">
         <ul className='flex flex-col min-w-30 text-nowrap'>
           <li className="text-ac ">■<span> Total earning</span></li>

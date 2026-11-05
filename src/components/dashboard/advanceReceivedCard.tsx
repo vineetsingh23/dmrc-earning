@@ -17,6 +17,7 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
       <h2 className={cardHeadingClass}>Advance received from each TOM</h2>
+      <div className="overflow-x-auto">
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
@@ -43,6 +44,7 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
             <td className={tableTotalCellClass}>{formatRupees(totalAdvanceReceived)}</td></tr>
         </tfoot>
       </table>
+      </div>
     </div>
   );
 }

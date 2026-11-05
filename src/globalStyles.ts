@@ -1,66 +1,45 @@
-export const appShellClass = 'min-h-screen bg-bg text-tx transition-colors';
+export const appShellClass = 'app-shell min-h-screen text-tx transition-colors';
 export const appHeaderClass = 'sticky top-0 z-50 border-b border-bd bg-card/95 shadow-sm backdrop-blur';
-export const appHeaderContentClass = 'mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-2 py-3 md:px-6';
+export const appHeaderContentClass = 'mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-3 py-3 md:px-6';
 export const appHeaderGroupClass = 'flex flex-wrap items-center gap-4';
-export const navigationClass = 'flex flex-wrap gap-2';
-export const navLinkClass = 'rounded-md border border-slate-200 px-3.5 py-1.5 text-sm font-medium text-slate-500 transition-colors hover:border-slate-300 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
-export const navLinkActiveClass = 'rounded-md px-3.5 py-1.5 text-sm font-medium border-blue-600 bg-blue-600 hover:bg-blue-700 text-white dark:border-blue-500 dark:bg-blue-600 dark:text-white dark:hover:border-blue-400 dark:hover:bg-blue-500';
+export const navigationClass = 'flex flex-nowrap gap-1.5 overflow-x-auto';
+export const navLinkClass = 'rounded-lg px-3 py-2 text-sm font-semibold text-mu transition-colors hover:bg-ca hover:text-tx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ac';
+export const navLinkActiveClass = 'rounded-lg bg-ac px-3 py-2 text-sm font-semibold text-onac shadow-sm';
 export const appHeaderControlsClass = 'flex flex-wrap items-center gap-3';
-export const dateInputClass = 'rounded-lg border border-slate-300 bg-white px-2 text-lg py-1.5 text-slate-800 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:focus-visible:outline-blue-400';
+export const dateInputClass = 'rounded-lg border border-bd bg-inp px-2 py-1.5 text-sm text-tx focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ac';
 export const syncStatusClass = 'text-sm text-slate-600 dark:text-slate-400';
 export const themeButtonClass = 'rounded-md border border-slate-300 bg-white px-3 py-1.5 text-sm font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-blue-400';
 export const mainContentClass = 'mx-auto max-w-screen-2xl p-4 md:p-6';
-export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3 ';
+export const dashboardGridClass = 'dashboard-grid grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3';
 export const stackedCardsClass = 'flex flex-col gap-4';
 
 // card classes
 
-export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
-export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md';
-export const cardHeadingClass = 'mb-2 font-bold text-md tracking-widest text-blue-600';
-
-// export const cardTable = 'w-full border-collapse'
-// export const cardTableHeaders = 'text-xs bg-ac text-tx'
-
-// export const cardTableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
-// export const cardTableClass = 'w-full border-collapse px-2';
-// export const cardSheetTableClass = 'w-full border-collapse';
-// export const cardTableHeaderRowClass = 'text-xs text-tx';
-// export const cardTableHeaderCellClass = 'border border-slate-200  dark:border-slate-300 px-2 py-1 text-center text-sm font-semibold text-tx dark:bg-slate-800';
-// export const cardTableCellClass = 'sheet-input-cell border border-bd text-right text-xs py-1.5 px-2 text-nowrap font-medium text-tx transition-colors duration-150';
-// export const cardTableCellLeftClass = `${cardTableCellClass} !text-center px-0`;
-// export const cardTableTotalRowClass = 'font-bold text-tx';
-// export const cardTableTotalCellClass = `${cardTableCellClass} px-1 py-4 bg-sheet-footer text-md font-bold dark:bg-slate-700`;
-// export const cardTableCalculatedCellClass = `${cardTableCellClass} px-0 font-semibold`;
-// export const cardTableMirrorCellClass = `${cardTableCellClass} px-0 font-semibold`;
-// export const cardTableRowClass = 'transition-colors duration-200';
-// export const cardTableInputClass = 'box-border h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-1 text-sm text-tx outline-none transition-colors placeholder:text-mu  focus:ring-inset focus:ring-ac dark:focus:bg-slate-700';
-// export const cardAmountInputClass = 'rounded-md border border-slate-300 bg-white px-1.5 py-0.5 text-right text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:ring-blue-400';
-// export const cardSummaryRowClass = 'flex justify-between border-b border-dashed border-slate-200 py-1 text-slate-700 dark:border-slate-700 dark:text-slate-200';
-
-// sheet classes
+export const cardContainer = 'brand-card flex w-full gap-4 p-4 transition-shadow duration-200 hover:shadow-md';
+export const cardClass = 'brand-card min-w-0 w-full max-w-none p-4 text-tx transition-[border-color,box-shadow] duration-200 hover:border-slate-300 dark:hover:border-slate-600';
+export const cardHeadingClass = 'mb-3 flex items-center gap-2 text-sm font-bold uppercase tracking-[0.12em] text-ac';
 export const sheetTableClass = 'w-full border-collapse';
 
 //tables classes
-export const tableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
-export const tableClass = 'w-full border-collapse px-2';
-export const tableHeaderRowClass = 'text-xs bg-table-head-bg text-table-head-tex';
-export const tableHeaderCellClass = 'border border-table-border px-1 py-2 text-nowrap text-center';
-export const tableCellClass = 'border border-table-boder text-right text-xs px-2 text-nowrap font-medium text-table-row-text transition-colors duration-150';
+export const tableWrapperClass = 'sheet-scroll-area overflow-auto rounded-xl border border-bd bg-card shadow-sm';
+export const tableClass = 'w-full border-collapse';
+export const tableHeaderRowClass = 'bg-table-head-bg text-table-head-text ';
+export const tableHeaderCellClass = 'border border-table-border px-2 py-2.5 text-center text-xs font-bold uppercase tracking-wide ';
+export const tableCellClass = 'border border-table-border px-2 py-1.5 text-right text-xs font-medium text-table-row-text transition-colors duration-150 max-w-10';
 export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
-export const tableTotalRowClass = 'font-bold text-table-footer-text bg-table-footer-bg';
-export const tableTotalCellClass = `${tableCellClass} px-1 py-4 text-md font-bold`;
+export const tableTotalRowClass = 'bg-table-footer-bg font-bold text-table-footer-text';
+export const tableTotalCellClass = `${tableCellClass} px-2 py-3 text-sm font-bold`;
 export const tableCalculatedCellClass = `${tableCellClass} px-0 font-semibold`;
 export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold`;
-export const tableRowClass = 'transition-colors duration-200';
-export const tableInputClass = 'box-border h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-1 text-sm text-tx outline-none transition-colors placeholder:text-mu  focus:ring-inset focus:ring-ac dark:focus:bg-slate-700';
-export const amountInputClass = 'rounded-md border border-slate-300 bg-white px-1.5 py-0.5 text-right text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:ring-blue-400';
+export const tableRowClass = 'transition-colors duration-150 even:bg-table-row-alt hover:bg-table-hover';
+export const tableInputClass = ' h-full border-0 bg-transparent  text-sm text-tx outline-none transition-colors placeholder:text-mu focus:ring-inset focus:ring-ac';
+export const amountInputClass = 'rounded-md border border-bd bg-inp px-1.5 py-0.5 text-right text-tx outline-none transition-colors placeholder:text-mu focus-visible:ring-2 focus-visible:ring-ac';
 export const summaryRowClass = 'flex justify-between border-b border-dashed border-slate-200 py-1 text-slate-700 dark:border-slate-700 dark:text-slate-200';
-export const primaryButtonClass = 'rounded-lg bg-blue-600 px-3 py-1.5 font-medium text-white transition-colors hover:bg-blue-700 focus-visible:outline-none focus-visible:outline-offset-0 focus-visible:outline-blue-500 disabled:pointer-events-none disabled:opacity-50 dark:bg-blue-600 dark:hover:bg-blue-500 dark:focus-visible:outline-blue-400';
-export const secondaryButtonClass = 'rounded-lg border border-slate-300 bg-white px-3 py-1.5 font-medium text-slate-700 transition-colors hover:border-slate-400 hover:bg-slate-50 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-slate-600 dark:hover:bg-slate-700 dark:focus-visible:outline-slate-400';
-export const pageHeadingClass = 'text-xl font-bold text-blue-700 dark:text-blue-300';
+export const primaryButtonClass = 'rounded-lg bg-ac px-4 py-2 text-sm font-semibold text-onac shadow-sm transition hover:brightness-95 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ac disabled:pointer-events-none disabled:opacity-50';
+export const secondaryButtonClass = 'rounded-lg border border-bd bg-card px-4 py-2 text-sm font-semibold text-tx transition hover:border-ac hover:text-ac focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ac';
+export const pageHeadingClass = 'text-xl font-bold tracking-tight text-tx';
 export const dialogOverlayClass = 'fixed inset-0 z-20 grid place-items-center bg-slate-950/50 p-4';
-export const dialogClass = 'w-[min(360px,90%)] rounded-2xl border border-slate-200 bg-white p-5 text-slate-800 shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:text-slate-100';
+export const dialogClass = 'w-[min(420px,90%)] rounded-2xl border border-bd bg-card p-5 text-tx shadow-xl';
 
 
 

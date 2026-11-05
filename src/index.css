@@ -4,22 +4,29 @@
 
 :root {
   color-scheme: light;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
 
-  /* Tables light color */
-  --table-bg: var(--color-blue-100);
-  --table-head-bg: var(--color-slate-400);
-  --table-head-text: var(--color-slate-600);
-  --table-row-text: var(--color-slate-600);
-  --table-row-alt: var(--color-blue-200);
-  --table-border: var(--color-slate-50);
-  --table-hover: var(--color-blue-300);
-  --table-footer-bg: var(--color-slate-300);
-  --table-footer-text: var(--color-slate-600);
+  /* DMRC-inspired navy and red surfaces */
+  --table-bg: #ffffff;
+  --table-head-bg: #e8eef5;
+  --table-head-text: #17324f;
+  --table-row-text: #34445a;
+  --table-row-alt: #f7f9fc;
+  --table-border: #dce4ed;
+  --table-hover: #f5e9e9;
+  --table-footer-bg: #edf2f7;
+  --table-footer-text: #17324f;
 
-    /* Cards color */
+  /* Cards color */
   --card-bg: var(--color-slate-50);
   --card-title: var(--color-blue-600);
   --card-border: var(--color-slate-100);
@@ -27,84 +34,87 @@
   --card-hover: var(--color-gray-50);
   --card-error: var(--color-red-500);
 
-
-  --bg: #e8ebef;
-  --errorCard:#efe8eb;
+  --bg: #f3f6fa;
+  --errorCard: #fff5f5;
   --card: #ffffff;
-  --tx: #1e2430;
-  --mu: #625f58;
-  --bd: #ececec;
-  --ac: #2563eb;
-  --ac2: #818cf8;
-  --in: #f1f3f6;
-  --ca: #e4ebf8;
+  --tx: #16263a;
+  --mu: #627186;
+  --bd: #dfe6ee;
+  --ac: #c62828;
+  --ac2: #173b63;
+  --in: #f8fafc;
+  --ca: #edf2f7;
   --onac: #fff;
   --bad: #dc2626;
   --ok: #15803d;
-  --tg: #dde0e5;
-  --bl: #d7dce4;
-  --tz: #d3d7dd;
-  --cz: #d6e1f6;
-  --h0: #dbe7ff;
-  --h1: #e8defc;
-  --h2: #d9f2e3;
-  --h3: #fdebc8;
-  --h4: #fbdde6;
-  --h5: #d4f0f0;
-  --sheet-header: #7299c8;
-  --sheet-footer:#4e7aaf;
-  --table-row-base: #d8d9dc;
-  --table-row-alt: #bcbdbe;
-  --table-row-hover: rgb(166, 185, 212);
-  --tbg: var(--color-gray-300);
-  --ttx:var(--color-slate-700);
-  --tbr:var(--color-slate-200);
-  --tr-even: var(--color-slate-300)
+  --tg: #e8edf3;
+  --bl: #d7e1ec;
+  --tz: #e4e9ef;
+  --cz: #f3e7e7;
+  --h0: #e7eef6;
+  --h1: #f3e8e8;
+  --h2: #e8f3ed;
+  --h3: #f8f0df;
+  --h4: #f7e9ed;
+  --h5: #e5f1f2;
+  --sheet-header: #173b63;
+  --sheet-footer: #e8eef5;
+  --table-row-base: #ffffff;
+  --table-row-alt: #f7f9fc;
+  --table-row-hover: #f5e9e9;
+  --tbg: #ffffff;
+  --ttx: #34445a;
+  --tbr: #dce4ed;
+  --tr-even: #f7f9fc;
 }
 
 .dark {
-  /* Tables dark color */
-  --table-head-bg: var(--color-slate-400);
-  --table-head: var(--color-slate-400);
-  --table-row-alt: var(--color-slate-200);
-  --table-border: var(--color-slate-50);
-  
-
   color-scheme: dark;
-  --errorCard: #1d0808;
-  --bg: #0e1420;
-  --card: #161e2c;
-  --tx: #f6f9fe;
-  --mu: #94a3b8;
-  --bd: #263043;
-  --ac: #60a5fa;
-  --ac2: #a5b4fc;
-  --in: #1c2638;
-  --ca: #1b2a44;
-  --onac: #0b1220;
+  --table-bg: #172131;
+  --table-head-bg: #22344a;
+  --table-head-text: #e6edf5;
+  --table-row-text: #d0d9e5;
+  --table-border: #344359;
+  --table-hover: #352a31;
+  --table-footer-bg: #22344a;
+  --table-footer-text: #e6edf5;
+  --errorCard: #291b20;
+  --bg: #101a28;
+  --card: #182537;
+  --tx: #edf2f8;
+  --mu: #a2b0c1;
+  --bd: #2b3a4e;
+  --ac: #f06b6b;
+  --ac2: #91b5dc;
+  --in: #111d2c;
+  --ca: #223249;
+  --onac: #ffffff;
   --bad: #f87171;
   --ok: #4ade80;
-  --tg: #222c3d;
-  --bl: #36445a;
-  --tz: #29364b;
-  --cz: #22355a;
-  --h0: #1e3a5f;
-  --h1: #3a2a5f;
-  --h2: #1f4a37;
-  --h3: #54411b;
-  --h4: #5a2a3d;
-  --h5: #1d4a4b;
-  --sheet-header: #374151;
-  --sheet-footer:#1d324b;
-  --table-row-base: #1f2937;
-  --table-row-alt: #293548;
-  --table-row-hover: #334155;
-
+  --tg: #28374a;
+  --bl: #34475f;
+  --tz: #28384d;
+  --cz: #352a31;
+  --h0: #23364c;
+  --h1: #382d38;
+  --h2: #243a36;
+  --h3: #403821;
+  --h4: #412a36;
+  --h5: #203a40;
+  --sheet-header: #223b59;
+  --sheet-footer: #22344a;
+  --table-row-base: #172131;
+  --table-row-alt: #1d2b3f;
+  --table-row-hover: #352a31;
+  --tbg: #172131;
+  --ttx: #d0d9e5;
+  --tbr: #344359;
+  --tr-even: #1d2b3f;
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
-/* Tables colors */
+  /* Tables colors */
   --color-table-bg: var(--table-bg);
   --color-table-head-bg: var(--table-head-bg);
   --color-table-head-text: var(--table-head-text);
@@ -121,33 +131,31 @@
   --color-card-border: var(--card-border);
   --color-card-shadow: var(--card-shodow);
   --color-card-hover: var(--card-hover);
-  
-  
+
   --color-tbg: var(--tbg);
   --color-ttx: var(--ttx);
   --color-tbr: var(--tbr);
   --color-tr-even: var(--tr-even);
 
-
-  --color-bg: var(--bg); 
-  --color-errorCard:var(--errorCard); 
-  --color-card: var(--card); 
+  --color-bg: var(--bg);
+  --color-errorCard: var(--errorCard);
+  --color-card: var(--card);
   --color-tx: var(--tx);
-  --color-mu: var(--mu); 
+  --color-mu: var(--mu);
   --color-bd: var(--bd);
-  --color-ac: var(--ac); 
-  --color-ac2: var(--ac2); 
-  --color-inp: var(--in); 
-  --color-ca: var(--ca); 
-  
-  --color-tg: var(--tg); 
+  --color-ac: var(--ac);
+  --color-ac2: var(--ac2);
+  --color-inp: var(--in);
+  --color-ca: var(--ca);
+
+  --color-tg: var(--tg);
   --color-sheet-footer: var(--sheet-footer);
-  --color-bl: var(--bl); 
-  --color-ok: var(--ok); 
-  --color-bad: var(--bad); 
-  --color-onac: var(--onac); 
-  --color-tz: var(--tz); 
-  --color-cz: var(--cz); 
+  --color-bl: var(--bl);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-onac: var(--onac);
+  --color-tz: var(--tz);
+  --color-cz: var(--cz);
   --color-sheet-header: var(--sheet-header);
 }
 
@@ -167,7 +175,69 @@ body {
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
+}
+
+img {
+  max-width: 100%;
+}
+
+.app-shell {
+  background:
+    radial-gradient(ellipse at 50% -18rem, color-mix(in srgb, var(--ac2) 8%, transparent), transparent 58%),
+    var(--bg);
+}
+
+.page-intro {
+  margin-bottom: 1.25rem;
+}
+
+.page-eyebrow {
+  color: var(--ac);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.page-title {
+  margin-top: 0.25rem;
+  color: var(--tx);
+  font-size: clamp(1.35rem, 2vw, 1.75rem);
+  font-weight: 750;
+  letter-spacing: -0.035em;
+  line-height: 1.2;
+}
+
+.page-description {
+  margin-top: 0.35rem;
+  color: var(--mu);
+  font-size: 0.9rem;
+}
+
+.brand-card {
+  border: 1px solid var(--bd);
+  border-radius: 1.25rem;
+  background: var(--card);
+  box-shadow: 0 8px 26px rgb(18 38 63 / 6%);
+}
+
+.dashboard-grid > * {
+  min-width: 0;
+}
+
+.dark .brand-card {
+  box-shadow: 0 12px 30px rgb(0 0 0 / 14%);
+}
+
+
+
+@media (max-width: 767px) {
+  .page-intro {
+    margin-bottom: 1rem;
+  }
 }
 
 button,
@@ -298,30 +368,134 @@ textarea:focus-visible {
 }
 
 @keyframes bank-success-pop {
-  0% { opacity: 0; transform: scale(0.35) rotate(-25deg); }
-  70% { opacity: 1; transform: scale(1.18) rotate(5deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.35) rotate(-25deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.18) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bank-success-icon { animation: none; }
+  .bank-success-icon {
+    animation: none;
+  }
 }
 
 @layer components {
-  .enterprise-table :is(th, td) { border: 1px solid var(--bd); }
-  .enterprise-table tbody tr { @apply transition-colors duration-150; }
-  .enterprise-table tbody td { height: 3rem; padding: 0; vertical-align: middle; }
-  .enterprise-table tbody tr:nth-child(even) { background-color: var(--table-row-alt); }
-  .enterprise-table tbody tr:hover { background-color: var(--table-row-hover); }
-  .sheet-table thead th { background-color: var(--sheet-header); }
-  .sheet-table tbody td { background-color: var(--table-row-base); }
-  .sheet-table tbody tr:nth-child(even) td { background-color: var(--table-row-alt); }
-  .sheet-table tbody tr:hover td { background-color: var(--table-row-hover); }
-  .enterprise-table tfoot td { height: 3rem; padding: 0; vertical-align: middle; }
-  .enterprise-table--sheet tbody td { height: 1.75rem; }
-  .enterprise-table--sheet tfoot td { height: 3.5rem; }
+  .enterprise-table :is(th, td) {
+    border: 1px solid var(--table-border);
+  }
+  .enterprise-table tbody tr {
+    @apply transition-colors duration-150;
+  }
+  .enterprise-table tbody td {
+    height: 3rem;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .enterprise-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-alt);
+  }
+  .enterprise-table tbody tr:hover {
+    background-color: var(--table-row-hover);
+  }
+  .sheet-table thead th {
+    background-color: var(--sheet-header);
+  }
+  .sheet-table tbody td {
+    background-color: var(--table-row-base);
+  }
+  .sheet-table tbody tr:nth-child(even) td {
+    background-color: var(--table-row-alt);
+  }
+  .sheet-table tbody tr:hover td {
+    background-color: var(--table-row-hover);
+  }
+  .enterprise-table tfoot td {
+    height: 3rem;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .enterprise-table--sheet tbody td {
+    height: 1.75rem;
+  }
+  .enterprise-table--sheet tfoot td {
+    height: 3.5rem;
+  }
 
   /* scroll box of a sheet: the rows scroll inside it, the headers stay visible. Change 7rem if you add a toolbar above the sheet. */
+  /* ---- sheets: sticky header, footer and first columns ---- */
+  /* sticky parts need separate borders: with collapsed borders the lines scroll away and cells show through */
+  .sheet-scroll-area {
+    max-height: calc(100dvh - 7rem);
+    overflow: auto;
+  }
+  .sheet-table {
+    border-collapse: separate;
+    border-spacing: 0;
+  }
+  .sheet-table th,
+  .sheet-table td {
+    border-width: 0 1px 1px 0;
+  } /* every cell draws its own right and bottom line */
+  .sheet-table thead {
+    position: sticky;
+    top: 0;
+    z-index: 20;
+  }
+  .sheet-table tfoot {
+    position: sticky;
+    bottom: 0;
+    z-index: 20;
+  }
+}
+
+/* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
+.date-input {
+  position: relative;
+}
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+@layer components {
+  .table {
+    @apply w-full  bg-gray-100 border-2 border-gray-300 rounded-md;
+  }
+  .table-header {
+    @apply bg-gray-400/40 text-xs max-w-min;
+  }
+  .table-header-cell {
+    @apply font-medium text-nowrap px-1 py-1.5;
+  }
+  .table-rows {
+    @apply border border-slate-50;
+  }
+  .table-input-cell {
+    @apply w-full bg-transparent py-0.5 px-1 text-sm outline-hidden focus:bg-card focus:ring-1 focus:ring-ac;
+  }
+  .table-footer {
+    @apply bg-gray-400/40;
+  }
+  .table-footer-cell {
+    padding-block: 0.5rem;
+  }
+}
+
+
+
 /* ---- sheets: sticky header, footer and first columns ---- */
 /* sticky parts need separate borders: with collapsed borders the lines scroll away and cells show through */
 .sheet-scroll-area { max-height: calc(100dvh - 7rem); overflow: auto; }
@@ -329,36 +503,3 @@ textarea:focus-visible {
 .sheet-table th, .sheet-table td { border-width: 0 1px 1px 0; }   /* every cell draws its own right and bottom line */
 .sheet-table thead { position: sticky; top: 0; z-index: 20; }
 .sheet-table tfoot { position: sticky; bottom: 0; z-index: 20; }
-}
-
-
-
-/* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
-.date-input { position: relative; }
-.date-input::-webkit-calendar-picker-indicator {
-  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
-}
-
-@layer components {
-  .table {
-    @apply w-full  bg-gray-100 border-2 border-gray-300 rounded-md
-   }
-  .table-header {
-    @apply bg-gray-400/40 text-xs max-w-min ;    
-  }
-  .table-header-cell {
-    @apply font-medium text-nowrap px-1 py-1.5;
-  }
-  .table-rows {
-    @apply border border-slate-50 
-  }
-  .table-input-cell {
-    @apply w-full bg-transparent py-0.5 px-1 text-sm outline-hidden focus:bg-card focus:ring-1 focus:ring-ac
-  }
-  .table-footer {
-    @apply bg-gray-400/40
-  }
-  .table-footer-cell {
-    @apply py-2
-  }
-}

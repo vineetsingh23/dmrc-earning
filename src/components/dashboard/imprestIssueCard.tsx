@@ -20,6 +20,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
       <h2 className="mb-2 font-semibold">Imprest issue to each TOM</h2>
+      <div className="overflow-x-auto">
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
@@ -51,6 +52,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
           </tr>
         </tfoot>
       </table>
+      </div>
     </div>
   );
 }

@@ -2,7 +2,7 @@ import { formatRupees } from '../../lib/earningCalculations';
 import { parseNumber } from '../../lib/earningColumns';
 import { entryCountsOnDate, miscColumnIndex, runningTotalsOfRows, type MiscKind } from '../../lib/miscEntries';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,cardHeadingClass,tableClass, tableHeaderCellClass,tableHeaderRowClass } from '../../globalStyles';
+import { cardClass,cardHeadingClass,tableCellLeftClass,tableClass, tableHeaderCellClass,tableHeaderRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
 
 interface MiscEntryCardProps {
   title: string;
@@ -15,7 +15,7 @@ interface MiscEntryCardProps {
   onAddRow: () => void;
 }
 
-const inputClass = 'w-full bg-transparent p-1.5 text-sm outline-hidden focus:bg-card focus:ring-2 focus:ring-ac';
+const inputClass = 'w-full bg-transparent  text-sm outline-hidden focus:bg-card focus:ring-2 focus:ring-ac';
 
 export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDate, countedTotal, onCellChange, onAddRow }: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);
@@ -23,12 +23,12 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
 
   // one typed cell; the data-* labels are what the arrow keys use to find the next cell
   const typedCell = (rowIndex: number, columnIndex: number, minWidthClass: string, isNumber = false) => (
-    <td className="border border-bl p-0">
+    <td className="table-rows">
       <input
         data-grid={kind} data-row={rowIndex} data-column={columnIndex}
         value={rows[rowIndex]?.[columnIndex] ?? ''} inputMode={isNumber ? 'decimal' : 'text'}
         onFocus={event => event.target.select()} onChange={event => onCellChange(rowIndex, columnIndex, event.target.value)}
-        className={`${inputClass} ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
+        className={`table-input-cell ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
       />
     </td>
   );
@@ -38,14 +38,14 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
       <div className="mb-2 flex items-center justify-between">
         <h2 className={cardHeadingClass}>{title}</h2>
         <button type="button" onClick={onAddRow}
-          className="rounded-xl border border-bd bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac">+ Add row</button>
+          className="rounded-md border border-slate-300 bg-linear-to-bl from-slate-200 to-pink-200 px-3 py-1 text-xs font-medium transition hover:-translate-y-0.5 hover:border-green-300 hover:text-green-600">+ Add row</button>
       </div>
-      <table className={tableClass}>
+      <table className='table'>
         <thead>
-          <tr className={tableHeaderRowClass}>
+          <tr className='table-header'>
           {headers.map((header)=> (
 
-              <th key={header} className={tableHeaderCellClass}>{header}</th>
+              <th key={header} className='table-header-cell'>{header}</th>
             ))}
             </tr>
       
@@ -53,11 +53,11 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
         <tbody>
           {Array.from({ length: rowCount }, (_, rowIndex) => (
             // an entry dated after the selected date is shown dimmed and is not counted in cash possession yet
-            <tr key={rowIndex} className={`even:bg-tz ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-20'}`}>
-              {typedCell(rowIndex, miscColumnIndex.date, 'min-w-[95px]')}
-              {typedCell(rowIndex, miscColumnIndex.name, 'min-w-[150px]')}
-              {typedCell(rowIndex, miscColumnIndex.amount, 'min-w-[80px]', true)}
-              <td className="border border-bl px-2 py-1 text-right text-xs">
+            <tr key={rowIndex} className={`table-rows even:bg-slate-200 hover:bg-slate-300/50 ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-20'}`}>
+              {typedCell(rowIndex, miscColumnIndex.date, 'min-w-20')}
+              {typedCell(rowIndex, miscColumnIndex.name, 'min-w-40')}
+              {typedCell(rowIndex, miscColumnIndex.amount, 'min-w-20', true)}
+              <td className="table-cells">
                 {runningTotals[rowIndex] === null ? '' : formatRupees(runningTotals[rowIndex])}
               </td>
               {typedCell(rowIndex, miscColumnIndex.remark, 'min-w-[150px]')}
@@ -65,11 +65,11 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
           ))}
         </tbody>
         <tfoot>
-          <tr className="bg-ca font-bold">
-            <td className="border border-bl px-2 py-4 text-sm" colSpan={2}>Total</td>
-            <td className="border border-bl px-2 py-4 text-right text-sm">{formatRupees(amountTotal)}</td>
-            <td className="border border-bl px-2 py-4 text-right text-sm">{formatRupees(amountTotal)}</td>
-            <td className="border border-bl" />
+          <tr className='table-footer'>
+            <td className='table-footer-cell' colSpan={2}>Total</td>
+            <td className='table-footer-cell'>{formatRupees(amountTotal)}</td>
+            <td className='table-footer-cell'>{formatRupees(amountTotal)}</td>
+            <td />
           </tr>
         </tfoot>
       </table>

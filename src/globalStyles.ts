@@ -13,6 +13,8 @@ export const mainContentClass = 'mx-auto max-w-screen-2xl p-4 md:p-6';
 export const dashboardGridClass = 'grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3 ';
 export const stackedCardsClass = 'flex flex-col gap-4';
 
+// card classes
+
 export const cardContainer ='w-full flex gap-4 rounded-2xl border-2 border-slate-200 bg-blue-50 p-4 shadow-md transition-[border-color,box-shadow,bg-color] duration-200 hover-border-slate-300 hover:shadow-xl dark:border-slate-700 dark:bg-slate-900 dark:hover:border-slate-600 dark:hover:shadow-lg dark:hover:bg-blue-900/10'
 export const cardClass = 'w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md';
 export const cardHeadingClass = 'mb-2 font-bold text-md tracking-widest text-blue-600';
@@ -36,18 +38,18 @@ export const cardHeadingClass = 'mb-2 font-bold text-md tracking-widest text-blu
 // export const cardAmountInputClass = 'rounded-md border border-slate-300 bg-white px-1.5 py-0.5 text-right text-slate-800 outline-none transition-colors placeholder:text-slate-400 focus-visible:ring-2 focus-visible:ring-blue-500 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100 dark:placeholder:text-slate-500 dark:focus-visible:ring-blue-400';
 // export const cardSummaryRowClass = 'flex justify-between border-b border-dashed border-slate-200 py-1 text-slate-700 dark:border-slate-700 dark:text-slate-200';
 
-// design for sheet tables
+// sheet classes
 export const sheetTableClass = 'w-full border-collapse';
 
-//design for card tables
+//tables classes
 export const tableWrapperClass = 'sheet-scroll-area rounded-xl border border-bd ';
 export const tableClass = 'w-full border-collapse px-2';
-export const tableHeaderRowClass = 'text-sm';
-export const tableHeaderCellClass = 'border border-tbr bg-tbg px-2 py-3 text-nowrap text-center text-sm font-semibold text-ttx';
-export const tableCellClass = 'sheet-input-cell border border-bd text-right text-xs py-1.5 px-2 text-nowrap font-medium text-tx transition-colors duration-150';
+export const tableHeaderRowClass = 'text-xs bg-table-head-bg text-table-head-tex';
+export const tableHeaderCellClass = 'border border-table-border px-1 py-2 text-nowrap text-center';
+export const tableCellClass = 'border border-table-boder text-right text-xs px-2 text-nowrap font-medium text-table-row-text transition-colors duration-150';
 export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
-export const tableTotalRowClass = 'font-bold text-tx';
-export const tableTotalCellClass = `${tableCellClass} px-1 py-4 bg-sheet-footer text-md font-bold dark:bg-slate-700`;
+export const tableTotalRowClass = 'font-bold text-table-footer-text bg-table-footer-bg';
+export const tableTotalCellClass = `${tableCellClass} px-1 py-4 text-md font-bold`;
 export const tableCalculatedCellClass = `${tableCellClass} px-0 font-semibold`;
 export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold`;
 export const tableRowClass = 'transition-colors duration-200';

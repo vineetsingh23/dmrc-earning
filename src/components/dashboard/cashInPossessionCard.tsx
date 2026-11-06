@@ -1,3 +1,4 @@
+import { CircleCheck } from 'lucide-react';
 import {
   cardClass,
   cardHeadingClass,
@@ -50,7 +51,33 @@ export default function CashInPossessionCard({
   return (
     <div className={`${cardClass} ${cashDifference === 0 ? '' : 'border-red-400 bg-errorCard'}`} onKeyDown={handleSheetKeyDown}>
 
-      <h2 className={cardHeadingClass}>Cash in possession</h2>
+         <div className="flex gap-4 w-full justify-between">
+        <div className="max-w-xs">
+          <h2 className={cardHeadingClass}>Cash in possession</h2>
+
+          <p className="mb-2 text-xs text-mu">
+            {cashCountsSource === "saved" && "Counts saved for this date."}
+            {cashCountsSource === "carried" &&
+              "Counts carried over from the last counted date. Update them if the cash in your drawer is different."}
+            {cashCountsSource === "none" &&
+              "No counts yet. Enter the notes and coins you hold."}
+          </p>
+        </div>
+        <div className="flex w-30 justify-between items-center h-8 border-2 rounded-2xl border-slate-300 dark:border-slate-600 shadow-md bg-linear-to-r from-slate-100 to-blue-50 dark:from-slate-800 dark:to-blue-800">
+          <span className={`${cashDifference === 0 ? '' : 'text-red-500'} text-center font-medium w-1/2`}>
+            {formatRupees(Number(cashDifference))}
+          </span>
+          <div className="flex justify-end transition-colors duration-150 ">
+            <CircleCheck
+              size={30}
+              className={`${cashDifference === 0 ? "fill-green-500" : "fill-red-500 animate-ping inset-1.5 duration-200"}`}
+              stroke="white"
+              strokeWidth={1}
+            />
+          </div>
+        </div>
+      </div>
+
 
       <p className="mb-2 text-xs text-mu">
   {cashCountsSource === 'saved' && 'Counts saved for this date.'}

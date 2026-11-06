@@ -67,10 +67,10 @@ export default function CashInPossessionCard({
           <span className={`${cashDifference === 0 ? '' : 'text-red-500'} text-center font-medium w-1/2`}>
             {formatRupees(Number(cashDifference))}
           </span>
-          <div className="flex justify-end transition-colors duration-150 ">
+          <div className="flex justify-end transition-colors duration-150 relative">
             <CircleCheck
               size={30}
-              className={`${cashDifference === 0 ? "fill-green-500" : "fill-red-500 animate-ping inset-1.5 duration-200"}`}
+              className={`${cashDifference === 0 ? "fill-green-500" : "fill-red-500 animate-ping"}`}
               stroke="white"
               strokeWidth={1}
             />
@@ -79,11 +79,7 @@ export default function CashInPossessionCard({
       </div>
 
 
-      <p className="mb-2 text-xs text-mu">
-  {cashCountsSource === 'saved' && 'Counts saved for this date.'}
-  {cashCountsSource === 'carried' && 'Counts carried over from the last counted date. Update them if the cash in your drawer is different.'}
-  {cashCountsSource === 'none' && 'No counts yet. Enter the notes and coins you hold.'}
-</p>
+
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>

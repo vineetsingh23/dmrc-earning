@@ -316,6 +316,11 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                     ),
                   )
                 }
+                onAddRow={() =>
+                  updateRegisterState((draftState) => {
+                    draftState.shiftRowCount += 1;
+                  })
+                }
               />
             }
           />

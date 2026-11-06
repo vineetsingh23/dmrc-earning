@@ -13,6 +13,12 @@
   --tx: #1e2430;
   --mu: #625f58;
   --bd: #d7dce4;
+  --sheet-border: #94a3b8;
+  --sheet-calculated-cell: #e0f2fe;
+  --sheet-calculated-header: #bae6fd;
+  --sheet-row: #ffffff;
+  --sheet-row-alt: #f1f5f9;
+  --table-head-footer: #e5e7eb;
   --ac: #2563eb;
   --ac2: #818cf8;
   --in: #f1f3f6;
@@ -42,6 +48,12 @@
   --tx: #f6f9fe;
   --mu: #94a3b8;
   --bd: #263043;
+  --sheet-border: #64748b;
+  --sheet-calculated-cell: #0c4a6e;
+  --sheet-calculated-header: #075985;
+  --sheet-row: #161e2c;
+  --sheet-row-alt: #1e293b;
+  --table-head-footer: #334155;
   --ac: #60a5fa;
   --ac2: #a5b4fc;
   --in: #1c2638;
@@ -228,11 +240,53 @@ textarea:focus-visible {
 
 @layer components {
   .enterprise-table :is(th, td) { border: 1px solid var(--bd); }
+  .enterprise-table--sheet { border: 1px solid var(--sheet-border); }
+  .enterprise-table--sheet :is(th, td) {
+    border-color: var(--sheet-border) !important;
+    border-style: solid !important;
+    border-width: 0 1px 1px 0 !important;
+  }
+  .enterprise-table--sheet tr > :first-child { border-left-width: 1px !important; }
+  .enterprise-table--sheet thead tr:first-child > * { border-top-width: 1px !important; }
+  .enterprise-table--sheet .sheet-freeze-boundary {
+    border-right: 3px solid var(--sheet-border) !important;
+  }
+  .enterprise-table--sheet .sheet-freeze-seam {
+    border-left-width: 0 !important;
+  }
+  .enterprise-table--sheet .calculated-cell {
+    background-color: var(--sheet-calculated-cell) !important;
+  }
+  .enterprise-table--sheet .calculated-header {
+    background-color: var(--table-head-footer) !important;
+  }
+  .enterprise-table thead th {
+    background-color: var(--table-head-footer) !important;
+    color: var(--tx) !important;
+    font-weight: 700 !important;
+  }
+  .enterprise-table tbody tr:nth-child(odd) td {
+    background-color: var(--sheet-row) !important;
+  }
+  .enterprise-table tbody tr:nth-child(even) td {
+    background-color: var(--sheet-row-alt) !important;
+  }
+  .enterprise-table--sheet tbody tr:nth-child(odd) td.calculated-cell,
+  .enterprise-table--sheet tbody tr:nth-child(even) td.calculated-cell {
+    background-color: var(--sheet-calculated-cell) !important;
+  }
   .enterprise-table tbody tr { @apply transition-colors duration-150; }
   .enterprise-table tbody td { height: 3rem; padding: 0; vertical-align: middle; }
   .enterprise-table tbody tr:nth-child(even) { background-color: var(--table-row-alt); }
   .enterprise-table tbody tr:hover { background-color: var(--table-row-hover); }
-  .enterprise-table tfoot td { height: 3rem; padding: 0; vertical-align: middle; }
+  .enterprise-table tfoot td {
+    height: 3rem;
+    padding: 0;
+    vertical-align: middle;
+    background-color: var(--table-head-footer) !important;
+    color: var(--tx) !important;
+    font-weight: 700 !important;
+  }
   .enterprise-table--sheet tbody td { height: 1.75rem; }
   .enterprise-table--sheet tfoot td { height: 3.5rem; }
 }

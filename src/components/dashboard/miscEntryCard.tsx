@@ -40,7 +40,7 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
         <button type="button" onClick={onAddRow}
           className="rounded-xl border border-bd bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac">+ Add row</button>
       </div>
-      <table className="w-full border-collapse">
+      <table className="enterprise-table w-full border-collapse">
         <thead>
           <tr>
             <th className={headerClass}>Date</th><th className={headerClass}>Equipment or Person name</th><th className={headerClass}>Amount</th>

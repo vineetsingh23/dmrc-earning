@@ -42,7 +42,7 @@ const sentToBankToday = figures.existingTransfer?.amount ?? 0;
     <div className="space-y-3">
       <h2 className={pageHeadingClass}>Final Earning</h2>
       <EarningSheetTable columns={finalEarningColumns} rowCount={1} readRow={() => finalRow}
-        showTotalRow={false} sheetStyle={finalEarningSheetStyle} />
+        frozenColumnCount={0} showTotalRow={false} sheetStyle={finalEarningSheetStyle} />
       <p className="text-sm text-slate-500">Read-only. Totals of Shift Entry and TVM Earning for the selected date.</p>
     </div>
   );

@@ -1,4 +1,4 @@
-import { CircleCheck, CircleIcon } from "lucide-react";
+import { CircleCheck} from "lucide-react";
 import {
   cardClass,
   cardHeadingClass,

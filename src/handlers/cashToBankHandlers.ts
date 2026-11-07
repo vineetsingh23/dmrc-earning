@@ -1,5 +1,6 @@
 import type { RegisterState } from '../lib/registerTypes';
 import { bankNoteValues } from '../lib/businessRules';
+import { clearCashCountHistory } from '../lib/cashCountHistory';
 
 // as many ₹500 notes as are in hand, then ₹200, then ₹100
 export function suggestBankNoteCounts(cashCountsInHand: Record<string, number>, amountToBank: number): Record<number, number> {
@@ -40,4 +41,5 @@ export function recordBankTransfer(state: RegisterState, request: BankTransferRe
   });
   state.cashCounts[date] = remainingCounts;
   state.bankTransfers[date] = { amount: amountToBank, slipNumber, noteCounts: { ...noteCountsToSend }, sentAt: new Date().toISOString() };
+  clearCashCountHistory(state,date);
 }

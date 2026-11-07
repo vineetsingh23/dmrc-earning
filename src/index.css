@@ -20,15 +20,15 @@
   --gray-text: var(--color-slate-700);
   --gray-border: var(--color-gray-300);
 
-  --th: var(--color-emerald-900);
+  --th: var(--color-gray-400);
   --th-tx: var(--color-slate-700);
-  --focus: var(--color-blue-300);
+  --focus: var(--color-slate-300);
+  --tx: #525c71;
   /* --hr:var(--color-emerald-500) */
 
   --bg: #e8ebef;
   --errorCard: #efe8eb;
   --card: #ffffff;
-  --tx: #1e2430;
   --mu: #625f58;
   --bd: #d7dce4;
   --ac: #2563eb;
@@ -90,10 +90,12 @@
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
-  --text-tiny: 14px;
+  --text-tiny: 13px;
+  --font-weight-tw:1000;
   --color-th-tx: var(--th-tx);
   --color-focus: var(--focus);
   --color-hr: var(--color-sky-800);
+  --color-tx: var(--tx);
 
   
   --color-th: var(--th);
@@ -103,7 +105,6 @@
   --color-bg: var(--bg);
   --color-errorCard: var(--errorCard);
   --color-card: var(--card);
-  --color-tx: var(--tx);
   --color-mu: var(--mu);
   --color-bd: var(--bd);
   --color-ac: var(--ac);
@@ -329,19 +330,19 @@ textarea:focus-visible {
     @apply w-full border-2 border-th/40
   }
 .table-header{
-  @apply bg-th/50 px-2 text-tiny text-tx
+  @apply bg-th/50 px-2 text-tiny
 }
 
 .table-header-cells {
-  @apply py-2 text-th-tx border border-ca/30
+  @apply py-2 text-tx border border-ca/30
 }
 
 .table-body {
-  @apply bg-th/20 text-sm font-medium text-th-tx/90 
+  @apply bg-white text-sm 
 }
 
 .table-rows{
-  @apply even:bg-th/20  border border-th/10 hover:bg-hr/30 transition-colors duration-150 
+  @apply even:bg-th/20  border border-th/10 hover:bg-th/10 transition-colors duration-150
 }
 
 .table-cells {
@@ -349,7 +350,7 @@ textarea:focus-visible {
 }
 
 .total-cells {
-  @apply even:bg-th/20 border-b dark:border-slate-700 border-slate-400 focus:ring-blue-300 text-right px-2
+  @apply even:bg-th/20 border-b border-th/40 focus:ring-blue-300 text-right px-2
 }
 
 .footer-cells{

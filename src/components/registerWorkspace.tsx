@@ -39,6 +39,7 @@ import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
 import BackupFolderCard from "./dashboard/backupFolderCard";
 import BackupToolbar from "./dashboard/backupToolbar";
 import SettingsPage from "./settingsPage";
+import { stepCashCountBack, stepCashCountForward } from "../lib/cashCountHistory";
 
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
@@ -224,6 +225,9 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   miscDebitTotal={figures.miscDebitTotal}
                   looseCoinAmount={figures.looseCoinsAmount}
                   cashCountsSource={figures.cashCountsSource}
+                  countHistory={registerState.cashCountHistory?.[selectedDate]}
+                  onBack={()=>updateRegisterState(draftState => {stepCashCountBack(draftState,selectedDate)})}
+                  onNext={()=>updateRegisterState(draftState => {stepCashCountForward(draftState,selectedDate)})}
                   denominationTotalAmount={figures.denominationTotalAmount}
                   imprestAndAdvanceIssuedTotal={
                     figures.imprestAndAdvanceIssuedTotal

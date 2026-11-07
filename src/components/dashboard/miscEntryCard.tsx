@@ -1,5 +1,5 @@
 import { formatRupees } from '../../lib/earningCalculations';
-import { calculatedColumn, parseNumber } from '../../lib/earningColumns';
+import { parseNumber } from '../../lib/earningColumns';
 import { entryCountsOnDate, miscColumnIndex, runningTotalsOfRows, type MiscKind } from '../../lib/miscEntries';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 
@@ -14,8 +14,7 @@ interface MiscEntryCardProps {
   onAddRow: () => void;
 }
 
-const headerClass = 'table-header';
-const inputClass = 'input-cells';
+
 
 export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDate, countedTotal, onCellChange, onAddRow }: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);

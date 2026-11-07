@@ -2,6 +2,9 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+
+
 :root {
   color-scheme: light;
   font-family:
@@ -14,7 +17,16 @@
     sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  --gray-bg: var(--color-gray-900);
+  --gray-text: var(--color-slate-700);
+  --gray-border: var(--color-gray-300);
 
+  --th: var(--color-emerald-900);
+  --th-tx: var(--color-slate-700);
+  --focus: var(--color-blue-300);
+  /* --hr:var(--color-emerald-500) */
+
+<<<<<<< HEAD
   /* DMRC-inspired navy and red surfaces */
   --table-bg: #ffffff;
   --table-head-bg: #e8eef5;
@@ -36,6 +48,10 @@
 
   --bg: #f3f6fa;
   --errorCard: #fff5f5;
+=======
+  --bg: #e8ebef;
+  --errorCard: #efe8eb;
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
   --card: #ffffff;
   --tx: #16263a;
   --mu: #627186;
@@ -70,6 +86,7 @@
 
 .dark {
   color-scheme: dark;
+<<<<<<< HEAD
   --table-bg: #172131;
   --table-head-bg: #22344a;
   --table-head-text: #e6edf5;
@@ -89,6 +106,26 @@
   --in: #111d2c;
   --ca: #223249;
   --onac: #ffffff;
+=======
+  --th: var(--color-sky-950);
+  --th-tx: var(--color-slate-400);
+  --focus: var(--color-blue-900);
+  /* --hr: var(--color-emerald-900); */
+  --gray-bg: var(--color-gray-400);
+  --gray-text: var(--color-slate-200);
+  --gray-border: var(--color-gray-700);
+  --bg: #0e1420;
+  --card: #161e2c;
+  --errorCard: color-mix(in srgb, var(--bad) 16%, var(--card));
+  --tx: #bdbfc3;
+  --mu: #94a3b8;
+  --bd: #263043;
+  --ac: #60a5fa;
+  --ac2: #a5b4fc;
+  --in: #1c2638;
+  --ca: #1b2a44;
+  --onac: #0b1220;
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
   --bad: #f87171;
   --ok: #4ade80;
   --tg: #28374a;
@@ -114,6 +151,7 @@
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
+<<<<<<< HEAD
   /* Tables colors */
   --color-table-bg: var(--table-bg);
   --color-table-head-bg: var(--table-head-bg);
@@ -136,6 +174,17 @@
   --color-ttx: var(--ttx);
   --color-tbr: var(--tbr);
   --color-tr-even: var(--tr-even);
+=======
+  --text-tiny: 14px;
+  --color-th-tx: var(--th-tx);
+  --color-focus: var(--focus);
+  --color-hr: var(--color-sky-800);
+
+  
+  --color-th: var(--th);
+  --color-gray-text: var(--gray-text);
+  --color-gray-border: var(--gray-border);
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
 
   --color-bg: var(--bg);
   --color-errorCard: var(--errorCard);
@@ -147,16 +196,24 @@
   --color-ac2: var(--ac2);
   --color-inp: var(--in);
   --color-ca: var(--ca);
+<<<<<<< HEAD
 
   --color-tg: var(--tg);
   --color-sheet-footer: var(--sheet-footer);
+=======
+  --color-tg: var(--tg);
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
   --color-bl: var(--bl);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --color-onac: var(--onac);
   --color-tz: var(--tz);
   --color-cz: var(--cz);
+<<<<<<< HEAD
   --color-sheet-header: var(--sheet-header);
+=======
+  --text-sm:var(--text[1rem]);
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
 }
 
 html {
@@ -178,6 +235,7 @@ body {
   transition:
     background-color 180ms ease,
     color 180ms ease;
+<<<<<<< HEAD
 }
 
 img {
@@ -238,6 +296,8 @@ img {
   .page-intro {
     margin-bottom: 1rem;
   }
+=======
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
 }
 
 button,
@@ -251,14 +311,18 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-button:focus-visible,
+/* button:focus-visible,
 a:focus-visible,
-input:focus-visible,
+input::-moz-focus-inner {
+    outline: 2x solid var(--color-blue-400);
+     outline-offset: 2px;
+
+}
 select:focus-visible,
 textarea:focus-visible {
   outline: 2px solid var(--ac);
   outline-offset: 2px;
-}
+} */
 
 ::selection {
   background: color-mix(in srgb, var(--ac) 24%, transparent);
@@ -390,7 +454,11 @@ textarea:focus-visible {
 
 @layer components {
   .enterprise-table :is(th, td) {
+<<<<<<< HEAD
     border: 1px solid var(--table-border);
+=======
+    border: 1px solid var(--bd);
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
   }
   .enterprise-table tbody tr {
     @apply transition-colors duration-150;
@@ -406,6 +474,7 @@ textarea:focus-visible {
   .enterprise-table tbody tr:hover {
     background-color: var(--table-row-hover);
   }
+<<<<<<< HEAD
   .sheet-table thead th {
     background-color: var(--sheet-header);
   }
@@ -418,6 +487,8 @@ textarea:focus-visible {
   .sheet-table tbody tr:hover td {
     background-color: var(--table-row-hover);
   }
+=======
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
   .enterprise-table tfoot td {
     height: 3rem;
     padding: 0;
@@ -430,6 +501,7 @@ textarea:focus-visible {
     height: 3.5rem;
   }
 
+<<<<<<< HEAD
   /* scroll box of a sheet: the rows scroll inside it, the headers stay visible. Change 7rem if you add a toolbar above the sheet. */
   /* ---- sheets: sticky header, footer and first columns ---- */
   /* sticky parts need separate borders: with collapsed borders the lines scroll away and cells show through */
@@ -492,9 +564,55 @@ textarea:focus-visible {
   .table-footer-cell {
     padding-block: 0.5rem;
   }
+=======
+  /* card background and table color and design */
+
+  .table {
+    @apply w-full border-2 border-th/40
+  }
+.table-header{
+  @apply bg-th/50 px-2 text-tiny text-tx
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
 }
 
+.table-header-cells {
+  @apply py-2 text-th-tx border border-ca/30
+}
 
+.table-body {
+  @apply bg-th/20 text-sm font-medium text-th-tx/90 
+}
+
+.table-rows{
+  @apply even:bg-th/20  border border-th/10 hover:bg-hr/30 transition-colors duration-150 
+}
+
+.table-cells {
+  @apply py-2 w-full px-2 focus:ring-1 focus-visible:bg-focus/30 focus:border-focus/10 outline-hidden focus:ring-ac
+}
+
+.total-cells {
+  @apply even:bg-th/20 border-b dark:border-slate-700 border-slate-400 focus:ring-blue-300 text-right px-2
+}
+
+.footer-cells{
+  @apply py-3 bg-th/60 font-bold text-right px-2 border border-ca/30
+}
+.footer {
+  @apply px-2
+}
+
+ 
+  .card {
+    @apply w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md
+  }
+ 
+  .button-outline{
+    @apply bg-th/30  px-4 py-2 rounded-md  text-tx hover:bg-th/60 hover:ring-1 hover:ring-sky-600
+  }
+}
+
+<<<<<<< HEAD
 
 /* ---- sheets: sticky header, footer and first columns ---- */
 /* sticky parts need separate borders: with collapsed borders the lines scroll away and cells show through */
@@ -503,3 +621,17 @@ textarea:focus-visible {
 .sheet-table th, .sheet-table td { border-width: 0 1px 1px 0; }   /* every cell draws its own right and bottom line */
 .sheet-table thead { position: sticky; top: 0; z-index: 20; }
 .sheet-table tfoot { position: sticky; bottom: 0; z-index: 20; }
+=======
+/* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
+.date-input {
+  position: relative;
+}
+.date-input::-webkit-calendar-picker-indicator {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075

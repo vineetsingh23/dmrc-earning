@@ -15,6 +15,11 @@ interface MiscEntryCardProps {
   onAddRow: () => void;
 }
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
 export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDate, countedTotal, onCellChange, onAddRow }: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);
   const amountTotal = rows.reduce((total, row) => total + parseNumber(row?.[miscColumnIndex.amount]), 0);
@@ -26,7 +31,11 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
         data-grid={kind} data-row={rowIndex} data-column={columnIndex}
         value={rows[rowIndex]?.[columnIndex] ?? ''} inputMode={isNumber ? 'decimal' : 'text'}
         onFocus={event => event.target.select()} onChange={event => onCellChange(rowIndex, columnIndex, event.target.value)}
+<<<<<<< HEAD
         className={`w-full rounded bg-transparent px-1.5 py-1 text-sm text-tx outline-none transition-all placeholder:text-mu focus:bg-card focus:ring-2 focus:ring-ac ${minWidthClass} ${isNumber ? 'text-right font-mono' : ''}`}
+=======
+        className={`input-cells ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
       />
     </td>
   );
@@ -34,6 +43,7 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
   const headers = ['Date', 'Equipment or Person Name', 'Amount', 'Total Amount', 'Remarks'];
 
   return (
+<<<<<<< HEAD
     <div className={`${cardClass} relative overflow-hidden`} onKeyDown={handleSheetKeyDown}>
 
       {/* DMRC Corporate Branding Accent Top Bar */}
@@ -103,6 +113,48 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
         </span>
       </div>
 
+=======
+        <div className="card" onKeyDown={handleSheetKeyDown}>
+    <div className="mb-2 flex items-center justify-between">
+        <h2 className="font-semibold">{title}</h2>
+        <button type="button" onClick={onAddRow}
+          className="button-outline">+ Add row</button>
+      </div>
+      <table className="table">
+        <thead className='table-header'>
+          <tr className='table-header-row'>
+            <th className='table-header-cells'>Date</th>
+            <th className='table-header-cells'>Equipment or Person name</th>
+            <th className='table-header-cells'>Amount</th>
+            <th className='table-header-cells'>Total Amount</th>
+            <th className='table-header-cells'>Remark</th>
+          </tr>
+        </thead>
+        <tbody className='table-body'>
+          {Array.from({ length: rowCount }, (_, rowIndex) => (
+            // an entry dated after the selected date is shown dimmed and is not counted in cash possession yet
+            <tr key={rowIndex} className={`${miscColumnIndex.amount ? 'table-rows' : ''} ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-50'}`}>
+              {typedCell(rowIndex, miscColumnIndex.date, 'table-cells min-w-25')}
+              {typedCell(rowIndex, miscColumnIndex.name, 'table-cells min-w-50')}
+              {typedCell(rowIndex, miscColumnIndex.amount, 'table-cells min-w-30', true)}
+              <td className={`${runningTotals[rowIndex]=== null ? 'table-cells' : ''} total-cells`}>
+                {runningTotals[rowIndex] === null ? '' : formatRupees(runningTotals[rowIndex])}
+              </td>
+              {typedCell(rowIndex, miscColumnIndex.remark, 'table-cells min-w-35')}
+            </tr>
+          ))}
+        </tbody>
+        <tfoot>
+          <tr className="table-footer">
+            <td className="footer-cells text-center" colSpan={2}>Total</td>
+            <td className="footer-cells">{formatRupees(amountTotal)}</td>
+            <td className="footer-cells">{formatRupees(amountTotal)}</td>
+            <td className="footer-cells" />
+          </tr>
+        </tfoot>
+      </table>
+      <small className="mt-1 block text-mu">Counted in cash possession up to this date: {formatRupees(countedTotal)}</small>
+>>>>>>> b54df80c2023db7c1c8b88aa2cd01de86adeb075
     </div>
   );
 }

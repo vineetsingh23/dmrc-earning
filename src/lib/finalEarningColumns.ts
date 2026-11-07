@@ -29,12 +29,14 @@ export const finalEarningColumns: ColumnNode[] = [
     columnGroup('CSC Sale', numberColumn('cscSaleSv2Sv6Quantity', 'Qty'), numberColumn('cscSaleT1T3Quantity', 'Qty'), numberColumn('cscSaleAmount', 'Total CSC Amount')),
   columnGroup('Add Value CSC',
     columnGroup('TOM', numberColumn('addValueSv2TomQuantity', 'Qty'), numberColumn('addValueSv2TomAmount', 'Amt')),
-    columnGroup('TVM', numberColumn('tvmAddValueQuantity', 'Qty'), numberColumn('tvmAddValueAmount', 'Amt'))),
+    columnGroup('TVM', numberColumn('tvmAddValueQuantity', 'Qty'), numberColumn('tvmAddValueAmount', 'Amt')),
+columnGroup('RCTM Add Value',  numberColumn('tvmRctmAddValueQuantity', 'Qty'), numberColumn('tvmRctmAddValueAmount', 'Amt'))
+),
   
   columnGroup('Add Value NCMC',
     columnGroup('Add Value NCMC TOM', numberColumn('addValueNcmcTomQuantity', 'Qty'), numberColumn('addValueNcmcTomAmount', 'Amt')),
     columnGroup('Add Value NCMC TVM', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amt')),
-    columnGroup('RCTM Add Value',  numberColumn('tvmRctmAddValueQuantity', 'Qty'), numberColumn('tvmRctmAddValueAmount', 'Amt')),
+    
     columnGroup('Add Value Cancel', numberColumn('addValueCancelQuantity', 'Qty'), numberColumn('addValueCancelAmount', 'Amt')))),
 
   columnGroup('Surcharge',

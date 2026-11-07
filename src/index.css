@@ -63,6 +63,7 @@
   --gray-border: var(--color-gray-700);
   --bg: #0e1420;
   --card: #161e2c;
+  --errorCard: color-mix(in srgb, var(--bad) 16%, var(--card));
   --tx: #bdbfc3;
   --mu: #94a3b8;
   --bd: #263043;

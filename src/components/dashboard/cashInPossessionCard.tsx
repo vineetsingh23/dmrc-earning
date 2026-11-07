@@ -49,7 +49,7 @@ export default function CashInPossessionCard({
   const cashDifference = Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
   const matchesCashInHand = cashDifference === 0;
   return (
-    <div className={`${cardClass} ${cashDifference === 0 ? '' : 'border-red-400 bg-errorCard'}`} onKeyDown={handleSheetKeyDown}>
+    <div className={`${cardClass} card ${cashDifference === 0 ? '' : 'border-red-400 bg-errorCard'}`} onKeyDown={handleSheetKeyDown}>
 
          <div className="flex gap-4 w-full justify-between">
         <div className="max-w-xs">

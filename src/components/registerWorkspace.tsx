@@ -27,6 +27,7 @@ import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";
 import {
   dashboardGridClass,
+  primaryButtonClass,
   stackedCardsClass,
 } from "../globalStyles";
 // import DetailListCard from "./dashboard/detailListCard";
@@ -169,7 +170,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-bg text-tx transition-colors">
+      <div className="app-shell min-h-screen text-tx transition-colors">
         <AppHeader
           stationName={station.name}
           selectedDate={selectedDate}
@@ -192,7 +193,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
     );
   }
   return (
-    <div className="min-h-screen bg-bg text-tx transition-colors">
+    <div className="app-shell min-h-screen text-tx transition-colors">
         <AppHeader
           stationName={station.name}
           selectedDate={selectedDate}
@@ -207,6 +208,11 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             path="/"
             element={
               <div className={dashboardGridClass}>
+                <header className="page-intro col-span-full">
+                  <p className="page-eyebrow">Daily operations</p>
+                  <h1 className="page-title">Station cash dashboard</h1>
+                  <p className="page-description">Review earnings, reconcile cash in possession, and manage station records for the selected date.</p>
+                </header>
                 <CashInHandCard
                   totalCashInHand={figures.totalCashInHand}
                   osTotalPaidAmount={figures.osTotalPaidAmount}
@@ -247,7 +253,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
     updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
 />
                 </div>
-                  <div className="col-span-full grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-3">
+                  <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
   {renderMiscCard('Misc debit', 'miscDebit')}
   {renderMiscCard('Misc credit', 'miscCredit')}
 </div>
@@ -275,10 +281,11 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                     "Penalty amount",
                   ])}
                 </div> */}
-                <section className="col-span-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                  <h2 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
-                    Data tools and backups
-                  </h2>
+                <section className="brand-card col-span-full p-4 sm:p-5">
+                  <div className="mb-4">
+                    <p className="page-eyebrow">Data management</p>
+                    <h2 className="mt-1 text-lg font-bold tracking-tight text-tx">Backups and register tools</h2>
+                  </div>
                   <BackupToolbar
                     stationName={station.name}
                     date={selectedDate}
@@ -301,36 +308,64 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
           <Route
             path="/shift-entry"
             element={
-              <EarningSheetTable
-                columns={visibleShiftColumns}
-                gridName="shift"
-                rowCount={registerState.shiftRowCount}
-                readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
-                readEntryValue={(rowIndex, fieldKey) =>
+              <div className="space-y-4">
+                <header className="page-intro">
+                  <p className="page-eyebrow">Revenue entry</p>
+                  <h1 className="page-title">Shift entry</h1>
+                  <p className="page-description">Enter and review shift-wise station earnings for the selected date.</p>
+                </header>
+                <EarningSheetTable
+                  columns={visibleShiftColumns}
+                  frozenDataColumnCount={2}
+                  gridName="shift"
+                  rowCount={registerState.shiftRowCount}
+                  readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
+                  readEntryValue={(rowIndex, fieldKey) =>
                   rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
-                }
-                writeEntryValue={(rowIndex, fieldKey, newValue) =>
-                  updateRegisterState((draftState) =>
-                    updateEntryCell(
-                      draftState.shiftEntries,
-                      selectedDate,
-                      rowIndex,
-                      fieldKey,
-                      newValue,
-                    ),
-                  )
-                }
-              />
+                  }
+                  writeEntryValue={(rowIndex, fieldKey, newValue) =>
+                    updateRegisterState((draftState) =>
+                      updateEntryCell(
+                        draftState.shiftEntries,
+                        selectedDate,
+                        rowIndex,
+                        fieldKey,
+                        newValue,
+                      ),
+                    )
+                  }
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateRegisterState(draftState => {
+                        draftState.shiftRowCount += 1;
+                      })
+                    }
+                    className={primaryButtonClass}
+                  >
+                    + Add row
+                  </button>
+                </div>
+              </div>
             }
           />
           <Route
             path="/tvm-earning"
             element={
-              <TvmEarningPage
-                registerState={registerState}
-                updateRegisterState={updateRegisterState}
-                date={selectedDate}
-              />
+              <div className="space-y-4">
+                <header className="page-intro">
+                  <p className="page-eyebrow">Revenue entry</p>
+                  <h1 className="page-title">TVM earnings</h1>
+                  <p className="page-description">Record ticket vending machine totals and review calculated amounts.</p>
+                </header>
+                <TvmEarningPage
+                  registerState={registerState}
+                  updateRegisterState={updateRegisterState}
+                  date={selectedDate}
+                />
+              </div>
             }
           />
           <Route
@@ -345,12 +380,19 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
           <Route
             path="/daily-report"
             element={
-              <DailyReportPage
-                registerState={registerState}
-                updateRegisterState={updateRegisterState}
-                date={selectedDate}
-                stationName={station.name}
-              />
+              <div className="space-y-4">
+                <header className="page-intro">
+                  <p className="page-eyebrow">Station communication</p>
+                  <h1 className="page-title">Daily report</h1>
+                  <p className="page-description">Prepare, review, and share the station’s daily operations report.</p>
+                </header>
+                <DailyReportPage
+                  registerState={registerState}
+                  updateRegisterState={updateRegisterState}
+                  date={selectedDate}
+                  stationName={station.name}
+                />
+              </div>
             }
           />
           <Route
@@ -369,6 +411,11 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             path="/station-overview"
             element={
               <div className="flex flex-col gap-4">
+                <header className="page-intro">
+                  <p className="page-eyebrow">Performance</p>
+                  <h1 className="page-title">Station overview</h1>
+                  <p className="page-description">Explore earnings trends, daily comparisons, and cashless transaction summaries.</p>
+                </header>
                 <StationStatisticsCard
                   registerState={registerState}
                   date={selectedDate}

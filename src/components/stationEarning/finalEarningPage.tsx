@@ -4,7 +4,6 @@ import type { RegisterState } from '../../lib/registerTypes';
 import { finalEarningColumns } from '../../lib/finalEarningColumns';
 import { sumRowsByField } from '../../lib/earningCalculations';
 import {
-  pageHeadingClass,
   tableCellClass,
   tableHeaderCellClass,
   tableHeaderGroupClasses,
@@ -40,10 +39,14 @@ const sentToBankToday = figures.existingTransfer?.amount ?? 0;
 
   return (
     <div className="space-y-3">
-      <h2 className={pageHeadingClass}>Final Earning</h2>
+      <header className="page-intro">
+        <p className="page-eyebrow">Revenue summary</p>
+        <h1 className="page-title">Final earning</h1>
+        <p className="page-description">Read-only totals from shift and TVM earnings for the selected date.</p>
+      </header>
       <EarningSheetTable columns={finalEarningColumns} rowCount={1} readRow={() => finalRow}
         showTotalRow={false} sheetStyle={finalEarningSheetStyle} />
-      <p className="text-sm text-slate-500">Read-only. Totals of Shift Entry and TVM Earning for the selected date.</p>
+      <p className="text-sm text-mu">Read-only totals for the selected date.</p>
     </div>
   );
 }

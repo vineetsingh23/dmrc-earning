@@ -30,8 +30,8 @@ export default function CashInHandCard({
   return (
     <div className={cardClass}>
 
-      <small className="block text-slate-500">Total cash in hand (unsent previous days + current day + TOM amounts)</small>
-      <div className="text-[26px] font-bold text-blue-600">{formatRupees(totalCashInHand)}</div>
+      <small className="block text-mu">Total cash in hand (unsent previous days + current day + TOM amounts)</small>
+      <div className="text-[26px] font-bold tracking-tight text-ac2">{formatRupees(totalCashInHand)}</div>
       <div className='px-1 py-2'>
 
       <div className={summaryRowClass}><span>Previous days cash not yet sent</span><b>{formatRupees(previousDaysCash)}</b></div>
@@ -40,7 +40,7 @@ export default function CashInHandCard({
       <div className={summaryRowClass}><span>AFC+Misc Paid Amount</span><b>{formatRupees(osTotalPaidAmount)}</b></div>
 
       </div>
-      <hr className='border-2 border-blue-300 my-2'/>
+      <hr className='my-2 border-bd'/>
       <div className='py-2'>
 
       <div className={summaryRowClass}><span>Sent to bank{existingTransfer ? ` · slip ${existingTransfer.slipNumber}` : ''}</span><b>{formatRupees(existingTransfer ? existingTransfer.amount : 0)}</b></div>

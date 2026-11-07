@@ -29,7 +29,7 @@ function findBestDay(dates: string[], measureOfDate:(entryDate:string)=> number)
   return bestDay
 
 } 
-const staticCardClass = 'w-full max-w-none flex flex-col gap-3 bg-blue-100 hover:bg-blue-200 transition-colors duration-200 text-center rounded-2xl border border-slate-200  p-4 text-slate-800 shadow-sm transition-[border-color,box-shadow] duration-150 hover:border-slate-300 hover:shadow-md dark:border-slate-700 dark:bg-slate-800 dark:hover:bg-slate-700/40 dark:text-slate-100 dark:hover:border-slate-600 dark:hover:shadow-lg';
+const staticCardClass = 'brand-card flex w-full max-w-none flex-col gap-3 p-4 text-center text-tx transition-[border-color,box-shadow] duration-150 hover:border-ac/40 hover:shadow-md';
 
 export default function StationStatisticsCard({registerState,date}: StationStatisticsCardProps) {
     const datesTillDate = datesWithEntriesUpTo(registerState, date);
@@ -56,13 +56,13 @@ export default function StationStatisticsCard({registerState,date}: StationStati
     { title: 'UPI by TOM 50 + 51', current: currentCashlessStatistics.tom5051Upi, previous: previousCashlessStatistics.tom5051Upi },
     { title: 'UPI by TVM', current: currentCashlessStatistics.tvmUpi, previous: previousCashlessStatistics.tvmUpi },
   ];
-const cardSeparator = 'mt-4 text-blue-600 dark:text-blue-400 text-md font-extrabold'
+const cardSeparator = 'mt-4 text-sm font-bold uppercase tracking-[0.12em] text-ac'
   return (
     <div>
 
     <h2 className={cardSeparator}>Statistics</h2>
    <div className={cardContainer}>
-      <div className="grid grid-cols-4 w-full gap-4">
+      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
         {statistics.map(({ title, bestDay }) => (
           <div key={title} className={staticCardClass}>
             <small className="block text-mu">{title}</small>
@@ -105,5 +105,4 @@ const cardSeparator = 'mt-4 text-blue-600 dark:text-blue-400 text-md font-extrab
 
   )
 }
-
 

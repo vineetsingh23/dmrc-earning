@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
+import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
 
 interface AdvanceReceivedCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance received is column 1
@@ -16,7 +16,8 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
 
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
-      <h2 className="mb-2 font-semibold">Advance received from each TOM</h2>
+      <h2 className={cardHeadingClass}>Advance received from each TOM</h2>
+      <div className="overflow-x-auto">
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
@@ -43,6 +44,7 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
             <td className={tableTotalCellClass}>{formatRupees(totalAdvanceReceived)}</td></tr>
         </tfoot>
       </table>
+      </div>
     </div>
   );
 }

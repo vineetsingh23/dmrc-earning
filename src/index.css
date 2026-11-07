@@ -1,14 +1,32 @@
 @import "tailwindcss";
 @custom-variant dark (&:where(.dark, .dark *));
 
+
+
+
 :root {
   color-scheme: light;
-  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  font-family:
+    Inter,
+    ui-sans-serif,
+    system-ui,
+    -apple-system,
+    BlinkMacSystemFont,
+    "Segoe UI",
+    sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
+  --gray-bg: var(--color-gray-900);
+  --gray-text: var(--color-slate-700);
+  --gray-border: var(--color-gray-300);
+
+  --th: var(--color-emerald-900);
+  --th-tx: var(--color-slate-700);
+  --focus: var(--color-blue-300);
+  /* --hr:var(--color-emerald-500) */
 
   --bg: #e8ebef;
-  --errorCard:#efe8eb;
+  --errorCard: #efe8eb;
   --card: #ffffff;
   --tx: #1e2430;
   --mu: #625f58;
@@ -36,7 +54,13 @@
 
 .dark {
   color-scheme: dark;
-  --errorCard: #1d0808;
+  --th: var(--color-sky-950);
+  --th-tx: var(--color-slate-400);
+  --focus: var(--color-blue-900);
+  /* --hr: var(--color-emerald-900); */
+  --gray-bg: var(--color-gray-400);
+  --gray-text: var(--color-slate-200);
+  --gray-border: var(--color-gray-700);
   --bg: #0e1420;
   --card: #161e2c;
   --tx: #bdbfc3;
@@ -65,9 +89,34 @@
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 @theme inline {
-  --color-bg: var(--bg); --color-errorCard:var(--errorCard); --color-card: var(--card); --color-tx: var(--tx); --color-mu: var(--mu); --color-bd: var(--bd);
-  --color-ac: var(--ac); --color-ac2: var(--ac2); --color-inp: var(--in); --color-ca: var(--ca); --color-tg: var(--tg);
-  --color-bl: var(--bl); --color-ok: var(--ok); --color-bad: var(--bad); --color-onac: var(--onac); --color-tz: var(--tz); --color-cz: var(--cz);
+  --text-tiny: 14px;
+  --color-th-tx: var(--th-tx);
+  --color-focus: var(--focus);
+  --color-hr: var(--color-sky-800);
+
+  
+  --color-th: var(--th);
+  --color-gray-text: var(--gray-text);
+  --color-gray-border: var(--gray-border);
+
+  --color-bg: var(--bg);
+  --color-errorCard: var(--errorCard);
+  --color-card: var(--card);
+  --color-tx: var(--tx);
+  --color-mu: var(--mu);
+  --color-bd: var(--bd);
+  --color-ac: var(--ac);
+  --color-ac2: var(--ac2);
+  --color-inp: var(--in);
+  --color-ca: var(--ca);
+  --color-tg: var(--tg);
+  --color-bl: var(--bl);
+  --color-ok: var(--ok);
+  --color-bad: var(--bad);
+  --color-onac: var(--onac);
+  --color-tz: var(--tz);
+  --color-cz: var(--cz);
+  --text-sm:var(--text[1rem]);
 }
 
 html {
@@ -86,7 +135,9 @@ body {
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
-  transition: background-color 180ms ease, color 180ms ease;
+  transition:
+    background-color 180ms ease,
+    color 180ms ease;
 }
 
 button,
@@ -100,14 +151,18 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-button:focus-visible,
+/* button:focus-visible,
 a:focus-visible,
-input:focus-visible,
+input::-moz-focus-inner {
+    outline: 2x solid var(--color-blue-400);
+     outline-offset: 2px;
+
+}
 select:focus-visible,
 textarea:focus-visible {
   outline: 2px solid var(--ac);
   outline-offset: 2px;
-}
+} */
 
 ::selection {
   background: color-mix(in srgb, var(--ac) 24%, transparent);
@@ -217,29 +272,111 @@ textarea:focus-visible {
 }
 
 @keyframes bank-success-pop {
-  0% { opacity: 0; transform: scale(0.35) rotate(-25deg); }
-  70% { opacity: 1; transform: scale(1.18) rotate(5deg); }
-  100% { opacity: 1; transform: scale(1) rotate(0); }
+  0% {
+    opacity: 0;
+    transform: scale(0.35) rotate(-25deg);
+  }
+  70% {
+    opacity: 1;
+    transform: scale(1.18) rotate(5deg);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) rotate(0);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .bank-success-icon { animation: none; }
+  .bank-success-icon {
+    animation: none;
+  }
 }
 
 @layer components {
-  .enterprise-table :is(th, td) { border: 1px solid var(--bd); }
-  .enterprise-table tbody tr { @apply transition-colors duration-150; }
-  .enterprise-table tbody td { height: 3rem; padding: 0; vertical-align: middle; }
-  .enterprise-table tbody tr:nth-child(even) { background-color: var(--table-row-alt); }
-  .enterprise-table tbody tr:hover { background-color: var(--table-row-hover); }
-  .enterprise-table tfoot td { height: 3rem; padding: 0; vertical-align: middle; }
-  .enterprise-table--sheet tbody td { height: 1.75rem; }
-  .enterprise-table--sheet tfoot td { height: 3.5rem; }
+  .enterprise-table :is(th, td) {
+    border: 1px solid var(--bd);
+  }
+  .enterprise-table tbody tr {
+    @apply transition-colors duration-150;
+  }
+  .enterprise-table tbody td {
+    height: 3rem;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .enterprise-table tbody tr:nth-child(even) {
+    background-color: var(--table-row-alt);
+  }
+  .enterprise-table tbody tr:hover {
+    background-color: var(--table-row-hover);
+  }
+  .enterprise-table tfoot td {
+    height: 3rem;
+    padding: 0;
+    vertical-align: middle;
+  }
+  .enterprise-table--sheet tbody td {
+    height: 1.75rem;
+  }
+  .enterprise-table--sheet tfoot td {
+    height: 3.5rem;
+  }
+
+  /* card background and table color and design */
+
+  .table {
+    @apply w-full border-2 border-th/40
+  }
+.table-header{
+  @apply bg-th/50 px-2 text-tiny text-tx
 }
 
+.table-header-cells {
+  @apply py-2 text-th-tx border border-ca/30
+}
+
+.table-body {
+  @apply bg-th/20 text-sm font-medium text-th-tx/90 
+}
+
+.table-rows{
+  @apply even:bg-th/20  border border-th/10 hover:bg-hr/30 transition-colors duration-150 
+}
+
+.table-cells {
+  @apply py-2 w-full px-2 focus:ring-1 focus-visible:bg-focus/30 focus:border-focus/10 outline-hidden focus:ring-ac
+}
+
+.total-cells {
+  @apply even:bg-th/20 border-b dark:border-slate-700 border-slate-400 focus:ring-blue-300 text-right px-2
+}
+
+.footer-cells{
+  @apply py-3 bg-th/60 font-bold text-right px-2 border border-ca/30
+}
+.footer {
+  @apply px-2
+}
+
+ 
+  .card {
+    @apply w-full max-w-none rounded-2xl border border-bd bg-card p-4 text-tx shadow-sm transition-[border-color,box-shadow,transform] duration-200 hover:shadow-md
+  }
+ 
+  .button-outline{
+    @apply bg-th/30  px-4 py-2 rounded-md  text-tx hover:bg-th/60 hover:ring-1 hover:ring-sky-600
+  }
+}
 
 /* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
-.date-input { position: relative; }
+.date-input {
+  position: relative;
+}
 .date-input::-webkit-calendar-picker-indicator {
-  position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
 }

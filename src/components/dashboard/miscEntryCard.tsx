@@ -1,5 +1,5 @@
 import { formatRupees } from '../../lib/earningCalculations';
-import { parseNumber } from '../../lib/earningColumns';
+import { calculatedColumn, parseNumber } from '../../lib/earningColumns';
 import { entryCountsOnDate, miscColumnIndex, runningTotalsOfRows, type MiscKind } from '../../lib/miscEntries';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 
@@ -14,8 +14,8 @@ interface MiscEntryCardProps {
   onAddRow: () => void;
 }
 
-const headerClass = 'border border-bl bg-ca px-2 py-1 text-xs';
-const inputClass = 'w-full bg-transparent p-1.5 text-sm outline-hidden focus:bg-card focus:ring-2 focus:ring-ac';
+const headerClass = 'table-header';
+const inputClass = 'input-cells';
 
 export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDate, countedTotal, onCellChange, onAddRow }: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);
@@ -28,45 +28,48 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
         data-grid={kind} data-row={rowIndex} data-column={columnIndex}
         value={rows[rowIndex]?.[columnIndex] ?? ''} inputMode={isNumber ? 'decimal' : 'text'}
         onFocus={event => event.target.select()} onChange={event => onCellChange(rowIndex, columnIndex, event.target.value)}
-        className={`${inputClass} ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
+        className={`input-cells ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
       />
     </td>
   );
 
   return (
-    <div className="overflow-auto rounded-2xl border border-bd bg-card p-4 shadow-sm" onKeyDown={handleSheetKeyDown}>
-      <div className="mb-2 flex items-center justify-between">
+        <div className="card" onKeyDown={handleSheetKeyDown}>
+    <div className="mb-2 flex items-center justify-between">
         <h2 className="font-semibold">{title}</h2>
         <button type="button" onClick={onAddRow}
-          className="rounded-xl border border-bd bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac">+ Add row</button>
+          className="button-outline">+ Add row</button>
       </div>
-      <table className="w-full border-collapse">
-        <thead>
-          <tr>
-            <th className={headerClass}>Date</th><th className={headerClass}>Equipment or Person name</th><th className={headerClass}>Amount</th>
-            <th className={headerClass}>Total Amount</th><th className={headerClass}>Remark</th>
+      <table className="table">
+        <thead className='table-header'>
+          <tr className='table-header-row'>
+            <th className='table-header-cells'>Date</th>
+            <th className='table-header-cells'>Equipment or Person name</th>
+            <th className='table-header-cells'>Amount</th>
+            <th className='table-header-cells'>Total Amount</th>
+            <th className='table-header-cells'>Remark</th>
           </tr>
         </thead>
-        <tbody>
+        <tbody className='table-body'>
           {Array.from({ length: rowCount }, (_, rowIndex) => (
             // an entry dated after the selected date is shown dimmed and is not counted in cash possession yet
-            <tr key={rowIndex} className={`even:bg-tz ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-50'}`}>
-              {typedCell(rowIndex, miscColumnIndex.date, 'min-w-[95px]')}
-              {typedCell(rowIndex, miscColumnIndex.name, 'min-w-[150px]')}
-              {typedCell(rowIndex, miscColumnIndex.amount, 'min-w-[80px]', true)}
-              <td className="border border-bl bg-ca px-2 py-1 text-right text-sm font-semibold">
+            <tr key={rowIndex} className={`${miscColumnIndex.amount ? 'table-rows' : ''} ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-50'}`}>
+              {typedCell(rowIndex, miscColumnIndex.date, 'table-cells min-w-25')}
+              {typedCell(rowIndex, miscColumnIndex.name, 'table-cells min-w-50')}
+              {typedCell(rowIndex, miscColumnIndex.amount, 'table-cells min-w-30', true)}
+              <td className={`${runningTotals[rowIndex]=== null ? 'table-cells' : ''} total-cells`}>
                 {runningTotals[rowIndex] === null ? '' : formatRupees(runningTotals[rowIndex])}
               </td>
-              {typedCell(rowIndex, miscColumnIndex.remark, 'min-w-[150px]')}
+              {typedCell(rowIndex, miscColumnIndex.remark, 'table-cells min-w-35')}
             </tr>
           ))}
         </tbody>
         <tfoot>
-          <tr className="bg-ca font-bold">
-            <td className="border border-bl px-2 py-1 text-sm" colSpan={2}>Total</td>
-            <td className="border border-bl px-2 py-1 text-right text-sm">{formatRupees(amountTotal)}</td>
-            <td className="border border-bl px-2 py-1 text-right text-sm">{formatRupees(amountTotal)}</td>
-            <td className="border border-bl" />
+          <tr className="table-footer">
+            <td className="footer-cells text-center" colSpan={2}>Total</td>
+            <td className="footer-cells">{formatRupees(amountTotal)}</td>
+            <td className="footer-cells">{formatRupees(amountTotal)}</td>
+            <td className="footer-cells" />
           </tr>
         </tfoot>
       </table>

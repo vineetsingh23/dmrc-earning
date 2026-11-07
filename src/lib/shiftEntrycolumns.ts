@@ -77,9 +77,9 @@ export const shiftEntryColumns: ColumnNode[] = [
   columnGroup('Top-up in SV-4 Cards (o)', ...quantityAmountColumns('sv4TopUpQuantity', 'sv4TopUpAmount', 'o')),
   
   columnGroup('Manual Refunds',  
-    columnGroup('Refund Readable CSC (CR)', ...quantityAmountColumns('readableCscRefundQuantity', 'readableCscRefundAmount', 'r')),
-    columnGroup('Manual Refund of Tour Card', ...quantityAmountColumns('tourCardRefundQuantity', 'tourCardRefundAmount', 's1')),
-    columnGroup('Manual Refund of Security Deposit Against OK URC', ...quantityAmountColumns('securityDepositRefundQuantity', 'securityDepositRefundAmount', 's2'))),
+    columnGroup('Readable OK CSC', ...quantityAmountColumns('readableCscRefundQuantity', 'readableCscRefundAmount', 'r')),
+    columnGroup('Readable OK Tour Card', ...quantityAmountColumns('tourCardRefundQuantity', 'tourCardRefundAmount', 's1')),
+    columnGroup('Security Deposit Against OK URC', ...quantityAmountColumns('securityDepositRefundQuantity', 'securityDepositRefundAmount', 's2'))),
 
   columnGroup('Penalty',
     columnGroup('Manual Receipt Penalty', ...quantityAmountColumns('manualPenaltyQuantity', 'manualPenaltyAmount', 't')),
@@ -104,14 +104,14 @@ export const shiftEntryColumns: ColumnNode[] = [
     mirrorColumn('penaltyThroughHhtPurse', 'HHT Penalty Purse (af)','hhtPenaltyPurseAmount'), 
     mirrorColumn('parkingThroughHhtPurse', 'HHT Parking Purse (y3)','hhtParkingPurseAmount'),
 
-  columnGroup('Surcharge Adjustment',
-      mirrorColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)', 'surchargePurseAmount'),
-      mirrorColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)', 'ncmcPurseAmount'))),
+  columnGroup('Surcharge Adjustment by Purse',
+      mirrorColumn('surchargeThroughPurseAfc', 'SV2', 'surchargePurseAmount'),
+      mirrorColumn('surchargeThroughPurseNcmc', 'NCMC', 'ncmcPurseAmount'))),
     // columnGroup('Surcharge Adjustment', numberColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)'), numberColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)'))),
 
   numberColumn('outsourceEarningAmount', 'Outsource Earning (OE)'),
   columnGroup('Outstanding Details',
-    columnGroup('Current', numberColumn('outstandingCurrentAfc', 'AFC (aj)'), numberColumn('outstandingCurrentMisc', 'Misc (ak)'), numberColumn('tvmMutilatedFakeNotes', 'TVM Mutilated/Fake Notes')),
+    columnGroup('Current', numberColumn('outstandingCurrentAfc', 'AFC (aj)'), numberColumn('outstandingCurrentMisc', 'Misc (ak)'), numberColumn('tvmMutilatedFakeNotes', 'TVM')),
     columnGroup('Paid', numberColumn('outstandingPaidAfc', 'AFC (al)'), numberColumn('outstandingPaidMisc', 'Misc (am)'))),
 
   calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),

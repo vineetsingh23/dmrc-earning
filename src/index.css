@@ -14,6 +14,8 @@
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --color-onac: var(--onac);
+  --color-card-text: var(--card-text);
+
 }
 
 :root {
@@ -35,6 +37,7 @@
   color-scheme: dark;
   --bg: #0e1420;
   --card: #161e2c;
+  --card-text: var(--color-red-500);
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */

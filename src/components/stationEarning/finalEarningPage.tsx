@@ -43,7 +43,7 @@ const sentToBankToday = figures.existingTransfer?.amount ?? 0;
         <h1 className="page-title">Final earning</h1>
         <p className="page-description">Read-only totals from shift and TVM earnings for the selected date.</p>
       </header>
-      <EarningSheetTable columns={finalEarningColumns} gridName="final" rowCount={1} readRow={() => finalRow}
+      <EarningSheetTable columns={finalEarningColumns} gridName="final" frozenColumnCount={0} rowCount={1} readRow={() => finalRow}
         showTotalRow={false} sheetStyle={finalEarningSheetStyle} />
       <p className="text-sm text-mu">Read-only totals for the selected date.</p>
     </div>

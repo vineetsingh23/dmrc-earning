@@ -112,7 +112,7 @@ export default function CashInPossessionCard({
         <div className="max-w-xs">
           <h2 className={cardHeadingClass}>Cash in possession</h2>
 
-          <p className="mb-2 text-xs text-mu">
+          <p className="mb-2 text-xs dark:text-slate-400 text-slate-700">
             {cashCountsSource === "saved" && "Counts saved for this date."}
             {cashCountsSource === "carried" &&
               "Counts carried over from the last counted date. Update them if the cash in your drawer is different."}

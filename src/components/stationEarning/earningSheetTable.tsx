@@ -291,8 +291,9 @@ export default function EarningSheetTable({
   gridName = "sheet",
 }: EarningSheetTableProps) {
   const isShiftGrid = gridName === "shift";
+  const isFinalGrid = gridName === "final";
   const isEarningGrid =
-    isShiftGrid || gridName === "tvm" || gridName === "final";
+    isShiftGrid || gridName === "tvm" || isFinalGrid;
   const leafColumns = columns.flatMap(collectLeafColumns);
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) =>
     readRow(rowIndex),
@@ -470,6 +471,8 @@ export default function EarningSheetTable({
         className={`${tableWrapperClass} ${
           isShiftGrid
             ? "overflow-auto! rounded-xl border-slate-300 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900"
+            : isFinalGrid
+              ? "overflow-auto!"
             : ""
         }`}
         style={
@@ -484,7 +487,9 @@ export default function EarningSheetTable({
       >
         <table
           ref={tableRef}
-          className={`${sheetTableClass} ${isShiftGrid ? "!w-max" : ""}`}
+          className={`${sheetTableClass} ${
+            isShiftGrid || isFinalGrid ? "!w-max" : ""
+          }`}
         >
           <colgroup>
             {leafColumns.map((column, columnIndex) => (

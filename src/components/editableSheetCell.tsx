@@ -1,6 +1,6 @@
 import { memo } from 'react';
 import { frozenCellStyle } from './sheetFrozenColumns';
-// import { tableInputClass } from '../globalStyles';
+import { tableCellClass, tableInputClass } from '../globalStyles';
 
 type WriteEntryValue = (rowIndex: number, fieldKey: string, newValue: string) => void;
 
@@ -15,16 +15,15 @@ interface EditableSheetCellProps {
 const EditableSheetCell = memo(function EditableSheetCell({
   gridName, rowIndex, columnIndex, fieldKey, isNumeric, value, frozenIndex, writeValueReference,
 }: EditableSheetCellProps) {
-  const tableInputClass = 'bg-blue-100 border-slate-100 border px-1 py-0.5'
   return (
-    <td className="" style={frozenIndex === undefined ? undefined : frozenCellStyle(frozenIndex, 5)}>
+    <td className={tableCellClass} style={frozenIndex === undefined ? undefined : frozenCellStyle(frozenIndex, 5)}>
       <input
         data-grid={gridName} data-row={rowIndex} data-column={columnIndex}
         value={value}
         inputMode={isNumeric ? 'decimal' : 'text'}
         onFocus={event => event.target.select()}
         onChange={event => writeValueReference.current?.(rowIndex, fieldKey, event.target.value)}
-        className={`${tableInputClass} ${isNumeric ? 'text-right max-w-17' : 'text-left max-w-25'} `}
+        className={`${tableInputClass} ${isNumeric ? 'text-right font-mono max-w-17' : 'text-left max-w-25'} `}
       />
     </td>
   );

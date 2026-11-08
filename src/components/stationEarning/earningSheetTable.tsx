@@ -5,6 +5,14 @@ import type { RegisterRow } from '../../lib/registerTypes';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
 import EditableSheetCell from '../editableSheetCell';
 import { frozenCellStyle, frozenColumnWidthsRem } from '../sheetFrozenColumns';
+import {
+  tableCellClass,
+  tableCellLeftClass,
+  tableHeaderCellClass,
+  tableRowClass,
+  tableTotalCellClass,
+  tableTotalRowClass,
+} from '../../globalStyles';
 
 export interface SheetStyle {
   headerCellClass: string;          // padding, text alignment and font of every header cell
@@ -14,10 +22,10 @@ export interface SheetStyle {
 }
 
 export const defaultSheetStyle: SheetStyle = {
-  headerCellClass: 'text-tx px-2  text-xs',
-  headerColorClasses: ['dark:bg-slate-800 border dark:border-slate-600 min-w-14'],
-  bodyCellClass: 'px-2 text-nowrap text-right',
-  footerCellClass: 'border border-slate-600 px-1 py-2 text-right',
+  headerCellClass: tableHeaderCellClass,
+  headerColorClasses: [''],
+  bodyCellClass: tableCellClass,
+  footerCellClass: tableTotalCellClass,
 };
 
 // how many columns at the start of the list are plain columns (not groups); only those can be frozen
@@ -100,13 +108,13 @@ export default function EarningSheetTable({
     }, 0);
 
   return (
-    <div onKeyDown={handleSheetKeyDown} tabIndex={isEditable ? undefined : 0} className="sheet-scroll-area rounded-xl border border-bd bg-card">
-      <table className="w-full">
+    <div onKeyDown={handleSheetKeyDown} tabIndex={isEditable ? undefined : 0} className="w-full max-w-full overflow-x-auto overscroll-x-contain rounded-xl border border-slate-300 bg-card dark:border-slate-700">
+      <table className="w-full min-w-[1200px] border-separate border-spacing-0 text-slate-600 dark:text-sky-400">
         <thead>
           {buildHeaderRows(columns, sheetStyle, effectiveFrozenCount).map((headerRow, headerRowIndex) => (
             <tr key={headerRowIndex}>
               {headerRowIndex === 0 && (
-                <th rowSpan={Math.max(...columns.map(columnDepth))} className='' style={frozenCellStyle(0, 50)}>#</th>
+                <th rowSpan={Math.max(...columns.map(columnDepth))} className={`${tableHeaderCellClass} min-w-[3rem] text-center`} style={frozenCellStyle(0, 50)}>#</th>
               )}
               {headerRow}
             </tr>
@@ -115,8 +123,8 @@ export default function EarningSheetTable({
 
         <tbody>
           {allRows.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td className='' style={frozenCellStyle(0, 5)}>{rowIndex + 1}</td>
+            <tr key={rowIndex} className={tableRowClass}>
+              <td className={`${tableCellLeftClass} text-center`} style={frozenCellStyle(0, 5)}>{rowIndex + 1}</td>
               {leafColumns.map((column, leafIndex) => {
                 const frozenStyle = frozenStyleOfLeaf(leafIndex, 5);
                 if (column.kind === 'calculated') {
@@ -129,8 +137,8 @@ export default function EarningSheetTable({
                 if (column.kind === 'mirror') {
                   // looks like a typed number cell, but is read-only and follows another column
                   return (
-                    <td key={column.fieldKey} className="sheet-input-cell" style={frozenStyle}>
-                      <div className="min-w-[70px] p-1.5 text-right text-sm">{row[column.sourceFieldKey!] ?? ''}</div>
+                    <td key={column.fieldKey} className={`${tableCellClass} min-w-[70px] text-nowrap text-right text-sm sheet-input-cell`} style={frozenStyle}>
+                      {row[column.sourceFieldKey!] ?? ''}
                     </td>
                   );
                 }
@@ -145,7 +153,7 @@ export default function EarningSheetTable({
                 }
                 // read-only: just show the value
                 return (
-                  <td key={column.fieldKey} className='' style={frozenStyle}>
+                  <td key={column.fieldKey} className={`${tableCellClass} text-nowrap`} style={frozenStyle}>
                     {column.kind === 'number' ? formatCellValue(column, parseNumber(row[column.fieldKey])) : row[column.fieldKey] ?? ''}
                   </td>
                 );
@@ -156,8 +164,8 @@ export default function EarningSheetTable({
 
         {showTotalRow && (
           <tfoot>
-            <tr>
-              <td className={sheetStyle.footerCellClass} style={frozenCellStyle(0, 5)}>Total</td>
+            <tr className={tableTotalRowClass}>
+              <td className={`${sheetStyle.footerCellClass} !text-left`} style={frozenCellStyle(0, 5)}>Total</td>
               {leafColumns.map((column, leafIndex) => (
                 <td key={column.fieldKey} className={sheetStyle.footerCellClass} style={frozenStyleOfLeaf(leafIndex, 5)}>
                   {column.kind === 'text' ? '' : formatCellValue(column, totalOfColumn(column))}

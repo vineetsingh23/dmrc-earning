@@ -6,7 +6,6 @@ import { sumRowsByField } from '../../lib/earningCalculations';
 import {
   tableCellClass,
   tableHeaderCellClass,
-  tableHeaderGroupClasses,
 } from '../../globalStyles';
 import { useDashboardFigures } from '../../hooks/useDashboardFigures';
 
@@ -15,7 +14,7 @@ interface FinalEarningPageProps { registerState: RegisterState; date: string }
 // Roomier cells and centered text while preserving the shared table palette.
 const finalEarningSheetStyle: SheetStyle = {
   headerCellClass: `${tableHeaderCellClass} px-4 py-3 text-sm font-bold`,
-  headerColorClasses: tableHeaderGroupClasses,
+  headerColorClasses: [''],
   bodyCellClass: `${tableCellClass} px-4 py-6 text-center font-bold`,
   footerCellClass: '',
 };

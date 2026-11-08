@@ -2,6 +2,7 @@ import { CircleCheck } from "lucide-react";
 import { Redo2, Undo2 } from "lucide-react";
 import {
   cardClass,
+  cardHeaderClass,
   cardHeadingClass,
   tableCellClass,
   tableCellLeftClass,
@@ -12,6 +13,7 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableTotalRowClass,
+  tableWrapperClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import {
@@ -106,7 +108,7 @@ export default function CashInPossessionCard({
       className={`${cardClass} card ${cashDifference === 0 ? "" : "border-red-400 bg-errorCard"}`}
       onKeyDown={handleSheetKeyDown}
     >
-      <div className="flex gap-4 w-full justify-between">
+      <div className={cardHeaderClass}>
         <div className="max-w-xs">
           <h2 className={cardHeadingClass}>Cash in possession</h2>
 
@@ -165,6 +167,7 @@ export default function CashInPossessionCard({
             `Back at the start. Next brings back ${changes.length} change${changes.length === 1 ? "" : "s"}.`}
         </span>
       </div>
+            <div className={tableWrapperClass}>
 
       <table className={tableClass}>
         <thead>
@@ -177,7 +180,7 @@ export default function CashInPossessionCard({
         <tbody>
           {countRows.map((countRow, rowIndex) => (
             <tr
-              key={countRow.countKey}
+            key={countRow.countKey}
               className={`${tableRowClass} ${cashDifference === 0 ? "" : "even:bg-errorCard"}`}
             >
               <td
@@ -198,7 +201,7 @@ export default function CashInPossessionCard({
                   onChange={(event) =>
                     onCountChange(countRow.countKey, event.target.value)
                   }
-                  className={`${tableInputClass} text-right`}
+                  className={`${tableInputClass} text-right font-mono`}
                 />
               </td>
               <td className={tableCellClass}>
@@ -239,12 +242,13 @@ export default function CashInPossessionCard({
           </tr>
         </tfoot>
       </table>
+      </div>
 
       <small
         className={`cash-status ${matchesCashInHand ? "cash-status-success" : "cash-status-error"}`}
         role="status"
         aria-live="polite"
-      >
+        >
         <i
           className={`fi ${matchesCashInHand ? "fi-rr-check" : "fi-rr-exclamation"} cash-status-icon`}
           aria-hidden="true"

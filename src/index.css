@@ -47,7 +47,6 @@
   --color-onac: var(--onac);
   --color-tz: var(--tz);
   --color-cz: var(--cz);
-  --text-sm: var(--text[1rem]);
 }
 
 :root {
@@ -136,7 +135,6 @@
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
-@
 
 html {
   min-width: 320px;

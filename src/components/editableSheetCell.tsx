@@ -66,6 +66,7 @@ const EditableSheetCell = memo(
           maxLength={isTime ? 5 : undefined}
           data-grid={gridName}
           data-row={rowIndex}
+
           data-column={columnIndex}
           value={isTime ? timeDraft : value}
           onFocus={(event) => event.target.select()}
@@ -114,7 +115,7 @@ const EditableSheetCell = memo(
             }
           }}
           className={`${tableInputClass} ${isNumeric ? "text-right" : "text-left"}`}
-          style={{ width: inputWidth ?? (isNumeric ? 72 : 96), minWidth: 0 }}
+          style={{ width: inputWidth ?? (isNumeric ? 100: 120), minWidth:0}}
         />
       </td>
     );

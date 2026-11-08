@@ -25,4 +25,19 @@ export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
   event.preventDefault();
   targetCell.focus();
   targetCell.select?.();
+
+  const targetRow = targetCell.closest('tr');
+  const targetCellElement = targetCell.closest('td');
+  const targetStyle = targetCellElement && window.getComputedStyle(targetCellElement);
+  if (!targetRow || !targetCellElement || targetStyle?.position === 'sticky') return;
+
+  const frozenRight = Array.from(targetRow.querySelectorAll<HTMLElement>('td'))
+    .filter(cell => window.getComputedStyle(cell).position === 'sticky')
+    .reduce((right, cell) => Math.max(right, cell.getBoundingClientRect().right), 0);
+  const containerLeft = gridElement.getBoundingClientRect().left + gridElement.clientLeft;
+  const hiddenWidth = frozenRight - targetCellElement.getBoundingClientRect().left;
+
+  if (frozenRight > containerLeft && hiddenWidth > 0) {
+    gridElement.scrollLeft += hiddenWidth;
+  }
 }

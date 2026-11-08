@@ -11,6 +11,7 @@ export interface BankTransfer{
 export interface RegisterState {
     shiftRowCount:number;
     tvmRowCount:number;
+    rowCountsInitialized?: boolean;
     shiftEntries:Record<string, Record<number, RegisterRow>>;
     tvmEntries: Record<string, Record<number, RegisterRow>>;
     detailLists: Record<string, Partial<Record<DetailListKind, string[][]>>>;
@@ -24,6 +25,7 @@ export interface RegisterState {
 export const createEmptyRegisterState =() : RegisterState =>({
     shiftRowCount:12,
     tvmRowCount:12,
+    rowCountsInitialized:true,
     shiftEntries:{},
     tvmEntries:{},
     detailLists:{},

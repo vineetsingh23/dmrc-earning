@@ -3,36 +3,7 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
-
-/* Cards components variables */
-  /* --color-card-bg: var(--card-bg);
-  --color-card-title: var(--card-title);
-  --color-card-border:var(--card-border);
-  --color-card-content: var(--card-content);
-  --font-card-title: 1.25rem;
-  --font-card-title--line-height:1.75rem;
-  --font-weight-card-title:600;
-  --font-weight-card-body:400;
-  --text-card-body:0.875rem;
-  --text-card-body-line-height:1.25rem; */
-
-
-
-
-
-  --text-tiny: 13px;
-  --font-weight-tx: 500;
-  --color-th-tx: var(--th-tx);
-  --color-focus: var(--focus);
-  --color-hr: var(--color-sky-800);
   --color-tx: var(--tx);
-
-  --color-th: var(--th);
-  --color-gray-text: var(--gray-text);
-  --color-gray-border: var(--gray-border);
-
-  --color-bg: var(--bg);
-  --color-errorCard: var(--errorCard);
   --color-card: var(--card);
   --color-mu: var(--mu);
   --color-bd: var(--bd);
@@ -40,13 +11,9 @@
   --color-ac2: var(--ac2);
   --color-inp: var(--in);
   --color-ca: var(--ca);
-  --color-tg: var(--tg);
-  --color-bl: var(--bl);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --color-onac: var(--onac);
-  --color-tz: var(--tz);
-  --color-cz: var(--cz);
 }
 
 :root {
@@ -61,77 +28,13 @@
   sans-serif;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
-  --gray-bg: var(--color-gray-900);
-  --gray-text: var(--color-slate-700);
-  --gray-border: var(--color-gray-300);
-  
-  --gradient: to-right, var(--color-red-500), var(--color-sky-400), var(--color-pink-400);
-  --th: var(--color-gray-400);
-  --th-tx: var(--color-slate-700);
-  --focus: var(--color-slate-300);
   --tx: #525c71;
-  /* --hr:var(--color-emerald-500) */
-
-  /* --bg: #e8ebef;
-  --errorCard: #efe8eb;
-  --card: #ffffff;
-  --mu: #625f58;
-  --bd: #d7dce4;
-  --ac: #2563eb;
-  --ac2: #818cf8;
-  --in: #f1f3f6;
-  --ca: #e4ebf8;
-  --onac: #fff;
-  --bad: #dc2626;
-  --ok: #15803d;
-  --tg: #dde0e5;
-  --bl: #d7dce4;
-  --tz: #d3d7dd;
-  --cz: #d6e1f6;
-  --h0: #dbe7ff;
-  --h1: #e8defc;
-  --h2: #d9f2e3;
-  --h3: #fdebc8;
-  --h4: #fbdde6;
-  --h5: #d4f0f0;
-  --table-row-alt: #eef0f5;
-  --table-row-hover: #f8f8f8; */
 }
 
 .dark {
   color-scheme: dark;
-  --th: var(--color-sky-950);
-  --th-tx: var(--color-slate-400);
-  --focus: var(--color-blue-900);
-  /* --hr: var(--color-emerald-900); */
-  --gray-bg: var(--color-gray-400);
-  --gray-text: var(--color-slate-200);
-  --gray-border: var(--color-gray-700);
   --bg: #0e1420;
   --card: #161e2c;
-  --errorCard: color-mix(in srgb, var(--bad) 16%, var(--card));
-  /* --tx: #bdbfc3;
-  --mu: #94a3b8;
-  --bd: #263043;
-  --ac: #60a5fa;
-  --ac2: #a5b4fc;
-  --in: #1c2638;
-  --ca: #1b2a44;
-  --onac: #0b1220;
-  --bad: #f87171;
-  --ok: #4ade80;
-  --tg: #222c3d;
-  --bl: #36445a;
-  --tz: #29364b;
-  --cz: #22355a;
-  --h0: #1e3a5f;
-  --h1: #3a2a5f;
-  --h2: #1f4a37;
-  --h3: #54411b;
-  --h4: #5a2a3d;
-  --h5: #1d4a4b;
-  --table-row-alt: #222c3d;
-  --table-row-hover: #2b3a50; */
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */

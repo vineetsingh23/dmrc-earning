@@ -18,6 +18,7 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
       <EarningSheetTable
         columns={tvmEarningColumns}
         gridName='tvm'
+        frozenColumnCount={0}
         rowCount={registerState.tvmRowCount}
         readRow={rowIndex => tvmRows[rowIndex] ?? {}}
         readEntryValue={(rowIndex, fieldKey) => tvmRows[rowIndex]?.[fieldKey] ?? ''}

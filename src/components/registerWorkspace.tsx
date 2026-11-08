@@ -316,7 +316,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                 </header>
                 <EarningSheetTable
                   columns={visibleShiftColumns}
-                  frozenDataColumnCount={2}
+                  frozenColumnCount={2}
                   gridName="shift"
                   rowCount={registerState.shiftRowCount}
                   readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}

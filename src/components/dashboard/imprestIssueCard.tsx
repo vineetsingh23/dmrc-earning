@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
+import { cardClass,cardHeaderClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
 
 interface ImprestIssueCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance issued is column 2
@@ -19,19 +19,19 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
   // const headerClass = 'border border-bl bg-ca px-2 py-1 text-xs';
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
-      <h2 className="mb-2 font-semibold">Imprest issue to each TOM</h2>
+      <h2 className={cardHeadingClass}>Imprest & advance issued to each TOM</h2>
       <div className="overflow-x-auto">
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={tableHeaderCellClass}>TOM No.</th><th className={tableHeaderCellClass}>Imprest issued</th>
-            <th className={tableHeaderCellClass}>Advance issued</th><th className={tableHeaderCellClass}>Total issued amount</th>
+            <th className={`${tableHeaderCellClass} min-w-20`}>TOM No.</th><th className={`${tableHeaderCellClass} min-w-40`}>Imprest</th>
+            <th className={tableHeaderCellClass}>Advance</th><th className={tableHeaderCellClass}>Total</th>
           </tr>
         </thead>
         <tbody>
           {tomOperators.map((tomOperator, rowIndex) => (
             <tr key={tomOperator.tomNumber} className={tableRowClass}>
-              <td className={`${tableCellLeftClass} text-left!`}>{tomOperator.tomNumber}</td>
+              <td className={tableCellLeftClass}>{tomOperator.tomNumber}</td>
               <td className={tableCellClass}>{formatRupees(tomOperator.imprestAmount)}</td>
               <td className={tableCellClass}>
                 <input data-grid="imprestIssue" data-row={rowIndex} data-column={0}

@@ -10,6 +10,11 @@
   --color-card: var(--card);
   --color-ac2: var(--ac2);
   --color-ca: var(--ca);
+  --color-th: var(--th);
+  --color-tr: var(--tr);
+  --color-gr: var(--gr);
+  --color-gt: var(--gt);
+;  
   
 
   --color-mu: var(--mu);
@@ -33,6 +38,10 @@
   --bg: var(--color-gray-200);
   --bd: var(--color-slate-400);
   --card: var(--color-white);
+  --th: var(--color-gray-300);
+  --tr: var(--color-teal-50);
+  --gr:var(--color-green-100);
+  --gt:var(--color-green-700);
 
   --gr: #46a55b;
   --bd: #b6bac2;
@@ -47,6 +56,10 @@
   --hr: var(--color-sky-300);
   --bd: var(--color-blue-400);
   --card: var(--color-slate-800);
+  --th: var(--color-slate-700);
+  --tr: var(--color-teal-950);
+   --gr:var(--color-green-950);
+   --gt:var(--color-green-400);
   
 
   --he: #161e2c;
@@ -66,6 +79,14 @@
   .page-info {
     @apply text-xl capitalize font-bold tracking-wide  text-transparent bg-clip-text bg-linear-120 from-red-600 to-indigo-600 via-blue-600
   }
+  .cash-status-error {
+    @apply bg-red-100 text-red-600 border border-red-500 inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2
+  }
+  .cash-status-success {
+    @apply bg-gr/30 text-gt border-gt font-semibold tracking-wide inline-flex items-center gap-3 mt-3 border rounded-xl px-3 py-2
+  }
+
+ 
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
@@ -131,43 +152,6 @@ textarea:focus-visible {
   }
 }
 
-.bank-success-icon {
-  display: inline-grid;
-  width: 1.5rem;
-  height: 1.5rem;
-  place-items: center;
-  border-radius: 9999px;
-  background: color-mix(in srgb, var(--ok) 16%, transparent);
-  animation: bank-success-pop 450ms ease-out both;
-}
-
-.cash-status {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  margin-top: 0.75rem;
-  padding: 0.5rem 0.75rem;
-  border: 1px solid currentColor;
-  border-radius: 0.75rem;
-  font-weight: 600;
-  line-height: 1.35;
-}
-
-.cash-status-success {
-  color: var(--ok);
-  background: color-mix(in srgb, var(--ok) 9%, var(--card));
-  border-color: color-mix(in srgb, var(--ok) 28%, transparent);
-}
-
-.cash-status-error {
-  color: var(--bad);
-  background: color-mix(in srgb, var(--bad) 8%, var(--card));
-  border-color: color-mix(in srgb, var(--bad) 28%, transparent);
-}
-
-.cash-status-icon {
-  flex: none;
-}
 
 .pwa-notice {
   position: fixed;

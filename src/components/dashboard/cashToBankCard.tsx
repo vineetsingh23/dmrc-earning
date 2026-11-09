@@ -17,6 +17,7 @@ import {
   tableTotalRowClass,
 } from '../../globalStyles';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
+import { CheckCheck, CircleCheckIcon, CircleLetterX} from 'lucide-react';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -64,13 +65,17 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
       </table>
       
       {existingTransfer ? (
-        <small className='cash-status cash-status-success' role="status" aria-live="polite">
-          <span className="bank-success-icon" aria-hidden="true"><i className="fi fi-rr-check" /></span>
-          Successfully sent to bank · Slip {existingTransfer.slipNumber}
+        <small className='cash-status-success' role="status" aria-live="polite">
+          <span className="bank-success-icon" aria-hidden="true"><CheckCheck /></span>
+          Successfully sent to bank · Slip No. - {existingTransfer.slipNumber}
         </small>
       ) : (
       <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
-        <i className={`fi ${matchesAmountDue ? 'fi-rr-check' : 'fi-rr-exclamation'} cash-status-icon`} aria-hidden="true" />
+       {matchesAmountDue ? (
+    <CircleCheckIcon className='size-8'/>
+  ) : (
+    <CircleLetterX className='size-8 stroke-1'/>
+  )}
         {notesExceedingStock.length
           ? `Count exceeds cash in hand for ₹${notesExceedingStock.join(', ₹')}`
           : matchesAmountDue

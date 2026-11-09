@@ -101,7 +101,7 @@ export default function CashInPossessionCard({
 
   //  const countInputClass = 'w-20 rounded border border-bd bg-inp px-1.5 py-0.5 text-right outline-hidden focus:ring-2 focus:ring-ac';
   const stepButtonClass =
-    "flex items-center gap-1 rounded-lg border border-bd bg-card px-2.5 py-1 text-sm font-medium transition hover:border-ac hover:text-ac disabled:pointer-events-none disabled:opacity-40";
+    "flex items-center gap-1 rounded-lg border border-bd bg-card px-2.5 py-1 text-sm font-medium transition hover:border-bd hover:bg-tr hover:text-ac disabled:pointer-events-none disabled:opacity-40";
 
   return (
     <div
@@ -172,7 +172,7 @@ export default function CashInPossessionCard({
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={tableHeaderCellClass}>Denominations</th>
+            <th className={`${tableHeaderCellClass} min-w-60`}>Denominations</th>
             <th className={tableHeaderCellClass}>Count</th>
             <th className={tableHeaderCellClass}>Amount</th>
           </tr>
@@ -201,7 +201,7 @@ export default function CashInPossessionCard({
                   onChange={(event) =>
                     onCountChange(countRow.countKey, event.target.value)
                   }
-                  className={`${tableInputClass} text-right font-mono`}
+                  className={`${tableInputClass} text-right`}
                 />
               </td>
               <td className={tableCellClass}>

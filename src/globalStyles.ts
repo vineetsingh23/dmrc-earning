@@ -1,6 +1,7 @@
 export const dashboardGridClass = 'dashboard-grid grid grid-cols-1 items-start gap-4 md:grid-cols-2 xl:grid-cols-3';
 export const stackedCardsClass = 'flex flex-col gap-4';
 
+
 // card classes
 
 export const cardContainer = 'brand-card flex w-full gap-4 p-4 transition-shadow duration-200 hover:shadow-md';

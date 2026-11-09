@@ -1,11 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AppHeader from "./layout/appHeader";
-import { effectiveDetailListRows } from '../lib/carriedLists';
-import { updateCarriedDetailListCell } from '../handlers/carriedListsHandlers';
-import { addMiscRow, updateMiscEntryCell } from '../handlers/miscEntryHandlers';
-import { miscRowCountOf, miscRowsOf, type MiscKind } from '../lib/miscEntries';
-import MiscEntryCard from './dashboard/miscEntryCard';
+import { effectiveDetailListRows } from "../lib/carriedLists";
+import { updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
+import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
+import { miscRowCountOf, miscRowsOf, type MiscKind } from "../lib/miscEntries";
+import MiscEntryCard from "./dashboard/miscEntryCard";
 // import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
 // import type { MiscKind } from '../lib/miscEntries';
 import EarningSheetTable from "./stationEarning/earningSheetTable";
@@ -40,7 +40,10 @@ import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
 import BackupFolderCard from "./dashboard/backupFolderCard";
 import BackupToolbar from "./dashboard/backupToolbar";
 import SettingsPage from "./settingsPage";
-import { stepCashCountBack, stepCashCountForward } from "../lib/cashCountHistory";
+import {
+  stepCashCountBack,
+  stepCashCountForward,
+} from "../lib/cashCountHistory";
 
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
@@ -115,16 +118,33 @@ export default function RegisterWorkspace({
   //     }
   //   />
   // );
-const renderMiscCard = (title: string, kind: MiscKind) => (
-  <MiscEntryCard
-    title={title} kind={kind}
-    rows={miscRowsOf(registerState, kind)} rowCount={miscRowCountOf(registerState, kind)} selectedDate={selectedDate}
-    countedTotal={kind === 'miscDebit' ? figures.miscDebitTotal : figures.miscCreditTotal}
-    onCellChange={(rowIndex, columnIndex, newValue) =>
-      updateRegisterState(draftState => updateMiscEntryCell(draftState, selectedDate, kind, rowIndex, columnIndex, newValue))}
-    onAddRow={() => updateRegisterState(draftState => addMiscRow(draftState, kind))}
-  />
-);
+  const renderMiscCard = (title: string, kind: MiscKind) => (
+    <MiscEntryCard
+      title={title}
+      kind={kind}
+      rows={miscRowsOf(registerState, kind)}
+      rowCount={miscRowCountOf(registerState, kind)}
+      selectedDate={selectedDate}
+      countedTotal={
+        kind === "miscDebit" ? figures.miscDebitTotal : figures.miscCreditTotal
+      }
+      onCellChange={(rowIndex, columnIndex, newValue) =>
+        updateRegisterState((draftState) =>
+          updateMiscEntryCell(
+            draftState,
+            selectedDate,
+            kind,
+            rowIndex,
+            columnIndex,
+            newValue,
+          ),
+        )
+      }
+      onAddRow={() =>
+        updateRegisterState((draftState) => addMiscRow(draftState, kind))
+      }
+    />
+  );
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(
@@ -176,7 +196,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
+          onToggleDarkMode={() => setIsDarkMode((theme) => !theme)}
           showNavigation={false}
         />
         <main className="mx-auto max-w-screen-2xl p-4 md:p-6">
@@ -186,7 +206,8 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             onLogout={onLogout}
           />
           <p className="mx-auto mt-4 max-w-2xl text-sm text-mu">
-            Register data could not be loaded. Check that this browser allows IndexedDB before continuing.
+            Register data could not be loaded. Check that this browser allows
+            IndexedDB before continuing.
           </p>
         </main>
       </div>
@@ -194,13 +215,13 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
   }
   return (
     <div className="app-shell min-h-screen text-tx transition-colors">
-        <AppHeader
-          stationName={station.name}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
-        />
+      <AppHeader
+        stationName={station.name}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={() => setIsDarkMode((theme) => !theme)}
+      />
 
       <main className="mx-auto min-h-[calc(100vh-68px)] max-w-screen-2xl p-4 md:p-6">
         <Routes>
@@ -209,9 +230,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             element={
               <div className={dashboardGridClass}>
                 <header className="page-intro col-span-full">
-                  <p className="page-eyebrow">Daily operations</p>
-                  <h1 className="page-title">Station cash dashboard</h1>
-                  <p className="page-description">Review earnings, reconcile cash in possession, and manage station records for the selected date.</p>
+                  <h1 className="page-info">Station cash dashboard</h1>
                 </header>
                 <CashInHandCard
                   totalCashInHand={figures.totalCashInHand}
@@ -232,8 +251,16 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   looseCoinAmount={figures.looseCoinsAmount}
                   cashCountsSource={figures.cashCountsSource}
                   countHistory={registerState.cashCountHistory?.[selectedDate]}
-                  onBack={()=>updateRegisterState(draftState => {stepCashCountBack(draftState,selectedDate)})}
-                  onNext={()=>updateRegisterState(draftState => {stepCashCountForward(draftState,selectedDate)})}
+                  onBack={() =>
+                    updateRegisterState((draftState) => {
+                      stepCashCountBack(draftState, selectedDate);
+                    })
+                  }
+                  onNext={() =>
+                    updateRegisterState((draftState) => {
+                      stepCashCountForward(draftState, selectedDate);
+                    })
+                  }
                   denominationTotalAmount={figures.denominationTotalAmount}
                   imprestAndAdvanceIssuedTotal={
                     figures.imprestAndAdvanceIssuedTotal
@@ -242,22 +269,49 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   onCountChange={changeCashCount}
                 />
                 <div className={stackedCardsClass}>
-                <ImprestIssueCard
-  listRows={effectiveDetailListRows(registerState, selectedDate, 'imprestIssue')}
-  onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))}
-/>
-<AdvanceReceivedCard
-  listRows={effectiveDetailListRows(registerState, selectedDate, 'advanceReceived')}
-  onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
-/>
+                  <ImprestIssueCard
+                    listRows={effectiveDetailListRows(
+                      registerState,
+                      selectedDate,
+                      "imprestIssue",
+                    )}
+                    onAdvanceChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          2,
+                          typedValue,
+                        ),
+                      )
+                    }
+                  />
+                  <AdvanceReceivedCard
+                    listRows={effectiveDetailListRows(
+                      registerState,
+                      selectedDate,
+                      "advanceReceived",
+                    )}
+                    onAdvanceChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "advanceReceived",
+                          rowIndex,
+                          1,
+                          typedValue,
+                        ),
+                      )
+                    }
+                  />
                 </div>
-                  <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
-  {renderMiscCard('Misc debit', 'miscDebit')}
-  {renderMiscCard('Misc credit', 'miscCredit')}
-</div>
-                
+                <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
+                  {renderMiscCard("Misc debit", "miscDebit")}
+                  {renderMiscCard("Misc credit", "miscCredit")}
+                </div>
 
                 {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
@@ -284,7 +338,9 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                 <section className="brand-card col-span-full p-4 sm:p-5">
                   <div className="mb-4">
                     <p className="page-eyebrow">Data management</p>
-                    <h2 className="mt-1 text-lg font-bold tracking-tight text-tx">Backups and register tools</h2>
+                    <h2 className="mt-1 text-lg font-bold tracking-tight text-tx">
+                      Backups and register tools
+                    </h2>
                   </div>
                   <BackupToolbar
                     stationName={station.name}
@@ -310,9 +366,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             element={
               <div className="space-y-4">
                 <header className="page-intro">
-                  <p className="page-eyebrow">Revenue entry</p>
-                  <h1 className="page-title">Shift entry</h1>
-                  <p className="page-description">Enter and review shift-wise station earnings for the selected date.</p>
+                  <h1 className="page-info">CC and TOM Earning</h1>
                 </header>
                 <EarningSheetTable
                   columns={visibleShiftColumns}
@@ -321,7 +375,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   rowCount={registerState.shiftRowCount}
                   readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
                   readEntryValue={(rowIndex, fieldKey) =>
-                  rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
+                    rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
                   }
                   writeEntryValue={(rowIndex, fieldKey, newValue) =>
                     updateRegisterState((draftState) =>
@@ -339,7 +393,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   <button
                     type="button"
                     onClick={() =>
-                      updateRegisterState(draftState => {
+                      updateRegisterState((draftState) => {
                         draftState.shiftRowCount += 1;
                       })
                     }
@@ -356,9 +410,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             element={
               <div className="space-y-4">
                 <header className="page-intro">
-                  <p className="page-eyebrow">Revenue entry</p>
-                  <h1 className="page-title">TVM earnings</h1>
-                  <p className="page-description">Record ticket vending machine totals and review calculated amounts.</p>
+                 <h1 className="page-info">TVM Earning</h1>
                 </header>
                 <TvmEarningPage
                   registerState={registerState}
@@ -371,10 +423,14 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
           <Route
             path="/final-earning"
             element={
+              <div className="space-y-3">
+                <h1 className="page-info">Final Earning</h1>
+
               <FinalEarningPage
                 registerState={registerState}
                 date={selectedDate}
-              />
+                />
+                </div>
             }
           />
           <Route
@@ -382,9 +438,7 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             element={
               <div className="space-y-4">
                 <header className="page-intro">
-                  <p className="page-eyebrow">Station communication</p>
-                  <h1 className="page-title">Daily report</h1>
-                  <p className="page-description">Prepare, review, and share the station’s daily operations report.</p>
+                  <h1 className="page-info">Morning Report</h1>
                 </header>
                 <DailyReportPage
                   registerState={registerState}
@@ -398,11 +452,14 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
           <Route
             path="/settings"
             element={
+              <div className="space-y-3">
+                  <h1 className="page-info">Settings and Website information</h1>
               <SettingsPage
                 storageStatus={storageStatus}
                 storageError={storageError}
                 onLogout={onLogout}
-              />
+                />
+                </div>
             }
           />
 
@@ -414,7 +471,10 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                 <header className="page-intro">
                   <p className="page-eyebrow">Performance</p>
                   <h1 className="page-title">Station overview</h1>
-                  <p className="page-description">Explore earnings trends, daily comparisons, and cashless transaction summaries.</p>
+                  <p className="page-description">
+                    Explore earnings trends, daily comparisons, and cashless
+                    transaction summaries.
+                  </p>
                 </header>
                 <StationStatisticsCard
                   registerState={registerState}

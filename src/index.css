@@ -3,41 +3,69 @@
 @custom-variant dark (&:where(.dark, .dark *));
 
 @theme inline {
+  --color-bg:var(--bg);
   --color-tx: var(--tx);
+  --color-bd: var(--bd);
+  --color-hr: var(--hr);
   --color-card: var(--card);
+  --color-ac2: var(--ac2);
+  --color-ca: var(--ca);
+  
+
   --color-mu: var(--mu);
   --color-bd: var(--bd);
   --color-ac: var(--ac);
-  --color-ac2: var(--ac2);
   --color-inp: var(--in);
-  --color-ca: var(--ca);
   --color-ok: var(--ok);
   --color-bad: var(--bad);
   --color-onac: var(--onac);
   --color-card-text: var(--card-text);
-
+  --color-gradient: var(--gradient);
+  --color-dark: var(--color-blue-950);
 }
 
 :root {
   color-scheme: light;
-  font-family:
-  Inter,
-  ui-sans-serif,
-  system-ui,
-  -apple-system,
-  BlinkMacSystemFont,
-  "Segoe UI",
-  sans-serif;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  --tx: #525c71;
+  --bg: var(--color-gray-100);
+  --tx: var(--color-slate-700);
+  --ac: var(--color-blue-500);
+  --ac2: var(--color-blue-100);
+  --bg: var(--color-gray-200);
+  --bd: var(--color-slate-400);
+  --card: var(--color-white);
+
+  --gr: #46a55b;
+  --bd: #b6bac2;
 }
 
 .dark {
   color-scheme: dark;
-  --bg: #0e1420;
-  --card: #161e2c;
+  --bg: #100f2f;
+  --ac: var(--color-sky-400);
+  --ac2: var(--color-sky-900);
+  --tx: var(--color-sky-400);
+  --hr: var(--color-sky-300);
+  --bd: var(--color-blue-400);
+  --card: var(--color-slate-800);
+  
+
+  --he: #161e2c;
   --card-text: var(--color-red-500);
+}
+
+@layer components {
+  .header {
+    @apply sticky top-0 z-10 border-b-2 border-bd/50 text-tx shadow-md  bg-linear-270 from-blue-50 to-fuchsia-50 dark:from-blue-950 dark:to-bg;
+  }
+  .isActive {
+    @apply bg-ac text-card;
+  }
+  .isNotActive {
+    @apply border border-bd bg-card text-tx hover:bg-ac2 hover:text-hr;
+  }
+  .page-info {
+    @apply text-xl capitalize font-bold tracking-wide  text-transparent bg-clip-text bg-linear-120 from-red-600 to-indigo-600 via-blue-600
+  }
 }
 
 /* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
@@ -214,10 +242,6 @@ textarea:focus-visible {
   .bank-success-icon {
     animation: none;
   }
-}
-
-@layer components {
-  /* card background and table color and design */
 }
 
 /* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */

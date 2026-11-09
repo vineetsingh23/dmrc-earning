@@ -1,5 +1,6 @@
 import { CheckCircle2, CircleAlert, Database, LogOut, LoaderCircle, MessageCircleCheck, ShieldCheck, UserRound } from 'lucide-react';
 import type { SaveStatus } from '../hooks/useRegisterData';
+import { cardClass} from '../globalStyles';
 
 interface SettingsPageProps {
   storageStatus: SaveStatus;
@@ -20,17 +21,13 @@ export default function SettingsPage({
   onLogout,
 }: SettingsPageProps) {
   const { label, Icon } = statusDetails[storageStatus];
-  const statusColor = storageStatus === 'error' ? 'text-bad' : storageStatus === 'saved' ? 'text-ok' : 'text-ac';
-
+  const statusColor = storageStatus === 'error' ? 'text-red-500' : storageStatus === 'saved' ? 'text-green-400' : 'text-ac';
+  const name:string = 'Vineet Kumar Singh';
+  const emp:string = 'Senior Head CRA';
   return (
     <section className="mx-auto w-full max-w-3xl space-y-5">
-      <header className="page-intro">
-        <p className="page-eyebrow">Workspace</p>
-        <h1 className="page-title">Settings</h1>
-        <p className="page-description">Application information, local data status, and station session controls.</p>
-      </header>
-
-      <section className="brand-card relative overflow-hidden p-5 sm:p-7" aria-labelledby="developer-profile-heading">
+      
+      <section className={cardClass} aria-labelledby="developer-profile-heading">
         <div aria-hidden="true" className="pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-ac/5 blur-3xl" />
         <div className="relative flex flex-col justify-between gap-5 border-b border-bd pb-5 sm:flex-row sm:items-start">
           <div className="flex items-start gap-4">
@@ -38,9 +35,13 @@ export default function SettingsPage({
               <UserRound className="size-7" aria-hidden="true" />
             </div>
             <div className="min-w-0">
-              <span className="inline-flex rounded-full bg-ca px-3 py-1 text-xs font-bold text-ac2">Lead developer &amp; maintainer</span>
-              <h2 id="developer-profile-heading" className="mt-2 text-xl font-bold tracking-tight text-tx">Vineet Kumar Singh</h2>
-              <p className="mt-1 text-sm text-mu">Sr. Head CRA <span className="mx-1.5 text-bd">·</span> <span className="font-mono text-ac2">Emp ID: 12649</span></p>
+              <span className="inline-flex rounded-full  py-1 text-xs font-bold text-tx">Developed, Designed and &amp; maintaining by</span>
+              <h2 className="mt-2 text-xl font-bold tracking-tight text-tx">{name}</h2>
+              <div className='mb-3 flex items-center gap-2 text-sm font-bold tracking-[0.12em]'>
+
+              <span className="h-3 w-3 rounded-full bg-red-600"></span>
+              <p className="mt-1 text-sm text-tx">{emp}<span className="mx-1.5 text-tx"></span> <span className="font-mono text-tx">Emp ID: 12649</span></p>
+              </div>
               <div className="mt-4 rounded-xl border border-bd bg-inp p-3">
                 <p className="text-xs font-semibold text-mu">Support and feedback</p>
                 <p className="mt-1 flex items-center gap-2 text-sm font-semibold text-tx">
@@ -65,7 +66,7 @@ export default function SettingsPage({
         </footer>
       </section>
 
-      <section className="brand-card p-5 sm:p-6" aria-labelledby="database-status-heading">
+      <section className={cardClass} aria-labelledby="database-status-heading">
         <div className="flex items-start gap-3">
           <div className="rounded-xl bg-ca p-2.5 text-ac2">
             <Database className="size-5" aria-hidden="true" />
@@ -83,9 +84,9 @@ export default function SettingsPage({
         </div>
       </section>
 
-      <section className="brand-card flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6">
+      <section className={`${cardClass}brand-card flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6`}>
         <div>
-          <h2 className="font-semibold text-tx">Sign out</h2>
+          <h2 className="font-semibold text-red-500 text-lg">Sign out</h2>
           <p className="mt-1 text-sm text-mu">Return to the station selection screen.</p>
         </div>
         <button
@@ -93,7 +94,7 @@ export default function SettingsPage({
           onClick={onLogout}
           className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-bad/30 bg-bad/10 px-4 py-2 text-sm font-semibold text-bad transition hover:bg-bad hover:text-white"
         >
-          <LogOut className="size-4" aria-hidden="true" />
+          <LogOut className="size-6 text-red-600 font-bold" aria-hidden="true" />
           Sign out
         </button>
       </section>

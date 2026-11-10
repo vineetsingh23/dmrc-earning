@@ -2,7 +2,7 @@ import type { BankTransfer } from '../../lib/registerTypes';
 import { formatRupees } from '../../lib/earningCalculations';
 import CashToBankCard from './cashToBankCard';
 import { useBankNoteDraft } from '../../hooks/useBankNoteDraft';
-import { cardClass, primaryButtonClass, summaryRowClass } from '../../globalStyles';
+import { cardClass, cardHeaderClass, cardHeadingClass, primaryButtonClass, summaryRowClass } from '../../globalStyles';
 import { cashInHandOfDate, cashFromPreviousDays } from '../../lib/earningCalculations';
 import { CircleCheck, Landmark } from 'lucide-react';
 
@@ -30,9 +30,14 @@ export default function CashInHandCard({
   
   return (
     <div className={cardClass}>
+      <div className={`${cardHeaderClass} flex-col items-start`}>
 
-      <small className="block text-tx">Total cash in hand (unsent previous days + current day + TOM amounts)</small>
-      <div className="text-[26px] font-bold tracking-tight text-ac">{formatRupees(totalCashInHand)}</div>
+      <h1 className={cardHeadingClass}>Total cash in hand</h1>
+      
+      <small className="block text-foreground capitalize">(unsent previous days + current day + TOM Advance)</small>
+
+      </div>
+      <div className="text-[26px] font-bold tracking-tight  text-primary">{formatRupees(totalCashInHand)}</div>
       <div className='px-1 py-2'>
 
       <div className={summaryRowClass}><span>Previous days cash not yet sent</span><b>{formatRupees(previousDaysCash)}</b></div>
@@ -41,7 +46,7 @@ export default function CashInHandCard({
       <div className={summaryRowClass}><span>AFC+Misc Paid Amount</span><b>{formatRupees(osTotalPaidAmount)}</b></div>
 
       </div>
-      <hr className='my-2 border-tx'/>
+      <hr className='my-2 border-border'/>
       <div className='py-2'>
 
       <div className={summaryRowClass}><span>Sent to bank{existingTransfer ?( <>{`. Slip No.  ${existingTransfer.slipNumber} ` }<CircleCheck size={20} className='inline-block ml-2 text-green-500 align-top'/></>): ''}</span><b>{formatRupees(existingTransfer ? existingTransfer.amount : 0)}</b></div>

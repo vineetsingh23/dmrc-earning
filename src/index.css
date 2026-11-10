@@ -2,99 +2,159 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@theme inline {
-  --color-bg:var(--bg);
-  --color-tx: var(--tx);
-  --color-bd: var(--bd);
-  --color-hr: var(--hr);
-  --color-card: var(--card);
-  --color-ac2: var(--ac2);
-  --color-ca: var(--ca);
-  --color-th: var(--th);
-  --color-tr: var(--tr);
-  --color-gr: var(--gr);
-  --color-gt: var(--gt);
-;  
-  
-
-  --color-mu: var(--mu);
-  --color-bd: var(--bd);
-  --color-ac: var(--ac);
-  --color-inp: var(--in);
-  --color-ok: var(--ok);
-  --color-bad: var(--bad);
-  --color-onac: var(--onac);
-  --color-card-text: var(--card-text);
-  --color-gradient: var(--gradient);
-  --color-dark: var(--color-blue-950);
-}
+/*
+ * Theme tokens
+ * Components use semantic names. Only these values change between themes.
+ */
 
 :root {
   color-scheme: light;
-  --bg: var(--color-gray-100);
-  --tx: var(--color-slate-700);
-  --ac: var(--color-blue-500);
-  --ac2: var(--color-blue-100);
-  --bg: var(--color-gray-200);
-  --bd: var(--color-slate-400);
-  --card: var(--color-white);
-  --th: var(--color-gray-300);
-  --tr: var(--color-teal-50);
-  --gr:var(--color-green-100);
-  --gt:var(--color-green-700);
 
-  --gr: #46a55b;
-  --bd: #b6bac2;
+  /* Surfaces */
+  --background: #e5e7eb;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --surface-hover: #e2e8f0;
+  --input-background: #f8fafc;
+
+  /* Text */
+  --foreground: #334155;
+  --muted-foreground: #64748b;
+
+  /* Brand and interaction */
+  --primary: #3b82f6;
+  --primary-hover: #2563eb;
+  --primary-subtle: #dbeafe;
+  --primary-foreground: #ffffff;
+  --hover-foreground: #1d4ed8;
+
+
+  /* Borders and focus */
+  --border: #b6bac2;
+  --focus: #3b82f6;
+
+  /* Feedback */
+  --success: #15803d;
+  --success-surface: #46a55b;
+  --success-foreground: #166534;
+  --danger: #dc2626;
+
+  /* Tables */
+  --table-header: #d1d5db;
+  --table-row-alt: #f3f4f6;
+  --table-row-hover: #f0fdfa;
+
+  /* Decorative accent */
+  --card-accent: #f87171;
 }
 
 .dark {
   color-scheme: dark;
-  --bg: #100f2f;
-  --ac: var(--color-sky-400);
-  --ac2: var(--color-sky-900);
-  --tx: var(--color-sky-400);
-  --hr: var(--color-sky-300);
-  --bd: var(--color-blue-400);
-  --card: var(--color-slate-800);
-  --th: var(--color-slate-700);
-  --tr: var(--color-teal-950);
-   --gr:var(--color-green-950);
-   --gt:var(--color-green-400);
-  
 
-  --he: #161e2c;
-  --card-text: var(--color-red-500);
+  /* Surfaces */
+  --background: #100f2f;
+  --surface: #1e293b;
+  --surface-muted: #334155;
+  --surface-hover: #1e3a5f;
+  --input-background: #172033;
+
+  /* Text */
+  --foreground: #e0e7ff;
+  --muted-foreground: #94a3b8;
+
+  /* Brand and interaction */
+  --primary: #38bdf8;
+  --primary-hover: #0ea5e9;
+  --primary-subtle: #0c4a6e;
+  --primary-foreground: #082f49;
+  --hover-foreground: #7dd3fc;
+
+  /* Borders and focus */
+  --border: #35567f;
+  --focus: #38bdf8;
+
+  /* Feedback */
+  --success: #4ade80;
+  --success-surface: #052e16;
+  --success-foreground: #4ade80;
+  --danger: #c45959;
+
+  /* Tables */
+  --table-header: #334155;
+  --table-row-alt: #1e293b;
+  --table-row-hover: #042f2e;
+
+  /* Decorative accent */
+  --card-accent: #991b1b;
+}
+
+/*
+ * Tailwind v4 mapping.
+ * Examples: bg-background, text-foreground, border-border,
+ * bg-primary, text-muted-foreground, bg-table-header.
+ */
+@theme inline {
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-hover: var(--surface-hover);
+  --color-input-background: var(--input-background);
+
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-subtle: var(--primary-subtle);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-hover-foreground: var(--hover-foreground);
+
+  --color-border: var(--border);
+  --color-focus: var(--focus);
+
+  --color-success: var(--success);
+  --color-success-surface: var(--success-surface);
+  --color-success-foreground: var(--success-foreground);
+  --color-danger: var(--danger);
+
+  --color-table-header: var(--table-header);
+  --color-table-row-alt: var(--table-row-alt);
+  --color-table-row-hover: var(--table-row-hover);
+  --color-card-accent: var(--card-accent);
+
+
 }
 
 @layer components {
   .header {
-    @apply sticky top-0 z-10 border-b-2 border-bd/50 text-tx shadow-md  bg-linear-270 from-blue-50 to-fuchsia-50 dark:from-blue-950 dark:to-bg;
+    @apply sticky top-0 z-10 border-b-2 border-border/50 text-foreground shadow-md bg-linear-270 from-blue-50 to-fuchsia-50 dark:from-blue-950 dark:to-background;
   }
+
   .isActive {
-    @apply bg-ac text-card;
+    @apply bg-primary text-primary-foreground;
   }
+
   .isNotActive {
-    @apply border border-bd bg-card text-tx hover:bg-ac2 hover:text-hr;
+    @apply border border-border bg-surface text-foreground hover:bg-primary-subtle hover:text-hover-foreground;
   }
+
   .page-info {
-    @apply text-xl capitalize font-bold tracking-wide  text-transparent bg-clip-text bg-linear-120 from-red-600 to-indigo-600 via-blue-600
+    @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-linear-120 from-red-600 to-indigo-600 via-blue-600;
   }
+
   .cash-status-error {
-    @apply bg-red-100 text-red-600 border border-red-500 inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2
+    @apply bg-card-accent/20 text-red-600 dark:text-red-200 font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
   }
+
   .cash-status-success {
-    @apply bg-gr/30 text-gt border-gt font-semibold tracking-wide inline-flex items-center gap-3 mt-3 border rounded-xl px-3 py-2
+    @apply bg-success-surface/30 text-success-foreground border-success-foreground font-semibold tracking-wide inline-flex items-center gap-3 mt-3 border rounded-xl px-3 py-2;
   }
-
- 
 }
-
-/* makes these usable as Tailwind colours: bg-card, text-mu, border-bd, bg-ca ... */
 
 html {
   min-width: 320px;
   min-height: 100%;
-  background: var(--bg);
+  background: var(--background);
   scroll-behavior: smooth;
 }
 
@@ -102,8 +162,8 @@ body {
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
-  background-color: var(--bg);
-  color: var(--tx);
+  background-color: var(--background);
+  color: var(--foreground);
   font-size: 15px;
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
@@ -123,22 +183,8 @@ button:not(:disabled) {
   cursor: pointer;
 }
 
-/* button:focus-visible,
-a:focus-visible,
-input::-moz-focus-inner {
-    outline: 2x solid var(--color-blue-400);
-     outline-offset: 2px;
-
-}
-     */
-/* select:focus-visible,
-textarea:focus-visible {
-  outline: 2px solid var(--ac);
-  outline-offset: 2px;
-}  */
-
 ::selection {
-  background: color-mix(in srgb, var(--ac) 24%, transparent);
+  background: color-mix(in srgb, var(--primary) 24%, transparent);
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -152,7 +198,6 @@ textarea:focus-visible {
   }
 }
 
-
 .pwa-notice {
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
@@ -160,9 +205,9 @@ textarea:focus-visible {
   z-index: 100;
   width: min(25rem, calc(100vw - 2rem));
   padding: 1rem;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--border);
   border-radius: 1rem;
-  background: var(--card);
+  background: var(--surface);
   box-shadow: 0 16px 40px rgb(15 23 42 / 18%);
   pointer-events: none;
 }
@@ -178,28 +223,28 @@ textarea:focus-visible {
   flex: none;
   place-items: center;
   border-radius: 0.75rem;
-  background: color-mix(in srgb, var(--ac) 12%, var(--card));
-  color: var(--ac);
+  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  color: var(--primary);
 }
 
 .pwa-notice-primary,
 .pwa-notice-secondary {
   min-height: 2.5rem;
   padding: 0.5rem 0.75rem;
-  border: 1px solid var(--bd);
+  border: 1px solid var(--border);
   border-radius: 0.625rem;
   font-weight: 600;
 }
 
 .pwa-notice-primary {
-  border-color: var(--ac);
-  background: var(--ac);
-  color: var(--onac);
+  border-color: var(--primary);
+  background: var(--primary);
+  color: var(--primary-foreground);
 }
 
 .pwa-notice-secondary {
-  background: var(--card);
-  color: var(--tx);
+  background: var(--surface);
+  color: var(--foreground);
 }
 
 .pwa-notice-primary:hover,
@@ -228,10 +273,11 @@ textarea:focus-visible {
   }
 }
 
-/* the calendar icon is drawn by Lucide: hide the browser's own icon, and let a click anywhere on the date open the picker */
+/* The calendar icon is drawn by Lucide; make the date field its hit area. */
 .date-input {
   position: relative;
 }
+
 .date-input::-webkit-calendar-picker-indicator {
   position: absolute;
   inset: 0;

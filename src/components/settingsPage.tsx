@@ -1,6 +1,6 @@
 import { CheckCircle2, CircleAlert, Database, LogOut, LoaderCircle, MessageCircleCheck, ShieldCheck, UserRound } from 'lucide-react';
 import type { SaveStatus } from '../hooks/useRegisterData';
-import { cardClass, cardTransition} from '../globalStyles';
+import { cardTransition} from '../globalStyles';
 
 interface SettingsPageProps {
   storageStatus: SaveStatus;

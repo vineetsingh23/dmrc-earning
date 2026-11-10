@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,cardHeaderClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
+import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
 
 interface ImprestIssueCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance issued is column 2

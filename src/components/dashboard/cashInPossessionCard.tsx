@@ -1,4 +1,4 @@
-import { CircleCheck } from "lucide-react";
+import { CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
 import { Redo2, Undo2 } from "lucide-react";
 import {
   cardClass,
@@ -101,11 +101,11 @@ export default function CashInPossessionCard({
 
   //  const countInputClass = 'w-20 rounded border border-bd bg-inp px-1.5 py-0.5 text-right outline-hidden focus:ring-2 focus:ring-ac';
   const stepButtonClass =
-    "flex items-center gap-1 rounded-lg border border-bd bg-card px-2.5 py-1 text-sm font-medium transition hover:border-bd hover:bg-tr hover:text-ac disabled:pointer-events-none disabled:opacity-40";
+    "flex items-center  gap-1 rounded-md border border-border bg-primary-foreground px-2.5 py-1 text-sm font-medium transition hover:border-border hover:bg-primary  hover:text-primary-subtle disabled:pointer-events-none disabled:opacity-40";
 
   return (
     <div
-      className={`${cardClass} card ${cashDifference === 0 ? "" : "border-red-400 bg-errorCard"}`}
+      className={`${cardClass} card ${cashDifference === 0 ? "" : "border-2 border-danger !bg-danger/10"}`}
       onKeyDown={handleSheetKeyDown}
     >
       <div className={cardHeaderClass}>
@@ -120,7 +120,7 @@ export default function CashInPossessionCard({
               "No counts yet. Enter the notes and coins you hold."}
           </p>
         </div>
-        <div className="flex w-40 px-2 py-2 justify-between items-center h-12 border-2 rounded-md border-slate-300 dark:border-slate-600 shadow-md bg-linear-to-r from-slate-100 to-blue-50 dark:from-slate-800 dark:to-blue-800">
+        <div className="flex w-40 px-2 py-2 justify-between items-center h-12 ">
           <span
             className={`${cashDifference === 0 ? "" : "text-red-500"} text-center font-medium w-1/2`}
           >
@@ -249,10 +249,11 @@ export default function CashInPossessionCard({
         role="status"
         aria-live="polite"
         >
-        <i
-          className={`fi ${matchesCashInHand ? "fi-rr-check" : "fi-rr-exclamation"} cash-status-icon`}
-          aria-hidden="true"
-        />
+       {matchesCashInHand ? (
+    <CircleCheckIcon className='size-8'/>
+  ) : (
+    <CircleLetterX className='size-8'/>
+  )}
         {matchesCashInHand
           ? "Cash in possession matches total cash in hand"
           : `Cash in possession ${cashDifference > 0 ? "exceeds" : "is below"} total cash in hand by ${formatRupees(Math.abs(cashDifference))}`}

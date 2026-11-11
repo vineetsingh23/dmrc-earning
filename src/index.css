@@ -11,7 +11,7 @@
   color-scheme: light;
 
   /* Surfaces */
-  --background: #e5e7eb;
+  --background: #e0e0e2;
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
   --surface-hover: #e2e8f0;
@@ -30,7 +30,7 @@
 
 
   /* Borders and focus */
-  --border: #b6bac2;
+  --border: #ebeced;
   --focus: #3b82f6;
 
   /* Feedback */
@@ -40,7 +40,7 @@
   --danger: #dc2626;
 
   /* Tables */
-  --table-header: #d1d5db;
+  --table-header: #c2ced7;
   --table-row-alt: #f3f4f6;
   --table-row-hover: #f0fdfa;
 
@@ -52,8 +52,8 @@
   color-scheme: dark;
 
   /* Surfaces */
-  --background: #100f2f;
-  --surface: #1e293b;
+  --background: #010107;
+  --surface: #050d1b;
   --surface-muted: #334155;
   --surface-hover: #1e3a5f;
   --input-background: #172033;
@@ -70,7 +70,7 @@
   --hover-foreground: #7dd3fc;
 
   /* Borders and focus */
-  --border: #35567f;
+  --border: #03080f;
   --focus: #38bdf8;
 
   /* Feedback */
@@ -80,9 +80,10 @@
   --danger: #c45959;
 
   /* Tables */
-  --table-header: #334155;
-  --table-row-alt: #1e293b;
+  --table-header: #101e31;
+  --table-row-alt: #0b1423;
   --table-row-hover: #042f2e;
+  
 
   /* Decorative accent */
   --card-accent: #991b1b;
@@ -143,7 +144,7 @@
   }
 
   .cash-status-error {
-    @apply bg-card-accent/20 text-red-600 dark:text-red-200 font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
+    @apply bg-card-accent/20 text-card-accent dark:text-red-200 font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
   }
 
   .cash-status-success {

@@ -172,9 +172,9 @@ export default function CashInPossessionCard({
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={`${tableHeaderCellClass} min-w-60`}>Denominations</th>
+            <th className={`${tableHeaderCellClass}`}>Denominations</th>
             <th className={tableHeaderCellClass}>Count</th>
-            <th className={tableHeaderCellClass}>Amount</th>
+            <th className={`${tableHeaderCellClass} min-w-30`}>Amount</th>
           </tr>
         </thead>
         <tbody>
@@ -233,7 +233,7 @@ export default function CashInPossessionCard({
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={`${tableTotalCellClass} !text-left`} colSpan={2}>
+            <td className={tableCellLeftClass} colSpan={2}>
               Total
             </td>
             <td className={tableTotalCellClass}>

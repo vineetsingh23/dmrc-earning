@@ -42,7 +42,7 @@ export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDat
       {/* Card Header */}
       <div className={cardHeaderClass}>
         <h2 className={cardHeadingClass}>
-          <span className="h-2 w-2 rounded-full bg-red-600"></span>
+          <span className="h-2 w-2 rounded-full bg-red-600 mr-3"></span>
           {title}
         </h2>
         <button

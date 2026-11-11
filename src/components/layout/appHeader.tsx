@@ -75,7 +75,7 @@ export default function AppHeader({
               to="/settings"
               className={({ isActive }) =>
                 `inline-flex shrink-0 items-center rounded-lg px-3 py-1.5 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-ac text-card' : 'text-mu hover:bg-ca hover:text-tx'
+                  isActive ? 'isActive' : 'isNotActive'
                 }`
               }
             >
@@ -87,7 +87,7 @@ export default function AppHeader({
             onClick={onToggleDarkMode}
             aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
             title={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
-            className="rounded-lg border border-bd p-2 bg-dark transition hover:border-ac hover:text-ac"
+            className="rounded-lg border border-bd p-2 bg-blue-950 transition hover:border-ac hover:text-ac"
           >
             {isDarkMode ? <Sun className="size-5 text-yellow-300 " aria-hidden="true"/> : <Moon className="size-5 fill-blue-100 text-blue-100" aria-hidden="true" />}
           </button>

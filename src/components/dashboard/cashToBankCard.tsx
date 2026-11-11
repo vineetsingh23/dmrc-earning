@@ -15,9 +15,10 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableTotalRowClass,
+  tableWrapperClass,
 } from '../../globalStyles';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { CheckCheck, CircleCheckIcon, CircleLetterX} from 'lucide-react';
+import { CheckCheck, CircleCheckIcon, CircleLetterX, FolderMinus} from 'lucide-react';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -34,6 +35,8 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
           <button className={`${secondaryButtonClass} my-1 max-w-40 text-sm`} onClick={resetToSuggestedCounts}>Auto calculate</button>
         )}
         </div>
+        <div className={tableWrapperClass}>
+
     
       <table className={tableClass} onKeyDown={handleSheetKeyDown}>
         <thead><tr className={tableHeaderRowClass}>
@@ -49,8 +52,8 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
                 {existingTransfer
                   ? noteCountsToSend[noteValue] ?? 0
                   : <input data-grid="cashToBank" data-row={rowIndex} data-column={0} 
-                      value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
-                      className={`${tableInputClass} text-right`} />}
+                  value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
+                  className={`${tableInputClass} text-right max-w-10`} />}
               </td>
               <td className={tableCellClass}>{formatRupees(noteValue * (noteCountsToSend[noteValue] ?? 0))}</td>
             </tr>
@@ -63,6 +66,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
           </tr>
         </tfoot>
       </table>
+      </div>
       
       {existingTransfer ? (
         <small className='cash-status-success' role="status" aria-live="polite">
@@ -74,13 +78,15 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
        {matchesAmountDue ? (
     <CircleCheckIcon className='size-8'/>
   ) : (
-    <CircleLetterX className='size-8 stroke-1'/>
+    <CircleLetterX className='size-7 stroke-2'/>
   )}
         {notesExceedingStock.length
           ? `Count exceeds cash in hand for ₹${notesExceedingStock.join(', ₹')}`
-          : matchesAmountDue
+          :matchesAmountDue
             ? `Cash count matches amount due: ${formatRupees(amountDueToBank)}`
-            : `Enter notes totaling ${formatRupees(amountDueToBank)} (currently ${formatRupees(noteTotalToSend)})`}
+            :noteTotalToSend < amountDueToBank
+            ? `Total Due ${formatRupees(amountDueToBank)} (Entered ${formatRupees(noteTotalToSend)}) Short ${formatRupees(amountDueToBank - noteTotalToSend)}`
+            : `Total Due ${formatRupees(amountDueToBank)} (Entered ${formatRupees(noteTotalToSend)}) Excess ${formatRupees(noteTotalToSend-amountDueToBank)}`}
       </small>
       )}
       </div>

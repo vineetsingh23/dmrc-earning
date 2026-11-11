@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass } from '../../globalStyles';
+import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass, tableWrapperClass } from '../../globalStyles';
 
 interface ImprestIssueCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance issued is column 2
@@ -21,11 +21,15 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
       <h2 className={cardHeadingClass}>Imprest & advance issued to each TOM</h2>
       <div className="overflow-x-auto">
+        <div className={tableWrapperClass}>
+
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={`${tableHeaderCellClass} min-w-20`}>TOM No.</th><th className={`${tableHeaderCellClass} min-w-40`}>Imprest</th>
-            <th className={tableHeaderCellClass}>Advance</th><th className={tableHeaderCellClass}>Total</th>
+            <th className={`${tableHeaderCellClass} min-w-20`}>TOM No.</th>
+            <th className={`${tableHeaderCellClass} `}>Imprest</th>
+            <th className={tableHeaderCellClass}>Advance</th>
+            <th className={tableHeaderCellClass}>Total</th>
           </tr>
         </thead>
         <tbody>
@@ -33,7 +37,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
             <tr key={tomOperator.tomNumber} className={tableRowClass}>
               <td className={tableCellLeftClass}>{tomOperator.tomNumber}</td>
               <td className={tableCellClass}>{formatRupees(tomOperator.imprestAmount)}</td>
-              <td className={tableCellClass}>
+              <td className={`${tableCellClass} max-w-20`}>
                 <input data-grid="imprestIssue" data-row={rowIndex} data-column={0}
                   value={listRows[rowIndex]?.[advanceColumnIndex] ?? ''} placeholder="0" inputMode="decimal"
                   onFocus={event => event.target.select()} onChange={event => onAdvanceChange(rowIndex, event.target.value)}
@@ -52,6 +56,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
           </tr>
         </tfoot>
       </table>
+          </div>
       </div>
     </div>
   );

@@ -28,6 +28,8 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableWrapperClass,
+  tableHeaderRowClass,
+  tableTotalRowClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 
@@ -42,10 +44,10 @@ export interface SheetStyle {
 }
 
 const defaultSheetStyle: SheetStyle = {
-  headerCellClass: tableHeaderCellClass,
+  headerCellClass: tableHeaderRowClass,
   headerColorClasses: tableHeaderGroupClasses,
   bodyCellClass: tableCellClass,
-  footerCellClass: tableTotalCellClass,
+  footerCellClass: tableTotalRowClass,
 };
 
 const firstColumnWidth = 64;
@@ -168,7 +170,7 @@ function buildHeaderRows(
 
   let leafIndexCounter = 0;
   const earningHeaderStyle = isEarningGrid
-    ? "!border-slate-700 !bg-slate-800 !text-white dark:!border-slate-600 dark:!bg-slate-900 dark:!text-slate-100"
+    ? "border border-border bg-table-header text-foreground"
     : "";
 
   function addHeaders(
@@ -525,7 +527,7 @@ export default function EarningSheetTable({
                 key={rowIndex}
                 className={`${tableRowClass} ${
                   isShiftGrid
-                    ? "even:!bg-slate-50 hover:bg-sky-50/80 dark:even:!bg-slate-800/60 dark:hover:bg-slate-700/80"
+                    ? "even:bg-table-row-alt hover:bg-table-row-hover"
                     : ""
                 }`}
               >

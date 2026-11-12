@@ -32,7 +32,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
 
         <h2 className={cardHeadingClass}>Cash to bank</h2>
         {!existingTransfer && (
-          <button className={`${secondaryButtonClass} my-1 max-w-40 text-sm`} onClick={resetToSuggestedCounts}>Auto calculate</button>
+          <button className={`${secondaryButtonClass} my-2 max-w-40 text-sm`} onClick={resetToSuggestedCounts}>Auto calculate</button>
         )}
         </div>
         <div className={tableWrapperClass}>
@@ -74,7 +74,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
           Successfully sent to bank · Slip No. - {existingTransfer.slipNumber}
         </small>
       ) : (
-      <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
+        <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
        {matchesAmountDue ? (
     <CircleCheckIcon className='size-8'/>
   ) : (

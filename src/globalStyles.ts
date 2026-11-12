@@ -65,18 +65,18 @@ export const tableClass =
   "min-w-full border-collapse px-2 overflow-none bg-surface py-4";
 export const sheetTableClass = "w-full border-collapse";
 
-export const tableHeaderRowClass = "bg-table-header text-xs ";
+export const tableHeaderRowClass = "text-xs text-foreground";
 
 export const tableHeaderCellClass =
   "border border-border px-2 py-2 text-center text-sm font-bold text-foreground";
 
 export const tableCellClass =
-  "border border-border text-right text-xs py-1 px-2 tracking-wide font-medium text-foreground transition-colors duration-150";
+  "border border-border text-right text-xs px-2 py-1 tracking-wide font-medium text-foreground transition-colors duration-150";
 
-export const tableCellLeftClass = `${tableCellClass} !text-center px-0 text-nowrap py-2`;
-export const tableTotalRowClass = "bg-table-header  text-foreground";
+export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
+export const tableTotalRowClass = "bg-table-header font-bold text-foreground";
 
-export const tableTotalCellClass = `${tableCellClass} text-sm! py-3 font-bold! tracking-wide`;
+export const tableTotalCellClass = `${tableCellClass} bg-table-header  py-3 text-sm font-bold tracking-wide`;
 
 export const tableCalculatedCellClass = `${tableCellClass} bg-primary-subtle font-semibold `;
 
@@ -97,7 +97,7 @@ export const primaryButtonClass =
   "flex gap-4  rounded-lg bg-primary px-3 py-1.5 font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
 
 export const secondaryButtonClass =
-  "rounded-lg border border-border bg-surface px-3 py-1.5 font-medium text-foreground transition-colors hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+  "rounded-lg border border-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-surface transition-colors hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const pageHeadingClass = "text-xl font-bold text-primary";
 

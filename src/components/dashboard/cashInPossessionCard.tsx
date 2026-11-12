@@ -1,4 +1,4 @@
-import { CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
+import { Check, CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
 import { Redo2, Undo2 } from "lucide-react";
 import {
   cardClass,
@@ -123,7 +123,7 @@ export default function CashInPossessionCard({
         {cashDifference === 0 ? (
           <div className="flex items-center gap-2">
             <p className="text-success font-bold">Cash OK</p>
-           <CircleCheck className="size-10 fill-green-700 stroke-surface" strokeWidth={2} strokeOpacity={40} />
+           <CircleCheck className="size-10 fill-success stroke-surface" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
            <div className="flex w-40 px-2 py-2 justify-between items-center h-12 bg-card-accent/30  border border-border rounded-md transition duration-300 ">
@@ -135,7 +135,7 @@ export default function CashInPossessionCard({
 
           <div className="flex justify-end transition duration-200  relative">
           
-            <CircleLetterX className="stroke-red-600 dark:stroke-red-200" size={30} strokeWidth={2}/>
+            <CircleLetterX className="stroke-danger" size={30} strokeWidth={2}/>
         </div>
         </div>
         )}
@@ -192,9 +192,9 @@ export default function CashInPossessionCard({
               className={`${tableRowClass} ${cashDifference === 0 ? "" : "even:bg-errorCard"}`}
             >
               <td
-                className={`${tableCellLeftClass} ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-ac" : ""}`}
+                className={`${tableCellLeftClass}  ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-foreground " : ""}`}
               >
-                {lastAppliedChange?.countKey === countRow.countKey ? "● " : ""}
+                {lastAppliedChange?.countKey === countRow.countKey ? <Check className="inline-flex mr-4 text-success"/> : ""}
                 {countRow.label}
               </td>
               <td className={tableCellClass}>
@@ -260,7 +260,7 @@ export default function CashInPossessionCard({
        {matchesCashInHand ? (
     <CircleCheckIcon className='size-8'/>
   ) : (
-    <CircleLetterX className='size-8'/>
+    <CircleLetterX className='size-8 stroke-danger'/>
   )}
         {matchesCashInHand
           ? "Cash in possession matches total cash in hand"

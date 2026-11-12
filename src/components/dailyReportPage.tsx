@@ -43,11 +43,11 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
     {label: 'Total UPI Transaction (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi)},
     {label: 'Total Cashless UPI & POS (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi + paymentSummary.totalPos)},
     {label: 'Percentage share of UPI' , value: `${(paymentSummary.totalUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
-    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
-    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
-    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
-    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
-    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Percentage share of UPI + POS' , value: `${(paymentSummary.digitalPaymentPercent).toFixed(2)}%`},
+    {label: 'Total TVM UPI' , value: formatRupees(paymentSummary.tvmUpi)},
+    {label: 'Total TVM Earning' , value: formatRupees(paymentSummary.tvmUpi)},
+    {label: 'Percentage share of TVM' , value: `${(paymentSummary.tvmUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
+    {label: 'Total CASHLESS EARNING' , value: `${((paymentSummary.totalUpi + paymentSummary.totalPos + paymentSummary.tvmUpi)*100 / paymentSummary.afcEarning).toFixed(2)}%`},
   ]
 
   const typedValueOf = (fieldKey: string) => registerState.reportFields?.[date]?.[fieldKey] ?? '';
@@ -114,7 +114,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
         </div>
       </div>
        <div className={`${cardClass}`}>
-        <h2 className={cardHeadingClass}>Morning Report · Digital Payments</h2>
+        <h2 className={cardHeadingClass}>Morning Report · Station Digital Earning Performance</h2>
         <div className="space-y-1">
           {digitalPerformance.map(({ label, value }) => (
             <div key={label} className={summaryRowClass}>

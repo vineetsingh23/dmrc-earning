@@ -21,7 +21,7 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
     <div className={`${cardContainer} min-h-44 items-center`}>
       <small className="text-mu flex flex-col">
         <ul className='flex flex-col min-w-30 text-nowrap'>
-          <li className="text-ac ">■<span> Total earning</span></li>
+          <li className="text-card-accent ">■<span> Total earning</span></li>
           <li className="text-ac2 ">■<span> Selected Day</span></li>
           <li className="text-ok ">■<span> Cashless</span></li>
         </ul>
@@ -35,10 +35,10 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
           return (
             <g key={dayDate}>
               <rect x={dayIndex * slotWidth + 5} y={chartHeight - 20 - earningBarHeight} width={barWidth} height={earningBarHeight} rx={2}
-                fill={dayDate === date ? 'var(--ac)' : 'var(--ac2)'}><title>{`${dayDate} total earning: ${formatRupees(earning)}`}</title></rect>
+                fill={dayDate === date ? 'var(--primary)' : 'var(--primary)'}><title>{`${dayDate} total earning: ${formatRupees(earning)}`}</title></rect>
               <rect x={dayIndex * slotWidth + 5 + barWidth} y={chartHeight - 20 - cashlessBarHeight} width={barWidth} height={cashlessBarHeight} rx={2}
-                fill="var(--ok)"><title>{`${dayDate} cashless: ${formatRupees(cashless)}`}</title></rect>
-              <text x={dayIndex * slotWidth + slotWidth / 2} y={chartHeight - 6} fontSize={10} textAnchor="middle" fill="var(--mu)">{dayDate.slice(8)}</text>
+                fill="var(--success)"><title>{`${dayDate} cashless: ${formatRupees(cashless)}`}</title></rect>
+              <text x={dayIndex * slotWidth + slotWidth / 2} y={chartHeight - 6} fontSize={10} textAnchor="middle" fill="var(--danger)">{dayDate.slice(8)}</text>
             </g>
           );
         })}

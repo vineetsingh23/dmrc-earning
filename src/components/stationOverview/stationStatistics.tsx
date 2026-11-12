@@ -33,7 +33,7 @@ export function findBestDay(
   return bestDay;
 }
 const staticCardClass =
-  "flex w-full max-w-none flex-col gap-3 p-4 text-center text-foreground transition-[border-color,box-shadow] duration-150 border border-border rounded-2xl m-4 hover:border-border hover:shadow-md";
+  "flex w-full max-w-none flex-col gap-3 p-4 text-center text-foreground transition-[border-color,box-shadow] duration-150 border border-border rounded-2xl m-4 hover:border-border hover:shadow-md hover:bg-table-row-hover";
 
 export default function StationStatisticsCard({
   registerState,

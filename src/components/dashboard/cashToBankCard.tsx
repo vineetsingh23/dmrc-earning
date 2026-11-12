@@ -61,7 +61,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={tableTotalCellClass} colSpan={2}>Total {existingTransfer ? 'sent' : 'entered'}</td>
+            <td className={`${tableCellLeftClass} font-bold!`} colSpan={2}>Total {existingTransfer ? 'Sent' : 'Entered'}</td>
             <td className={tableTotalCellClass}>{formatRupees(existingTransfer ? existingTransfer.amount : noteTotalToSend)}</td>
           </tr>
         </tfoot>

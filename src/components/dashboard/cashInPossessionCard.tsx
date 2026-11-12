@@ -241,7 +241,7 @@ export default function CashInPossessionCard({
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={tableCellLeftClass} colSpan={2}>
+            <td className={`${tableCellLeftClass} font-bold!`} colSpan={2}>
               Total
             </td>
             <td className={tableTotalCellClass}>

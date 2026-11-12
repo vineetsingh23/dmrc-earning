@@ -49,7 +49,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={`${tableCellLeftClass}`}>Total</td>
+            <td className={`${tableCellLeftClass} font-bold!`}>Total</td>
             <td className={tableTotalCellClass}>{formatRupees(totalImprestAmount)}</td>
             <td className={tableTotalCellClass}>{formatRupees(totalAdvanceAmount)}</td>
             <td className={tableTotalCellClass}>{formatRupees(totalImprestAmount + totalAdvanceAmount)}</td>

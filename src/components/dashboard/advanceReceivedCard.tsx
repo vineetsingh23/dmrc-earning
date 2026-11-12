@@ -42,7 +42,7 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={tableCellLeftClass}>Total</td>
+            <td className={`${tableCellLeftClass} font-bold!`}>Total</td>
             <td className={tableTotalCellClass}>{formatRupees(totalAdvanceReceived)}</td></tr>
         </tfoot>
       </table>

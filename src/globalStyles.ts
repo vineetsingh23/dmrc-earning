@@ -46,7 +46,7 @@ export const cardClass =
   "w-full min-w-0 overflow-auto rounded-2xl border border-border border-t-4 border-t-card-accent px-4 py-3 bg-surface text-foreground shadow-md transition-[border-color,box-shadow] duration-200 hover:shadow-lg";
 
 export const cardHeadingClass =
-  "mb-4 flex items-center  text-sm font-bold uppercase tracking-[0.12em] text-primary";
+  "mb-4 flex items-center  font-bold uppercase tracking-[0.12em] text-primary";
 export const staticCardClass = "dark:bg-slate-800";
 
 export const cardHeaderClass =
@@ -65,18 +65,18 @@ export const tableClass =
   "min-w-full border-collapse px-2 overflow-none bg-surface py-4";
 export const sheetTableClass = "w-full border-collapse";
 
-export const tableHeaderRowClass = "text-xs text-foreground";
+export const tableHeaderRowClass = "bg-table-header";
 
 export const tableHeaderCellClass =
-  "border border-border px-2 py-2 text-center text-sm font-bold text-foreground";
+  "border border-border px-2 py-2 text-sm text-center text-foreground";
 
 export const tableCellClass =
-  "border border-border text-right text-xs px-2 py-1 tracking-wide font-medium text-foreground transition-colors duration-150";
+  "border border-border text-right text-xs px-2 tracking-wide font-medium text-foreground transition-colors duration-150";
 
-export const tableCellLeftClass = `${tableCellClass} !text-center px-0`;
-export const tableTotalRowClass = "bg-table-header font-bold text-foreground";
+export const tableCellLeftClass = `${tableCellClass} !text-center px-0 py-2.5`;
+export const tableTotalRowClass = " bg-table-header text-foreground text-right";
 
-export const tableTotalCellClass = `${tableCellClass} bg-table-header  py-3 text-sm font-bold tracking-wide`;
+export const tableTotalCellClass = `${tableCellClass} font-bold! text-foreground`
 
 export const tableCalculatedCellClass = `${tableCellClass} bg-primary-subtle font-semibold `;
 
@@ -85,7 +85,7 @@ export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold`;
 export const tableRowClass =
   "transition-colors duration-200 even:bg-table-row-alt hover:bg-table-row-hover";
 
-export const tableInputClass = `${tableCellClass} rounded-md border-border-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:-ring-inset focus:ring-2 focus:ring-focus`;
+export const tableInputClass = `${tableCellClass} rounded-md border-border-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:ring-inset focus:ring-2 focus:ring-focus`;
 
 export const amountInputClass = `${tableCellClass} text-right text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 

@@ -636,7 +636,7 @@ export default function EarningSheetTable({
                   );
                   const zIndex = freeze.isFrozen ? 50 : 40;
                   const isTotalLabel = columnIndex === 0;
-                  const footerStickyClass = `sticky ${freeze.className} ${sheetStyle.footerCellClass} border border-slate-400 px-2 py-3 text-sm font-bold dark:border-slate-700 ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
+                  const footerStickyClass = `sticky ${freeze.className} ${sheetStyle.footerCellClass} border border-border px-2 py-3 ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
                   const freezeBoundaryClass =
                     (isTotalLabel && mergeFooterLabel) ||
                     (frozenColumnCount > 0 &&

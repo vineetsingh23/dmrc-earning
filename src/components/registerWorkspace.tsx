@@ -13,6 +13,7 @@ import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
 import SendToBankDialog from "./dashboard/sentToBankDialog";
 import { shiftEntryColumns } from "../lib/shiftEntrycolumns";
+import { finalEarningColumns } from "../lib/finalEarningColumns";
 import { bankRoundingAmount } from "../lib/businessRules";
 import { updateEntryCell } from "../handlers/entryCellHandler";
 import { updateCashCount } from "../handlers/cashcountHandlers";
@@ -59,6 +60,14 @@ export default function RegisterWorkspace({
   const visibleShiftColumns = useMemo(
     () =>
       filterByFacilities(shiftEntryColumns, {
+        hasSv4Recharge: station.hasSv4Recharge,
+        hasParking: station.hasParking,
+      }),
+    [station],
+  );
+  const visibleFinalColumns = useMemo(
+    () =>
+      filterByFacilities(finalEarningColumns, {
         hasSv4Recharge: station.hasSv4Recharge,
         hasParking: station.hasParking,
       }),
@@ -413,6 +422,7 @@ export default function RegisterWorkspace({
                  <h1 className="page-info">TVM Earning</h1>
                 </header>
                 <TvmEarningPage
+                
                   registerState={registerState}
                   updateRegisterState={updateRegisterState}
                   date={selectedDate}
@@ -427,6 +437,7 @@ export default function RegisterWorkspace({
                 <h1 className="page-info">Final Earning</h1>
 
               <FinalEarningPage
+                columns={visibleFinalColumns}
                 registerState={registerState}
                 date={selectedDate}
                 />

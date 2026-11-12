@@ -59,12 +59,12 @@ export const shiftEntryColumns: ColumnNode[] = [
 
   columnGroup('Contactless Smart Card (CSC)',
     columnGroup('CSC Sale (TOM/CCC)', numberColumn('cscSaleSv2Sv6Quantity', 'SV-2 & SV-6 Qty'), numberColumn('cscSaleT1T3Quantity', 'T-1 & T-3 Qty'), numberColumn('cscSaleAmount', 'Total Amt (e)')),
-    columnGroup('CSC Sale Cancel', ...quantityAmountColumns('cscSaleCancelQuantity', 'cscSaleCancelAmount', 'f')),
+    // columnGroup('CSC Sale Cancel', ...quantityAmountColumns('cscSaleCancelQuantity', 'cscSaleCancelAmount', 'f')),
     columnGroup('CSC Refund', numberColumn('cscRefundSv2Quantity', 'SV-2 Qty'), numberColumn('cscRefundT1T3Quantity', 'T-1 & T-3 Qty'), numberColumn('cscRefundAmount', 'Amt (g)')),
     columnGroup('Add Value',
       columnGroup('SV2 TOM', ...quantityAmountColumns('addValueSv2TomQuantity', 'addValueSv2TomAmount', 'h1')),
-      columnGroup('NCMC TOM', ...quantityAmountColumns('addValueNcmcTomQuantity', 'addValueNcmcTomAmount', 'h2'))),
-    columnGroup('Add Value Cancel', ...quantityAmountColumns('addValueCancelQuantity', 'addValueCancelAmount', 'i'))),
+      columnGroup('NCMC TOM', ...quantityAmountColumns('addValueNcmcTomQuantity', 'addValueNcmcTomAmount', 'h2')))),
+    // columnGroup('Add Value Cancel', ...quantityAmountColumns('addValueCancelQuantity', 'addValueCancelAmount', 'i'))),
 
   columnGroup('Surcharge (CCC)',
     columnGroup('By Cash/Cashless (other than Purse)', ...quantityAmountColumns('surchargeCashQuantity', 'surchargeCashAmount', 'j')),

@@ -71,7 +71,7 @@ columnGroup('RCTM Add Value',  numberColumn('tvmRctmAddValueQuantity', 'Qty'), n
       numberColumn('posAtCcc', 'POS at CCC (aa1)'), numberColumn('posAtTvm', 'POS at TVM (ab1)'), numberColumn('staticQrAtCcc', 'Static QR at CCC (ac)'),
       numberColumn('posAtRctm', 'POS at RCTM (ad)'), numberColumn('posAtScvm', 'POS at SCVM (ae)'), numberColumn('upiAtTvm', 'UPI at TVM (ab2)'),
       numberColumn('upiAtTomCc', 'UPI at TOM/CC (aa2)'), numberColumn('hhtPenaltyPurseCashless', 'HHT Penalty Purse (af)'), numberColumn('hhtParkingPurse', 'HHT Parking Purse (w4)'),
-      columnGroup('Surcharge Adjustment', numberColumn('surchargeThroughPurseAfc', 'Through Purse by AFC at CCC (ag)'), numberColumn('surchargeThroughPurseNcmc', 'Through purse in NCMC by AFC at CCC (ah)'))),
+      columnGroup('Surcharge Adjustment', numberColumn('surchargePurseAmount', 'Through Purse by AFC at CCC (ag)'), numberColumn('ncmcPurseAmount', 'Through purse in NCMC by AFC at CCC (ah)'))),
   
     numberColumn('outsourceEarningAmount', 'Outsource Earning (OE)'),
     columnGroup('Outstanding Details',

@@ -18,7 +18,7 @@ import {
   tableWrapperClass,
 } from '../../globalStyles';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { CheckCheck, CircleCheckIcon, CircleLetterX, FolderMinus} from 'lucide-react';
+import { CheckCheck, CircleCheckIcon, CircleLetterX} from 'lucide-react';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -61,7 +61,7 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={`${tableTotalCellClass} !text-left`} colSpan={2}>Total {existingTransfer ? 'sent' : 'entered'}</td>
+            <td className={tableTotalCellClass} colSpan={2}>Total {existingTransfer ? 'sent' : 'entered'}</td>
             <td className={tableTotalCellClass}>{formatRupees(existingTransfer ? existingTransfer.amount : noteTotalToSend)}</td>
           </tr>
         </tfoot>

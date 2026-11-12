@@ -52,7 +52,7 @@ export const cardHeaderClass =
   "mb-2 flex items-center justify-between border-b border-border";
 
 export const cardButtonClass =
-  "inline-flex items-center gap-1.5 rounded-lg border border-border bg-surface px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
+  "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-border bg-primary text-white px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
 
 export const cardTransition = `${cardClass} transition-transform scale-95 hover:scale-105 duration-300 ease-in-out`;
 
@@ -60,21 +60,21 @@ export const cardTransition = `${cardClass} transition-transform scale-95 hover:
 export const tableWrapperClass =
   "overflow-auto rounded-xl border border-border";
 
-export const tableClass = "min-w-full border-collapse px-2 overflow-none bg-surface";
+export const tableClass = "min-w-full border-collapse px-2 overflow-none bg-surface py-4";
 export const sheetTableClass = "w-full border-collapse";
 
 export const tableHeaderRowClass = "bg-table-header text-xs ";
 
 export const tableHeaderCellClass =
-  "border border-border px-2 py-2 text-center text-sm font-semibold text-foreground";
+  "border border-border px-2 py-2 text-center text-sm font-bold text-foreground";
 
 export const tableCellClass =
   "border border-border text-right text-xs py-1 px-2 tracking-wide font-medium text-foreground transition-colors duration-150";
 
 export const tableCellLeftClass = `${tableCellClass} !text-center px-0 text-nowrap py-2`;
-export const tableTotalRowClass = "bg-table-header font-bold text-foreground";
+export const tableTotalRowClass = "bg-table-header  text-foreground";
 
-export const tableTotalCellClass = `${tableCellClass} text-sm py-3 font-bold tracking-wide`;
+export const tableTotalCellClass = `${tableCellClass} text-sm! py-3 font-bold! tracking-wide`;
 
 export const tableCalculatedCellClass = `${tableCellClass} bg-primary-subtle font-semibold `;
 
@@ -84,7 +84,7 @@ export const tableRowClass =
   "transition-colors duration-200 even:bg-table-row-alt hover:bg-table-row-hover";
 
 export const tableInputClass =
-  `${tableCellClass} rounded-md box-border h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:-ring-inset focus:ring-2 focus:ring-focus`
+  `${tableCellClass} rounded-md border-border-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:-ring-inset focus:ring-2 focus:ring-focus`
 
 export const amountInputClass =
   `${tableCellClass} text-right text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`

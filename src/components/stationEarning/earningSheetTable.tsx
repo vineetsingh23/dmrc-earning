@@ -29,10 +29,10 @@ import {
   tableWrapperClass,
   tableHeaderRowClass,
   tableTotalRowClass,
+  tableHeaderCellClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 
-const sheetTableClass = tableClass;
 
 export interface SheetStyle {
   headerCellClass: string; // padding, text alignment and font of every header cell
@@ -202,7 +202,7 @@ function buildHeaderRows(
 
         if (isFrozen) zIndex = "z-30";
 
-        const headerClass = `sticky ${zIndex} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight ${earningHeaderStyle}`;
+        const headerClass = `sticky ${zIndex} ${isFrozen ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -238,7 +238,7 @@ function buildHeaderRows(
           frozenColumnCount > 0 && leafIndex === frozenColumnCount - 1
             ? "sheet-freeze-seam"
             : "";
-        const headerClass = `sticky ${zIndex} ${freeze.className} ${freezeBoundaryClass} ${freezeSeamClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight ${calculatedHeaderClass} ${earningHeaderStyle}`;
+        const headerClass = `sticky ${zIndex} ${freeze.className} ${freeze.isFrozen ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${freezeSeamClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${calculatedHeaderClass} ${earningHeaderStyle}`;
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -458,7 +458,7 @@ export default function EarningSheetTable({
           <button
             type="button"
             onClick={onAddRow}
-            className={`rounded-xl border border-bd bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac ${
+            className={`rounded-xl border border-border bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac ${
               isShiftGrid
                 ? "shadow-sm hover:shadow-md"
                 : ""
@@ -471,7 +471,7 @@ export default function EarningSheetTable({
       <div
         className={`${tableWrapperClass} ${
           isShiftGrid
-            ? "overflow-auto! rounded-xl border-slate-300 bg-white shadow-sm dark:border-slate-700 dark:bg-slate-900"
+            ? "overflow-auto! rounded-xl"
             : isFinalGrid
               ? "overflow-auto!"
             : ""
@@ -488,7 +488,7 @@ export default function EarningSheetTable({
       >
         <table
           ref={tableRef}
-          className={`${sheetTableClass} ${
+          className={`sheet-sticky-table ${tableClass} ${
             isShiftGrid || isFinalGrid ? "!w-max" : ""
           }`}
         >
@@ -502,7 +502,7 @@ export default function EarningSheetTable({
               />
             ))}
           </colgroup>
-          <thead ref={headerRef}>
+          <thead ref={headerRef} className="sheet-sticky-header">
           
             {buildHeaderRows(
               columns,
@@ -514,7 +514,9 @@ export default function EarningSheetTable({
               columnWidths,
             ).map(
               (headerRow, headerRowIndex) => (
-                <tr key={headerRowIndex}>{headerRow}</tr>
+                <tr key={headerRowIndex} className={`${tableHeaderCellClass} font-bold!`}>
+                  {headerRow}
+                </tr>
               ),
             )}
           </thead>
@@ -540,7 +542,9 @@ export default function EarningSheetTable({
                   );
                   const stickyClass = [
                     freeze.isFrozen
-                      ? `${freeze.className} z-10 bg-white dark:bg-slate-900`
+                      ? `${freeze.className} z-10 sheet-frozen-cell ${
+                          rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
+                        }`
                       : "",
                     frozenColumnCount > 0 &&
                     colIndex === frozenColumnCount - 1
@@ -666,7 +670,7 @@ export default function EarningSheetTable({
                         bottom: 0,
                         zIndex,
                         borderTop: "2px solid var(--sheet-border)",
-                        boxShadow: "0 -2px 6px rgb(0 0 0 / 0.15)",
+                        boxShadow: `${freezeBoundaryClass ? "inset -2px 0 0 var(--border), " : ""}0 -2px 6px rgb(0 0 0 / 0.15)`,
                       }}
                     >
                       {isTotalLabel ? "Total" : column.kind === "text"

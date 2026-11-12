@@ -40,8 +40,8 @@
   --danger: #dc2626;
 
   /* Tables */
-  --table-header: #c2ced7;
-  --table-row-alt: #f3f4f6;
+  --table-header: #b7c1c8;
+  --table-row-alt: #e3e6e9;
   --table-row-hover: #f0fdfa;
 
   /* Decorative accent */
@@ -52,14 +52,14 @@
   color-scheme: dark;
 
   /* Surfaces */
-  --background: #010107;
-  --surface: #050d1b;
+  --background: var(--color-slate-800);
+  --surface: #071220;
   --surface-muted: #334155;
   --surface-hover: #1e3a5f;
-  --input-background: #172033;
+  --input-background: #363f53;
 
   /* Text */
-  --foreground: #e0e7ff;
+  --foreground: #a3a8bb;
   --muted-foreground: #94a3b8;
 
   /* Brand and interaction */
@@ -70,7 +70,7 @@
   --hover-foreground: #7dd3fc;
 
   /* Borders and focus */
-  --border: #03080f;
+  --border: #181f29;
   --focus: #38bdf8;
 
   /* Feedback */
@@ -80,8 +80,8 @@
   --danger: #c45959;
 
   /* Tables */
-  --table-header: #101e31;
-  --table-row-alt: #0b1423;
+  --table-header: #23344a;
+  --table-row-alt: #141e31;
   --table-row-hover: #042f2e;
   
 
@@ -286,4 +286,69 @@ button:not(:disabled) {
   height: 100%;
   opacity: 0;
   cursor: pointer;
+}
+
+.sheet-sticky-header {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.sheet-sticky-table {
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+.sheet-sticky-table th,
+.sheet-sticky-table td {
+  border-width: 0 1px 1px 0 !important;
+}
+
+.sheet-frozen-cell {
+  isolation: isolate;
+  background-clip: border-box;
+  background-color: color-mix(in srgb, var(--surface) 88%, var(--table-header)) !important;
+}
+
+.sheet-frozen-cell input,
+.sheet-frozen-cell > div {
+  text-align: center !important;
+}
+
+.sheet-frozen-cell-even {
+  background-color: color-mix(in srgb, var(--table-row-alt) 80%, var(--table-header)) !important;
+}
+
+.sheet-frozen-cell:hover {
+  background-color: var(--table-row-hover) !important;
+}
+
+.sheet-frozen-header {
+  isolation: isolate;
+  z-index: 60 !important;
+  background-clip: border-box;
+  background-color: var(--table-header) !important;
+}
+
+.sheet-freeze-seam {
+  position: sticky;
+}
+
+.sheet-freeze-seam::after {
+  position: absolute;
+  top: -1px;
+  right: -3px;
+  bottom: 0;
+  width: 4px;
+  background-color: inherit;
+  content: "";
+  pointer-events: none;
+}
+
+.sheet-freeze-boundary {
+  box-shadow: inset -1px 0 0 color-mix(in srgb, var(--foreground) 25%, var(--border));
+}
+
+.sheet-freeze-seam {
+  box-shadow: inset -2px 0 0 color-mix(in srgb, var(--foreground) 35%, var(--border));
 }

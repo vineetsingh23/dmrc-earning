@@ -1,4 +1,4 @@
-import { CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
+import { CheckCheck, CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
 import { Redo2, Undo2 } from "lucide-react";
 import {
   cardClass,
@@ -101,11 +101,11 @@ export default function CashInPossessionCard({
 
   //  const countInputClass = 'w-20 rounded border border-bd bg-inp px-1.5 py-0.5 text-right outline-hidden focus:ring-2 focus:ring-ac';
   const stepButtonClass =
-    "flex items-center  gap-1 rounded-md border border-border bg-primary-foreground px-2.5 py-1 text-sm font-medium transition hover:border-border hover:bg-primary  hover:text-primary-subtle disabled:pointer-events-none disabled:opacity-40";
+    "flex items-center  gap-1 rounded-md border border-border bg-primary px-2.5 py-1 text-sm font-semibold transition hover:border-border text-primary-subtle disabled:pointer-events-none disabled:opacity-40";
 
   return (
     <div
-      className={`${cardClass} card ${cashDifference === 0 ? "" : "border-2 border-danger !bg-danger/10"}`}
+      className={`${cardClass} ${cashDifference === 0 ? "" : "bg-red-50/90! dark:bg-red-900/20!"}`}
       onKeyDown={handleSheetKeyDown}
     >
       <div className={cardHeaderClass}>
@@ -120,21 +120,29 @@ export default function CashInPossessionCard({
               "No counts yet. Enter the notes and coins you hold."}
           </p>
         </div>
-        <div className="flex w-40 px-2 py-2 justify-between items-center h-12 ">
-          <span
-            className={`${cashDifference === 0 ? "" : "text-red-500"} text-center font-medium w-1/2`}
-          >
-            {formatRupees(Number(cashDifference))}
-          </span>
-          <div className="flex justify-end transition-colors duration-150 relative">
-            <CircleCheck
-              size={30}
-              className={`${cashDifference === 0 ? "fill-green-500" : "fill-red-500 animate-ping"}`}
-              stroke="white"
-              strokeWidth={1}
-            />
+        {cashDifference === 0 ? (
+          <div className="flex items-center gap-2">
+            <p className="text-success font-bold">Cash OK</p>
+           <CircleCheck className="size-10 fill-green-700 " strokeWidth={2} strokeOpacity={40} />
           </div>
+        ): (
+           <div className="flex w-40 px-2 py-2 justify-between items-center h-12 bg-card-accent/30  border border-border rounded-md transition duration-300 ">
+          <span
+            className={`${cashDifference === 0 ? "" : "text-danger"} text-center font-medium w-1/2`}
+          >
+            {formatRupees(Number(cashDifference))} 
+          </span>
+
+          <div className="flex justify-end transition duration-200  relative">
+          
+            <CircleLetterX className="stroke-red-600 dark:stroke-red-200" size={30} strokeWidth={2}/>
         </div>
+        </div>
+        )}
+       
+             
+          
+         
       </div>
       <div className="mb-2 flex flex-wrap items-center gap-2">
         <button

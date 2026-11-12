@@ -468,14 +468,7 @@ export default function RegisterWorkspace({
             path="/station-overview"
             element={
               <div className="flex flex-col gap-4">
-                <header className="page-intro">
-                  <p className="page-eyebrow">Performance</p>
-                  <h1 className="page-title">Station overview</h1>
-                  <p className="page-description">
-                    Explore earnings trends, daily comparisons, and cashless
-                    transaction summaries.
-                  </p>
-                </header>
+                <h1 className="page-info">Station Earning Statistics</h1>
                 <StationStatisticsCard
                   registerState={registerState}
                   date={selectedDate}

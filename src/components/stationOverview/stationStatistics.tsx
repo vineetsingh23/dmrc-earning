@@ -1,108 +1,194 @@
-import {cardContainer } from "../../globalStyles";
+import { cardContainer } from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
-import {type  RegisterState } from "../../lib/registerTypes";
+import { type RegisterState } from "../../lib/registerTypes";
 import {
-  addDays, dailyCashlessStatisticsOfDate, dailyEarningOfDate, dailyQrSaleOfDate,
-  datesWithEntriesUpTo, formatRupees, tvmAddValueOfDate, tvmQrSaleOfDate,
-} from '../../lib/earningCalculations';
-
-
-
+  addDays,
+  dailyCashlessStatisticsOfDate,
+  dailyEarningOfDate,
+  dailyQrSaleOfDate,
+  datesWithEntriesUpTo,
+  formatRupees,
+  tvmAddValueOfDate,
+  tvmQrSaleOfDate,
+} from "../../lib/earningCalculations";
 
 interface StationStatisticsCardProps {
   registerState: RegisterState;
-  date: string
+  date: string;
 }
 
-type BestDay ={date:string; amount: number } | null;
+type BestDay = { date: string; amount: number } | null;
 
-function findBestDay(dates: string[], measureOfDate:(entryDate:string)=> number):BestDay{
-
-  let bestDay : BestDay = null
-  dates.forEach(entryDate => {
+function findBestDay(
+  dates: string[],
+  measureOfDate: (entryDate: string) => number,
+): BestDay {
+  let bestDay: BestDay = null;
+  dates.forEach((entryDate) => {
     const measuredAmount = measureOfDate(entryDate);
-    if(measuredAmount> 0 && 
-      (!bestDay || measuredAmount > bestDay.amount))
-      bestDay = {date: entryDate, amount:measuredAmount}
-  })
+    if (measuredAmount > 0 && (!bestDay || measuredAmount > bestDay.amount))
+      bestDay = { date: entryDate, amount: measuredAmount };
+  });
 
-  return bestDay
+  return bestDay;
+}
+const staticCardClass =
+  "flex w-full max-w-none flex-col gap-3 p-4 text-center text-foreground transition-[border-color,box-shadow] duration-150 border border-border rounded-2xl m-4 hover:border-border hover:shadow-md";
 
-} 
-const staticCardClass = 'brand-card flex w-full max-w-none flex-col gap-3 p-4 text-center text-tx transition-[border-color,box-shadow] duration-150 hover:border-ac/40 hover:shadow-md';
-
-export default function StationStatisticsCard({registerState,date}: StationStatisticsCardProps) {
-    const datesTillDate = datesWithEntriesUpTo(registerState, date);
-  const datesInSelectedMonth = datesTillDate.filter(entryDate => entryDate.startsWith(date.slice(0, 7)));
+export default function StationStatisticsCard({
+  registerState,
+  date,
+}: StationStatisticsCardProps) {
+  const datesTillDate = datesWithEntriesUpTo(registerState, date);
+  const datesInSelectedMonth = datesTillDate.filter((entryDate) =>
+    entryDate.startsWith(date.slice(0, 7)),
+  );
   const statistics: { title: string; bestDay: BestDay }[] = [
-    { title: 'Highest earning this month', bestDay: findBestDay(datesInSelectedMonth, entryDate => dailyEarningOfDate(registerState, entryDate)) },
-    { title: 'Highest earning till date', bestDay: findBestDay(datesTillDate, entryDate => dailyEarningOfDate(registerState, entryDate)) },
-    { title: 'Highest Earning TVM this month', bestDay: findBestDay(datesInSelectedMonth, entryDate => dailyQrSaleOfDate(registerState, entryDate)) },
-    { title: 'Highest Earning TVM till date', bestDay: findBestDay(datesTillDate, entryDate => dailyQrSaleOfDate(registerState, entryDate)) },
-    { title: 'Highest Earning TOM this month', bestDay: findBestDay(datesTillDate, entryDate => tvmQrSaleOfDate(registerState, entryDate)) },
-    { title: 'Highest Earning TOM till date', bestDay: findBestDay(datesTillDate, entryDate => tvmQrSaleOfDate(registerState, entryDate)) },
-    { title: 'Highest Cashless Earning this month', bestDay: findBestDay(datesTillDate, entryDate => tvmAddValueOfDate(registerState, entryDate)) },
-    { title: 'Highest Cashless Earning till date', bestDay: findBestDay(datesTillDate, entryDate => tvmAddValueOfDate(registerState, entryDate)) },
+    {
+      title: "Highest earning this month",
+      bestDay: findBestDay(datesInSelectedMonth, (entryDate) =>
+        dailyEarningOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest earning till date",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        dailyEarningOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Earning TVM this month",
+      bestDay: findBestDay(datesInSelectedMonth, (entryDate) =>
+        dailyQrSaleOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Earning TVM till date",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        dailyQrSaleOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Earning TOM this month",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        tvmQrSaleOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Earning TOM till date",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        tvmQrSaleOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Cashless Earning this month",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        tvmAddValueOfDate(registerState, entryDate),
+      ),
+    },
+    {
+      title: "Highest Cashless Earning till date",
+      bestDay: findBestDay(datesTillDate, (entryDate) =>
+        tvmAddValueOfDate(registerState, entryDate),
+      ),
+    },
   ];
 
   const previousDate = addDays(date, -1);
-  const currentCashlessStatistics = dailyCashlessStatisticsOfDate(registerState, date);
-  const previousCashlessStatistics: ReturnType<typeof dailyCashlessStatisticsOfDate> = dailyCashlessStatisticsOfDate(registerState, previousDate);
+  const currentCashlessStatistics = dailyCashlessStatisticsOfDate(
+    registerState,
+    date,
+  );
+  const previousCashlessStatistics: ReturnType<
+    typeof dailyCashlessStatisticsOfDate
+  > = dailyCashlessStatisticsOfDate(registerState, previousDate);
   const cashlessTransactions = [
-    { title: 'Total AFC earning', current: currentCashlessStatistics.afcEarning, previous: previousCashlessStatistics.afcEarning },
-    { title: 'Total UPI', current: currentCashlessStatistics.upiTotal, previous: previousCashlessStatistics.upiTotal },
-    { title: 'Total POS', current: currentCashlessStatistics.posTotal, previous: previousCashlessStatistics.posTotal },
-    { title: 'UPI by TOM 80 + 81', current: currentCashlessStatistics.tom8081Upi, previous: previousCashlessStatistics.tom8081Upi },
-    { title: 'UPI by TOM 50 + 51', current: currentCashlessStatistics.tom5051Upi, previous: previousCashlessStatistics.tom5051Upi },
-    { title: 'UPI by TVM', current: currentCashlessStatistics.tvmUpi, previous: previousCashlessStatistics.tvmUpi },
+    {
+      title: "Total AFC earning",
+      current: currentCashlessStatistics.afcEarning,
+      previous: previousCashlessStatistics.afcEarning,
+    },
+    {
+      title: "Total UPI",
+      current: currentCashlessStatistics.upiTotal,
+      previous: previousCashlessStatistics.upiTotal,
+    },
+    {
+      title: "Total POS",
+      current: currentCashlessStatistics.posTotal,
+      previous: previousCashlessStatistics.posTotal,
+    },
+    {
+      title: "UPI by TOM 80 + 81",
+      current: currentCashlessStatistics.tom8081Upi,
+      previous: previousCashlessStatistics.tom8081Upi,
+    },
+    {
+      title: "UPI by TOM 50 + 51",
+      current: currentCashlessStatistics.tom5051Upi,
+      previous: previousCashlessStatistics.tom5051Upi,
+    },
+    {
+      title: "UPI by TVM",
+      current: currentCashlessStatistics.tvmUpi,
+      previous: previousCashlessStatistics.tvmUpi,
+    },
   ];
-const cardSeparator = 'mt-4 text-sm font-bold uppercase tracking-[0.12em] text-ac'
+  const cardSeparator =
+    "mt-4 text-sm font-bold uppercase tracking-[0.12em] text-ac";
   return (
     <div>
-
-    <h2 className={cardSeparator}>Statistics</h2>
-   <div className={cardContainer}>
-      <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
-        {statistics.map(({ title, bestDay }) => (
-          <div key={title} className={staticCardClass}>
-            <small className="block text-mu">{title}</small>
-            {bestDay
-              ? <><b className="text-xl">{formatRupees(bestDay.amount)}</b><small className="block text-mu">{bestDay.date}</small></>
-              : <b>—</b>}
-          </div>
-        ))}
-      </div>
-    </div>
-
-     <h2 className={cardSeparator}>Cashless Transactions · day-over-day</h2>
-   <div className={cardContainer}>
-      <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {cashlessTransactions.map(({ title, current, previous }) => {
-          const changePercent = previous === 0 ? null : ((current - previous) / previous) * 100;
-          const changeClass = current > previous
-            ? 'text-emerald-700 dark:text-emerald-300'
-            : current < previous
-              ? 'text-red-700 dark:text-red-300'
-              : 'text-mu';
-
-          return (
-          <div key={title} className={staticCardClass}>
-            <small className="block text-mu">{title}</small>
-            <b className="text-xl">{formatRupees(current)}</b>
-            <small className="block text-mu">Previous day ({previousDate}): {formatRupees(previous)}</small>
-            <small className={changeClass}>
-              {changePercent === null
-                ? (current === 0 ? 'No change from zero' : 'New · previous day was zero')
-                : `${changePercent > 0 ? '↑' : changePercent < 0 ? '↓' : '—'} ${Math.abs(changePercent).toFixed(1)}% ${changePercent > 0 ? 'increase' : changePercent < 0 ? 'decrease' : 'no change'}`}
-            </small>
-          </div>
-          );
-        })}
-      </div>
-    </div>
-
+      <h2 className={cardSeparator}>Statistics</h2>
+      <div className={cardContainer}>
+        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+          {statistics.map(({ title, bestDay }) => (
+            <div key={title} className={staticCardClass}>
+              <small className="block text-foreground">{title}</small>
+              {bestDay ? (
+                <>
+                  <b className="text-xl">{formatRupees(bestDay.amount)}</b>
+                  <small className="block text-mu">{bestDay.date}</small>
+                </>
+              ) : (
+                <b>—</b>
+              )}
+            </div>
+          ))}
         </div>
+      </div>
 
-  )
+      <h2 className={cardSeparator}>Cashless Transactions · day-over-day</h2>
+      <div className={cardContainer}>
+        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+          {cashlessTransactions.map(({ title, current, previous }) => {
+            const changePercent =
+              previous === 0 ? null : ((current - previous) / previous) * 100;
+            const changeClass =
+              current > previous
+                ? "text-emerald-700 dark:text-emerald-300"
+                : current < previous
+                  ? "text-red-700 dark:text-red-300"
+                  : "text-mu";
+
+            return (
+              <div key={title} className={staticCardClass}>
+                <small className="block text-mu">{title}</small>
+                <b className="text-xl">{formatRupees(current)}</b>
+                <small className="block text-mu">
+                  Previous day ({previousDate}): {formatRupees(previous)}
+                </small>
+                <small className={changeClass}>
+                  {changePercent === null
+                    ? current === 0
+                      ? "No change from zero"
+                      : "New · previous day was zero"
+                    : `${changePercent > 0 ? "↑" : changePercent < 0 ? "↓" : "—"} ${Math.abs(changePercent).toFixed(1)}% ${changePercent > 0 ? "increase" : changePercent < 0 ? "decrease" : "no change"}`}
+                </small>
+              </div>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
 }
-

@@ -47,6 +47,7 @@ export const cardClass =
 
 export const cardHeadingClass =
   "mb-4 flex items-center  text-sm font-bold uppercase tracking-[0.12em] text-primary";
+export const staticCardClass = "dark:bg-slate-800";
 
 export const cardHeaderClass =
   "mb-2 flex items-center justify-between border-b border-border";
@@ -60,7 +61,8 @@ export const cardTransition = `${cardClass} transition-transform scale-95 hover:
 export const tableWrapperClass =
   "overflow-auto rounded-xl border border-border";
 
-export const tableClass = "min-w-full border-collapse px-2 overflow-none bg-surface py-4";
+export const tableClass =
+  "min-w-full border-collapse px-2 overflow-none bg-surface py-4";
 export const sheetTableClass = "w-full border-collapse";
 
 export const tableHeaderRowClass = "bg-table-header text-xs ";
@@ -83,11 +85,9 @@ export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold`;
 export const tableRowClass =
   "transition-colors duration-200 even:bg-table-row-alt hover:bg-table-row-hover";
 
-export const tableInputClass =
-  `${tableCellClass} rounded-md border-border-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:-ring-inset focus:ring-2 focus:ring-focus`
+export const tableInputClass = `${tableCellClass} rounded-md border-border-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:-ring-inset focus:ring-2 focus:ring-focus`;
 
-export const amountInputClass =
-  `${tableCellClass} text-right text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`
+export const amountInputClass = `${tableCellClass} text-right text-foreground outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
 export const summaryRowClass =
   "flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-foreground/80";

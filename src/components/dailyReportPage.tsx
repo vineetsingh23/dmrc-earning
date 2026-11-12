@@ -1,7 +1,9 @@
 import { useMemo, useState } from 'react';
 import type { RegisterState } from '../lib/registerTypes';
-import { buildWhatsAppMessage, reportFields, whatsAppLink } from '../lib/dailyReport';
+import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFields, whatsAppLink } from '../lib/dailyReport';
 import { copyReportFieldsFromPreviousDate, updateReportField } from '../handlers/reportFieldHandlers';
+import { cardClass, cardHeadingClass, summaryRowClass } from '../globalStyles';
+import { formatRupees } from '../lib/earningCalculations';
 
 interface DailyReportPageProps {
   registerState: RegisterState;
@@ -16,6 +18,38 @@ const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-1.5 text-s
 export default function DailyReportPage({ registerState, updateRegisterState, date, stationName }: DailyReportPageProps) {
   const [feedback, setFeedback] = useState('');
   const message = useMemo(() => buildWhatsAppMessage(registerState, date, stationName), [registerState, date, stationName]);
+  const paymentSummary = useMemo(
+    () => buildDailyReportPaymentSummary(registerState, date),
+    [registerState, date],
+
+  );
+  const summaryRows = [
+    { label: 'Total AFC Earning', value: formatRupees(paymentSummary.afcEarning) },
+    { label: 'Total TOM UPI', value: formatRupees(paymentSummary.tomUpi) },
+    { label: 'Total CC UPI', value: formatRupees(paymentSummary.ccUpi) },
+    { label: 'Total TVM UPI', value: formatRupees(paymentSummary.tvmUpi) },
+    { label: 'Total UPI Earning', value: formatRupees(paymentSummary.totalUpi) },
+    { label: 'Total POS Earning', value: formatRupees(paymentSummary.totalPos) },
+    { label: 'Total Digital Payment Percentage (A)', value: `${paymentSummary.digitalPaymentPercent.toFixed(2)}%` },
+    { label: 'Average Digital Payment of Previous Month (B)', value: `${paymentSummary.previousMonthDigitalPaymentPercent.toFixed(2)}%` },
+    {
+      label: 'Difference (A-B)',
+      value: `${(paymentSummary.digitalPaymentPercent - paymentSummary.previousMonthDigitalPaymentPercent).toFixed(2)} percentage points`,
+    },
+  ];
+
+  const digitalPerformance = [
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Total UPI Transaction (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi)},
+    {label: 'Total Cashless UPI & POS (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi + paymentSummary.totalPos)},
+    {label: 'Percentage share of UPI' , value: `${(paymentSummary.totalUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+    {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
+  ]
+
   const typedValueOf = (fieldKey: string) => registerState.reportFields?.[date]?.[fieldKey] ?? '';
   const hasEarlierFields = Object.keys(registerState.reportFields ?? {}).some(savedDate => savedDate < date);
 
@@ -27,7 +61,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
 
   return (
     <div className="grid gap-3 lg:grid-cols-2">
-      <div className="rounded-2xl border border-bd bg-card p-4 shadow-sm">
+      <div className={cardClass}>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 className="font-semibold">Report details for {date}</h2>
           <button className={buttonClass} disabled={!hasEarlierFields}
@@ -55,7 +89,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
         </div>
       </div>
 
-      <div className="rounded-2xl border border-bd bg-card p-4 shadow-sm">
+      <div className={cardClass}>
         <h2 className="mb-2 font-semibold">Message</h2>
         <pre className="max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-lg border border-bd bg-inp p-3 text-sm">{message}</pre>
         <div className="mt-3 flex flex-wrap items-center gap-2">
@@ -65,6 +99,29 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
           </button>
           <button className={buttonClass} onClick={copyMessage}>Copy message</button>
           <span className="text-sm text-mu">{feedback}</span>
+        </div>
+      </div>
+
+      <div className={`${cardClass}`}>
+        <h2 className={cardHeadingClass}>Morning Report · Digital Payments</h2>
+        <div className="space-y-1">
+          {summaryRows.map(({ label, value }) => (
+            <div key={label} className={summaryRowClass}>
+              <span>{label}</span>
+              <b className="text-right">{value}</b>
+            </div>
+          ))}
+        </div>
+      </div>
+       <div className={`${cardClass}`}>
+        <h2 className={cardHeadingClass}>Morning Report · Digital Payments</h2>
+        <div className="space-y-1">
+          {digitalPerformance.map(({ label, value }) => (
+            <div key={label} className={summaryRowClass}>
+              <span>{label}</span>
+              <b className="text-right">{value}</b>
+            </div>
+          ))}
         </div>
       </div>
     </div>

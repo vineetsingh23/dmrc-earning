@@ -1,4 +1,4 @@
-import { cardContainer } from "../../globalStyles";
+import { cardClass, cardContainer } from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import { type RegisterState } from "../../lib/registerTypes";
 import {
@@ -19,7 +19,7 @@ interface StationStatisticsCardProps {
 
 type BestDay = { date: string; amount: number } | null;
 
-function findBestDay(
+export function findBestDay(
   dates: string[],
   measureOfDate: (entryDate: string) => number,
 ): BestDay {
@@ -138,6 +138,7 @@ export default function StationStatisticsCard({
     "mt-4 text-sm font-bold uppercase tracking-[0.12em] text-ac";
   return (
     <div>
+     
       <h2 className={cardSeparator}>Statistics</h2>
       <div className={cardContainer}>
         <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">

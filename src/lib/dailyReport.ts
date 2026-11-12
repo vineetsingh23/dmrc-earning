@@ -1,6 +1,7 @@
 import type { RegisterRow, RegisterState } from './registerTypes';
 import { parseNumber, sumOfFields, tvmAfcTotal } from './earningColumns';
 import { afcCollectionTotal } from './shiftEntrycolumns';
+import { dailyCashlessStatisticsOfDate } from './earningCalculations';
 
 // ---- fields typed by the user, once for each date ----
 export type ReportFieldKind = 'number' | 'text' | 'yesNo';
@@ -70,6 +71,56 @@ export function buildDailyReportFigures(state: RegisterState, date: string) {
   };
 }
 export type DailyReportFigures = ReturnType<typeof buildDailyReportFigures>;
+
+export function buildDailyReportPaymentSummary(state: RegisterState, date: string) {
+  const cashless = dailyCashlessStatisticsOfDate(state, date);
+  const afcEarning = buildDailyReportFigures(state, date).afcEarning;
+  const digitalPaymentPercent = (upi: number, pos: number, afc: number) =>
+    afc > 0 ? ((upi + pos) / afc) * 100 : 0;
+
+
+  const [year, month] = date.slice(0, 7).split('-').map(Number);
+  const previousMonthPrefix =
+    month === 1
+      ? `${year - 1}-12`
+      : `${year}-${String(month - 1).padStart(2, '0')}`;
+  const previousMonthDates = [
+    ...new Set([
+      ...Object.keys(state.shiftEntries),
+      ...Object.keys(state.tvmEntries ?? {}),
+    ]),
+  ].filter(entryDate => entryDate.startsWith(previousMonthPrefix));
+  const previousMonthTotals = previousMonthDates.reduce(
+    (totals, entryDate) => {
+      const dailyCashless = dailyCashlessStatisticsOfDate(state, entryDate);
+      return {
+        upi: totals.upi + dailyCashless.upiTotal,
+        pos: totals.pos + dailyCashless.posTotal,
+        afc: totals.afc + buildDailyReportFigures(state, entryDate).afcEarning,
+      };
+    },
+    { upi: 0, pos: 0, afc: 0 },
+  );
+
+  return {
+    afcEarning,
+    tomUpi: cashless.tom5051Upi,
+    ccUpi: cashless.tom8081Upi,
+    tvmUpi: cashless.tvmUpi,
+    totalUpi: cashless.upiTotal,
+    totalPos: cashless.posTotal,
+    digitalPaymentPercent: digitalPaymentPercent(
+      cashless.upiTotal,
+      cashless.posTotal,
+      afcEarning,
+    ),
+    previousMonthDigitalPaymentPercent: digitalPaymentPercent(
+      previousMonthTotals.upi,
+      previousMonthTotals.pos,
+      previousMonthTotals.afc,
+    ),
+  };
+}
 
 // typed value of a field for a date; an empty field uses its default (for the station label: the station name)
 export function reportFieldValue(state: RegisterState, date: string, field: ReportFieldDefinition, stationName: string): string {

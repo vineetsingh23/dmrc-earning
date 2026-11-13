@@ -13,6 +13,7 @@
   /* Surfaces */
   --my-gradient: linear-gradient(to right, #d6d2d2, #ece4e4, #f0f0f0);
   --background: linear-gradient(to bottom right,#ecedec, #b8b8b8, #cac9ca);
+  --watermark-img: url('/dmrc.png');
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
   --surface-hover: #e2e8f0;
@@ -55,7 +56,7 @@
   --my-gradient: linear-gradient(to bottom right,#4d122e, rgb(18, 20, 87), #581453);
 
   /* Surfaces */
-  --background: linear-gradient(to right,#2c2c45, #5e5e64, #2b1729);
+  --background: linear-gradient(to right,#45455a, #40404e, #432f41);
   --surface: var(--color-slate-900);
   --surface-muted: #334155;
   --surface-hover: #1e3a5f;
@@ -94,12 +95,14 @@
 
 /*
  * Tailwind v4 mapping.
- * Examples: bg-background, text-foreground, border-border,
+ * Examples: 
+ , text-foreground, border-border,
  * bg-primary, text-muted-foreground, bg-table-header.
  */
 @theme inline {
   --background-image-my-gradient: var(--my-gradient);
   --background-image-theme-gradient: var(--background);
+  --background-image-watermark: var(--watermark-img);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
@@ -196,6 +199,24 @@ body {
   transition:
     background-color 180ms ease,
     color 180ms ease;
+}
+
+.app-shell {
+  position: relative;
+  isolation: isolate;
+}
+
+.app-shell::before {
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  background-image: var(--watermark-img);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  content: "";
+  opacity: 0.08;
+  pointer-events: none;
 }
 
 button,

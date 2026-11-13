@@ -4,7 +4,7 @@
  */
 
 export const appShellClass =
-  "min-h-screen bg-background text-foreground transition-colors";
+  "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-theme-gradient text-foreground transition-colors";
 
 export const appHeaderClass =
   "sticky top-0 z-50 border-b border-border bg-surface/95 shadow-sm backdrop-blur";
@@ -113,5 +113,5 @@ export const dialogClass =
  */
 export const tableHeaderGroupClasses = [
   "bg-table-header text-sm font-semibold text-foreground",
-  "bg-table-header text-sm font-semibold text-foreground",
+ 
 ];

@@ -2,10 +2,10 @@ import { useMemo, useState } from 'react';
 import type { RegisterState } from '../lib/registerTypes';
 import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFields, whatsAppLink } from '../lib/dailyReport';
 import { copyReportFieldsFromPreviousDate, updateReportField } from '../handlers/reportFieldHandlers';
-import { cardClass, cardHeadingClass, summaryRowClass } from '../globalStyles';
+import { cardClass, cardContainer, cardHeadingClass, summaryRowClass } from '../globalStyles';
 import { formatRupees } from '../lib/earningCalculations';
 import { handleSheetKeyDown } from '../handlers/sheetKeyboardHandlers';
-import { MessageCircle, MessageCircleCheck, PhoneIcon } from 'lucide-react';
+import { MessageCircleCheck} from 'lucide-react';
 
 interface DailyReportPageProps {
   registerState: RegisterState;
@@ -124,7 +124,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
 
       <div className={`${cardClass}`}>
         <h2 className={cardHeadingClass}>Morning Report · Digital Payments</h2>
-        <div className="space-y-1">
+        <div className={`${cardContainer} flex-col p-4 mb-4 border-2 border-sky-600! hover:border-foreground scale-z-125 opacity-70`}>
           {summaryRows.map(({ label, value }) => (
             <div key={label} className={summaryRowClass}>
               <span>{label}</span>
@@ -135,9 +135,9 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
       </div>
        <div className={`${cardClass}`}>
         <h2 className={cardHeadingClass}>Morning Report · Station Digital Earning Performance</h2>
-        <div className="space-y-1">
+        <div className={`${cardContainer} flex-col p-4 mb-4 border-2 border-sky-600! hover:border-foreground scale-z-125 opacity-70`}>
           {digitalPerformance.map(({ label, value }) => (
-            <div key={label} className={summaryRowClass}>
+            <div key={label} className={summaryRowClass}> 
               <span>{label}</span>
               <b className="text-right">{value}</b>
             </div>

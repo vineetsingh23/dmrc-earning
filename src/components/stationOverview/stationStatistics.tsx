@@ -1,4 +1,4 @@
-import { cardClass, cardContainer } from "../../globalStyles";
+import { cardContainer } from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import { type RegisterState } from "../../lib/registerTypes";
 import {

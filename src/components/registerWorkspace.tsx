@@ -27,8 +27,6 @@ import TvmEarningPage from "./stationEarning/tvmEarningPage";
 import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";
 import {
-  cardClass,
-  cardContainer,
   dashboardGridClass,
   primaryButtonClass,
   stackedCardsClass,
@@ -201,7 +199,7 @@ export default function RegisterWorkspace({
 
   if (!isLoaded) {
     return (
-      <div className="app-shell min-h-screen text-tx transition-colors">
+      <div className="app-shell bg-my-gradient min-h-screen text-tx transition-colors">
         <AppHeader
           stationName={station.name}
           selectedDate={selectedDate}

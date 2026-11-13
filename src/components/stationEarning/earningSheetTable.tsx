@@ -469,7 +469,7 @@ export default function EarningSheetTable({
         </div>
       )}
       <div
-        className={`${tableWrapperClass} ${
+        className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-sky-300 mr-6 scrollbar-track-sky-50/10 ${
           isShiftGrid
             ? "overflow-auto! rounded-xl"
             : isFinalGrid
@@ -657,7 +657,7 @@ export default function EarningSheetTable({
                       key={column.fieldKey}
                       colSpan={
                         isTotalLabel && mergeFooterLabel
-                          ? Math.min(3, leafColumns.length)
+                          ? Math.min(2, leafColumns.length)
                           : undefined
                       }
                       className={`${footerStickyClass} ${freezeBoundaryClass}`}

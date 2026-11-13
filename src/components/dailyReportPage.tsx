@@ -4,6 +4,8 @@ import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFields, wha
 import { copyReportFieldsFromPreviousDate, updateReportField } from '../handlers/reportFieldHandlers';
 import { cardClass, cardHeadingClass, summaryRowClass } from '../globalStyles';
 import { formatRupees } from '../lib/earningCalculations';
+import { handleSheetKeyDown } from '../handlers/sheetKeyboardHandlers';
+import { MessageCircle, MessageCircleCheck, PhoneIcon } from 'lucide-react';
 
 interface DailyReportPageProps {
   registerState: RegisterState;
@@ -13,7 +15,7 @@ interface DailyReportPageProps {
 }
 
 const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
-const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-1.5 text-sm text-tx outline-hidden focus:ring-2 focus:ring-ac';
+const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-2.5 text-sm text-tx outline-hidden focus:ring-2 focus:ring-ac';
 
 export default function DailyReportPage({ registerState, updateRegisterState, date, stationName }: DailyReportPageProps) {
   const [feedback, setFeedback] = useState('');
@@ -61,40 +63,58 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
 
   return (
     <div className="grid gap-3 lg:grid-cols-2">
-      <div className={cardClass}>
+      <div className={cardClass} onKeyDown={handleSheetKeyDown}>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          <h2 className="font-semibold">Report details for {date}</h2>
+          <h2 className={cardHeadingClass}>Report details for {date}</h2>
           <button className={buttonClass} disabled={!hasEarlierFields}
             onClick={() => updateRegisterState(draftState => { copyReportFieldsFromPreviousDate(draftState, date); })}>
             Copy empty fields from previous day
           </button>
         </div>
-        <div className="grid gap-2 sm:grid-cols-2">
-          {reportFields.map(field => (
-            <label key={field.fieldKey} className="text-xs text-mu">
-              {field.label}
-              {field.kind === 'yesNo' ? (
-                <select value={typedValueOf(field.fieldKey)} onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))} className={inputClass}>
-                  <option value="">{field.defaultValue ? `Default: ${field.defaultValue}` : 'Select'}</option>
-                  <option value="YES">YES</option>
-                  <option value="NO">NO</option>
-                </select>
-              ) : (
-                <input value={typedValueOf(field.fieldKey)} inputMode={field.kind === 'number' ? 'numeric' : 'text'}
-                  placeholder={field.fieldKey === 'stationLabel' ? stationName : field.defaultValue ?? ''}
-                  onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))} className={inputClass} />
-              )}
-            </label>
-          ))}
+        <div className="grid gap-3 sm:grid-cols-2" >
+          {reportFields.map((field, fieldIndex) => {
+            const gridRow = Math.floor(fieldIndex / 2);
+            const gridColumn = fieldIndex % 2;
+            return (
+              <label key={field.fieldKey} className="text-xs text-foreground">
+                {field.label}
+                {field.kind === 'yesNo' ? (
+                  <select
+                    data-grid="dailyReport"
+                    data-row={gridRow}
+                    data-column={gridColumn}
+                    value={typedValueOf(field.fieldKey)}
+                    onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))}
+                    className={inputClass}
+                  >
+                    <option value="">{field.defaultValue ? `Default: ${field.defaultValue}` : 'Select'}</option>
+                    <option value="YES">YES</option>
+                    <option value="NO">NO</option>
+                  </select>
+                ) : (
+                  <input
+                    data-grid="dailyReport"
+                    data-row={gridRow}
+                    data-column={gridColumn}
+                    value={typedValueOf(field.fieldKey)}
+                    inputMode={field.kind === 'number' ? 'numeric' : 'text'}
+                    placeholder={field.fieldKey === 'stationLabel' ? stationName : field.defaultValue ?? ''}
+                    onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))}
+                    className={inputClass}
+                  />
+                )}
+              </label>
+            );
+          })}
         </div>
       </div>
 
       <div className={cardClass}>
-        <h2 className="mb-2 font-semibold">Message</h2>
-        <pre className="max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-lg border border-bd bg-inp p-3 text-sm">{message}</pre>
+        <h2 className={cardHeadingClass}>Message</h2>
+        <pre className="max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-lg border border-background bg-surface p-3 text-sm">{message}</pre>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <button className="inline-flex items-center gap-2 rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-onac transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
-            <i className="fi fi-rr-comment-alt" aria-hidden="true" />
+          <button className="inline-flex items-center gap-2 rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-surface bg-success transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
+            <MessageCircleCheck  className='fill-green-600 stroke-2 stroke-white'/>
             Send report on WhatsApp
           </button>
           <button className={buttonClass} onClick={copyMessage}>Copy message</button>

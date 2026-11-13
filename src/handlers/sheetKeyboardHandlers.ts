@@ -21,11 +21,13 @@ export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
     else { columnIndex++; if (columnIndex > lastColumnIndex) { columnIndex = 0; rowIndex++; } }
   } else return;
 
-  const targetCell = gridElement.querySelector<HTMLInputElement | HTMLTextAreaElement>(`[data-grid="${gridName}"][data-row="${rowIndex}"][data-column="${columnIndex}"]`);
+  const targetCell = gridElement.querySelector<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>(`[data-grid="${gridName}"][data-row="${rowIndex}"][data-column="${columnIndex}"]`);
   if (!targetCell) return;   // at the edge of the table: let the browser do its normal thing
   event.preventDefault();
   targetCell.focus();
-  targetCell.select?.();
+  if (targetCell instanceof HTMLInputElement || targetCell instanceof HTMLTextAreaElement) {
+    targetCell.select();
+  }
 
   const targetRow = targetCell.closest('tr');
   const targetCellElement = targetCell.closest('td');

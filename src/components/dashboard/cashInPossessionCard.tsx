@@ -126,14 +126,14 @@ export default function CashInPossessionCard({
            <CircleCheck className="size-10 fill-success stroke-surface" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
-           <div className="flex w-40 px-2 py-2 justify-between items-center h-12 bg-card-accent/30  border border-border rounded-md transition duration-300 ">
+           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-card-accent/30  border border-border rounded-md transition duration-300 ">
           <span
             className={`${cashDifference === 0 ? "" : "text-danger"} text-center font-medium w-1/2`}
           >
             {formatRupees(Number(cashDifference))} 
           </span>
 
-          <div className="flex justify-end transition duration-200  relative">
+          <div className="flex justify-end transition duration-200  relative ml-4">
           
             <CircleLetterX className="stroke-danger" size={30} strokeWidth={2}/>
         </div>

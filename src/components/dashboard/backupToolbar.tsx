@@ -3,6 +3,7 @@ import type { RegisterState } from '../../lib/registerTypes';
 import type { StationFacilities } from '../../lib/earningColumns';
 import { exportBackupAsJson, exportRowsAsCsv, importBackupFromJson } from '../../handlers/dataTransferHandlers';
 import { fillMonthWithSampleData } from '../../lib/sampleDataGenerator';
+import { cardClass } from '../../globalStyles';
 
 interface BackupToolbarProps {
   stationName: string;
@@ -33,7 +34,7 @@ export default function BackupToolbar({ stationName, date, registerState, update
     });
 
   return (
-    <div>
+    <div className={cardClass}>
       <h3 className="mb-2 font-medium text-slate-700 dark:text-slate-200">
         Sample data and import/export
       </h3>

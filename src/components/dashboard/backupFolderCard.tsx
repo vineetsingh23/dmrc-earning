@@ -1,3 +1,4 @@
+import { cardClass } from '../../globalStyles';
 import type { BackupStatus } from '../../hooks/useWeeklyBackup';
 
 interface BackupFolderCardProps {
@@ -17,7 +18,7 @@ const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medi
 
 export default function BackupFolderCard({ backupStatus, folderName, lastBackupTime, backupMessage, onChooseFolder, onBackUpNow }: BackupFolderCardProps) {
   return (
-    <section className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-700">
+    <section className={cardClass}>
       <h3 className="mb-1 font-medium text-slate-700 dark:text-slate-200">Automatic weekly backup (JSON)</h3>
       <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-bad' : 'text-mu'}`}>{statusTexts[backupStatus]}</p>
       {folderName && <p className="text-sm">Folder: <b>{folderName}</b></p>}

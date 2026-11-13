@@ -40,10 +40,10 @@ export const stackedCardsClass = "flex flex-col gap-4";
 
 /* Cards */
 export const cardContainer =
-  "card flex w-full gap-4  rounded-2xl border border-border bg-surface shadow-md transition-shadow duration-200 hover:shadow-xl";
+  "card flex w-full gap-4  rounded-2xl border border-border bg-my-gradient shadow-md transition-shadow duration-200 hover:shadow-xl";
 
 export const cardClass =
-  "w-full min-w-0 overflow-auto rounded-2xl border border-border border-t-4 border-t-card-accent px-4 py-3 bg-surface text-foreground shadow-md transition-[border-color,box-shadow] duration-200 hover:shadow-lg";
+  "w-full min-w-0 overflow-auto rounded-2xl border border-border border-t-4 border-t-card-accent px-4 py-3 bg-my-gradient text-foreground shadow-md transition-[border-color,box-shadow] duration-200 hover:shadow-lg";
 
 export const cardHeadingClass =
   "mb-4 flex items-center  font-bold uppercase tracking-[0.12em] text-primary";

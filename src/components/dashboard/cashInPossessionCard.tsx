@@ -126,7 +126,7 @@ export default function CashInPossessionCard({
            <CircleCheck className="size-10 fill-success stroke-surface" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
-           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-card-accent/30  border border-border rounded-md transition duration-300 ">
+           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-card-accent/15  border border-border rounded-md transition duration-300 ">
           <span
             className={`${cashDifference === 0 ? "" : "text-danger"} text-center font-medium w-1/2`}
           >
@@ -144,7 +144,7 @@ export default function CashInPossessionCard({
           
          
       </div>
-      <div className="mb-2 flex flex-wrap items-center gap-2">
+      <div className="mb-2 flex flex-wrap items-center gap-2 ">
         <button
           type="button"
           className={stepButtonClass}
@@ -152,7 +152,7 @@ export default function CashInPossessionCard({
           onClick={onBack}
           title="Undo the last change"
         >
-          <Undo2 className="size-4" aria-hidden="true" />
+          <Undo2 className="size-4" aria-hidden="true" strokeWidth={4} />
           Back
         </button>
         <button
@@ -163,7 +163,7 @@ export default function CashInPossessionCard({
           title="Apply the change again"
         >
           Next
-          <Redo2 className="size-4" aria-hidden="true" />
+          <Redo2 className="size-4" aria-hidden="true" strokeWidth={4} />
         </button>
         <span role="status" className="text-xs text-mu">
           {changes.length === 0 && "No changes to review yet."}
@@ -180,7 +180,7 @@ export default function CashInPossessionCard({
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={`${tableHeaderCellClass}`}>Denominations</th>
+            <th className={`${tableHeaderCellClass} min-w-50`}>Denominations</th>
             <th className={tableHeaderCellClass}>Count</th>
             <th className={`${tableHeaderCellClass} min-w-30`}>Amount</th>
           </tr>

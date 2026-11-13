@@ -27,6 +27,8 @@ import TvmEarningPage from "./stationEarning/tvmEarningPage";
 import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";
 import {
+  cardClass,
+  cardContainer,
   dashboardGridClass,
   primaryButtonClass,
   stackedCardsClass,
@@ -344,16 +346,18 @@ export default function RegisterWorkspace({
                     "Penalty amount",
                   ])}
                 </div> */}
-                <section className="brand-card col-span-full p-4 sm:p-5">
+                <section className='p-4 gap-3 border-2 border-border rounded-2xl col-span-full bg-theme-gradient'>
                   <div className="mb-4">
                     <p className="page-eyebrow">Data management</p>
                     <h2 className="mt-1 text-lg font-bold tracking-tight text-tx">
                       Backups and register tools
                     </h2>
                   </div>
+                  <div className='flex gap-4 w-full'>
+
                   <BackupToolbar
                     stationName={station.name}
-                    date={selectedDate}
+                    date={selectedDate} 
                     registerState={registerState}
                     updateRegisterState={updateRegisterState}
                     facilities={{
@@ -366,6 +370,7 @@ export default function RegisterWorkspace({
                     onChooseFolder={weeklyBackup.chooseFolder}
                     onBackUpNow={weeklyBackup.backUpNow}
                   />
+                </div>
                 </section>
               </div>
             }

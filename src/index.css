@@ -11,7 +11,8 @@
   color-scheme: light;
 
   /* Surfaces */
-  --background: #e0e0e2;
+  --my-gradient: linear-gradient(to right, #d6d2d2, #ece4e4, #f0f0f0);
+  --background: linear-gradient(to bottom right,#ecedec, #b8b8b8, #cac9ca);
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
   --surface-hover: #e2e8f0;
@@ -51,8 +52,10 @@
 .dark {
   color-scheme: dark;
 
+  --my-gradient: linear-gradient(to bottom right,#4d122e, rgb(18, 20, 87), #581453);
+
   /* Surfaces */
-  --background: var(--color-slate-950);
+  --background: linear-gradient(to right,#2c2c45, #5e5e64, #2b1729);
   --surface: var(--color-slate-900);
   --surface-muted: #334155;
   --surface-hover: #1e3a5f;
@@ -77,7 +80,7 @@
   --success: #4ade80;
   --success-surface: #052e16;
   --success-foreground: #4ade80;
-  --danger: #c79999;
+  --danger: #d7b1b1;
 
   /* Tables */
   --table-header: var(--color-gray-800);
@@ -95,7 +98,8 @@
  * bg-primary, text-muted-foreground, bg-table-header.
  */
 @theme inline {
-  --color-background: var(--background);
+  --background-image-my-gradient: var(--my-gradient);
+  --background-image-theme-gradient: var(--background);
   --color-surface: var(--surface);
   --color-surface-muted: var(--surface-muted);
   --color-surface-hover: var(--surface-hover);
@@ -128,7 +132,7 @@
 
 @layer components {
   .header {
-    @apply sticky top-0 z-10 border-b-2 border-border/50 text-foreground shadow-md bg-linear-270 from-blue-50 to-fuchsia-50 dark:from-blue-950 dark:to-background;
+    @apply sticky top-0 z-10 border-b-2 border-border/50 text-foreground shadow-md bg-blue-600;
   }
 
   .isActive {

@@ -9,18 +9,38 @@
 
 :root {
   color-scheme: light;
+/* --background: linear-gradient(to bottom right,#cbeacb, #b8b8b8, #cac9ca); */
+  --background:#b8babb;
+  --watermark-img: #ffffff;
+  --surface: #ffffff;
+  --surface-muted: #f1f5f9;
+  --surface-hover: #e2e8f0;
+  --input-background: #f8fafc;
 
+/* card colors */
+  --card : #d8d8da;
+  --card-text:#383c45;
+  --card-border:#bdb9b9;
+  --card-shadow:#0f0c0c;
+  --my-gradient: linear-gradient(to left,#4c0a5b, #680522, #480644);
+  
 
-  --card : #fff;
-  --card-text:#222222;
-  --card-border:#222222;
-  --card-shadow:#222222;
+  /* table colors */
+  --table:#cfcfcf;
+  --table-header: #97a0a6;
+  --table-row-alt: #dfdede;
+  --table-row-hover: #98b7b7;
+  --table-footer:#878683;
+  --surface: #a2a2a2;
+  --table-border:#bfbdbd;
+  --table-text:#bab5b5;
+  --table-shadow:#0d0c0c;
+  --calculated:#978c72;
+  
+ 
 
-  /* Surfaces */
   /* --my-gradient: linear-gradient(to top, #d6d2d2, #ece4e4, #f0f0f0); */
 
-  /* --background: linear-gradient(to bottom right,#cbeacb, #b8b8b8, #cac9ca); */
-  --background:#b8babb;
   --watermark-img: #ffffff;
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
@@ -32,7 +52,7 @@
   --muted-foreground: #64748b;
 
   /* Brand and interaction */
-  --primary: #3b82f6;
+  --primary: #0490ed;
   --primary-hover: #2563eb;
   --primary-subtle: #dbeafe;
   --primary-foreground: #ffffff;
@@ -40,19 +60,17 @@
 
 
   /* Borders and focus */
-  --border: #ebeced;
+
   --focus: #3b82f6;
 
   /* Feedback */
-  --success: #15803d;
+  --success: #05be49;
   --success-surface: #46a55b;
   --success-foreground: #166534;
-  --danger: #dc2626;
+  --danger: #f96969;
 
   /* Tables */
-  --table-header: #b7c1c8;
-  --table-row-alt: #e3e6e9;
-  --table-row-hover: #f0fdfa;
+
 
   /* Decorative accent */
   --card-accent: #f87171;
@@ -61,24 +79,35 @@
 .dark {
   color-scheme: dark;
 
+  /* --background: linear-gradient(to right,#261919, #40404e, #322831); */
+  --background: #211f1f;
+  --surface-muted: #281c1f;
+  --surface-hover: #434446;
+  --input-background: #363f53;
+  
+  
+  /* Card Background */
+  --card:#423c3c;
+  --card-text:#b6b4b4;
+  --card-border:#544d4d;
+  --card-shadow:#050505;
+  --card-hover:#2e1e1e;
   --my-gradient: linear-gradient(to bottom right,#4d122e, #222222, #581453);
   /* --my-gradient: #222222; */
+  /* Tables */
+  --table:#453b3b;
+  --table-header:#2d2626;
+  --table-row-alt: #484242;
+  --table-row-hover: #423b3b;
+  --table-footer:#282525;
+  --surface: #3b3535;
+  --table-border:#555050;
+  --table-text:#b3b1b1;
+  --table-shadow:#0d0c0c;
+  --calculated: #5c4407;
+  
 
   /* Surfaces */
-  /* --background: linear-gradient(to right,#261919, #40404e, #322831); */
-
-  /* Card Background */
-
-  --card:#373232;
-  --card-text:#9d9d9d;
-  --card-border:#e0e0e0;
-  --card-shadow:#000000;
-
-  --background: #1a1a1a;
-  --surface: var(--color-slate-900);
-  --surface-muted: #281c1f;
-  --surface-hover: #1e3a5f;
-  --input-background: #363f53;
 
   /* Text */
   --foreground: #a3a8bb;
@@ -87,8 +116,8 @@
   /* Brand and interaction */
   --primary: #38bdf8;
   --primary-hover: #0ea5e9;
-  --primary-subtle: #0c4a6e;
-  --primary-foreground: #082f49;
+  --primary-subtle: #525353;
+  --primary-foreground: #353636;
   --hover-foreground: #7dd3fc;
 
   /* Borders and focus */
@@ -101,11 +130,6 @@
   --success-foreground: #4ade80;
   --danger: #d7b1b1;
 
-  /* Tables */
-  --table-header:#121212;
-  --table-row-alt: #121212;
-  --table-row-hover: #054443;
-  
 
   /* Decorative accent */
   --card-accent: #991b1b;
@@ -123,7 +147,17 @@
   --color-card-border: var(--card-border);
   --color-card-text: var(--card-text);
   --color-card-shadow: var(--card-shadow);
-
+  --color-card-hover: var(--card-hover);
+  --color-table: var(--table);
+  --color-table-header: var(--table-header);
+  --color-table-row-alt: var(--table-row-alt);
+  --color-table-row-hover: var(--table-row-hover);
+  --color-card-accent: var(--card-accent);
+  --color-table-footer: var(--table-footer);
+  --color-table-border: var(--table-border);
+  --color-table-shadow: var(--table-shadow);
+  --color-calculated: var(--calculated);
+ 
 
   --background-image-my-gradient: var(--my-gradient);
   --background-image-theme-gradient: var(--background);
@@ -150,10 +184,6 @@
   --color-success-foreground: var(--success-foreground);
   --color-danger: var(--danger);
 
-  --color-table-header: var(--table-header);
-  --color-table-row-alt: var(--table-row-alt);
-  --color-table-row-hover: var(--table-row-hover);
-  --color-card-accent: var(--card-accent);
 
 
 }
@@ -378,7 +408,7 @@ button:not(:disabled) {
 .sheet-frozen-cell {
   isolation: isolate;
   background-clip: border-box;
-  background-color: color-mix(in srgb, var(--surface) 88%, var(--table-header)) !important;
+  background-color: color-mix(in srgb, var(--surface) 88%, var(--table-row-alt)) !important;
 }
 
 .sheet-frozen-cell input,
@@ -387,7 +417,7 @@ button:not(:disabled) {
 }
 
 .sheet-frozen-cell-even {
-  background-color: color-mix(in srgb, var(--table-row-alt) 80%, var(--table-header)) !important;
+  background-color: color-mix(in srgb, var(--table-row-alt), var(--table-header)) !important;
 }
 
 .sheet-frozen-cell:hover {

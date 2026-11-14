@@ -1,6 +1,6 @@
 import type { RegisterState } from '../../lib/registerTypes';
 import { addDays, dailyCashlessOfDate, dailyEarningOfDate, formatRupees } from '../../lib/earningCalculations';
-import { cardContainer } from '../../globalStyles';
+import { cardContainer, cardHeadingClass } from '../../globalStyles';
 
 interface EarningHistogramCardProps { registerState: RegisterState; date: string }
 
@@ -17,13 +17,13 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
 
   return (
     <>
-      <h2 className="font-semibold bottom-0">Daily earning histogram ({daysShown} days to {date})</h2>
-    <div className={`${cardContainer} min-h-44 items-center`}>
+      <h2 className={`${cardHeadingClass} mb-0!`}>Daily earning histogram ({daysShown} days to {date})</h2>
+    <div className={`${cardContainer} min-h-44 items-center p-2`}>
       <small className="text-mu flex flex-col">
         <ul className='flex flex-col min-w-30 text-nowrap'>
-          <li className="text-card-accent ">■<span> Total earning</span></li>
-          <li className="text-ac2 ">■<span> Selected Day</span></li>
-          <li className="text-ok ">■<span> Cashless</span></li>
+          <li className="text-primary">■<span> Total earning</span></li>
+          <li className="text-success">■<span> Selected Day</span></li>
+          <li className="text-danger">■<span> Cashless</span></li>
         </ul>
      
         {/* <span className="text-ac">■</span> selected day · <span className="text-ok">■</span> Cashless */}
@@ -38,7 +38,7 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
                 fill={dayDate === date ? 'var(--primary)' : 'var(--primary)'}><title>{`${dayDate} total earning: ${formatRupees(earning)}`}</title></rect>
               <rect x={dayIndex * slotWidth + 5 + barWidth} y={chartHeight - 20 - cashlessBarHeight} width={barWidth} height={cashlessBarHeight} rx={2}
                 fill="var(--success)"><title>{`${dayDate} cashless: ${formatRupees(cashless)}`}</title></rect>
-              <text x={dayIndex * slotWidth + slotWidth / 2} y={chartHeight - 6} fontSize={10} textAnchor="middle" fill="var(--danger)">{dayDate.slice(8)}</text>
+              <text x={dayIndex * slotWidth + slotWidth / 2} y={chartHeight - 6} fontSize={15} textAnchor="middle" fill='var(--danger)'>{dayDate.slice(8)}</text>
             </g>
           );
         })}

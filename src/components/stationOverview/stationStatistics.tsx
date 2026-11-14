@@ -1,4 +1,4 @@
-import { cardContainer } from "../../globalStyles";
+import { cardClass, cardHeadingClass} from "../../globalStyles";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import { type RegisterState } from "../../lib/registerTypes";
 import {
@@ -32,8 +32,6 @@ export function findBestDay(
 
   return bestDay;
 }
-const staticCardClass =
-  "flex w-full max-w-none flex-col gap-3 p-4 text-center text-foreground transition-[border-color,box-shadow] duration-150 border border-border rounded-2xl m-4 hover:border-border hover:shadow-md hover:bg-table-row-hover";
 
 export default function StationStatisticsCard({
   registerState,
@@ -134,20 +132,23 @@ export default function StationStatisticsCard({
       previous: previousCashlessStatistics.tvmUpi,
     },
   ];
-  const cardSeparator =
-    "mt-4 text-sm font-bold uppercase tracking-[0.12em] text-ac";
+  const cardSeparator =`${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
+  const staticCardClass ='grid grid-cols-4 gap-4 p-4 ';
+  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-surface text-card-text hover:bg-card-hover shadow-md shadow-card-shadow'
   return (
     <div>
      
       <h2 className={cardSeparator}>Statistics</h2>
-      <div className={cardContainer}>
-        <div className="grid w-full grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-4">
+
+        <div className={cardClass}>
+          <div className={staticCardClass}>
+
           {statistics.map(({ title, bestDay }) => (
-            <div key={title} className={staticCardClass}>
+            <div key={title} className={statisticsCard}>
               <small className="block text-foreground">{title}</small>
               {bestDay ? (
                 <>
-                  <b className="text-xl">{formatRupees(bestDay.amount)}</b>
+                  <b className="text-xl text-primary">{formatRupees(bestDay.amount)}</b>
                   <small className="block text-mu">{bestDay.date}</small>
                 </>
               ) : (
@@ -156,11 +157,17 @@ export default function StationStatisticsCard({
             </div>
           ))}
         </div>
-      </div>
+        </div>
+    
 
       <h2 className={cardSeparator}>Cashless Transactions · day-over-day</h2>
-      <div className={cardContainer}>
-        <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+
+      <div className={cardClass}>
+        <div className={staticCardClass}>
+
+     
+    
+   
           {cashlessTransactions.map(({ title, current, previous }) => {
             const changePercent =
               previous === 0 ? null : ((current - previous) / previous) * 100;
@@ -172,7 +179,7 @@ export default function StationStatisticsCard({
                   : "text-mu";
 
             return (
-              <div key={title} className={staticCardClass}>
+              <div key={title} className={statisticsCard}>
                 <small className="block text-mu">{title}</small>
                 <b className="text-xl">{formatRupees(current)}</b>
                 <small className="block text-mu">
@@ -189,7 +196,8 @@ export default function StationStatisticsCard({
             );
           })}
         </div>
+           </div>
       </div>
-    </div>
+
   );
 }

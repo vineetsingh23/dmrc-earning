@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass, tableWrapperClass } from '../../globalStyles';
+import { cardClass,cardHeaderClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass, tableWrapperClass } from '../../globalStyles';
 
 interface ImprestIssueCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance issued is column 2
@@ -19,8 +19,11 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
   // const headerClass = 'border border-bl bg-ca px-2 py-1 text-xs';
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
+      <div className={cardHeaderClass}>
+
       <h2 className={cardHeadingClass}>Imprest & advance issued to each TOM</h2>
-      <div className="overflow-x-auto">
+      </div>
+   
         <div className={tableWrapperClass}>
 
       <table className={tableClass}>
@@ -57,7 +60,7 @@ export default function ImprestIssueCard({ listRows, onAdvanceChange }: ImprestI
         </tfoot>
       </table>
           </div>
-      </div>
+   
     </div>
   );
 }

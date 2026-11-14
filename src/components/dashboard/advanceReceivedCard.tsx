@@ -2,7 +2,7 @@ import { tomOperators } from '../../lib/businessRules';
 import { parseNumber } from '../../lib/earningColumns';
 import { formatRupees } from '../../lib/earningCalculations';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import { cardClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass, tableWrapperClass } from '../../globalStyles';
+import { cardClass,cardHeaderClass,cardHeadingClass,tableCellClass, tableCellLeftClass, tableClass, tableHeaderCellClass, tableHeaderRowClass, tableInputClass, tableRowClass, tableTotalCellClass, tableTotalRowClass, tableWrapperClass } from '../../globalStyles';
 
 interface AdvanceReceivedCardProps {
   listRows: string[][];                                           // [rowIndex][columnIndex]; advance received is column 1
@@ -16,8 +16,11 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
 
   return (
     <div className={cardClass} onKeyDown={handleSheetKeyDown}>
+      <div className={cardHeaderClass}>
+
       <h2 className={cardHeadingClass}>Advance received from each TOM</h2>
-      <div className="overflow-x-auto">
+      </div>
+    
         <div className={tableWrapperClass}>
 
       <table className={tableClass}>
@@ -48,6 +51,6 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange }: Advan
       </table>
                   </div>
       </div>
-    </div>
+
   );
 }

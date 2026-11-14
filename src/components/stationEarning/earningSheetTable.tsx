@@ -458,9 +458,9 @@ export default function EarningSheetTable({
           <button
             type="button"
             onClick={onAddRow}
-            className={`rounded-xl border border-border bg-card px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac ${
+            className={`rounded-xl border border-table-border bg-table px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:table-hover  ${
               isShiftGrid
-                ? "shadow-sm hover:shadow-md"
+                ? "shadow-sm hover:table-hover"
                 : ""
             }`}
           >
@@ -469,7 +469,7 @@ export default function EarningSheetTable({
         </div>
       )}
       <div
-        className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-sky-300 mr-6 scrollbar-track-sky-50/10 ${
+        className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header mr-6 scrollbar-track-table-header/10 ${
           isShiftGrid
             ? "overflow-auto! rounded-xl"
             : isFinalGrid
@@ -528,7 +528,7 @@ export default function EarningSheetTable({
                 key={rowIndex}
                 className={`${tableRowClass} ${
                   isShiftGrid
-                    ? "even:bg-table-row-alt hover:bg-table-row-hover"
+                    ? "even:bg-table-row-alt hover:bg-table-row-hove"
                     : ""
                 }`}
               >
@@ -557,7 +557,7 @@ export default function EarningSheetTable({
                         key={column.fieldKey} 
                         className={`
                           ${sheetStyle.bodyCellClass} 
-                          ${tableCalculatedCellClass} px-0 font-semibold calculated-cell
+                          ${tableCalculatedCellClass}
                           ${stickyClass}`} 
                           style={{ ...freeze.style, width: columnWidth }}>
 
@@ -636,7 +636,7 @@ export default function EarningSheetTable({
                   );
                   const zIndex = freeze.isFrozen ? 50 : 40;
                   const isTotalLabel = columnIndex === 0;
-                  const footerStickyClass = `sticky ${freeze.className} ${sheetStyle.footerCellClass} border border-border px-2 py-3 ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
+                  const footerStickyClass = `sticky ${freeze.className} ${sheetStyle.footerCellClass} border border-border px-2 py-3 font-semibold ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
                   const freezeBoundaryClass =
                     (isTotalLabel && mergeFooterLabel) ||
                     (frozenColumnCount > 0 &&

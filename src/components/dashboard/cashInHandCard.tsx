@@ -30,7 +30,7 @@ export default function CashInHandCard({
   
   return (
     <div className={cardClass}>
-      <div className={`${cardHeaderClass} flex-col items-start`}>
+      <div className={`${cardHeaderClass} flex-col items-start `}>
 
       <h1 className={cardHeadingClass}>Total cash in hand</h1>
       

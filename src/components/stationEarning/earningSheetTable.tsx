@@ -284,7 +284,7 @@ export default function EarningSheetTable({
   readEntryValue,
   writeEntryValue,
   onAddRow,
-  frozenColumnCount = 3,
+  frozenColumnCount = 2,
   uniformColumnWidth,
   mergeFooterLabel = true,
   showTotalRow = true,
@@ -362,7 +362,7 @@ export default function EarningSheetTable({
       return runningTotal + parseNumber(row[column.fieldKey]);
     }, 0);
   const totalLabelWidth = leafColumns
-    .slice(0, Math.min(3, leafColumns.length))
+    .slice(0, Math.min(2, leafColumns.length))
     .reduce(
       (width, _, index) => width + columnWidths[index],
       0,
@@ -624,7 +624,7 @@ export default function EarningSheetTable({
             <tfoot>
               <tr>
                 {leafColumns.map((column, columnIndex) => {
-                  if (mergeFooterLabel && columnIndex > 0 && columnIndex < 3) {
+                  if (mergeFooterLabel && columnIndex > 0 && columnIndex < 2) {
                     return null;
                   }
 
@@ -664,7 +664,7 @@ export default function EarningSheetTable({
                       style={{
                         ...footerStyle,
                         width: isTotalLabel && mergeFooterLabel
-                          ? columnOffsets[3]
+                          ? columnOffsets[2]
                           : getColumnWidth(columnIndex),
                         position: "sticky",
                         bottom: 0,

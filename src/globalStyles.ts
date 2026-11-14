@@ -7,7 +7,7 @@ export const appShellClass =
   "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-theme-gradient text-foreground transition-colors";
 
 export const appHeaderClass =
-  "sticky top-0 z-50 border-b border-border bg-surface/95 shadow-sm backdrop-blur";
+  "sticky top-0 z-50 border-b border-border bg-surface/60 shadow-sm backdrop-blur";
 
 export const appHeaderContentClass =
   "mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-2 py-3 md:px-6";
@@ -40,17 +40,19 @@ export const stackedCardsClass = "flex flex-col gap-4";
 
 /* Cards */
 export const cardContainer =
-  "card flex w-full gap-4  rounded-2xl border border-border bg-my-gradient shadow-md transition-shadow duration-200 hover:shadow-xl";
-
+  "card flex w-full gap-4  rounded-2xl border border-card-border bg-my-gradient shadow-md transition-shadow duration-200 hover:shadow-xl";
+// export const cardContainer=`min-h-screen flex items-center justify-center p-6 transition-colors duration-300 darK:bg-[#1a1a1a] bg-[#e5e5e5`
 export const cardClass =
-  "w-full min-w-0 overflow-auto rounded-2xl border border-border border-t-4 border-t-card-accent px-4 py-3 bg-my-gradient text-foreground shadow-md transition-[border-color,box-shadow] duration-200 hover:shadow-lg";
+  "w-full min-w-0 overflow-auto transition-all duration-300 backdrop-blur-md rounded-2xl border border-card-border border-t-4 border-t-card-border px-4 py-3 bg-card shadow-card-shadow/10 text-card-text shadow-md hover:shadow-lg transition-[border-color,box-shadow]";
+
+// export const cardClass=`w-80 rounded-[28px] p-5 shadow-xl transition-all duration-300 border dark:bg-[#222222]/80 dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:shadow-black/40   bg-white/90 backdrop-blur-md border-black/5 text-[#111111] shadow-black/10`
 
 export const cardHeadingClass =
   "mb-4 flex items-center  font-bold uppercase tracking-[0.12em] text-primary";
 export const staticCardClass = "dark:bg-slate-800";
 
 export const cardHeaderClass =
-  "mb-2 flex items-center justify-between border-b border-border";
+  "mb-2 flex items-center justify-between border border-card-border/10 bg-card/20 shadow-card-shadow/40  shadow-lg backdrop-blur-md rounded-2xl p-2";
 
 export const cardButtonClass =
   "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-border bg-primary text-white px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";

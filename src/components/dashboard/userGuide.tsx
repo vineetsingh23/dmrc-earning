@@ -6,10 +6,30 @@ import {
   Download,
   LayoutDashboard,
   Settings,
+  Landmark,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const guideSections = [
+  {
+    title: "Cash to Bank",
+    Icon: Landmark,
+    description: [
+      "Step 1: Add cash to Cash in Possession. It will automatically assign denominations from higher to lower value.",
+      "Step 2 (Optional): Change the cash-to-bank denomination if you want to send a different amount or combination.",
+      "Step 3: Click Sent to bank, enter the Slip No. in the pop-up, and the system will adjust the denomination in Cash in Possession. You will then be left with only the remaining cash after the transfer.",
+    ],
+  },
+  {
+    title: "Shift Entry Table",
+    Icon: Database,
+    description: [
+      { text: "Surcharge Columns:", type: "header" },
+      "A. Add total amount of surcharge (surcharge from QR Ticket + surcharge from CSC-SV) in Surcharge other than purse column",
+      "Enter total surcharge through purse column, this amount automatically adjusted in previous column remaining cash surcharge only",
+      "B. Add total amount of surcharge in first column of NCMC surcharge, then add total amount of surcharge through NCMC purse. First column amount will remain with cash only",
+    ],
+  },
   {
     title: "Choose a date and navigate",
     Icon: CalendarDays,
@@ -77,9 +97,28 @@ export default function UserGuide() {
               </span>
               <h2 className="font-bold tracking-tight">{title}</h2>
             </div>
-            <p className="mt-4 text-sm leading-6 text-muted-foreground">
-              {description}
-            </p>
+            {Array.isArray(description) ? (
+              <ol className="mt-4 space-y-2 text-sm leading-6 text-muted-foreground">
+                {description.map((step) => {
+                  const isHeader = typeof step === "object" && step.type === "header";
+                  const content = typeof step === "string" ? step : step.text;
+
+                  return (
+                    <li
+                      key={content}
+                      className={`flex gap-2 ${isHeader ? "font-semibold text-foreground" : ""}`}
+                    >
+                      {!isHeader && <span className="mt-0.5 text-primary">•</span>}
+                      <span>{content}</span>
+                    </li>
+                  );
+                })}
+              </ol>
+            ) : (
+              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+                {description}
+              </p>
+            )}
           </section>
         ))}
       </div>

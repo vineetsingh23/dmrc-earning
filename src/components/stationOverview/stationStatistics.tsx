@@ -1,4 +1,5 @@
-import { cardClass, cardHeadingClass} from "../../globalStyles";
+import { cardButtonClass, cardClass, cardContainer, cardHeadingClass} from "../../globalStyles";
+import { MachineCategoryStatisticsOfDate, type EarningMachineCategory } from "../../lib/machineCategoryStatistics";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import { type RegisterState } from "../../lib/registerTypes";
 import {
@@ -11,6 +12,7 @@ import {
   tvmAddValueOfDate,
   tvmQrSaleOfDate,
 } from "../../lib/earningCalculations";
+
 
 interface StationStatisticsCardProps {
   registerState: RegisterState;
@@ -132,6 +134,13 @@ export default function StationStatisticsCard({
       previous: previousCashlessStatistics.tvmUpi,
     },
   ];
+  const machineCategoryStats =MachineCategoryStatisticsOfDate(registerState,date);
+  const machineCAtegoryRows: {key:EarningMachineCategory | 'overall'; label:string;}[]= [
+    {key:'CC', label: 'CC(80,81,82)'},
+    {key:'TOM', label:'TOM(50,51,52,...'},
+    {key:'RCTM',label:'RCTM'},
+    {key:'overall',label:'overall Total'},
+  ];
   const cardSeparator =`${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
   const staticCardClass ='grid grid-cols-4 gap-4 p-4 ';
   const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-surface text-card-text hover:bg-card-hover shadow-md shadow-card-shadow'
@@ -196,6 +205,49 @@ export default function StationStatisticsCard({
             );
           })}
         </div>
+        <section className="mt-5">
+            <h2 className={cardButtonClass}>Earning by Machine Category . {date}</h2>
+            <div className={`${cardContainer} overflow-x-auto`}>
+              <table className="w-full min-w-[720px] border-collapse text-sm">
+                <thead>
+                  <tr className="border-b border-table-border text-foreground">
+                    <th className="px-3 py-3">
+                      Category
+                    </th>
+                    <th className="px-3 py-3 text-right">
+                      QR Sale
+                    </th>
+                    <th  className="px-3 py-3 text-right">
+                      Add Value
+                    </th>
+                    <th  className="px-3 py-3 text-right">UPI</th>
+                    <th  className="px-3 py-3 text-right">POS</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                  {machineCAtegoryRows.map(({key,label})=> {
+                    const row = machineCategoryStats[key];
+                    const isOverall = key === 'overall';
+                    return (
+                      <tr key={key} className={`border-b border-table-border ${isOverall ? 'font-bold bg-table' : ''}`}>
+                        <td className="px-3 py-3">
+                          {label}
+                        </td>
+                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.qrSale)}</td>
+                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.addValue)}</td>
+                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.upi)}</td>
+                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.pos)}</td>
+                        
+
+                      </tr>
+                    )
+                  })}
+                </tbody>
+
+              </table>
+            </div>
+        </section>
            </div>
       </div>
 

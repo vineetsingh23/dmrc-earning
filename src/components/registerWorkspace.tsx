@@ -47,7 +47,7 @@ import {
   stepCashCountForward,
 } from "../lib/cashCountHistory";
 import UserGuide from "./dashboard/userGuide";
-
+import { reconcileOpetatorAdvance } from "../handlers/advanceReconciliationHandler";
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
 interface RegisterWorkspaceProps {
@@ -312,17 +312,23 @@ export default function RegisterWorkspace({
                       selectedDate,
                       "advanceReceived",
                     )}
-                    onAdvanceChange={(rowIndex, typedValue) =>
-                      updateRegisterState((draftState) =>
-                        updateCarriedDetailListCell(
-                          draftState,
-                          selectedDate,
-                          "advanceReceived",
-                          rowIndex,
-                          1,
-                          typedValue,
-                        ),
+                    onAdvanceChange={(rowIndex,typedValue)=>
+
+                    updateRegisterState((draftState) => {
+                      updateCarriedDetailListCell(
+                        draftState,
+                        selectedDate,
+                        "advanceReceived",
+                        rowIndex,
+                        1,
+                        typedValue,
+                      );
+                      reconcileOpetatorAdvance(
+                        draftState,
+                        selectedDate,
                       )
+                    })
+
                     }
                   />
                 </div>
@@ -374,14 +380,21 @@ export default function RegisterWorkspace({
                     rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
                   }
                   writeEntryValue={(rowIndex, fieldKey, newValue) =>
-                    updateRegisterState((draftState) =>
-                      updateEntryCell(
+                    updateRegisterState((draftState) =>{
+                       updateEntryCell(
                         draftState.shiftEntries,
                         selectedDate,
                         rowIndex,
                         fieldKey,
                         newValue,
                       ),
+                      reconcileOpetatorAdvance(
+                        draftState,
+                        selectedDate,
+                      )
+
+                    }
+                     
                     )
                   }
                 />

@@ -57,11 +57,11 @@ export default function SettingsPage({
       >
         <div
           aria-hidden="true"
-          className="pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-ac/5 blur-3xl"
+          className="pointer-events-none absolute -right-16 -top-20 size-56 rounded-full bg-card blur-3xl"
         />
         <div className="relative flex flex-col justify-between gap-5 border-b border-bd pb-5 sm:flex-row sm:items-start">
           <div className="flex items-start gap-4">
-            <div className="grid size-14 shrink-0 place-items-center rounded-2xl bg-primary text-white shadow-sm">
+            <div className="grid size-10 shrink-0 place-items-center rounded-2xl bg-primary text-white shadow-sm">
               <UserRound className="size-7" aria-hidden="true"  />
             </div>
             <div className="min-w-0">
@@ -79,13 +79,13 @@ export default function SettingsPage({
                   <span className="font-mono text-primary">&amp; Emp ID: 12649</span>
                 </p>
               </div>
-              <div className="mt-4 rounded-xl border border-bd  p-3 bg-success text-success-foreground">
+              <div className="mt-4 rounded-xl border border-bd  p-3 bg-success text-primary-foreground">
                 <p className="text-xs font-semibold ml-8">
                   Support and feedback
                 </p>
                 <p className="mt-1 flex items-center gap-2 text-sm font-semibold">
                   <MessageCircleCheck
-                    className="size-6 text-success-surface"
+                    className="size-6"
                     aria-hidden="true"
                   />
                   WhatsApp: 9953161116

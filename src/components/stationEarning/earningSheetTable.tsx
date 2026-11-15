@@ -673,7 +673,7 @@ export default function EarningSheetTable({
                         boxShadow: `${freezeBoundaryClass ? "inset -2px 0 0 var(--border), " : ""}0 -2px 6px rgb(0 0 0 / 0.15)`,
                       }}
                     >
-                      {isTotalLabel ? "Total" : column.kind === "text"
+                      {isTotalLabel ? "Total" : column.kind === "text" || column.kind === "mirror"
                         ? "" : formatCellValue(column, totalOfColumn(column))}
                     </td>
                   )

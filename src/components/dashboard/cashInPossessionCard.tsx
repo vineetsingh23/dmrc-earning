@@ -101,9 +101,7 @@ export default function CashInPossessionCard({
   const matchesCashInHand = cashDifference === 0;
 
   //  const countInputClass = 'w-20 rounded border border-bd bg-inp px-1.5 py-0.5 text-right outline-hidden focus:ring-2 focus:ring-ac';
-  const stepButtonClass =
-    "flex items-center  gap-1 rounded-md border border-border bg-primary px-2.5 py-1 text-sm font-semibold transition hover:border-border text-primary-subtle disabled:pointer-events-none disabled:opacity-40";
-
+ 
   return (
     <div
       className={`${cardClass} ${cashDifference === 0 ? "" : "bg-red-50/90! dark:bg-red-900/20!"}`}

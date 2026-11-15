@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import AppHeader from "./layout/appHeader";
 import { effectiveDetailListRows } from "../lib/carriedLists";
 import { updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
@@ -45,6 +46,7 @@ import {
   stepCashCountBack,
   stepCashCountForward,
 } from "../lib/cashCountHistory";
+import UserGuide from "./dashboard/userGuide";
 
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
 
@@ -218,7 +220,7 @@ export default function RegisterWorkspace({
             Register data could not be loaded. Check that this browser allows
             IndexedDB before continuing.
           </p>
-        </main>
+          </main>
       </div>
     );
   }
@@ -238,8 +240,15 @@ export default function RegisterWorkspace({
             path="/"
             element={
               <div className={dashboardGridClass}>
-                <header className="page-intro col-span-full">
+                <header className="page-intro col-span-full w-full flex justify-between">
                   <h1 className="page-info">Station cash dashboard</h1>
+                  <Link
+                    to="/user-guide"
+                    className="inline-flex items-center gap-2 rounded-xl border border-primary bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                  >
+                    <BookOpen className="size-4" aria-hidden="true" />
+                    User guide
+                  </Link>
                 </header>
                 <CashInHandCard
                   totalCashInHand={figures.totalCashInHand}
@@ -343,33 +352,8 @@ export default function RegisterWorkspace({
                     "Address of passenger",
                     "Penalty amount",
                   ])}
-                </div> */}
-                <section className='p-4 gap-3 border-2 border-border rounded-2xl col-span-full bg-theme-gradient'>
-                  <div className="mb-4">
-                    <p className="page-eyebrow">Data management</p>
-                    <h2 className="mt-1 text-lg font-bold tracking-tight text-tx">
-                      Backups and register tools
-                    </h2>
-                  </div>
-                  <div className='flex gap-4 w-full'>
+                </div>                 */}
 
-                  <BackupToolbar
-                    stationName={station.name}
-                    date={selectedDate} 
-                    registerState={registerState}
-                    updateRegisterState={updateRegisterState}
-                    facilities={{
-                      hasSv4Recharge: station.hasSv4Recharge,
-                      hasParking: station.hasParking,
-                    }}
-                  />
-                  <BackupFolderCard
-                    {...weeklyBackup}
-                    onChooseFolder={weeklyBackup.chooseFolder}
-                    onBackUpNow={weeklyBackup.backUpNow}
-                  />
-                </div>
-                </section>
               </div>
             }
           />
@@ -467,15 +451,37 @@ export default function RegisterWorkspace({
             path="/settings"
             element={
               <div className="space-y-3">
-                  <h1 className="page-info">Settings and Website information</h1>
-              <SettingsPage
-                storageStatus={storageStatus}
-                storageError={storageError}
-                onLogout={onLogout}
+                <h1 className="page-info">
+                  Settings and Website information
+                </h1>
+                <SettingsPage
+                  storageStatus={storageStatus}
+                  storageError={storageError}
+                  onLogout={onLogout}
+                  backupFolderCard={
+                    <BackupFolderCard
+                      {...weeklyBackup}
+                      onChooseFolder={weeklyBackup.chooseFolder}
+                      onBackUpNow={weeklyBackup.backUpNow}
+                    />
+                  }
+                  backupToolbarCard={
+                    <BackupToolbar
+                      stationName={station.name}
+                      date={selectedDate}
+                      registerState={registerState}
+                      updateRegisterState={updateRegisterState}
+                      facilities={{
+                        hasSv4Recharge: station.hasSv4Recharge,
+                        hasParking: station.hasParking,
+                      }}
+                    />
+                  }
                 />
-                </div>
+              </div>
             }
           />
+          <Route path="/user-guide" element={<UserGuide />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route

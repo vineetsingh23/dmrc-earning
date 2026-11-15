@@ -4,6 +4,7 @@ import {
   cardClass,
   cardHeaderClass,
   cardHeadingClass,
+  primaryButtonClass,
   tableCellClass,
   tableCellLeftClass,
   tableClass,
@@ -147,7 +148,7 @@ export default function CashInPossessionCard({
       <div className="mb-2 flex flex-wrap items-center gap-2 ">
         <button
           type="button"
-          className={stepButtonClass}
+          className={primaryButtonClass}
           disabled={!canGoBack}
           onClick={onBack}
           title="Undo the last change"
@@ -157,7 +158,7 @@ export default function CashInPossessionCard({
         </button>
         <button
           type="button"
-          className={stepButtonClass}
+          className={primaryButtonClass}
           disabled={!canGoNext}
           onClick={onNext}
           title="Apply the change again"

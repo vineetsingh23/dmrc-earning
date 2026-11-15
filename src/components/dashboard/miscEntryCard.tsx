@@ -12,6 +12,7 @@ import {
   cardClass,
   cardHeaderClass,
   cardHeadingClass,
+  primaryButtonClass,
   tableCellClass,
   tableCellLeftClass,
   tableClass,
@@ -121,7 +122,7 @@ export default function MiscEntryCard({
           <span className="h-2 w-2 rounded-full bg-danger mr-3"></span>
           {title}
         </h2>
-        <button type="button" onClick={onAddRow} className={cardButtonClass}>
+        <button type="button" onClick={onAddRow} className={primaryButtonClass}>
           <PlusIcon size={18} className="inline-block" /> Add row
         </button>
       </div>

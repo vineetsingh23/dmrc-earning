@@ -31,10 +31,10 @@ export default function AppHeader({
     <header className={appHeaderClass}>
       <div className="mx-auto grid max-w-screen grid-cols-[1fr_auto] items-center gap-x-2 gap-y-2 px-2 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-4">
         <div className="flex min-w-70 items-center gap-4">
-          <img src='/Delhi_Metro.png' className='size-10 w-23'/>
+          <img src='/Delhi_Metro.png' className='size-14 w-35'/>
           <div className="min-w-0">
-            <p className="truncate text-lg font-bold text-ac">Earning Register</p>
-            <p className="truncate text-sm text-tx">{stationName}</p>
+            <p className="truncate text-lg font-bold text-primary">Earning Register</p>
+            <p className="truncate text-sm text-card-text">{stationName}</p>
           </div>
         </div>
 

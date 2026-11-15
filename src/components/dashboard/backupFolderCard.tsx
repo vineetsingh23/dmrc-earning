@@ -14,7 +14,7 @@ const statusTexts: Record<BackupStatus, string> = {
   working: 'Writing the backup…',
   error: 'The backup failed.',
 };
-const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac disabled:opacity-50';
+const buttonClass = 'rounded-xl border border-bd bg-primary text-primary-foreground px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 disabled:opacity-50';
 
 export default function BackupFolderCard({ backupStatus, folderName, lastBackupTime, backupMessage, onChooseFolder, onBackUpNow }: BackupFolderCardProps) {
   return (
@@ -23,10 +23,10 @@ export default function BackupFolderCard({ backupStatus, folderName, lastBackupT
         <b>Automatic weekly backup (JSON)</b>
         </div>
       
-      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-bad' : 'text-mu'}`}>{statusTexts[backupStatus]}</p>
+      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-danger' : 'text-card-text'}`}>{statusTexts[backupStatus]}</p>
       {folderName && <p className="text-sm">Folder: <b>{folderName}</b></p>}
       {lastBackupTime && <p className="text-sm">Last backup: <b>{new Date(lastBackupTime).toLocaleString()}</b></p>}
-      {backupMessage && <p className="text-xs text-mu">{backupMessage}</p>}
+      {backupMessage && <p className="text-xs">{backupMessage}</p>}
       {backupStatus !== 'unsupported' && (
         <div className="mt-2 flex flex-wrap gap-2">
           <button className={buttonClass} onClick={onChooseFolder}>{folderName ? 'Change folder' : 'Choose backup folder'}</button>

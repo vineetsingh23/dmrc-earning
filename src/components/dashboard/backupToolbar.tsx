@@ -13,7 +13,7 @@ interface BackupToolbarProps {
   facilities: StationFacilities;
 }
 
-const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
+const buttonClass = 'rounded-xl border border-card-border bg-primary text-primary-foreground px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-card-hover';
 
 // rows of one date with their row number in front, ready for CSV
 const rowsWithRowNumber = (rowsByIndex: Record<number, Record<string, string>> | undefined, date: string) =>

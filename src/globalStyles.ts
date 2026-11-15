@@ -7,7 +7,7 @@ export const appShellClass =
   "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-theme-gradient text-foreground transition-colors";
 
 export const appHeaderClass =
-  "sticky top-0 z-50 border-b border-border bg-surface/60 shadow-sm backdrop-blur";
+  "sticky top-0 z-50 border-b border-border bg-surface shadow-sm backdrop-blur shadow-card-shadow";
 
 export const appHeaderContentClass =
   "mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-2 py-3 md:px-6";
@@ -52,12 +52,12 @@ export const cardHeadingClass =
 export const staticCardClass = "dark:bg-slate-800";
 
 export const cardHeaderClass =
-  "mb-2 flex items-center justify-between border border-card-border/10 bg-card/20 shadow-card-shadow/40  shadow-md backdrop-blur-md rounded-2xl p-2";
+  "mb-2  flex justify-between items-center border border-card-border/10 bg-card-header shadow-card-shadow/40  shadow-md backdrop-blur-md rounded-2xl p-2";
 
 export const cardButtonClass =
   "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-table-border bg-primary text-white px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
 
-export const cardTransition = `${cardClass} transition-transform scale-95 hover:scale-105 duration-300 ease-in-out`;
+export const cardTransition = `${cardClass} transition-transform scale-95 hover:scale-100 duration-300 ease-in-out overflow-auto scrollbar-none`;
 
 /* Tables */
 export const tableWrapperClass =
@@ -92,11 +92,11 @@ export const tableInputClass = `${tableCellClass} rounded-md border-table-border
 export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
 export const summaryRowClass =
-  "flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-foreground/80";
+  "flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-foreground/90";
 
 /* Buttons and dialogs */
 export const primaryButtonClass =
-  "flex gap-4  rounded-lg bg-primary px-3 py-1.5 font-medium text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
+  "flex gap-4 items-center  rounded-lg bg-primary px-3 py-1.5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
 
 export const secondaryButtonClass =
   "rounded-lg border border-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-surface transition-colors hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";

@@ -22,7 +22,8 @@
   --card-text:#383c45;
   --card-border:#bdb9b9;
   --card-shadow:#0f0c0c;
-  --my-gradient: linear-gradient(to left,#4c0a5b, #680522, #480644);
+  --card-header: #e2e2e6;
+  --my-gradient: linear-gradient(to left,#e0d9e1, #c6c3c4, #f9f1f8);
   
 
   /* table colors */
@@ -52,8 +53,8 @@
   --muted-foreground: #64748b;
 
   /* Brand and interaction */
-  --primary: #0490ed;
-  --primary-hover: #2563eb;
+  --primary: rgb(16, 138, 219);
+  --primary-hover: #054d7d;
   --primary-subtle: #dbeafe;
   --primary-foreground: #ffffff;
   --hover-foreground: #1d4ed8;
@@ -64,7 +65,7 @@
   --focus: #3b82f6;
 
   /* Feedback */
-  --success: #05be49;
+  --success: #0d903d;
   --success-surface: #46a55b;
   --success-foreground: #166534;
   --danger: #f96969;
@@ -87,12 +88,13 @@
   
   
   /* Card Background */
-  --card:#423c3c;
+  --card:#474040;
   --card-text:#b6b4b4;
   --card-border:#544d4d;
   --card-shadow:#050505;
   --card-hover:#2e1e1e;
-  --my-gradient: linear-gradient(to bottom right,#4d122e, #222222, #581453);
+  --card-header:#312929;
+  --my-gradient: linear-gradient(to bottom right,#c61c6c, rgb(202, 189, 189), #ba1daf);
   /* --my-gradient: #222222; */
   /* Tables */
   --table:#453b3b;
@@ -114,8 +116,8 @@
   --muted-foreground: #94a3b8;
 
   /* Brand and interaction */
-  --primary: #38bdf8;
-  --primary-hover: #0ea5e9;
+  --primary: #17a5e1;
+  --primary-hover: #1a6f96;
   --primary-subtle: #525353;
   --primary-foreground: #353636;
   --hover-foreground: #7dd3fc;
@@ -125,9 +127,9 @@
   --focus: #38bdf8;
 
   /* Feedback */
-  --success: #4ade80;
+  --success: #11e15d;
   --success-surface: #052e16;
-  --success-foreground: #4ade80;
+  --success-foreground: #0f4121;
   --danger: #d7b1b1;
 
 
@@ -148,6 +150,7 @@
   --color-card-text: var(--card-text);
   --color-card-shadow: var(--card-shadow);
   --color-card-hover: var(--card-hover);
+  --color-card-header: var(--card-header);
   --color-table: var(--table);
   --color-table-header: var(--table-header);
   --color-table-row-alt: var(--table-row-alt);

@@ -78,7 +78,7 @@ export default function UserGuide() {
         </div>
         <Link
           to="/"
-          className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-xl border border-border bg-surface px-4 py-2 text-sm font-semibold text-foreground transition hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:self-auto"
+          className="inline-flex min-h-10 items-center justify-center gap-2 self-start rounded-xl border border-button-border bg-button px-4 py-2 text-sm font-semibold text-button-text transition hover:border-button-border/30 hover:bg-button/30 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus sm:self-auto"
         >
           <ArrowLeft className="size-4" aria-hidden="true" />
           Back to dashboard
@@ -106,7 +106,7 @@ export default function UserGuide() {
                   return (
                     <li
                       key={content}
-                      className={`flex gap-2 ${isHeader ? "font-semibold text-foreground" : ""}`}
+                      className={`flex gap-2 ${isHeader ? "font-semibold text-card-text" : ""}`}
                     >
                       {!isHeader && <span className="mt-0.5 text-primary">•</span>}
                       <span>{content}</span>
@@ -115,7 +115,7 @@ export default function UserGuide() {
                 })}
               </ol>
             ) : (
-              <p className="mt-4 text-sm leading-6 text-muted-foreground">
+              <p className="mt-4 text-sm leading-6 text-card-small">
                 {description}
               </p>
             )}

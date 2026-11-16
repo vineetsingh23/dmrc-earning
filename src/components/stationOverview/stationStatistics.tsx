@@ -144,7 +144,7 @@ export default function StationStatisticsCard({
   ];
   const cardSeparator =`${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
   const staticCardClass ='grid grid-cols-4 gap-4 p-4 ';
-  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-surface text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200'
+  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-header text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200'
   return (
     <div>
      
@@ -155,11 +155,11 @@ export default function StationStatisticsCard({
 
           {statistics.map(({ title, bestDay }) => (
             <div key={title} className={statisticsCard}>
-              <small className="block text-foreground">{title}</small>
+              <small className="block text-card-text">{title}</small>
               {bestDay ? (
                 <>
-                  <b className="text-xl text-primary">{formatRupees(bestDay.amount)}</b>
-                  <small className="block text-mu">{bestDay.date}</small>
+                  <b className="text-xl text-big-number">{formatRupees(bestDay.amount)}</b>
+                  <small className="block text-card-text">{bestDay.date}</small>
                 </>
               ) : (
                 <b>—</b>
@@ -211,7 +211,7 @@ export default function StationStatisticsCard({
             <div className={`${cardContainer} overflow-x-auto`}>
               <table className="w-full min-w-[720px] border-collapse text-sm">
                 <thead>
-                  <tr className="border-b border-table-border text-foreground">
+                  <tr className="border-b border-table-border text-card-text">
                     <th className="px-3 py-3">
                       Category
                     </th>

@@ -61,7 +61,7 @@ export default function SettingsPage({
         />
         <div className="relative flex flex-col justify-between gap-5 border-b border-bd pb-5 sm:flex-row sm:items-start">
           <div className="flex items-start gap-4">
-            <div className="grid size-10 shrink-0 place-items-center rounded-2xl bg-primary text-white shadow-sm">
+            <div className="grid size-10 shrink-0 place-items-center rounded-2xl bg-button text-white shadow-sm">
               <UserRound className="size-7" aria-hidden="true"  />
             </div>
             <div className="min-w-0">
@@ -79,7 +79,7 @@ export default function SettingsPage({
                   <span className="font-mono text-primary">&amp; Emp ID: 12649</span>
                 </p>
               </div>
-              <div className="mt-4 rounded-xl border border-bd  p-3 bg-success text-primary-foreground">
+              <div className="mt-4 rounded-xl border border-bd  p-3 bg-success text-header-small">
                 <p className="text-xs font-semibold ml-8">
                   Support and feedback
                 </p>

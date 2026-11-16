@@ -10,21 +10,26 @@
 :root {
   color-scheme: light;
   /*  common colors used anywhere */
-  --background: #b8babb;
+  --background:  linear-gradient(to right, #c4c5c6,#f3f6eb, #d1cfcf);
+  --page-info: linear-gradient(to top, #850808, #064b60, #6d0960);
+  --primary:#0c3eb4;
+  --primary-foreground: #ffffff;
   --watermark-img: #ffffff;
-  --surface: #ffffff;
-  --surface-muted: #f1f5f9;
-  --surface-hover: #e2e8f0;
-  --input-background: #f8fafc;
+  
+  --header: #b34444;
+  --header-muted: #f1f5f9;
+  --header-hover: #e2e8f0;
+  --header-text:#ffffff;
+
 
   /* card colors */
-  --card: #efeff5;
-  --card-text: #383c45;
-  --card-border: #bdb9b9;
-  --card-shadow: #0f0c0c;
-  --card-hover: #e8bdbd;
-  --card-header: rgb(223, 225, 225);
-  --my-gradient: linear-gradient(to bottom, #fdfdfd, #fbfbf0, #afa3b2);
+  --card: linear-gradient(to top, #c3c2be, #fefff8, #68ad59);
+  --card-text: #094798;
+  --card-border: #d7d7d7;
+  --card-shadow: rgb(45, 44, 44);
+  --card-hover: #rgb(223, 223, 223);
+  --card-header: inherit;
+
 
   /* table colors */
   --table: #cfcfcf;
@@ -32,122 +37,121 @@
   --table-row-alt: #dfdede;
   --table-row-hover: #98b7b7;
   --table-footer: #878683;
-  --surface: #dddcdc;
+  --header: #dddcdc;
   --table-border: #bfbdbd;
-  --table-text: #bab5b5;
+  --table-text: #696e69;
+  --table-text-muted:#ffffff;
   --table-shadow: #0d0c0c;
   --calculated: #978c72;
-
-  /* --my-gradient: linear-gradient(to top, #d6d2d2, #ece4e4, #f0f0f0); */
-
-  --watermark-img: #ffffff;
-  --surface: #ffffff;
-  --surface-muted: #f1f5f9;
-  --surface-hover: #e2e8f0;
+  --focus: #3b82f6;
   --input-background: #f8fafc;
 
-  /* Text */
-  --foreground: #334155;
-  --muted-foreground: #64748b;
+  /* Buttons */
+  --button:rgb(32, 123, 227);
+  --button-text:#f9f9f9;
+  --button-hover:rgb(13, 50, 145);
+  --button-border:#ffffff;
+  --isActive:#4f0583;
 
-  /* Brand and interaction */
-  --primary: rgb(1, 55, 181);
-  --primary-hover: #054d7d;
-  --primary-subtle: #dbeafe;
-  --primary-foreground: #ffffff;
-  --hover-foreground: #1d4ed8;
+/* big number */
 
-  /* Borders and focus */
+  --big-number:#e2e2e2;
 
-  --focus: #3b82f6;
+ /* Feedback */
+  --success: #a2f4c0;
+  --success-border: #b6fac5;
+  --success-text: #166534;
+  --danger: #f5b5b5;
+  --danger-border:#ae0412;
+  --danger-text:#ae0412;
 
-  /* Feedback */
-  --success: #0d903d;
-  --success-surface: #b6fac5;
-  --success-foreground: #166534;
-  --danger: #ae0606;
 
-  /* Tables */
-
-  /* Decorative accent */
-  --card-accent: #f87171;
 }
 
 .dark {
   color-scheme: dark;
+ /*  common colors used anywhere */
+  --background: linear-gradient(to bottom,#e8e1e1, #ffffff, #c8c8c8);
+  --page-info: linear-gradient(to top, #ffffff, #ffffff, #ffffff);
+  --primary:#ffffff;
+  --primary-foreground:#ffffff;
+  --watermark-img: #ffffff;
+  --header: #ffffff;
+  --header-muted: #f1f5f9;
+  --header-hover: #e2e8f0;
+  --header-text:#000000;
 
-  --background: linear-gradient(to right,#211212, #58474c, #222d23);
-  /* --background: #211f1f; */
-  --surface-muted: #281c1f;
-  --surface-hover: #434446;
-  --input-background: #363f53;
 
-  /* Card Background */
-  --card: #474040;
-  --card-text: #b6b4b4;
-  --card-border: #544d4d;
-  --card-shadow: #050505;
-  --card-hover: #2e1e1e;
-  --card-header: #312929;
-  --my-gradient: linear-gradient(
-    to bottom,
-    #2e191c,
-    rgb(46, 46, 44),
-    #1d1a1a
-  );
-  /* --my-gradient: #222222; */
-  /* Tables */
-  --table: #453b3b;
-  --table-header: #2d2626;
-  --table-row-alt: #484242;
-  --table-row-hover: #423b3b;
-  --table-footer: #282525;
-  --surface: #3b3535;
-  --table-border: #555050;
-  --table-text: #b3b1b1;
+  /* card colors */
+  --card: linear-gradient(to bottom,#d8d3d3,#ffffff,#e5dddd);
+  --card-text: #372a38;
+  --card-border: #bdb9b9;
+  --card-shadow: #0f0c0c;
+  --card-hover: #e8bdbd;
+  --card-header: rgb(223, 225, 225);
+
+
+  /* table colors */
+  --table: #cfcfcf;
+  --table-header: #97a0a6;
+  --table-row-alt: #dfdede;
+  --table-row-hover: #98b7b7;
+  --table-footer: #878683;
+  --header: #dddcdc;
+  --table-border: #bfbdbd;
+  --table-text: #08a513;
+  --table-text-muted:#ffffff;
   --table-shadow: #0d0c0c;
-  --calculated: #5c4407;
+  --calculated: #978c72;
+  --focus: #3b82f6;
+  --input-background: #f8fafc;
 
-  /* Surfaces */
+  /* Buttons */
+  --button:#ffffff;
+  --button-text:#111111;
+  --button-hover:#ffffff;
+  --button-border:#ffffff;
+  --isActive:#ffffff;
 
-  /* Text */
-  --foreground: #a3a8bb;
-  --muted-foreground: #94a3b8;
+/* big number */
 
-  /* Brand and interaction */
-  --primary: #05a4e3;
-  --primary-hover: #1a6f96;
-  --primary-subtle: #525353;
-  --primary-foreground: #353636;
-  --hover-foreground: #7dd3fc;
+  --big-number:#e2e2e2;
 
-  /* Borders and focus */
-  --border: #313a47;
-  --focus: #38bdf8;
+ /* Feedback */
+  --success: #a7e2bd;
+  --success-border: #427e4f;
+  --success-text: #0b2d18;
+  --danger: #ebadad;
+  --danger-border:#a03a42;
+  --danger-text:#6e0e16;
 
-  /* Feedback */
-  --success: #11e15d;
-  --success-surface: #052e16;
-  --success-foreground: #0f4121;
-  --danger: #d7b1b1;
-
-  /* Decorative accent */
-  --card-accent: #991b1b;
 }
 
-/*
- * Tailwind v4 mapping.
- * Examples: 
- , text-foreground, border-border,
- * bg-primary, text-muted-foreground, bg-table-header.
- */
+
 @theme inline {
-  --color-card: var(--card);
+
+  --background-image-background:var(--background);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --background-image-page-info: var(--page-info);
+ 
+  --color-header: var(--header);
+  --color-header-muted: var(--header-muted);
+  --color-header-hover: var(--header-hover);
+  --color-header-border:var(--header-border);
+  --color-header-text: var(--header-text);
+  
+/* cards */
+  
+  --background-image-card: var(--card);
   --color-card-border: var(--card-border);
   --color-card-text: var(--card-text);
+  --color-table-text-muted: var(--table-text-muted);
   --color-card-shadow: var(--card-shadow);
   --color-card-hover: var(--card-hover);
   --color-card-header: var(--card-header);
+
+  /* tables */
   --color-table: var(--table);
   --color-table-header: var(--table-header);
   --color-table-row-alt: var(--table-row-alt);
@@ -156,57 +160,53 @@
   --color-table-footer: var(--table-footer);
   --color-table-border: var(--table-border);
   --color-table-shadow: var(--table-shadow);
+  --color-focus: var(--focus);
   --color-calculated: var(--calculated);
 
-  --background-image-my-gradient: var(--my-gradient);
-  --background-image-theme-gradient: var(--background);
-  --background-image-watermark: var(--watermark-img);
-  --color-surface: var(--surface);
-  --color-surface-muted: var(--surface-muted);
-  --color-surface-hover: var(--surface-hover);
+  /* button */
+  --color-button: var(--button);
+  --color-button-text: var(--button-text);
+  --color-button-border: var(--button-border);
+  --color-button-hover: var(--button-hover);
+  --color-isActive: var(--isActive);
+
+  
+  /* header */
+  --background-image-header: var(--header);
+  --color-header-muted: var(--header-muted);
+  --color-header-hover: var(--header-hover);
   --color-input-background: var(--input-background);
 
-  --color-foreground: var(--foreground);
-  --color-muted-foreground: var(--muted-foreground);
-
-  --color-primary: var(--primary);
-  --color-primary-hover: var(--primary-hover);
-  --color-primary-subtle: var(--primary-subtle);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-hover-foreground: var(--hover-foreground);
-
-  --color-border: var(--border);
-  --color-focus: var(--focus);
 
   --color-success: var(--success);
-  --color-success-surface: var(--success-surface);
-  --color-success-foreground: var(--success-foreground);
+  --color-success-text: var(--success-text);
+  --color-success-border: var(--success-border);
   --color-danger: var(--danger);
+  --color-danger-text: var(--danger-text);
+  --color-danger-border: var(--danger-border);
+ 
 }
 
 @layer components {
-  .header {
-    @apply sticky top-0 z-10 border-b-2 border-border/50 text-foreground shadow-md bg-blue-600;
-  }
 
   .isActive {
-    @apply bg-primary text-primary-foreground;
+    @apply bg-isActive text-button-text;
   }
 
   .isNotActive {
-    @apply border border-border bg-surface text-foreground hover:bg-primary-subtle hover:text-hover-foreground;
+    @apply border border-button-border bg-button text-header-text hover:bg-button-hover;
   }
 
   .page-info {
-    @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-linear-120 from-red-600 to-indigo-600 via-blue-600;
-  }
+    @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-page-info
+   }
 
   .cash-status-error {
-    @apply bg-card-accent/20 text-danger font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
+    @apply bg-danger text-danger-text font-bold border border-danger-border inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
   }
 
   .cash-status-success {
-    @apply bg-success-surface/30 text-success-foreground border-success-foreground font-semibold tracking-wide inline-flex items-center gap-3 mt-3 border rounded-xl px-3 py-2;
+    @apply bg-success text-success-text border border-success-border font-semibold tracking-wide inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
   }
 
   .border-gradient-box {
@@ -308,7 +308,7 @@ button:not(:disabled) {
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 1rem;
-  background: var(--surface);
+  background: var(--header);
   box-shadow: 0 16px 40px rgb(15 23 42 / 18%);
   pointer-events: none;
 }
@@ -324,7 +324,7 @@ button:not(:disabled) {
   flex: none;
   place-items: center;
   border-radius: 0.75rem;
-  background: color-mix(in srgb, var(--primary) 12%, var(--surface));
+  background: color-mix(in srgb, var(--primary) 12%, var(--header));
   color: var(--primary);
 }
 
@@ -344,7 +344,7 @@ button:not(:disabled) {
 }
 
 .pwa-notice-secondary {
-  background: var(--surface);
+  background: var(--header);
   color: var(--foreground);
 }
 
@@ -409,7 +409,7 @@ button:not(:disabled) {
   background-clip: border-box;
   background-color: color-mix(
     in srgb,
-    var(--surface) 88%,
+    var(--header) 88%,
     var(--table-row-alt)
   ) !important;
 }

@@ -4,10 +4,10 @@
  */
 
 export const appShellClass =
-  "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-theme-gradient text-foreground transition-colors";
+  "min-h-screen w-full bg-cover bg-center bg-no-repeat bg-theme-gradient  transition-colors";
 
 export const appHeaderClass =
-  "sticky top-0 z-50 border-b border-border bg-surface shadow-sm backdrop-blur shadow-card-shadow";
+  "sticky top-0 z-50 border-b border-border bg-header shadow-sm backdrop-blur shadow-card-shadow";
 
 export const appHeaderContentClass =
   "mx-auto flex max-w-screen-2xl flex-wrap items-center justify-between gap-3 px-2 py-3 md:px-6";
@@ -16,20 +16,20 @@ export const appHeaderGroupClass = "flex flex-wrap items-center gap-4";
 export const navigationClass = "flex flex-wrap gap-2";
 
 export const navLinkClass =
-  "rounded-md border border-border bg-surface px-3.5 py-1.5 text-sm font-medium text-muted-foreground transition-colors hover:border-primary hover:bg-surface-hover hover:text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+  "rounded-md border border-border bg-header px-3.5 py-1.5 text-sm font-medium  transition-colors hover:button-border hover:bg-header-hover  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const navLinkActiveClass =
-  "rounded-md border border-primary bg-primary px-3.5 py-1.5 text-sm font-medium text-primary-foreground transition-colors hover:bg-primary-hover";
+  "rounded-md border button-border bg-button px-3.5 py-1.5 text-sm font-medium  transition-colors hover:bg-button-hover";
 
 export const appHeaderControlsClass = "flex flex-wrap items-center gap-3";
 
 export const dateInputClass =
-  "rounded-lg border border-border bg-input-background px-2 py-1.5 text-lg text-foreground focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+  "rounded-lg border border-border bg-input-background px-2 py-1.5 text-lg  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
-export const syncStatusClass = "text-sm text-muted-foreground";
+export const syncStatusClass = "text-sm ";
 
 export const themeButtonClass =
-  "rounded-md border border-border bg-surface px-3 py-1.5 text-sm font-medium text-foreground transition-colors hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+  "rounded-md border border-border bg-header px-3 py-1.5 text-sm font-medium transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const mainContentClass = "mx-auto max-w-screen-2xl p-4 md:p-6";
 
@@ -40,22 +40,22 @@ export const stackedCardsClass = "flex flex-col gap-4";
 
 /* Cards */
 export const cardContainer =
-  " w-full gap-4  rounded-2xl border border-card-border bg-my-gradient shadow-md transition-shadow duration-200 hover:shadow-xl";
+  " w-full gap-4  rounded-2xl border border-card-border bg-card shadow-md transition-shadow duration-200 hover:shadow-xl";
 // export const cardContainer=`min-h-screen flex items-center justify-center p-6 transition-colors duration-300 darK:bg-[#1a1a1a] bg-[#e5e5e5`
 export const cardClass =
-  "w-full min-w-0 overflow-auto transition-all duration-300 backdrop-blur-md rounded-2xl border border-card-border border-t-4 border-t-card-border px-4 py-3 bg-my-gradient shadow-card-shadow text-card-text shadow-md hover:shadow-lg transition-[border-color,box-shadow]";
+  "w-full min-w-0 overflow-auto transition-all duration-300 backdrop-blur-md rounded-2xl bg-card border border-card-border border-t-4 border-t-card-border px-4 py-3 bg-my-gradient shadow-card-shadow  shadow-md hover:shadow-lg transition-[border-color,box-shadow]";
 
 // export const cardClass=`w-80 rounded-[28px] p-5 shadow-xl transition-all duration-300 border dark:bg-[#222222]/80 dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:shadow-black/40   bg-white/90 backdrop-blur-md border-black/5 text-[#111111] shadow-black/10`
 
 export const cardHeadingClass =
-  "mb-4 flex items-center  font-bold uppercase tracking-[0.12em] text-primary text-sm";
-export const staticCardClass = "dark:bg-slate-800";
+  "mb-4 flex items-center text-card-text  font-bold uppercase tracking-[0.12em]  text-sm";
+
 
 export const cardHeaderClass =
   "mb-2  flex justify-between items-center border border-card-border/10 bg-card-header shadow-card-shadow/40  shadow-md backdrop-blur-md rounded-2xl p-2";
 
 export const cardButtonClass =
-  "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-table-border bg-primary text-white px-3.5 py-1.5 text-xs font-semibold text-foreground shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
+  "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-table-border bg-button text-white px-3.5 py-1.5 text-xs font-semibold  shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
 
 export const cardTransition = `${cardClass} transition-transform scale-95 hover:scale-100 duration-300 ease-in-out overflow-auto scrollbar-none`;
 
@@ -87,33 +87,33 @@ export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold bg-cal
 export const tableRowClass =
   "transition-colors duration-200 even:bg-table-row-alt hover:bg-table-row-hover";
 
-export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-foreground outline-none transition-colors placeholder:text-muted-foreground focus:bg-surface focus:ring-inset focus:ring-2 focus:ring-focus`;
+export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-table-text outline-none transition-colors placeholder:text-table-text/30 focus:bg-header focus:ring-inset focus:ring-2 focus:ring-focus`;
 
-export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-muted-foreground focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
+export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
 export const summaryRowClass =
-  "flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-foreground/90";
+  "flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-card-text";
 
 /* Buttons and dialogs */
 export const primaryButtonClass =
-  "flex gap-4 items-center  rounded-lg bg-primary px-3 py-1.5 font-semibold text-primary-foreground transition-colors hover:bg-primary-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
+  "flex gap-4 items-center  rounded-lg bg-button px-3 py-1.5 font-semibold  transition-colors hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
 
 export const secondaryButtonClass =
-  "rounded-lg border border-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-surface transition-colors hover:border-primary hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+  "rounded-lg border border-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-header transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
-export const pageHeadingClass = "text-xl font-bold text-primary";
+export const pageHeadingClass = "text-xl font-bold";
 
 export const dialogOverlayClass =
   "fixed inset-0 z-20 grid place-items-center bg-slate-950/50 p-4";
 
 export const dialogClass =
-  "w-[min(360px,90%)] rounded-2xl border border-border bg-surface p-5 text-foreground shadow-xl";
+  "w-[min(360px,90%)] rounded-2xl border border-border bg-header p-5 shadow-xl";
 
 /*
  * Keep the two entries because callers may select them by index.
  * They now share the same theme-aware visual treatment.
  */
 export const tableHeaderGroupClasses = [
-  "bg-table-header text-sm font-semibold text-foreground",
+  "bg-table-header text-sm font-semibold text-table-text",
  
 ];

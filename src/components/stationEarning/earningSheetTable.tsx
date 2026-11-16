@@ -169,7 +169,7 @@ function buildHeaderRows(
 
   let leafIndexCounter = 0;
   const earningHeaderStyle = isEarningGrid
-    ? "border border-border bg-table-header text-foreground"
+    ? "border border-border bg-table-header text-table-text"
     : "";
 
   function addHeaders(

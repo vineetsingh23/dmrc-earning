@@ -122,7 +122,7 @@ export default function CashInPossessionCard({
         {cashDifference === 0 ? (
           <div className="flex items-center gap-2">
             <p className="text-success font-bold">Cash OK</p>
-           <CircleCheck className="size-10 fill-success stroke-surface" strokeWidth={2} strokeOpacity={40} />
+           <CircleCheck className="size-10 fill-success stroke-header" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
            <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-card-accent/15  border border-border rounded-md transition duration-300 ">
@@ -191,7 +191,7 @@ export default function CashInPossessionCard({
               className={`${tableRowClass} ${cashDifference === 0 ? "" : "even:bg-errorCard"}`}
             >
               <td
-                className={`${tableCellLeftClass}  ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-foreground " : ""}`}
+                className={`${tableCellLeftClass}  ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-table-text " : ""}`}
               >
                 {lastAppliedChange?.countKey === countRow.countKey ? <Check className="inline-flex mr-4 text-success"/> : ""}
                 {countRow.label}

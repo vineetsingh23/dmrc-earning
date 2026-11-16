@@ -14,7 +14,7 @@ const statusTexts: Record<BackupStatus, string> = {
   working: 'Writing the backup…',
   error: 'The backup failed.',
 };
-const buttonClass = 'rounded-xl border border-bd bg-primary text-primary-foreground px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 disabled:opacity-50';
+const buttonClass = 'rounded-xl border border-bd bg-button text-button-text px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 disabled:opacity-50';
 
 export default function BackupFolderCard({ backupStatus, folderName, lastBackupTime, backupMessage, onChooseFolder, onBackUpNow }: BackupFolderCardProps) {
   return (

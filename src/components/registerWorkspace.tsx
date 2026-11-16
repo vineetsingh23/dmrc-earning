@@ -2,6 +2,10 @@ import { useEffect, useMemo, useState } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import AppHeader from "./layout/appHeader";
+import {
+  bankRoundingAmount,
+  tomOperators,
+} from "../lib/businessRules";
 import { effectiveDetailListRows } from "../lib/carriedLists";
 import { updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
 import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
@@ -15,7 +19,7 @@ import CashInPossessionCard from "./dashboard/cashInPossessionCard";
 import SendToBankDialog from "./dashboard/sentToBankDialog";
 import { shiftEntryColumns } from "../lib/shiftEntrycolumns";
 import { finalEarningColumns } from "../lib/finalEarningColumns";
-import { bankRoundingAmount } from "../lib/businessRules";
+
 import { updateEntryCell } from "../handlers/entryCellHandler";
 import { updateCashCount } from "../handlers/cashcountHandlers";
 import { recordBankTransfer } from "../handlers/cashToBankHandlers";
@@ -47,8 +51,14 @@ import {
   stepCashCountForward,
 } from "../lib/cashCountHistory";
 import UserGuide from "./dashboard/userGuide";
-import { reconcileOpetatorAdvance } from "../handlers/advanceReconciliationHandler";
+// import { reconcileOperatorAdvance } from "../handlers/advanceReconciliationHandler";
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
+import {
+  getAdvanceMatchView,
+  toggleAdvanceMatch,
+  releaseAdvanceMatchBeforeShiftEdit,
+  releaseAdvanceMatchBeforeAdvanceEdit,
+} from "../handlers/advanceReconciliationHandler";
 
 interface RegisterWorkspaceProps {
   station: StationRecord;
@@ -307,30 +317,34 @@ export default function RegisterWorkspace({
                     }
                   />
                   <AdvanceReceivedCard
-                    listRows={effectiveDetailListRows(
-                      registerState,
-                      selectedDate,
-                      "advanceReceived",
-                    )}
-                    onAdvanceChange={(rowIndex,typedValue)=>
+  listRows={effectiveDetailListRows(
+    registerState,
+    selectedDate,
+    "advanceReceived",
+  )}
+  onAdvanceChange={(rowIndex, typedValue) =>
+    updateRegisterState((draftState) => {
+      const operatorNumber = tomOperators[rowIndex]?.tomNumber;
 
-                    updateRegisterState((draftState) => {
-                      updateCarriedDetailListCell(
-                        draftState,
-                        selectedDate,
-                        "advanceReceived",
-                        rowIndex,
-                        1,
-                        typedValue,
-                      );
-                      reconcileOpetatorAdvance(
-                        draftState,
-                        selectedDate,
-                      )
-                    })
+      if (operatorNumber) {
+        releaseAdvanceMatchBeforeAdvanceEdit(
+          draftState,
+          selectedDate,
+          operatorNumber,
+        );
+      }
 
-                    }
-                  />
+      updateCarriedDetailListCell(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        rowIndex,
+        1,
+        typedValue,
+      );
+    })
+  }
+/>
                 </div>
                 <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
                   {renderMiscCard("Misc debit", "miscDebit")}
@@ -370,34 +384,61 @@ export default function RegisterWorkspace({
                 <header className="page-intro">
                   <h1 className="page-info">CC and TOM Earning</h1>
                 </header>
-                <EarningSheetTable
-                  columns={visibleShiftColumns}
-                  frozenColumnCount={2}
-                  gridName="shift"
-                  rowCount={registerState.shiftRowCount}
-                  readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
-                  readEntryValue={(rowIndex, fieldKey) =>
-                    rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
-                  }
-                  writeEntryValue={(rowIndex, fieldKey, newValue) =>
-                    updateRegisterState((draftState) =>{
-                       updateEntryCell(
-                        draftState.shiftEntries,
-                        selectedDate,
-                        rowIndex,
-                        fieldKey,
-                        newValue,
-                      ),
-                      reconcileOpetatorAdvance(
-                        draftState,
-                        selectedDate,
-                      )
+               <EarningSheetTable
+  columns={visibleShiftColumns}
+  frozenColumnCount={2}
+  gridName="shift"
+  rowCount={registerState.shiftRowCount}
+  readRow={(rowIndex) => {
+    const row = rowsOfSelectedDate[rowIndex] ?? {};
 
-                    }
-                     
-                    )
-                  }
-                />
+    const matchView = getAdvanceMatchView(
+      registerState,
+      selectedDate,
+      row,
+    );
+
+    return {
+      ...row,
+      advanceMatchEligible: String(matchView.eligible),
+      advanceMatchDisplay: matchView.display,
+    };
+  }}
+  readEntryValue={(rowIndex, fieldKey) =>
+    rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
+  }
+  writeEntryValue={(rowIndex, fieldKey, newValue) =>
+    updateRegisterState((draftState) => {
+      // Handle manual checkbox confirmation.
+      if (fieldKey === "advanceMatchConfirmed") {
+        toggleAdvanceMatch(
+          draftState,
+          selectedDate,
+          rowIndex,
+          newValue === "true",
+        );
+
+        return;
+      }
+
+      // Restore the advance if a confirmed row is edited.
+      releaseAdvanceMatchBeforeShiftEdit(
+        draftState,
+        selectedDate,
+        rowIndex,
+      );
+
+      // Update the Shift Entry field.
+      updateEntryCell(
+        draftState.shiftEntries,
+        selectedDate,
+        rowIndex,
+        fieldKey,
+        newValue,
+      );
+    })
+  }
+/>
                 <div className="flex justify-end">
                   <button
                     type="button"

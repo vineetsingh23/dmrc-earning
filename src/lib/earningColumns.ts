@@ -13,7 +13,7 @@ export const sumOfFields = (row: RegisterRow, fieldKeys: string): number =>
 export interface ColumnLeaf {
   fieldKey: string;
   label: string;
-  kind: 'text' | 'number' | 'calculated' | 'mirror';
+  kind: 'text' | 'number' | 'calculated' | 'mirror' | 'reconciliation';
   formula?: (row: RegisterRow) => number;   // only calculated columns have one
   sourceFieldKey?: string;
 }
@@ -28,6 +28,15 @@ export const columnDepth = (node: ColumnNode): number =>
 // a read-only cell that shows the value typed in another column of the same row
 export const mirrorColumn = (fieldKey: string, label: string, sourceFieldKey: string): ColumnLeaf =>
   ({ fieldKey, label, kind: 'mirror', sourceFieldKey });
+
+export const reconciliationColumn = (
+  fieldKey: string,
+  label: string
+): ColumnLeaf => ({
+  fieldKey,
+  label,
+  kind: 'reconciliation',
+});
 
 // the real data columns under a node
 export const collectLeafColumns = (node: ColumnNode): ColumnLeaf[] =>

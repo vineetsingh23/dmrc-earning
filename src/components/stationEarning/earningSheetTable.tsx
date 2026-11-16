@@ -334,6 +334,7 @@ export default function EarningSheetTable({
   });
   const getColumnWidth = (columnIndex: number) => columnWidths[columnIndex];
   const isEditable = Boolean(readEntryValue && writeEntryValue);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLTableSectionElement>(null);
   const tableRef = useRef<HTMLTableElement>(null);
   const [headerRowHeights, setHeaderRowHeights] = useState<number[]>([]);
@@ -355,6 +356,7 @@ export default function EarningSheetTable({
   // total of one column over all rows (calculated columns add up their formula results)
   const totalOfColumn = (column: ColumnLeaf) =>
     allRows.reduce((runningTotal, row) => {
+
       if (column.kind === "calculated")
         return runningTotal + column.formula!(row);
       if (column.kind === "mirror")
@@ -408,6 +410,21 @@ export default function EarningSheetTable({
 
     return () => observer.disconnect();
   }, [columns]);
+  
+  useLayoutEffect(() => {
+  if (!isShiftGrid) return;
+
+  const container = scrollContainerRef.current;
+  if (!container) return;
+
+  const savedPosition = sessionStorage.getItem(
+    "shift-entry-horizontal-scroll"
+  );
+
+  if (savedPosition !== null) {
+    container.scrollLeft = Number(savedPosition);
+  }
+}, [isShiftGrid, columns]);
 
   useLayoutEffect(() => {
     const firstRow = tableRef.current?.tBodies[0]?.rows[0];
@@ -468,14 +485,23 @@ export default function EarningSheetTable({
           </button>
         </div>
       )}
-      <div
-        className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header mr-6 scrollbar-track-table-header/10 ${
-          isShiftGrid
-            ? "overflow-auto! rounded-xl"
-            : isFinalGrid
-              ? "overflow-auto!"
-            : ""
-        }`}
+ <div
+  ref={scrollContainerRef}
+  onScroll={(event) => {
+    if (isShiftGrid) {
+      sessionStorage.setItem(
+        "shift-entry-horizontal-scroll",
+        String(event.currentTarget.scrollLeft)
+      );
+    }
+  }}
+  className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header mr-6 scrollbar-track-table-header/10 ${
+    isShiftGrid
+      ? "overflow-auto! rounded-xl"
+      : isFinalGrid
+        ? "overflow-auto!"
+        : ""
+  }`}
         style={
           gridName === "shift"
             ? { height: "calc(100dvh - 180px)" }
@@ -551,6 +577,43 @@ export default function EarningSheetTable({
                       ? "sheet-freeze-boundary sheet-freeze-seam"
                       : "",
                   ].join(" ");
+
+if (column.fieldKey === "advanceMatchConfirmed") {
+  const isEligible = row.advanceMatchEligible === "true";
+  const isConfirmed = row.advanceMatchConfirmed === "true";
+  const difference = row.advanceMatchDisplay ?? "";
+
+  return (
+    <td
+      key={column.fieldKey}
+      className={`${tableCellClass} ${stickyClass} text-center`}
+      style={{ ...freeze.style, width: columnWidth }}
+    >
+      {isEligible || isConfirmed ? (
+        <input
+          type="checkbox"
+          checked={isConfirmed}
+          disabled={!isEligible}
+          aria-label={`Confirm advance match for row ${rowIndex + 1}`}
+          onChange={(event) =>
+            writeValueReference.current?.(
+              rowIndex,
+              column.fieldKey,
+              event.target.checked ? "true" : ""
+            )
+          }
+          className="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-not-allowed"
+        />
+      ) : (
+        <span className="whitespace-nowrap text-sm font-semibold text-amber-600">
+          {difference || "—"}
+        </span>
+      )}
+    </td>
+  );
+}
+
+
                   if (column.kind === "calculated") {
                     return (
                       <td 
@@ -673,8 +736,12 @@ export default function EarningSheetTable({
                         boxShadow: `${freezeBoundaryClass ? "inset -2px 0 0 var(--border), " : ""}0 -2px 6px rgb(0 0 0 / 0.15)`,
                       }}
                     >
-                      {isTotalLabel ? "Total" : column.kind === "text" || column.kind === "mirror"
-                        ? "" : formatCellValue(column, totalOfColumn(column))}
+                   {isTotalLabel
+  ? "Total"
+  : column.kind === "text" ||
+      column.kind === "reconciliation"
+    ? ""
+    : formatCellValue(column, totalOfColumn(column))}
                     </td>
                   )
                 })

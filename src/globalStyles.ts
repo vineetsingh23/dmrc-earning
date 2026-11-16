@@ -43,7 +43,7 @@ export const cardContainer =
   " w-full gap-4  rounded-2xl border border-card-border bg-my-gradient shadow-md transition-shadow duration-200 hover:shadow-xl";
 // export const cardContainer=`min-h-screen flex items-center justify-center p-6 transition-colors duration-300 darK:bg-[#1a1a1a] bg-[#e5e5e5`
 export const cardClass =
-  "w-full min-w-0 overflow-auto transition-all duration-300 backdrop-blur-md rounded-2xl border border-card-border border-t-4 border-t-card-border px-4 py-3 bg-card shadow-card-shadow text-card-text shadow-md hover:shadow-lg transition-[border-color,box-shadow]";
+  "w-full min-w-0 overflow-auto transition-all duration-300 backdrop-blur-md rounded-2xl border border-card-border border-t-4 border-t-card-border px-4 py-3 bg-my-gradient shadow-card-shadow text-card-text shadow-md hover:shadow-lg transition-[border-color,box-shadow]";
 
 // export const cardClass=`w-80 rounded-[28px] p-5 shadow-xl transition-all duration-300 border dark:bg-[#222222]/80 dark:backdrop-blur-md dark:border-white/10 dark:text-white dark:shadow-black/40   bg-white/90 backdrop-blur-md border-black/5 text-[#111111] shadow-black/10`
 

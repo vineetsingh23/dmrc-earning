@@ -9,36 +9,33 @@
 
 :root {
   color-scheme: light;
-/* --background: linear-gradient(to bottom right,#cbeacb, #b8b8b8, #cac9ca); */
-  --background:#b8babb;
+  /*  common colors used anywhere */
+  --background: #b8babb;
   --watermark-img: #ffffff;
   --surface: #ffffff;
   --surface-muted: #f1f5f9;
   --surface-hover: #e2e8f0;
   --input-background: #f8fafc;
 
-/* card colors */
-  --card : #efeff5;
-  --card-text:#383c45;
-  --card-border:#bdb9b9;
-  --card-shadow:#0f0c0c;
-  --card-header: #e2e2e6;
-  --my-gradient: linear-gradient(to left,#e0d9e1, #c6c3c4, #f9f1f8);
-  
+  /* card colors */
+  --card: #efeff5;
+  --card-text: #383c45;
+  --card-border: #bdb9b9;
+  --card-shadow: #0f0c0c;
+  --card-header: rgb(66, 204, 238);
+  --my-gradient: linear-gradient(to bottom, #6d3369, #fbfbf0, #b1adad);
 
   /* table colors */
-  --table:#cfcfcf;
+  --table: #cfcfcf;
   --table-header: #97a0a6;
   --table-row-alt: #dfdede;
   --table-row-hover: #98b7b7;
-  --table-footer:#878683;
-  --surface: #a2a2a2;
-  --table-border:#bfbdbd;
-  --table-text:#bab5b5;
-  --table-shadow:#0d0c0c;
-  --calculated:#978c72;
-  
- 
+  --table-footer: #878683;
+  --surface: #dddcdc;
+  --table-border: #bfbdbd;
+  --table-text: #bab5b5;
+  --table-shadow: #0d0c0c;
+  --calculated: #978c72;
 
   /* --my-gradient: linear-gradient(to top, #d6d2d2, #ece4e4, #f0f0f0); */
 
@@ -53,12 +50,11 @@
   --muted-foreground: #64748b;
 
   /* Brand and interaction */
-  --primary: rgb(16, 138, 219);
+  --primary: rgb(1, 55, 181);
   --primary-hover: #054d7d;
   --primary-subtle: #dbeafe;
   --primary-foreground: #ffffff;
   --hover-foreground: #1d4ed8;
-
 
   /* Borders and focus */
 
@@ -68,10 +64,9 @@
   --success: #0d903d;
   --success-surface: #b6fac5;
   --success-foreground: #166534;
-  --danger: #f96969;
+  --danger: #ae0606;
 
   /* Tables */
-
 
   /* Decorative accent */
   --card-accent: #f87171;
@@ -80,34 +75,37 @@
 .dark {
   color-scheme: dark;
 
-  /* --background: linear-gradient(to right,#261919, #40404e, #322831); */
-  --background: #211f1f;
+  --background: linear-gradient(to right,#211212, #58474c, #222d23);
+  /* --background: #211f1f; */
   --surface-muted: #281c1f;
   --surface-hover: #434446;
   --input-background: #363f53;
-  
-  
+
   /* Card Background */
-  --card:#474040;
-  --card-text:#b6b4b4;
-  --card-border:#544d4d;
-  --card-shadow:#050505;
-  --card-hover:#2e1e1e;
-  --card-header:#312929;
-  --my-gradient: linear-gradient(to bottom right,#c61c6c, rgb(202, 189, 189), #ba1daf);
+  --card: #474040;
+  --card-text: #b6b4b4;
+  --card-border: #544d4d;
+  --card-shadow: #050505;
+  --card-hover: #2e1e1e;
+  --card-header: #312929;
+  --my-gradient: linear-gradient(
+    to bottom,
+    #2e191c,
+    rgb(46, 46, 44),
+    #1d1a1a
+  );
   /* --my-gradient: #222222; */
   /* Tables */
-  --table:#453b3b;
-  --table-header:#2d2626;
+  --table: #453b3b;
+  --table-header: #2d2626;
   --table-row-alt: #484242;
   --table-row-hover: #423b3b;
-  --table-footer:#282525;
+  --table-footer: #282525;
   --surface: #3b3535;
-  --table-border:#555050;
-  --table-text:#b3b1b1;
-  --table-shadow:#0d0c0c;
+  --table-border: #555050;
+  --table-text: #b3b1b1;
+  --table-shadow: #0d0c0c;
   --calculated: #5c4407;
-  
 
   /* Surfaces */
 
@@ -132,7 +130,6 @@
   --success-foreground: #0f4121;
   --danger: #d7b1b1;
 
-
   /* Decorative accent */
   --card-accent: #991b1b;
 }
@@ -144,7 +141,6 @@
  * bg-primary, text-muted-foreground, bg-table-header.
  */
 @theme inline {
-
   --color-card: var(--card);
   --color-card-border: var(--card-border);
   --color-card-text: var(--card-text);
@@ -160,7 +156,6 @@
   --color-table-border: var(--table-border);
   --color-table-shadow: var(--table-shadow);
   --color-calculated: var(--calculated);
- 
 
   --background-image-my-gradient: var(--my-gradient);
   --background-image-theme-gradient: var(--background);
@@ -186,9 +181,6 @@
   --color-success-surface: var(--success-surface);
   --color-success-foreground: var(--success-foreground);
   --color-danger: var(--danger);
-
-
-
 }
 
 @layer components {
@@ -209,18 +201,22 @@
   }
 
   .cash-status-error {
-    @apply bg-card-accent/20 text-card-accent dark:text-red-200 font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
+    @apply bg-card-accent/20 text-danger font-bold border border-danger inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
   }
 
   .cash-status-success {
     @apply bg-success-surface/30 text-success-foreground border-success-foreground font-semibold tracking-wide inline-flex items-center gap-3 mt-3 border rounded-xl px-3 py-2;
   }
 
-
   .border-gradient-box {
     position: relative;
     border-radius: 1rem; /* Adjust to match your rounded-2xl or rounded-xl */
-    background: linear-gradient(to right, #dc2626, #f43f5e, #1e3a8a); /* Your gradient */
+    background: linear-gradient(
+      to right,
+      #dc2626,
+      #f43f5e,
+      #1e3a8a
+    ); /* Your gradient */
     padding: 2px; /* This controls the thickness of the gradient border */
   }
 
@@ -236,7 +232,6 @@
     background-color: #0f172a; /* Dark mode bg (slate-900) */
   }
 }
-
 
 html {
   min-width: 320px;
@@ -411,7 +406,11 @@ button:not(:disabled) {
 .sheet-frozen-cell {
   isolation: isolate;
   background-clip: border-box;
-  background-color: color-mix(in srgb, var(--surface) 88%, var(--table-row-alt)) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--surface) 88%,
+    var(--table-row-alt)
+  ) !important;
 }
 
 .sheet-frozen-cell input,
@@ -420,7 +419,11 @@ button:not(:disabled) {
 }
 
 .sheet-frozen-cell-even {
-  background-color: color-mix(in srgb, var(--table-row-alt), var(--table-header)) !important;
+  background-color: color-mix(
+    in srgb,
+    var(--table-row-alt),
+    var(--table-header)
+  ) !important;
 }
 
 .sheet-frozen-cell:hover {
@@ -450,9 +453,11 @@ button:not(:disabled) {
 }
 
 .sheet-freeze-boundary {
-  box-shadow: inset -1px 0 0 color-mix(in srgb, var(--foreground) 25%, var(--border));
+  box-shadow: inset -1px 0 0
+    color-mix(in srgb, var(--foreground) 25%, var(--border));
 }
 
 .sheet-freeze-seam {
-  box-shadow: inset -2px 0 0 color-mix(in srgb, var(--foreground) 35%, var(--border));
+  box-shadow: inset -2px 0 0
+    color-mix(in srgb, var(--foreground) 35%, var(--border));
 }

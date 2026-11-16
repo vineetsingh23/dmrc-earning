@@ -4,13 +4,30 @@ import { afcCollectionTotal } from './shiftEntrycolumns';
 import { dailyCashlessStatisticsOfDate } from './earningCalculations';
 
 // ---- fields typed by the user, once for each date ----
-export type ReportFieldKind = 'number' | 'text' | 'yesNo';
-export interface ReportFieldDefinition { fieldKey: string; label: string; kind: ReportFieldKind; defaultValue?: string }
+export type ReportFieldKind = 'number' | 'text' | 'yesNo' | 'calculated';
+export type ReportFieldDefinition =
+  | { fieldKey: string; label: string; kind: Exclude<ReportFieldKind, 'calculated'>; defaultValue?: string }
+  | { fieldKey: string; label: string; kind: 'calculated'; formula: (values: Record<string, string>) => number };
+
+const totalEntryFieldKeys = 'cscEntry ncmcEntry qrEntry';
+const totalExitFieldKeys = 'cscExit ncmcExit qrExit';
+
+const footfallFieldKeys = 'cscEntry cscExit ncmcEntry ncmcExit qrEntry qrExit';
+const ridershipFieldKeys = 'qrEntry cscExit ncmcExit';
 
 export const reportFields: ReportFieldDefinition[] = [
   { fieldKey: 'stationLabel', label: 'Station (as written in the report)', kind: 'text' },   // empty = the station name
-  { fieldKey: 'footfall', label: 'Footfall', kind: 'number' },
-  { fieldKey: 'ridership', label: 'Ridership', kind: 'number' },
+
+  { fieldKey: 'cscEntry', label: 'CSC Entry', kind: 'number' },
+  { fieldKey: 'cscExit', label: 'CSC Exit', kind: 'number' },
+  { fieldKey: 'ncmcEntry', label: 'NCMC Entry', kind: 'number' },
+  { fieldKey: 'ncmcExit', label: 'NCMC Exit', kind: 'number' },
+  { fieldKey: 'qrEntry', label: 'QR Entry', kind: 'number' },
+  { fieldKey: 'qrExit', label: 'QR Exit', kind: 'number' },
+  { fieldKey: 'totalEntry', label: 'Total Entry', kind: 'calculated', formula: values => sumOfFields(values, totalEntryFieldKeys) },
+  { fieldKey: 'totalExit', label: 'Total Exit', kind: 'calculated', formula: values => sumOfFields(values, totalExitFieldKeys) },
+  { fieldKey: 'footfall', label: 'Footfall', kind: 'calculated', formula: values => sumOfFields(values, footfallFieldKeys) },
+  { fieldKey: 'ridership', label: 'Ridership', kind: 'calculated', formula: values => sumOfFields(values, ridershipFieldKeys) },
   { fieldKey: 'cscStock', label: 'CSC stock', kind: 'number' },
   { fieldKey: 'ncmcSale', label: 'NCMC sale', kind: 'number' },
   { fieldKey: 'contractorTomOperators', label: 'Contractor hours: TOM operators', kind: 'number' },
@@ -124,6 +141,9 @@ export function buildDailyReportPaymentSummary(state: RegisterState, date: strin
 
 // typed value of a field for a date; an empty field uses its default (for the station label: the station name)
 export function reportFieldValue(state: RegisterState, date: string, field: ReportFieldDefinition, stationName: string): string {
+  if (field.kind === 'calculated') {
+    return String(field.formula(state.reportFields?.[date] ?? {}));
+  }
   const typedValue = (state.reportFields?.[date]?.[field.fieldKey] ?? '').trim();
   if (typedValue) return typedValue;
   return field.fieldKey === 'stationLabel' ? stationName : field.defaultValue ?? '';

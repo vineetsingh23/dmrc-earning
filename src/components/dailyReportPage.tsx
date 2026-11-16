@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import type { RegisterState } from '../lib/registerTypes';
-import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFields, whatsAppLink } from '../lib/dailyReport';
+import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFieldValue, reportFields, whatsAppLink } from '../lib/dailyReport';
 import { copyReportFieldsFromPreviousDate, updateReportField } from '../handlers/reportFieldHandlers';
 import { cardClass, cardContainer, cardHeadingClass, summaryRowClass } from '../globalStyles';
 import { formatRupees } from '../lib/earningCalculations';
@@ -15,7 +15,7 @@ interface DailyReportPageProps {
 }
 
 const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
-const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-2.5 text-sm text-tx outline-hidden focus:ring-2 focus:ring-ac';
+const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-1 text-sm text-tx outline-hidden focus:ring-2 focus:ring-ac';
 
 export default function DailyReportPage({ registerState, updateRegisterState, date, stationName }: DailyReportPageProps) {
   const [feedback, setFeedback] = useState('');
@@ -62,7 +62,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
   };
 
   return (
-    <div className="grid gap-3 lg:grid-cols-2">
+    <div className="grid gap-3 sm:grid-cols-2">
       <div className={cardClass} onKeyDown={handleSheetKeyDown}>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
           <h2 className={cardHeadingClass}>Report details for {date}</h2>
@@ -71,47 +71,118 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
             Copy empty fields from previous day
           </button>
         </div>
-        <div className="grid gap-3 sm:grid-cols-2" >
-          {reportFields.map((field, fieldIndex) => {
-            const gridRow = Math.floor(fieldIndex / 2);
-            const gridColumn = fieldIndex % 2;
-            return (
-              <label key={field.fieldKey} className="text-xs text-foreground">
-                {field.label}
-                {field.kind === 'yesNo' ? (
-                  <select
-                    data-grid="dailyReport"
-                    data-row={gridRow}
-                    data-column={gridColumn}
-                    value={typedValueOf(field.fieldKey)}
-                    onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))}
-                    className={inputClass}
-                  >
-                    <option value="">{field.defaultValue ? `Default: ${field.defaultValue}` : 'Select'}</option>
-                    <option value="YES">YES</option>
-                    <option value="NO">NO</option>
-                  </select>
-                ) : (
-                  <input
-                    data-grid="dailyReport"
-                    data-row={gridRow}
-                    data-column={gridColumn}
-                    value={typedValueOf(field.fieldKey)}
-                    inputMode={field.kind === 'number' ? 'numeric' : 'text'}
-                    placeholder={field.fieldKey === 'stationLabel' ? stationName : field.defaultValue ?? ''}
-                    onChange={event => updateRegisterState(draftState => updateReportField(draftState, date, field.fieldKey, event.target.value))}
-                    className={inputClass}
-                  />
+      
+<div className="overflow-x-auto rounded-xl border border-bd">
+  <table className="w-full min-w-[480px] border-collapse text-sm">
+    <thead className="bg-surface text-tx">
+      <tr>
+        <th className="w-16 border-b border-bd px-3 py-3 text-center">
+          S.No.
+        </th>
+        <th className="border-b border-bd px-4 py-3 text-left">
+          Report Particulars
+        </th>
+        <th className="w-[40%] border-b border-bd px-4 py-3 text-left">
+          Entry
+        </th>
+      </tr>
+    </thead>
+
+    <tbody>
+      {reportFields.map((field, fieldIndex) => (
+        <tr
+          key={field.fieldKey}
+          className="last:border-b-0 hover:bg-surface/60"
+        >
+          <td className="px-3 py-1 text-center text-mu">
+            {fieldIndex + 1}
+          </td>
+
+          <td className="px-4 py-1 font-medium text-tx">
+            {field.label}
+          </td>
+
+          <td className="px-4 py-1">
+            {field.kind === 'yesNo' ? (
+              <select
+                data-grid="dailyReport"
+                data-row={fieldIndex}
+                data-column={0}
+                value={
+                  typedValueOf(field.fieldKey) ||
+                  field.defaultValue ||
+                  ''
+                }
+                onChange={event =>
+                  updateRegisterState(draftState =>
+                    updateReportField(
+                      draftState,
+                      date,
+                      field.fieldKey,
+                      event.target.value
+                    )
+                  )
+                }
+                className={inputClass}
+              >
+                <option value="">Select</option>
+                <option value="YES">YES</option>
+                <option value="NO">NO</option>
+              </select>
+            ) : field.kind === 'calculated' ? (
+              <input
+                data-grid="dailyReport"
+                data-row={fieldIndex}
+                data-column={0}
+                value={reportFieldValue(
+                  registerState,
+                  date,
+                  field,
+                  stationName
                 )}
-              </label>
-            );
-          })}
-        </div>
+                readOnly
+                aria-label={`${field.label} (calculated)`}
+                className={`${inputClass} bg-calculated/40 font-semibold`}
+              />
+            ) : (
+              <input
+                data-grid="dailyReport"
+                data-row={fieldIndex}
+                data-column={0}
+                value={typedValueOf(field.fieldKey)}
+                inputMode={
+                  field.kind === 'number' ? 'numeric' : 'text'
+                }
+                placeholder={
+                  field.fieldKey === 'stationLabel'
+                    ? stationName
+                    : field.defaultValue ?? ''
+                }
+                onChange={event =>
+                  updateRegisterState(draftState =>
+                    updateReportField(
+                      draftState,
+                      date,
+                      field.fieldKey,
+                      event.target.value
+                    )
+                  )
+                }
+                className={inputClass}
+              />
+            )}
+          </td>
+        </tr>
+      ))}
+    </tbody>
+  </table>
+</div>
+
       </div>
 
       <div className={cardClass}>
         <h2 className={cardHeadingClass}>Message</h2>
-        <pre className="max-h-[60vh] overflow-auto whitespace-pre-wrap rounded-lg border border-background bg-surface p-3 text-sm">{message}</pre>
+        <pre className="max-h-[100vh] overflow-auto whitespace-pre-wrap rounded-lg border border-background bg-surface p-3 text-sm">{message}</pre>
         <div className="mt-3 flex flex-wrap items-center gap-2">
           <button className="inline-flex items-center gap-2 rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-surface bg-success transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
             <MessageCircleCheck  className='fill-green-600 stroke-2 stroke-white'/>

@@ -22,8 +22,9 @@
   --card-text: #383c45;
   --card-border: #bdb9b9;
   --card-shadow: #0f0c0c;
-  --card-header: rgb(66, 204, 238);
-  --my-gradient: linear-gradient(to bottom, #6d3369, #fbfbf0, #b1adad);
+  --card-hover: #e8bdbd;
+  --card-header: rgb(223, 225, 225);
+  --my-gradient: linear-gradient(to bottom, #fdfdfd, #fbfbf0, #afa3b2);
 
   /* table colors */
   --table: #cfcfcf;

@@ -144,7 +144,7 @@ export default function StationStatisticsCard({
   ];
   const cardSeparator =`${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
   const staticCardClass ='grid grid-cols-4 gap-4 p-4 ';
-  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-surface text-card-text hover:bg-card-hover shadow-md shadow-card-shadow'
+  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-surface text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200'
   return (
     <div>
      

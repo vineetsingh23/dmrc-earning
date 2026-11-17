@@ -104,7 +104,7 @@ export default function CashInPossessionCard({
  
   return (
     <div
-      className={`${cardClass} ${cashDifference === 0 ? "" : "bg-red-50/90! dark:bg-red-900/20!"}`}
+      className={`${cardClass} ${cashDifference === 0 ? "" : "bg-danger! border-2 border-danger-border border-t-danger-border"}`}
       onKeyDown={handleSheetKeyDown}
     >
       <div className={cardHeaderClass}>
@@ -122,19 +122,19 @@ export default function CashInPossessionCard({
         {cashDifference === 0 ? (
           <div className="flex items-center gap-2">
             <p className="text-success font-bold">Cash OK</p>
-           <CircleCheck className="size-10 fill-success stroke-header" strokeWidth={2} strokeOpacity={40} />
+           <CircleCheck className="size-10 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
-           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-card-accent/15  border border-border rounded-md transition duration-300 ">
+           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-danger  border border-danger rounded-md transition duration-300 ">
           <span
-            className={`${cashDifference === 0 ? "" : "text-danger"} text-center font-medium w-1/2`}
+            className={`${cashDifference === 0 ? "" : "text-danger-text"} text-center font-medium w-1/2`}
           >
             {formatRupees(Number(cashDifference))} 
           </span>
 
           <div className="flex justify-end transition duration-200  relative ml-4">
           
-            <CircleLetterX className="stroke-danger" size={30} strokeWidth={2}/>
+            <CircleLetterX className="stroke-danger-text" size={30} strokeWidth={2}/>
         </div>
         </div>
         )}
@@ -257,9 +257,9 @@ export default function CashInPossessionCard({
         aria-live="polite"
         >
        {matchesCashInHand ? (
-    <CircleCheckIcon className='size-8'/>
+    <CircleCheckIcon className='size-8 text-success-text'/>
   ) : (
-    <CircleLetterX className='size-8 stroke-danger'/>
+    <CircleLetterX className='size-8 text-danger-text'/>
   )}
         {matchesCashInHand
           ? "Cash in possession matches total cash in hand"

@@ -16,19 +16,23 @@
   --primary-foreground: #ffffff;
   --watermark-img: #ffffff;
   
-  --header: #b34444;
+  --nav-header:linear-gradient(to top, #9ddcef, #b2d7f3, #a4f5d0);
   --header-muted: #f1f5f9;
   --header-hover: #e2e8f0;
-  --header-text:#ffffff;
-
-
+  --header-border: var(--card-border);
+  --header-shadow: var(--card-shadow);
+  
+  
   /* card colors */
-  --card: linear-gradient(to top, #c3c2be, #fefff8, #68ad59);
-  --card-text: #094798;
-  --card-border: #d7d7d7;
-  --card-shadow: rgb(45, 44, 44);
+  --card: linear-gradient(to top, #a77d99, #fefff8, #835685);
+  --card-text: #4b057a;
+  --card-border: inherit;
+  --card-shadow: rgb(52, 30, 30);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
+  --muted:#ffffff;
+  --header-text:#050b84;
+  --big-number:#7916c0;
 
 
   /* table colors */
@@ -49,13 +53,14 @@
   /* Buttons */
   --button:rgb(32, 123, 227);
   --button-text:#f9f9f9;
-  --button-hover:rgb(13, 50, 145);
+  --button-hover:rgb(8, 59, 190);
   --button-border:#ffffff;
   --isActive:#4f0583;
+  --isNotActive:#ffffff;
 
 /* big number */
 
-  --big-number:#e2e2e2;
+
 
  /* Feedback */
   --success: #a2f4c0;
@@ -76,7 +81,8 @@
   --primary:#ffffff;
   --primary-foreground:#ffffff;
   --watermark-img: #ffffff;
-  --header: #ffffff;
+  
+  --header: linear-gradient(to top, #ffffff, #ffffff, #ffffff);
   --header-muted: #f1f5f9;
   --header-hover: #e2e8f0;
   --header-text:#000000;
@@ -112,10 +118,11 @@
   --button-hover:#ffffff;
   --button-border:#ffffff;
   --isActive:#ffffff;
+  --isNotActive:#ffffff;
 
 /* big number */
 
-  --big-number:#e2e2e2;
+
 
  /* Feedback */
   --success: #a7e2bd;
@@ -130,19 +137,22 @@
 
 @theme inline {
 
+/* app background and colors */
   --background-image-background:var(--background);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --background-image-page-info: var(--page-info);
- 
-  --color-header: var(--header);
+
+ /* header and navigation bar */
+  --background-image-nav-header: var(--nav-header);
   --color-header-muted: var(--header-muted);
   --color-header-hover: var(--header-hover);
   --color-header-border:var(--header-border);
   --color-header-text: var(--header-text);
+  --color-muted: var(--muted);
+  --color-header-shadow: var(--header-shadow);
   
 /* cards */
-  
   --background-image-card: var(--card);
   --color-card-border: var(--card-border);
   --color-card-text: var(--card-text);
@@ -150,6 +160,7 @@
   --color-card-shadow: var(--card-shadow);
   --color-card-hover: var(--card-hover);
   --color-card-header: var(--card-header);
+  --color-big-number: var(--big-number);
 
   /* tables */
   --color-table: var(--table);
@@ -169,6 +180,7 @@
   --color-button-border: var(--button-border);
   --color-button-hover: var(--button-hover);
   --color-isActive: var(--isActive);
+  --color-isNotActive: var(--isNotActive);
 
   
   /* header */
@@ -189,13 +201,7 @@
 
 @layer components {
 
-  .isActive {
-    @apply bg-isActive text-button-text;
-  }
 
-  .isNotActive {
-    @apply border border-button-border bg-button text-header-text hover:bg-button-hover;
-  }
 
   .page-info {
     @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-page-info

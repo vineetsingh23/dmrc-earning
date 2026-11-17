@@ -34,10 +34,10 @@ export default function CashInHandCard({
 
       <h1 className={cardHeadingClass}>Total cash in hand</h1>
       
-      <small className="block text-card-small text-card-text capitalize">(unsent previous days + current day + TOM Advance)</small>
+      <small className="block text-muted capitalize">(unsent previous days + current day + TOM Advance)</small>
 
       </div>
-      <div className="text-[26px] font-bold tracking-tight  text-big-number">{formatRupees(totalCashInHand)}</div>
+      <div className="text-[26px] font-bold tracking-tight text-big-number">{formatRupees(totalCashInHand)}</div>
       <div className='px-1 py-2'>
 
       <div className={summaryRowClass}><span>Previous days cash not yet sent</span><b>{formatRupees(previousDaysCash)}</b></div>

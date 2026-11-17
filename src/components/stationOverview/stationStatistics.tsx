@@ -1,5 +1,13 @@
-import { cardButtonClass, cardClass, cardContainer, cardHeadingClass} from "../../globalStyles";
-import { MachineCategoryStatisticsOfDate, type EarningMachineCategory } from "../../lib/machineCategoryStatistics";
+import {
+  cardButtonClass,
+  cardClass,
+  cardContainer,
+  cardHeadingClass,
+} from "../../globalStyles";
+import {
+  MachineCategoryStatisticsOfDate,
+  type EarningMachineCategory,
+} from "../../lib/machineCategoryStatistics";
 // import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
 import { type RegisterState } from "../../lib/registerTypes";
 import {
@@ -12,7 +20,6 @@ import {
   tvmAddValueOfDate,
   tvmQrSaleOfDate,
 } from "../../lib/earningCalculations";
-
 
 interface StationStatisticsCardProps {
   registerState: RegisterState;
@@ -134,31 +141,38 @@ export default function StationStatisticsCard({
       previous: previousCashlessStatistics.tvmUpi,
     },
   ];
-  const machineCategoryStats =MachineCategoryStatisticsOfDate(registerState,date);
-  const machineCAtegoryRows: {key:EarningMachineCategory | 'overall'; label:string;}[]= [
-    {key:'CC', label: 'CC(80,81,82)'},
-    {key:'TOM', label:'TOM(50,51,52,...'},
-    {key:'TVM', label:'TVM(1,2,3,...)'},
-    {key:'RCTM',label:'RCTM'},
-    {key:'overall',label:'overall Total'},
+  const machineCategoryStats = MachineCategoryStatisticsOfDate(
+    registerState,
+    date,
+  );
+  const machineCAtegoryRows: {
+    key: EarningMachineCategory | "overall";
+    label: string;
+  }[] = [
+    { key: "CC", label: "CC(80,81,82)" },
+    { key: "TOM", label: "TOM(50,51,52,..." },
+    { key: "TVM", label: "TVM(1,2,3,...)" },
+    { key: "RCTM", label: "RCTM" },
+    { key: "overall", label: "overall Total" },
   ];
-  const cardSeparator =`${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
-  const staticCardClass ='grid grid-cols-4 gap-4 p-4 ';
-  const statisticsCard = 'border border-table-border rounded-2xl p-2 items-center flex flex-col bg-header text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200'
+  const cardSeparator = `${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
+  const staticCardClass = "grid grid-cols-4 gap-4 p-4 ";
+  const statisticsCard =
+    "border border-table-border rounded-2xl p-2 items-center flex flex-col bg-header text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200";
   return (
     <div>
-     
       <h2 className={cardSeparator}>Statistics</h2>
 
-        <div className={cardClass}>
-          <div className={staticCardClass}>
-
+      <div className={cardClass}>
+        <div className={staticCardClass}>
           {statistics.map(({ title, bestDay }) => (
             <div key={title} className={statisticsCard}>
               <small className="block text-card-text">{title}</small>
               {bestDay ? (
                 <>
-                  <b className="text-xl text-big-number">{formatRupees(bestDay.amount)}</b>
+                  <b className="text-xl text-big-number">
+                    {formatRupees(bestDay.amount)}
+                  </b>
                   <small className="block text-card-text">{bestDay.date}</small>
                 </>
               ) : (
@@ -167,17 +181,12 @@ export default function StationStatisticsCard({
             </div>
           ))}
         </div>
-        </div>
-    
+      </div>
 
       <h2 className={cardSeparator}>Cashless Transactions · day-over-day</h2>
 
       <div className={cardClass}>
         <div className={staticCardClass}>
-
-     
-    
-   
           {cashlessTransactions.map(({ title, current, previous }) => {
             const changePercent =
               previous === 0 ? null : ((current - previous) / previous) * 100;
@@ -207,50 +216,50 @@ export default function StationStatisticsCard({
           })}
         </div>
         <section className="mt-5">
-            <h2 className={cardButtonClass}>Earning by Machine Category . {date}</h2>
-            <div className={`${cardContainer} overflow-x-auto`}>
-              <table className="w-full min-w-[720px] border-collapse text-sm">
-                <thead>
-                  <tr className="border-b border-table-border text-card-text">
-                    <th className="px-3 py-3">
-                      Category
-                    </th>
-                    <th className="px-3 py-3 text-right">
-                      QR Sale
-                    </th>
-                    <th  className="px-3 py-3 text-right">
-                      Add Value
-                    </th>
-                    <th  className="px-3 py-3 text-right">UPI</th>
-                    <th  className="px-3 py-3 text-right">POS</th>
-
-                  </tr>
-                </thead>
-                <tbody>
-                  {machineCAtegoryRows.map(({key,label})=> {
-                    const row = machineCategoryStats[key];
-                    const isOverall = key === 'overall';
-                    return (
-                      <tr key={key} className={`border-b border-table-border ${isOverall ? 'font-bold bg-table' : ''}`}>
-                        <td className="px-3 py-3">
-                          {label}
-                        </td>
-                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.qrSale)}</td>
-                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.addValue)}</td>
-                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.upi)}</td>
-                        <td className="px-3 py-3 text-right tabular-nums">{formatRupees(row.pos)}</td>
-                        
-
-                      </tr>
-                    )
-                  })}
-                </tbody>
-
-              </table>
-            </div>
+          <h2 className={cardButtonClass}>
+            Earning by Machine Category . {date}
+          </h2>
+          <div className={`${cardContainer} overflow-x-auto`}>
+            <table className="w-full min-w-[720px] border-collapse text-sm">
+              <thead>
+                <tr className="border-b border-table-border text-card-text">
+                  <th className="px-3 py-3">Category</th>
+                  <th className="px-3 py-3 text-right">QR Sale</th>
+                  <th className="px-3 py-3 text-right">Add Value</th>
+                  <th className="px-3 py-3 text-right">UPI</th>
+                  <th className="px-3 py-3 text-right">POS</th>
+                </tr>
+              </thead>
+              <tbody>
+                {machineCAtegoryRows.map(({ key, label }) => {
+                  const row = machineCategoryStats[key];
+                  const isOverall = key === "overall";
+                  return (
+                    <tr
+                      key={key}
+                      className={`border-b border-table-border ${isOverall ? "font-bold bg-table" : ""}`}
+                    >
+                      <td className="px-3 py-3">{label}</td>
+                      <td className="px-3 py-3 text-right tabular-nums">
+                        {formatRupees(row.qrSale)}
+                      </td>
+                      <td className="px-3 py-3 text-right tabular-nums">
+                        {formatRupees(row.addValue)}
+                      </td>
+                      <td className="px-3 py-3 text-right tabular-nums">
+                        {formatRupees(row.upi)}
+                      </td>
+                      <td className="px-3 py-3 text-right tabular-nums">
+                        {formatRupees(row.pos)}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </section>
-           </div>
       </div>
-
+    </div>
   );
 }

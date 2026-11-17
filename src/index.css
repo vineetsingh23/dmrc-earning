@@ -71,7 +71,7 @@
   color-scheme: dark;
   --background:  linear-gradient(to right, #131212,#141412, #180f0f);
   --page-info: linear-gradient(to top, #e88d8d, #76ddfc, #f27ce2);
-  --primary:#0c3eb4;
+  --primary:#4efafa;
   --primary-foreground: #604848;
 
   
@@ -85,11 +85,11 @@
   --card: linear-gradient(to top, #444040, #3c3b3a, #2f2f2f);
   --card-text: #8ef3f5;
   --card-border: #2e2e2e;
-  --card-shadow: rgb(201, 138, 138);
+  --card-shadow: rgb(3, 2, 2);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
   --muted:#8cb0bc;
-  --header-text:#f8f1e7;
+  --header-text:#ada8a1;
   --big-number:#3cf051;
 
 
@@ -100,8 +100,8 @@
   --table-row-hover: #015138;
   --table-footer: var(--table-header);
   --table-border: #654f4f;
-  --table-text: #696e69;
-  --table-text-muted:#ffffff;
+  --table-text: #0fbc0f;
+  --table-text-muted:#a18383;
   --table-shadow: #0d0c0c;
   --calculated: #1c5a4f;
   --focus: #29a4ab;

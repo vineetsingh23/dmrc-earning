@@ -55,11 +55,6 @@
   --button-hover:rgb(8, 59, 190);
   --button-border:#ffffff;
   --isActive:#4f0583;
-  --isNotActive:#ffffff;
-
-/* big number */
-
-
 
  /* Feedback */
   --success: #a2f4c0;
@@ -74,62 +69,58 @@
 
 .dark {
   color-scheme: dark;
- /*  common colors used anywhere */
-  --background: linear-gradient(to bottom,#e8e1e1, #ffffff, #c8c8c8);
-  --page-info: linear-gradient(to top, #ffffff, #ffffff, #ffffff);
-  --primary:#ffffff;
-  --primary-foreground:#ffffff;
-  --watermark-img: #ffffff;
+  --background:  linear-gradient(to right, #131212,#141412, #180f0f);
+  --page-info: linear-gradient(to top, #e88d8d, #76ddfc, #f27ce2);
+  --primary:#0c3eb4;
+  --primary-foreground: #604848;
+
   
-  --header: linear-gradient(to top, #ffffff, #ffffff, #ffffff);
-  --header-muted: #f1f5f9;
-  --header-hover: #e2e8f0;
-  --header-text:#000000;
-
-
+  --nav-header:linear-gradient(to top, #605e5e, #5d5b5b, #626262);
+  --header-hover: #aabfd3;
+  --header-border: var(--card-border);
+  --header-shadow: var(--card-shadow);
+  
+  
   /* card colors */
-  --card: linear-gradient(to bottom,#d8d3d3,#ffffff,#e5dddd);
-  --card-text: #372a38;
-  --card-border: #bdb9b9;
-  --card-shadow: #0f0c0c;
-  --card-hover: #e8bdbd;
-  --card-header: rgb(223, 225, 225);
+  --card: linear-gradient(to top, #444040, #3c3b3a, #2f2f2f);
+  --card-text: #8ef3f5;
+  --card-border: #2e2e2e;
+  --card-shadow: rgb(201, 138, 138);
+  --card-hover: #rgb(223, 223, 223);
+  --card-header: inherit;
+  --muted:#8cb0bc;
+  --header-text:#f8f1e7;
+  --big-number:#3cf051;
 
 
   /* table colors */
-  --table: #cfcfcf;
-  --table-header: #97a0a6;
-  --table-row-alt: #dfdede;
-  --table-row-hover: #98b7b7;
-  --table-footer: #878683;
-  --header: #dddcdc;
-  --table-border: #bfbdbd;
-  --table-text: #08a513;
+  --table: #273c3c;
+  --table-header: #23353f;
+  --table-row-alt: #305b5d;
+  --table-row-hover: #015138;
+  --table-footer: var(--table-header);
+  --table-border: #654f4f;
+  --table-text: #696e69;
   --table-text-muted:#ffffff;
   --table-shadow: #0d0c0c;
-  --calculated: #978c72;
-  --focus: #3b82f6;
-  --input-background: #f8fafc;
+  --calculated: #1c5a4f;
+  --focus: #29a4ab;
+  --input-focus: #4b490f;
 
   /* Buttons */
-  --button:#ffffff;
-  --button-text:#111111;
-  --button-hover:#ffffff;
+  --button:rgb(7, 185, 235);
+  --button-text:rgb(253, 254, 255);
+  --button-hover:rgb(8, 59, 190);
   --button-border:#ffffff;
-  --isActive:#ffffff;
-  --isNotActive:#ffffff;
-
-/* big number */
-
-
+  --isActive:#a941f4;
 
  /* Feedback */
-  --success: #a7e2bd;
-  --success-border: #427e4f;
-  --success-text: #0b2d18;
-  --danger: #ebadad;
-  --danger-border:#a03a42;
-  --danger-text:#6e0e16;
+  --success: #a2f4c0;
+  --success-border: #b6fac5;
+  --success-text: #166534;
+  --danger: #d68989;
+  --danger-border:#ae0412;
+  --danger-text:#ae0412;
 
 }
 
@@ -148,7 +139,7 @@
   --color-header-hover: var(--header-hover);
   --color-header-border:var(--header-border);
   --color-header-text: var(--header-text);
-  --color-muted: var(--muted);
+  --color-text-muted: var(--text-muted);
   --color-header-shadow: var(--header-shadow);
   
 /* cards */
@@ -180,7 +171,7 @@
   --color-button-border: var(--button-border);
   --color-button-hover: var(--button-hover);
   --color-isActive: var(--isActive);
-  --color-isNotActive: var(--isNotActive);
+
 
   
   /* header */

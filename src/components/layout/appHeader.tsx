@@ -76,7 +76,7 @@ export default function AppHeader({
               to="/settings"
               className={({ isActive }) =>
                 `${navigationClass} ${
-                  isActive ? linkActiveClass : linkNotActiveClass
+                  isActive ? linkActiveClass : ''
                 }`
               }
             >

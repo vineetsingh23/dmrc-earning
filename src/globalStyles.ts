@@ -45,10 +45,10 @@ export const cardTransition = `${cardClass} transition-transform scale-95 hover:
 
 /* Tables */
 export const tableWrapperClass =
-  "overflow-auto rounded-xl border-collapse shadow-md shadow-table-shadow";
+  "overflow-auto w-full rounded-xl border-collapse shadow-md shadow-table-shadow";
 
 export const tableClass =
-  "min-w-full border-collapse px-2 overflow-none bg-table py-4";
+  "w-full border-collapse px-2 overflow-none bg-table py-4";
 export const sheetTableClass = "w-full";
 
 export const tableHeaderRowClass = "bg-table-header text-table-text border border-table-border";

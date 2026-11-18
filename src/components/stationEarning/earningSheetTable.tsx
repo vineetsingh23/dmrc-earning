@@ -495,7 +495,7 @@ export default function EarningSheetTable({
       );
     }
   }}
-  className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header mr-6 scrollbar-track-table-header/10 ${
+  className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header  scrollbar-track-table-header/30 ${
     isShiftGrid
       ? "overflow-auto! rounded-xl"
       : isFinalGrid
@@ -504,7 +504,7 @@ export default function EarningSheetTable({
   }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 180px)" }
+            ? { height: "calc(100dvh - 280px)" }
             : onAddRow
               ? { height: "calc(100dvh - 170px)" }
               : undefined
@@ -554,7 +554,7 @@ export default function EarningSheetTable({
                 key={rowIndex}
                 className={`${tableRowClass} ${
                   isShiftGrid
-                    ? "even:bg-table-row-alt hover:bg-table-row-hove"
+                    ? "even:bg-table-row-alt hover:bg-table-row-hover"
                     : ""
                 }`}
               >

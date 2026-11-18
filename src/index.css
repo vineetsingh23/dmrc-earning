@@ -403,10 +403,11 @@ button:not(:disabled) {
 
 .sheet-frozen-cell {
   isolation: isolate;
+  
   background-clip: border-box;
   background-color: color-mix(
     in srgb,
-    var(--header) 88%,
+    var(--table) 88%,
     var(--table-row-alt)
   ) !important;
 }
@@ -414,6 +415,7 @@ button:not(:disabled) {
 .sheet-frozen-cell input,
 .sheet-frozen-cell > div {
   text-align: center !important;
+  
 }
 
 .sheet-frozen-cell-even {
@@ -452,10 +454,10 @@ button:not(:disabled) {
 
 .sheet-freeze-boundary {
   box-shadow: inset -1px 0 0
-    color-mix(in srgb, var(--foreground) 25%, var(--border));
+    color-mix(in srgb, var(--foreground) 25%, var(--table-border));
 }
 
 .sheet-freeze-seam {
   box-shadow: inset -2px 0 0
-    color-mix(in srgb, var(--foreground) 35%, var(--border));
+    color-mix(in srgb, var(--foreground) 35%, var(--table-border));
 }

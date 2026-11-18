@@ -74,11 +74,11 @@ const minimumEditableColumnWidth = Math.ceil(widestDigitWidth * 6 + 24);
 
 const compactColumnWidths: Record<string, number> = {
   employeeNumber: 96,
-  shiftStartTime: 112,
-  shiftEndTime: 112,
+  shiftStartTime: 80,
+  shiftEndTime: 80,
   shiftNumber: 64,
-  qrFreeExit: 60,
-  cscSaleSv2Sv6Quantity: 64,
+  qrFreeExit: 50,
+  cscSaleSv2Sv6Quantity: 60,
   cscSaleT1T3Quantity: 64,
   cscSaleAmount: 72,
   cscRefundSv2Quantity: 64,
@@ -127,7 +127,7 @@ function getColumnFreezeProps(
   if (columnIndex === 0) {
     return {
       isFrozen,
-      className: isFrozen ? "sticky" : "",
+      className: isFrozen ? "sticky border-2 border-table-border" : "",
       style: {
         ...style,
         width: columnWidth,
@@ -169,7 +169,7 @@ function buildHeaderRows(
 
   let leafIndexCounter = 0;
   const earningHeaderStyle = isEarningGrid
-    ? "border border-border bg-table-header text-table-text"
+    ? "border border-table-border bg-table-header text-table-text"
     : "";
 
   function addHeaders(
@@ -202,7 +202,7 @@ function buildHeaderRows(
 
         if (isFrozen) zIndex = "z-30";
 
-        const headerClass = `sticky ${zIndex} ${isFrozen ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
+        const headerClass = `sticky ${zIndex} ${isFrozen ? "sheet-frozen-header " : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -495,7 +495,7 @@ export default function EarningSheetTable({
       );
     }
   }}
-  className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header  scrollbar-track-table-header/30 ${
+  className={`${tableWrapperClass} earning-sheet-scroll snap-x scroll-p-6 scrollbar-thumb-table-header scrollbar-track-table/30 hover:scrollbar-thumb-table-header/80 ${
     isShiftGrid
       ? "overflow-auto! rounded-xl"
       : isFinalGrid
@@ -504,9 +504,11 @@ export default function EarningSheetTable({
   }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 280px)" }
+            ? { height: "calc(110dvh - 270px)" }
+            : gridName === "tvm"
+              ? { height: "max(8rem, calc(100dvh - 210px))" }
             : onAddRow
-              ? { height: "calc(100dvh - 170px)" }
+              ? { height: "calc(100dvh - 210px)" }
               : undefined
         }
         onKeyDown={handleSheetKeyDown}

@@ -7,7 +7,10 @@ import {
   tomOperators,
 } from "../lib/businessRules";
 import { effectiveDetailListRows } from "../lib/carriedLists";
-import { updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
+import {
+  addCarriedDetailListRow,
+  updateCarriedDetailListCell,
+} from "../handlers/carriedListsHandlers";
 import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
 import { miscRowCountOf, miscRowsOf, type MiscKind } from "../lib/miscEntries";
 import MiscEntryCard from "./dashboard/miscEntryCard";
@@ -303,6 +306,30 @@ export default function RegisterWorkspace({
                       selectedDate,
                       "imprestIssue",
                     )}
+                    onTomNumberChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          0,
+                          typedValue,
+                        ),
+                      )
+                    }
+                    onImprestChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          1,
+                          typedValue,
+                        ),
+                      )
+                    }
                     onAdvanceChange={(rowIndex, typedValue) =>
                       updateRegisterState((draftState) =>
                         updateCarriedDetailListCell(
@@ -315,36 +342,66 @@ export default function RegisterWorkspace({
                         ),
                       )
                     }
+onAddRow={() =>
+  updateRegisterState((draftState) =>
+    addCarriedDetailListRow(
+      draftState,
+      selectedDate,
+      "imprestIssue",
+    ),
+  )
+}
                   />
                   <AdvanceReceivedCard
-  listRows={effectiveDetailListRows(
-    registerState,
-    selectedDate,
-    "advanceReceived",
-  )}
-  onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState((draftState) => {
-      const operatorNumber = tomOperators[rowIndex]?.tomNumber;
+listRows={effectiveDetailListRows(
+  registerState,
+  selectedDate,
+  "advanceReceived",
+)}
+onTomNumberChange={(rowIndex, typedValue) =>
+  updateRegisterState((draftState) =>
+    updateCarriedDetailListCell(
+      draftState,
+      selectedDate,
+      "advanceReceived",
+      rowIndex,
+      0,
+      typedValue,
+    ),
+  )
+}
+onAdvanceChange={(rowIndex, typedValue) =>
+  updateRegisterState((draftState) => {
+    const operatorNumber = tomOperators[rowIndex]?.tomNumber;
 
-      if (operatorNumber) {
-        releaseAdvanceMatchBeforeAdvanceEdit(
-          draftState,
-          selectedDate,
-          operatorNumber,
-        );
-      }
-
-      updateCarriedDetailListCell(
+    if (operatorNumber) {
+      releaseAdvanceMatchBeforeAdvanceEdit(
         draftState,
         selectedDate,
-        "advanceReceived",
-        rowIndex,
-        1,
-        typedValue,
+        operatorNumber,
       );
-    })
-  }
-/>
+    }
+
+    updateCarriedDetailListCell(
+      draftState,
+      selectedDate,
+      "advanceReceived",
+      rowIndex,
+      1,
+      typedValue,
+    );
+  })
+}
+onAddRow={() =>
+  updateRegisterState((draftState) =>
+    addCarriedDetailListRow(
+      draftState,
+      selectedDate,
+      "advanceReceived",
+    ),
+  )
+}
+                  />
                 </div>
                 <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
                   {renderMiscCard("Misc debit", "miscDebit")}

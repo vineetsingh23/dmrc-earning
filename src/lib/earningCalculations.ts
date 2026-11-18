@@ -71,12 +71,18 @@ export const breakIntoDenominations = (amount: number): Record<string, number> =
 
 export const imprestIssuedTotalForDate = (state: RegisterState, date: string) => {
   const issuedRows = effectiveDetailListRows(state, date, 'imprestIssue');
-  return tomOperators.reduce((total, tomOperator, rowIndex) => total + tomOperator.imprestAmount + parseNumber(issuedRows[rowIndex]?.[2]), 0);
+  const rowCount = Math.max(tomOperators.length, issuedRows.length);
+  return Array.from({ length: rowCount }, (_, rowIndex) => {
+    const imprestAmount = rowIndex < tomOperators.length
+      ? tomOperators[rowIndex].imprestAmount
+      : parseNumber(issuedRows[rowIndex]?.[1]);
+    return imprestAmount + parseNumber(issuedRows[rowIndex]?.[2]);
+  }).reduce((total, amount) => total + amount, 0);
 };
 
 export const advanceReceivedTotalForDate = (state: RegisterState, date: string) => {
   const receivedRows = effectiveDetailListRows(state, date, 'advanceReceived');
-  return tomOperators.reduce((total, _tomOperator, rowIndex) => total + parseNumber(receivedRows[rowIndex]?.[1]), 0);
+  return receivedRows.reduce((total, row) => total + parseNumber(row[1]), 0);
 };
 
 

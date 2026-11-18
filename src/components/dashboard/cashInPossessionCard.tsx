@@ -107,7 +107,7 @@ export default function CashInPossessionCard({
       className={`${cardClass} ${cashDifference === 0 ? "" : "bg-danger! border-2 border-danger-border border-t-danger-border"}`}
       onKeyDown={handleSheetKeyDown}
     >
-      <div className={cardHeaderClass}>
+      <div className={`${cardHeaderClass} `}>
         <div className="max-w-xs">
           <h2 className={cardHeadingClass}>Cash in possession</h2>
 
@@ -119,16 +119,18 @@ export default function CashInPossessionCard({
               "No counts yet. Enter the notes and coins you hold."}
           </p>
         </div>
+        <div className="self-start top-0">
+
         {cashDifference === 0 ? (
-          <div className="flex items-center gap-2">
+          <div className="flex  gap-2 ">
             <p className="text-success font-bold">Cash OK</p>
            <CircleCheck className="size-10 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
           </div>
         ): (
-           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-danger  border border-danger rounded-md transition duration-300 ">
+          <div className="flex w-40 px-2 py-1 top-0 justify-between items-center bg-danger  border border-danger rounded-md transition duration-300 ">
           <span
             className={`${cashDifference === 0 ? "" : "text-danger-text"} text-center font-medium w-1/2`}
-          >
+            >
             {formatRupees(Number(cashDifference))} 
           </span>
 
@@ -138,6 +140,7 @@ export default function CashInPossessionCard({
         </div>
         </div>
         )}
+        </div>
        
              
           

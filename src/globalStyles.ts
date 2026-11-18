@@ -93,5 +93,6 @@ export const dialogClass ="w-[min(360px,90%)] rounded-2xl border border-border b
  */
 export const tableHeaderGroupClasses = [
   "bg-table-header text-sm font-semibold text-table-text",
+
  
 ];

@@ -10,13 +10,13 @@
 :root {
   color-scheme: light;
   /*  common colors used anywhere */
-  --background:  linear-gradient(to right, #c4c5c6,#f3f6eb, #d1cfcf);
+  --background:  linear-gradient(to right, #c4c5c6,#9da784, #d1cfcf);
   --page-info: linear-gradient(to top, #850808, #064b60, #6d0960);
   --primary:#0c3eb4;
-  --primary-foreground: #ffffff;
+  --primary-foreground: #726b6b;
   --watermark-img: #ffffff;
   
-  --nav-header:linear-gradient(to top, #8af5e1, #c3a6d7, #d3f0a1);
+  --nav-header:linear-gradient(to left, #a09d80, #c9c092, #37aaa4);
   --header-muted: #3c4b5a;
   --header-hover: #373a3d;
   --header-border: var(--card-border);
@@ -24,35 +24,36 @@
   
   
   /* card colors */
-  --card: linear-gradient(to top, #e88a42, #fefff8, #10877b);
+  --card: linear-gradient(to top right, #e88a42, #fefff8, #10877b);
   --card-text: #4b057a;
   --card-border: inherit;
   --card-shadow: rgb(52, 30, 30);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
   --muted:#212425;
-  --header-text:#f8f1e7;
+  --header-text:#534a3d;
   --big-number:#7916c0;
 
 
   /* table colors */
-  --table: #b4dcdc;
-  --table-header: #6993a9;
-  --table-row-alt: #c5f0f2;
+  --table-body: #a2ac80;
+  --table-header: #257099;
+  --table-row-text: #172923;
+  --table-row-alt: #b5bd9a;
   --table-row-hover: #42ffc3;
   --table-footer: var(--table-header);
-  --table-border: #bfbdbd;
-  --table-text: #696e69;
-  --table-text-muted:#ffffff;
+  --table-border: #648286;
+  --table-text: #e5ebe5;
+  --table-text-muted:#2e2121;
   --table-shadow: #0d0c0c;
   --calculated: #29e1c2;
   --focus: #3b82f6;
   --input-focus: #ece985;
 
   /* Buttons */
-  --button:rgb(31, 102, 122);
+  --button: #4f0583; ;
   --button-text:#f9f9f9;
-  --button-hover:rgb(8, 59, 190);
+  --button-hover: #4f0583;
   --button-border:#ffffff;
   --isActive:#4f0583;
 
@@ -69,55 +70,57 @@
 
 .dark {
   color-scheme: dark;
-  --background:  linear-gradient(to right, #131212,#141412, #180f0f);
+  --background:  linear-gradient(to right, #2b2525,#33332c, #3b3939);
   --page-info: linear-gradient(to top, #e88d8d, #76ddfc, #f27ce2);
   --primary:#4efafa;
   --primary-foreground: #604848;
 
   
-  --nav-header:linear-gradient(to top, #605e5e, #5d5b5b, #626262);
+  --nav-header:linear-gradient(to top, #535050, #3f3333, #524c4c);
   --header-hover: #aabfd3;
   --header-border: var(--card-border);
   --header-shadow: var(--card-shadow);
   
   
   /* card colors */
-  --card: linear-gradient(to top, #444040, #3c3b3a, #2f2f2f);
-  --card-text: #8ef3f5;
+  --card: linear-gradient(to top, #3d3838, #524c46, #504c4c);
+  --card-text: #9edfa9;
   --card-border: #2e2e2e;
   --card-shadow: rgb(3, 2, 2);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
-  --muted:#8cb0bc;
-  --header-text:#ada8a1;
+  --muted:#74939e;
+  --header-text:#ebbb78;
   --big-number:#3cf051;
 
 
   /* table colors */
-  --table: #273c3c;
-  --table-header: #23353f;
-  --table-row-alt: #305b5d;
-  --table-row-hover: #015138;
+  --table: #474343;
+  --table-header: #1a1209;
+  --table-body: #312c26;
+  --table-row-alt: #2b241b;
+  --table-row-text: #2b241b;
+  --table-row-hover: #7c4d18;
   --table-footer: var(--table-header);
-  --table-border: #654f4f;
-  --table-text: #0fbc0f;
+  --table-border: #5a5353;
+  --table-text: #aec4ae;
   --table-text-muted:#a18383;
-  --table-shadow: #0d0c0c;
-  --calculated: #1c5a4f;
-  --focus: #29a4ab;
-  --input-focus: #4b490f;
+  --table-shadow: #141313;
+  --calculated: #480255;
+  --focus: #37d5dd;
+  --input-focus: #2d0236;
 
   /* Buttons */
-  --button:rgb(7, 185, 235);
-  --button-text:rgb(253, 254, 255);
-  --button-hover:rgb(8, 59, 190);
-  --button-border:#ffffff;
-  --isActive:#a941f4;
+  --button:rgb(3, 45, 56);
+  --button-text:#cecbcb;
+  --button-hover:rgb(2, 44, 49);
+  --button-border:#e9d6d6;
+  --isActive:#3d0963;
 
  /* Feedback */
-  --success: #a2f4c0;
-  --success-border: #b6fac5;
-  --success-text: #166534;
+  --success: #0a3319;
+  --success-border: #3d9450;
+  --success-text: #51f77a;
   --danger: #d68989;
   --danger-border:#ae0412;
   --danger-text:#ae0412;
@@ -155,9 +158,11 @@
   /* tables */
   --color-table: var(--table);
   --color-table-header: var(--table-header);
+  --color-table-body: var(--table-body);
   --color-table-row-alt: var(--table-row-alt);
+  --color-table-row-text: var(--table-row-text);
   --color-table-row-hover: var(--table-row-hover);
-  --color-card-accent: var(--card-accent);
+  --color-table-text: var(--table-text);
   --color-table-footer: var(--table-footer);
   --color-table-border: var(--table-border);
   --color-table-shadow: var(--table-shadow);
@@ -407,8 +412,8 @@ button:not(:disabled) {
   background-clip: border-box;
   background-color: color-mix(
     in srgb,
-    var(--table) 88%,
-    var(--table-row-alt)
+    var(--table-body) 85%,
+    var(--table-header) 85%
   ) !important;
 }
 
@@ -421,8 +426,8 @@ button:not(:disabled) {
 .sheet-frozen-cell-even {
   background-color: color-mix(
     in srgb,
-    var(--table-row-alt),
-    var(--table-header)
+    var(--table-body) ,
+    var(--table-header) 85%
   ) !important;
 }
 

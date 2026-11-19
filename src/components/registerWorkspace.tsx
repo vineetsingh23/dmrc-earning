@@ -7,7 +7,7 @@ import {
   tomOperators,
 } from "../lib/businessRules";
 import { effectiveDetailListRows } from "../lib/carriedLists";
-import { updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
+import { addCarriedDetailListRow, updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
 import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
 import { miscRowCountOf, miscRowsOf, type MiscKind } from "../lib/miscEntries";
 import MiscEntryCard from "./dashboard/miscEntryCard";
@@ -315,6 +315,34 @@ export default function RegisterWorkspace({
                         ),
                       )
                     }
+                    onTomNumberChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          0,
+                          typedValue,
+                        ),
+                      )
+                    }
+                    onAddRow={() =>
+                      updateRegisterState((draftState) => {
+                        const rows = effectiveDetailListRows(draftState, selectedDate, "imprestIssue");
+                        addCarriedDetailListRow(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          tomOperators.map((tomOperator) => [
+                            tomOperator.tomNumber,
+                            String(tomOperator.imprestAmount),
+                            "",
+                          ]),
+                          [`Additional ${Math.max(rows.length - tomOperators.length, 0) + 1}`, "0", ""],
+                        );
+                      })
+                    }
                   />
                   <AdvanceReceivedCard
   listRows={effectiveDetailListRows(
@@ -341,6 +369,30 @@ export default function RegisterWorkspace({
         rowIndex,
         1,
         typedValue,
+      );
+    })
+  }
+  onTomNumberChange={(rowIndex, typedValue) =>
+    updateRegisterState((draftState) =>
+      updateCarriedDetailListCell(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        rowIndex,
+        0,
+        typedValue,
+      ),
+    )
+  }
+  onAddRow={() =>
+    updateRegisterState((draftState) => {
+      const rows = effectiveDetailListRows(draftState, selectedDate, "advanceReceived");
+      addCarriedDetailListRow(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        tomOperators.map((tomOperator) => [tomOperator.tomNumber, ""]),
+        [`Additional ${Math.max(rows.length - tomOperators.length, 0) + 1}`, ""],
       );
     })
   }

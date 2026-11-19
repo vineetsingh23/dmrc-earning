@@ -70,9 +70,9 @@ export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold bg-cal
 
 export const tableRowClass ="transition-colors duration-200 bg-table-body even:bg-table-row-alt hover:bg-table-row-hover ";
 
-export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-table-row-text outline-none transition-colors placeholder:text-table-text/30 focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
+export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-table-row-text outline-none transition-colors placeholder:text-table-row-text/30 focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
 
-export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
+export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-row-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
 export const summaryRowClass ="flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-card-text";
 

@@ -10,7 +10,11 @@ export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
   if (focusedCell.tagName === 'TEXTAREA' && ['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter'].includes(pressedKey)) return;
   let rowIndex = Number(focusedCell.dataset.row), columnIndex = Number(focusedCell.dataset.column);
   const gridElement = event.currentTarget;
-  const lastColumnIndex = gridElement.querySelectorAll(`[data-grid="${gridName}"][data-row="0"]`).length - 1;
+  const gridColumns = Array.from(
+    gridElement.querySelectorAll<HTMLElement>(`[data-grid="${gridName}"]`),
+    cell => Number(cell.dataset.column),
+  );
+  const lastColumnIndex = Math.max(...gridColumns);
 
   if (pressedKey === 'ArrowDown' || (pressedKey === 'Enter' && !event.shiftKey)) rowIndex++;
   else if (pressedKey === 'ArrowUp' || (pressedKey === 'Enter' && event.shiftKey)) rowIndex--;

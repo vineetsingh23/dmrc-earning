@@ -107,37 +107,37 @@ export default function CashInPossessionCard({
       className={`${cardClass} ${cashDifference === 0 ? "" : "bg-danger! border-2 border-danger-border border-t-danger-border"}`}
       onKeyDown={handleSheetKeyDown}
     >
-      <div className={cardHeaderClass}>
-        <div className="max-w-xs">
-          <h2 className={cardHeadingClass}>Cash in possession</h2>
+      <div className={`${cardHeaderClass} flex-col items-start gap-2`}>
+        <div className="flex w-full items-center justify-between gap-2">
+          <h2 className={`${cardHeadingClass} mb-0! text-nowrap`}>Cash in possession</h2>
+            {cashDifference === 0 ? (
+              <div className="ml-4 flex gap-2 items-center bg-transparent rounded-md px-1">
+                <p className="text-success font-bold">Cash OK</p>
+               <CircleCheck className="size-7 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
+              </div>
+            ): (
+               <div className="ml-2 flex w-40 items-center justify-between bg-danger pl-2 py-1 border border-danger rounded-md transition duration-300">
+              <span
+                className={`${cashDifference === 0 ? "" : "text-danger-text"} font-medium`}
+              >
+                {formatRupees(Number(cashDifference))}
+              </span>
 
-          <p className="mb-2 text-xs text-muted">
+              <div className="flex flex-end transition duration-200 gap-2">
+
+                <CircleLetterX className="stroke-danger-text" size={30} strokeWidth={2}/>
+            </div>
+            </div>
+            )}
+
+        </div>
+          <p className="mb-2 w-full text-left text-xs text-muted">
             {cashCountsSource === "saved" && "Counts saved for this date."}
             {cashCountsSource === "carried" &&
               "Counts carried over from the last counted date. Update them if the cash in your drawer is different."}
             {cashCountsSource === "none" &&
               "No counts yet. Enter the notes and coins you hold."}
           </p>
-        </div>
-        {cashDifference === 0 ? (
-          <div className="flex items-center gap-2">
-            <p className="text-success font-bold">Cash OK</p>
-           <CircleCheck className="size-10 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
-          </div>
-        ): (
-           <div className="flex w-40 px-2 py-2  justify-between items-center h-12 bg-danger  border border-danger rounded-md transition duration-300 ">
-          <span
-            className={`${cashDifference === 0 ? "" : "text-danger-text"} text-center font-medium w-1/2`}
-          >
-            {formatRupees(Number(cashDifference))} 
-          </span>
-
-          <div className="flex justify-end transition duration-200  relative ml-4">
-          
-            <CircleLetterX className="stroke-danger-text" size={30} strokeWidth={2}/>
-        </div>
-        </div>
-        )}
        
              
           

@@ -12,10 +12,10 @@ export const navigationClass = "inline-flex shrink-0 items-center rounded-lg px-
 // export const navLinkClass ="rounded-md border border-border bg-header px-3.5 py-1.5 text-sm font-medium  transition-colors hover:button-border hover:bg-header-hover  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const linkActiveClass ="bg-isActive text-button-text border";
-export const linkNotActiveClass ="border border-button-border bg-button text-button-text hover:bg-button-hover hover:border-focus";
+export const linkNotActiveClass ="border border-button-border bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";
 export const datePickerClass = "flex gap-3 items-center justify-center px-2 py-1.5 outline-hidden bg-isActive/80 text-button-text rounded-lg border-button-border hover:bg-isActive/90"
 export const appHeaderControlsClass = "col-start-2 row-start-1 flex shrink-0 items-center justify-self-end gap-2 md:col-start-3";
-export const themeButtonClass ="rounded-md border border-button-border bg-isActive px-3 py-1.5 text-sm font-medium transition-colors hover:button-border hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+export const themeButtonClass ="rounded-md border border-button-border bg-isActive px-3 py-1.5 text-sm font-medium transition-colors hover:button-border hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus shadow-md shadow-button-shadow";
 
 export const dateInputClass ="rounded-lg border border-border bg-input-background px-2 py-1.5 text-lg  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
@@ -70,16 +70,16 @@ export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold bg-cal
 
 export const tableRowClass ="transition-colors duration-200 bg-table-body even:bg-table-row-alt hover:bg-table-row-hover ";
 
-export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 text-sm text-table-row-text outline-none transition-colors placeholder:text-table-row-text/30 focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
+export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-table-row-text outline-none transition-colors placeholder:text-table-row-text/30 focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
 
 export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-row-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
-export const summaryRowClass ="flex justify-between border-b border-dashed border-border font-semibold py-1 px-2 tracking-wide text-card-text";
+export const summaryRowClass ="flex justify-between border-b border-dashed border-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
 
 /* Buttons and dialogs */
-export const primaryButtonClass ="flex gap-4 items-center  rounded-lg bg-button text-button-text px-3 py-1.5 font-semibold  transition-colors hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50";
+export const primaryButtonClass ="flex gap-4 items-center  rounded-lg bg-button text-button-text px-3 py-1.5 font-semibold  transition-colors hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50 shadow-md shadow-button-shadow";
 
-export const secondaryButtonClass ="rounded-lg border border-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-header transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
+export const secondaryButtonClass ="rounded-lg border border-button-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-header transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const pageHeadingClass = "text-xl font-bold";
 

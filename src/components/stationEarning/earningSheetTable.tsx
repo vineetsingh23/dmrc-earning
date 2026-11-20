@@ -74,8 +74,8 @@ const minimumEditableColumnWidth = Math.ceil(widestDigitWidth * 6 + 24);
 
 const compactColumnWidths: Record<string, number> = {
   employeeNumber: 96,
-  shiftStartTime: 112,
-  shiftEndTime: 112,
+  shiftStartTime: 80,
+  shiftEndTime: 80,
   shiftNumber: 64,
   qrFreeExit: 60,
   cscSaleSv2Sv6Quantity: 64,
@@ -169,7 +169,7 @@ function buildHeaderRows(
 
   let leafIndexCounter = 0;
   const earningHeaderStyle = isEarningGrid
-    ? "border border-border bg-table-header text-table-header-text"
+    ? "border border-table-border bg-table-header text-table-header-text"
     : "";
 
   function addHeaders(

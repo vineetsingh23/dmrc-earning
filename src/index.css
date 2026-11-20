@@ -36,14 +36,14 @@
 
 
   /* table colors */
-  --table-body: #a2ac80;
-  --table-header: #257099;
+  --table-body: #a5e6dd;
+  --table-header: #83b1a5;
   --table-row-text: #172923;
-  --table-row-alt: #b5bd9a;
+  --table-row-alt: #95dace;
   --table-row-hover: #42ffc3;
   --table-footer: var(--table-header);
   --table-border: #648286;
-  --table-text: #e5ebe5;
+  --table-text: #2e2e30;
   --table-text-muted:#2e2121;
   --table-shadow: #0d0c0c;
   --calculated: #29e1c2;
@@ -51,17 +51,18 @@
   --input-focus: #ece985;
 
   /* Buttons */
-  --button: #4f0583; ;
-  --button-text:#f9f9f9;
-  --button-hover: #4f0583;
-  --button-border:#ffffff;
+  --button: #17807a; ;
+  --button-text:#ffffff;
+  --button-hover: #0d4749;
+  --button-border:#9ef7dc;
+  --button-shadow: var(--card-shadow);
   --isActive:#4f0583;
 
  /* Feedback */
   --success: #a2f4c0;
   --success-border: #b6fac5;
   --success-text: #166534;
-  --danger: #d68989;
+  --danger: #f1c8c8;
   --danger-border:#ae0412;
   --danger-text:#ae0412;
 
@@ -99,16 +100,16 @@
   --table-header: #1a1209;
   --table-body: #312c26;
   --table-row-alt: #2b241b;
-  --table-row-text: #2b241b;
-  --table-row-hover: #7c4d18;
+  --table-row-text: #e4d5c0;
+  --table-row-hover: #5a442d;
   --table-footer: var(--table-header);
   --table-border: #5a5353;
   --table-text: #aec4ae;
   --table-text-muted:#a18383;
   --table-shadow: #141313;
-  --calculated: #480255;
+  --calculated: #d1c408;
   --focus: #37d5dd;
-  --input-focus: #2d0236;
+  --input-focus: #7e4d03;
 
   /* Buttons */
   --button:rgb(3, 45, 56);
@@ -175,6 +176,7 @@
   --color-button-text: var(--button-text);
   --color-button-border: var(--button-border);
   --color-button-hover: var(--button-hover);
+  --color-button-shadow: var(--button-shadow);
   --color-isActive: var(--isActive);
 
 

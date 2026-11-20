@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Link, Navigate, Route, Routes } from "react-router-dom";
 import { BookOpen } from "lucide-react";
 import AppHeader from "./layout/appHeader";
@@ -26,6 +26,7 @@ import { recordBankTransfer } from "../handlers/cashToBankHandlers";
 import { useRegisterData } from "../hooks/useRegisterData";
 import { useDashboardFigures } from "../hooks/useDashboardFigures";
 import { useBankNoteDraft } from "../hooks/useBankNoteDraft";
+import { useThemeMode } from "../hooks/useThemeMode";
 import ImprestIssueCard from "./dashboard/imprestIssueCard";
 import AdvanceReceivedCard from "./dashboard/advanceReceivedCard";
 import TvmEarningPage from "./stationEarning/tvmEarningPage";
@@ -102,18 +103,8 @@ export default function RegisterWorkspace({
     new Date().toISOString().slice(0, 10),
   );
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme
-      ? savedTheme === "dark"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+  const { isDarkMode, toggleDarkMode } = useThemeMode();
   const rowsOfSelectedDate = registerState.shiftEntries[selectedDate] ?? {};
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  }, [isDarkMode]);
 
   // const renderDetailList = (
   //   title: string,
@@ -217,7 +208,7 @@ export default function RegisterWorkspace({
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode((theme) => !theme)}
+          onToggleDarkMode={toggleDarkMode}
           showNavigation={false}
         />
         <main className="mx-auto max-w-screen-2xl p-4 md:p-6">
@@ -241,7 +232,7 @@ export default function RegisterWorkspace({
         selectedDate={selectedDate}
         onDateChange={setSelectedDate}
         isDarkMode={isDarkMode}
-        onToggleDarkMode={() => setIsDarkMode((theme) => !theme)}
+        onToggleDarkMode={toggleDarkMode}
       />
 
       <main className="mx-auto min-h-[calc(100vh-68px)] max-w-screen-2xl p-4 md:p-6">

@@ -66,7 +66,24 @@
   --danger-border:#ae0412;
   --danger-text:#ae0412;
 
-
+  /* Station login page */
+  --login-bg: linear-gradient(160deg, #f6f3ee 0%, #ece7df 55%, #e3e8ef 100%);
+  --login-grid: rgb(23 59 99 / 7%);
+  --login-glow-1: rgb(227 30 36 / 16%);
+  --login-glow-2: rgb(23 59 99 / 18%);
+  --login-card: rgb(255 255 255 / 82%);
+  --login-card-border: rgb(23 59 99 / 12%);
+  --login-card-shadow: 0 24px 60px -24px rgb(23 59 99 / 35%);
+  --login-text: #14233a;
+  --login-muted: #5b6676;
+  --login-accent: #c8102e;
+  --login-accent-hover: #a50d26;
+  --login-accent-text: #ffffff;
+  --login-line-2: #173b63;
+  --login-input: #ffffff;
+  --login-input-border: #cfd6df;
+  --login-ring: rgb(200 16 46 / 22%);
+  --login-chip: #f1ede6;
 }
 
 .dark {
@@ -126,6 +143,24 @@
   --danger-border:#ae0412;
   --danger-text:#ae0412;
 
+  /* Station login page */
+  --login-bg: linear-gradient(160deg, #0b1220 0%, #101a2c 55%, #161226 100%);
+  --login-grid: rgb(148 178 220 / 6%);
+  --login-glow-1: rgb(255 77 92 / 20%);
+  --login-glow-2: rgb(56 140 255 / 18%);
+  --login-card: rgb(17 26 43 / 78%);
+  --login-card-border: rgb(148 178 220 / 14%);
+  --login-card-shadow: 0 24px 60px -20px rgb(0 0 0 / 70%);
+  --login-text: #e8eef7;
+  --login-muted: #93a1b5;
+  --login-accent: #ff4d5c;
+  --login-accent-hover: #ff6b78;
+  --login-accent-text: #1a0508;
+  --login-line-2: #5aa2ff;
+  --login-input: #0d1626;
+  --login-input-border: #2a3a54;
+  --login-ring: rgb(255 77 92 / 28%);
+  --login-chip: #1a263b;
 }
 
 
@@ -194,7 +229,19 @@
   --color-danger: var(--danger);
   --color-danger-text: var(--danger-text);
   --color-danger-border: var(--danger-border);
- 
+
+  /* station login page */
+  --color-login-text: var(--login-text);
+  --color-login-muted: var(--login-muted);
+  --color-login-accent: var(--login-accent);
+  --color-login-accent-hover: var(--login-accent-hover);
+  --color-login-accent-text: var(--login-accent-text);
+  --color-login-line-2: var(--login-line-2);
+  --color-login-input: var(--login-input);
+  --color-login-input-border: var(--login-input-border);
+  --color-login-ring: var(--login-ring);
+  --color-login-chip: var(--login-chip);
+  --color-login-card-border: var(--login-card-border);
 }
 
 @layer components {
@@ -467,4 +514,38 @@ button:not(:disabled) {
 .sheet-freeze-seam {
   box-shadow: inset -2px 0 0
     color-mix(in srgb, var(--foreground) 35%, var(--table-border));
+}
+
+/* Station login page */
+.login-backdrop {
+  background: var(--login-bg);
+  transition: background 240ms ease;
+}
+
+.login-backdrop::before {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(var(--login-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--login-grid) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, #000 30%, transparent 75%);
+  content: "";
+  pointer-events: none;
+}
+
+.login-glow-1 { background: var(--login-glow-1); }
+.login-glow-2 { background: var(--login-glow-2); }
+
+.login-card {
+  background: var(--login-card);
+  border: 1px solid var(--login-card-border);
+  box-shadow: var(--login-card-shadow);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+}
+
+.login-select option {
+  background: var(--login-input);
+  color: var(--login-text);
 }

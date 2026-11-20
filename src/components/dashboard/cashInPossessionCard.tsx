@@ -112,7 +112,7 @@ export default function CashInPossessionCard({
           <h2 className={`${cardHeadingClass} mb-0! text-nowrap`}>Cash in possession</h2>
             {cashDifference === 0 ? (
               <div className="ml-4 flex gap-2 items-center bg-transparent rounded-md px-1">
-                <p className="text-success font-bold">Cash OK</p>
+                <p className="text-success-text font-bold">Cash OK</p>
                <CircleCheck className="size-7 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
               </div>
             ): (

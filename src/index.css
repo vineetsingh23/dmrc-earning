@@ -102,7 +102,7 @@
   
   /* card colors */
   --card: linear-gradient(to top, #3d3838, #524c46, #504c4c);
-  --card-text: #9edfa9;
+  --card-text: #D7FCDF;
   --card-border: #2e2e2e;
   --card-shadow: rgb(3, 2, 2);
   --card-hover: #rgb(223, 223, 223);

@@ -22,8 +22,8 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
       <small className="text-mu flex flex-col">
         <ul className='flex flex-col min-w-30 text-nowrap'>
           <li className="text-primary">■<span> Total earning</span></li>
-          <li className="text-success">■<span> Selected Day</span></li>
-          <li className="text-danger">■<span> Cashless</span></li>
+          <li className="text-success">■<span> Cashless earning</span></li>
+          <li className="text-danger">■<span> Selected day (per date) </span></li>
         </ul>
      
         {/* <span className="text-ac">■</span> selected day · <span className="text-ok">■</span> Cashless */}

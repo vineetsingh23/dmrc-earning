@@ -14,7 +14,7 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
   const tvmRows = registerState.tvmEntries?.[date] ?? {};
   return (
     <>
-       <div className="flex justify-between">
+       <div className="flex justify-between mb-4">
                 <header className="page-intro">
                  <h1 className="page-info">TVM Earning</h1>
                 </header>

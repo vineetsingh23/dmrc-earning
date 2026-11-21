@@ -423,10 +423,23 @@ export default function RegisterWorkspace({
           <Route
             path="/shift-entry"
             element={
-              <div className="space-y-4">
-                <header className="page-intro">
+              <div className="">
+                <header className="flex justify-end mb-4">
                   <h1 className="page-info">CC and TOM Earning</h1>
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateRegisterState((draftState) => {
+                        draftState.shiftRowCount += 1;
+                      })
+                    }
+                    className={primaryButtonClass}
+                  >
+                    + Add row
+                  </button>
                 </header>
+               
+      
                <EarningSheetTable
   columns={visibleShiftColumns}
   frozenColumnCount={2}
@@ -482,19 +495,7 @@ export default function RegisterWorkspace({
     })
   }
 />
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() =>
-                      updateRegisterState((draftState) => {
-                        draftState.shiftRowCount += 1;
-                      })
-                    }
-                    className={primaryButtonClass}
-                  >
-                    + Add row
-                  </button>
-                </div>
+                
               </div>
             }
           />

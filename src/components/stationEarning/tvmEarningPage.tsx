@@ -14,10 +14,15 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
   const tvmRows = registerState.tvmEntries?.[date] ?? {};
   return (
     <>
+       <div className="flex justify-between">
+                <header className="page-intro">
+                 <h1 className="page-info">TVM Earning</h1>
+                </header>
       <button className={`${primaryButtonClass}`}
         onClick={() => updateRegisterState(draftState => { draftState.tvmRowCount++; })}>
         + Add row
       </button>
+       </div>
       <EarningSheetTable
         columns={tvmEarningColumns}
         gridName='tvm'

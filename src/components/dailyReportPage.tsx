@@ -15,7 +15,7 @@ interface DailyReportPageProps {
 }
 
 const buttonClass = 'rounded-xl border border-button-border bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
-const inputClass = 'w-full rounded-lg border border-table-border bg-inp px-2 py-1 text-sm text-table-text outline-hidden focus:ring-2 focus:ring-ac';
+const inputClass = 'w-full rounded-lg border border-table-border/30 bg-input-focus px-2 py-1 text-sm text-table-text outline-hidden focus:ring-2 focus:ring-focus';
 
 export default function DailyReportPage({ registerState, updateRegisterState, date, stationName }: DailyReportPageProps) {
   const [feedback, setFeedback] = useState('');

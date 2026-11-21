@@ -17,8 +17,8 @@ import {
   dailyQrSaleOfDate,
   datesWithEntriesUpTo,
   formatRupees,
-  tvmAddValueOfDate,
   tvmQrSaleOfDate,
+  dailyCashlessOfDate
 } from "../../lib/earningCalculations";
 
 interface StationStatisticsCardProps {
@@ -90,13 +90,13 @@ export default function StationStatisticsCard({
     {
       title: "Highest Cashless Earning this month",
       bestDay: findBestDay(datesTillDate, (entryDate) =>
-        tvmAddValueOfDate(registerState, entryDate),
+        dailyCashlessOfDate(registerState, entryDate),
       ),
     },
     {
       title: "Highest Cashless Earning till date",
       bestDay: findBestDay(datesTillDate, (entryDate) =>
-        tvmAddValueOfDate(registerState, entryDate),
+       dailyCashlessOfDate(registerState, entryDate),
       ),
     },
   ];

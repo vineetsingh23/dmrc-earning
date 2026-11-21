@@ -14,8 +14,8 @@ interface DailyReportPageProps {
   stationName: string;
 }
 
-const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
-const inputClass = 'w-full rounded-lg border border-bd bg-inp px-2 py-1 text-sm text-tx outline-hidden focus:ring-2 focus:ring-ac';
+const buttonClass = 'rounded-xl border border-button-border bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
+const inputClass = 'w-full rounded-lg border border-table-border bg-inp px-2 py-1 text-sm text-table-text outline-hidden focus:ring-2 focus:ring-ac';
 
 export default function DailyReportPage({ registerState, updateRegisterState, date, stationName }: DailyReportPageProps) {
   const [feedback, setFeedback] = useState('');
@@ -72,17 +72,17 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
           </button>
         </div>
       
-<div className="overflow-x-auto rounded-xl border border-bd">
+<div className="overflow-x-auto rounded-xl border border-table-border">
   <table className="w-full min-w-[480px] border-collapse text-sm">
-    <thead className="bg-surface text-tx">
+    <thead className="bg-surface text-table-text">
       <tr>
-        <th className="w-16 border-b border-bd px-3 py-3 text-center">
+        <th className="w-16 border-b border-table-border px-3 py-3 text-center">
           S.No.
         </th>
-        <th className="border-b border-bd px-4 py-3 text-left">
+        <th className="border-b border-table-border px-4 py-3 text-left">
           Report Particulars
         </th>
-        <th className="w-[40%] border-b border-bd px-4 py-3 text-left">
+        <th className="w-[40%] border-b border-table-border px-4 py-3 text-left">
           Entry
         </th>
       </tr>
@@ -94,11 +94,11 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
           key={field.fieldKey}
           className="last:border-b-0 hover:bg-surface/60"
         >
-          <td className="px-3 py-1 text-center text-mu">
+          <td className="px-3 py-1 text-center text-table-text">
             {fieldIndex + 1}
           </td>
 
-          <td className="px-4 py-1 font-medium text-tx">
+          <td className="px-4 py-1 font-medium text-table-text">
             {field.label}
           </td>
 
@@ -184,8 +184,8 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
         <h2 className={cardHeadingClass}>Message</h2>
         <pre className="max-h-[100vh] overflow-auto whitespace-pre-wrap rounded-lg border border-background bg-surface p-3 text-sm">{message}</pre>
         <div className="mt-3 flex flex-wrap items-center gap-2">
-          <button className="inline-flex items-center gap-2 rounded-xl border border-ok bg-ok px-3.5 py-1.5 font-medium text-surface bg-success transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
-            <MessageCircleCheck  className='fill-green-600 stroke-2 stroke-white'/>
+          <button className="inline-flex items-center gap-2 rounded-xl border border-success-border px-3.5 py-1.5 font-medium text-success-text bg-success transition hover:-translate-y-0.5" onClick={sendOnWhatsApp}>
+            <MessageCircleCheck  className='fill-success stroke-2 stroke-success-text'/>
             Send report on WhatsApp
           </button>
           <button className={buttonClass} onClick={copyMessage}>Copy message</button>

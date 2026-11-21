@@ -131,11 +131,11 @@ export default function MiscEntryCard({
       <div className={`${tableWrapperClass} overflow-hidden`}>
         <table className={`${tableClass} w-full min-w-0 table-fixed`}>
           <colgroup>
-            <col className="w-[15%]" />
+            <col className="w-[17%]" />
             <col className="w-[27%]" />
             <col className="w-[16%]" />
             <col className="w-[20%]" />
-            <col className="w-[22%]" />
+            <col className="w-[20%]" />
           </colgroup>
           <thead className={tableHeaderRowClass}>
             <tr>

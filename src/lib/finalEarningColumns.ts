@@ -27,6 +27,7 @@ export const finalEarningColumns: ColumnNode[] = [
 
   columnGroup('CSC Sale and Add Value',  
     columnGroup('CSC Sale', numberColumn('cscSaleSv2Sv6Quantity', 'Qty'), numberColumn('cscSaleT1T3Quantity', 'Qty'), numberColumn('cscSaleAmount', 'Total CSC Amount')),
+    columnGroup('CSC Refund', numberColumn('cscRefundSv2Quantity', 'SV-2 Qty'), numberColumn('cscRefundT1T3Quantity', 'T-1 & T-3 Qty'), numberColumn('cscRefundAmount', 'Amt (g)')),
   columnGroup('Add Value CSC',
     columnGroup('TOM', numberColumn('addValueSv2TomQuantity', 'Qty'), numberColumn('addValueSv2TomAmount', 'Amt')),
     columnGroup('TVM', numberColumn('tvmAddValueQuantity', 'Qty'), numberColumn('tvmAddValueAmount', 'Amt')),

@@ -115,9 +115,9 @@ export const shiftEntryColumns: ColumnNode[] = [
     columnGroup('Paid', numberColumn('outstandingPaidAfc', 'AFC (al)'), numberColumn('outstandingPaidMisc', 'Misc (am)'))),
 
   calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),
-mirrorColumn(
-  'advanceMatchConfirmed',
-  'Advance Match',
-  'advanceMatchConfirmed'
-),
+// mirrorColumn(
+//   'advanceMatchConfirmed',
+//   'Advance Match',
+//   'advanceMatchConfirmed'
+// ),
 ];

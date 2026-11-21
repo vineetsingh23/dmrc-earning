@@ -129,11 +129,11 @@
   --input-focus: #7e4d03;
 
   /* Buttons */
-  --button:rgb(3, 45, 56);
-  --button-text:#cecbcb;
-  --button-hover:rgb(2, 44, 49);
-  --button-border:#e9d6d6;
-  --isActive:#3d0963;
+  --button:#15825F;
+  --button-text:#D8F0E8;
+  --button-hover:#0;
+  --button-border:#5DDEAF;
+  --isActive:#8A43CC;
 
  /* Feedback */
   --success: #0a3319;

@@ -423,7 +423,7 @@ export default function RegisterWorkspace({
           <Route
             path="/shift-entry"
             element={
-         
+           <>
                 <header className="flex justify-between mb-4">
                   <h1 className="page-info">CC and TOM Earning</h1>
                   <button
@@ -496,7 +496,7 @@ export default function RegisterWorkspace({
   }
 />
                 
-        
+        </>
             }
           />
           <Route

@@ -10,3 +10,19 @@ export function updateCarriedDetailListCell(state: RegisterState, date: string, 
   if (!listsOfDate[kind]) listsOfDate[kind] = effectiveDetailListRows(state, date, kind).map(row => [...row]);
   updateDetailListCell(state, date, kind, rowIndex, columnIndex, newValue);
 }
+
+export function addCarriedDetailListRow(
+  state: RegisterState,
+  date: string,
+  kind: DetailListKind,
+  defaultRows: string[][],
+  newRow: string[],
+) {
+  const rows = effectiveDetailListRows(state, date, kind).map(row => [...row]);
+  while (rows.length < defaultRows.length) rows.push([...defaultRows[rows.length]]);
+  rows.push([...newRow]);
+
+  state.detailLists ??= {};
+  const listsOfDate = (state.detailLists[date] ??= {});
+  listsOfDate[kind] = rows;
+}

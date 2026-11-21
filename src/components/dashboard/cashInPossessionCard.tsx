@@ -1,7 +1,10 @@
-import { CircleCheck } from 'lucide-react';
+import { Check, CircleCheck, CircleCheckIcon, CircleLetterX } from "lucide-react";
+import { Redo2, Undo2 } from "lucide-react";
 import {
   cardClass,
+  cardHeaderClass,
   cardHeadingClass,
+  primaryButtonClass,
   tableCellClass,
   tableCellLeftClass,
   tableClass,
@@ -11,137 +14,256 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableTotalRowClass,
-} from '../../globalStyles';
-import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
-import {formatRupees,looseCoinsKey,coinRows, noteRows } from '../../lib/earningCalculations';
+  tableWrapperClass,
+} from "../../globalStyles";
+import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
+import {
+  formatRupees,
+  looseCoinsKey,
+  coinRows,
+  noteRows,
+} from "../../lib/earningCalculations";
+import type { CashCountHistory } from "../../lib/registerTypes";
 
 interface CashInPossessionCardProps {
   cashCountsInHand: Record<string, number>;
-  looseCoinAmount?:number;
+  looseCoinAmount?: number;
   denominationTotalAmount: number;
   totalCashInHand: number;
-  miscDebitTotal:number;
-  miscCreditTotal:number;
-  imprestAndAdvanceIssuedTotal:number;
-  cashCountsSource: 'saved' | 'carried' | 'none';
-
+  miscDebitTotal: number;
+  miscCreditTotal: number;
+  imprestAndAdvanceIssuedTotal: number;
+  cashCountsSource: "saved" | "carried" | "none";
+  countHistory: CashCountHistory | undefined;
   onCountChange: (countKey: string, typedValue: string) => void;
-
+  onBack: () => void;
+  onNext: () => void;
 }
-interface CountRow { countKey: string; label: string; unitValue: number; isRupeeAmount: boolean }
+interface CountRow {
+  countKey: string;
+  label: string;
+  unitValue: number;
+  isRupeeAmount: boolean;
+}
 const countRows: CountRow[] = [
-  ...noteRows.map(row => ({ countKey: row.key, label: row.label, unitValue: Number(row.value), isRupeeAmount: false })),
-  { countKey: looseCoinsKey, label: 'Loose coins (amount ₹)', unitValue: 1, isRupeeAmount: true },
-  ...coinRows.map(row => ({ countKey: row.key, label: row.label, unitValue: Number(row.value), isRupeeAmount: false })),
+  ...noteRows.map((row) => ({
+    countKey: row.key,
+    label: row.label,
+    unitValue: Number(row.value),
+    isRupeeAmount: false,
+  })),
+  {
+    countKey: looseCoinsKey,
+    label: "Loose coins (amount ₹)",
+    unitValue: 1,
+    isRupeeAmount: true,
+  },
+  ...coinRows.map((row) => ({
+    countKey: row.key,
+    label: row.label,
+    unitValue: Number(row.value),
+    isRupeeAmount: false,
+  })),
 ];
+const labelOfCountKey = (countKey: string) =>
+  countRows.find((row) => row.countKey === countKey)?.label ?? countKey;
+const timeOf = (milliseconds: number) =>
+  new Date(milliseconds).toLocaleTimeString([], {
+    hour: "2-digit",
+    minute: "2-digit",
+  });
 
-
-export default function CashInPossessionCard({ 
-                                        cashCountsInHand, 
-                                        denominationTotalAmount, 
-                                        totalCashInHand,
-                                        cashCountsSource,
-                                        miscCreditTotal,
-                                        miscDebitTotal,
-                                        imprestAndAdvanceIssuedTotal,
-                                        onCountChange }: CashInPossessionCardProps) {
-  const cardTotalAmount = denominationTotalAmount + imprestAndAdvanceIssuedTotal + miscCreditTotal - miscDebitTotal;
-  const cashDifference = Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
+export default function CashInPossessionCard({
+  cashCountsInHand,
+  denominationTotalAmount,
+  totalCashInHand,
+  cashCountsSource,
+  miscCreditTotal,
+  miscDebitTotal,
+  countHistory,
+  onBack,
+  onNext,
+  imprestAndAdvanceIssuedTotal,
+  onCountChange,
+}: CashInPossessionCardProps) {
+  const cardTotalAmount =
+    denominationTotalAmount +
+    imprestAndAdvanceIssuedTotal +
+    miscCreditTotal -
+    miscDebitTotal;
+  const changes = countHistory?.changes ?? [];
+  const position = countHistory?.position ?? 0;
+  const lastAppliedChange = position > 0 ? changes[position - 1] : undefined;
+  const canGoBack = position > 0,
+    canGoNext = position < changes.length;
+  const cashDifference =
+    Math.round((cardTotalAmount - totalCashInHand) * 100) / 100;
   const matchesCashInHand = cashDifference === 0;
+
+  //  const countInputClass = 'w-20 rounded border border-bd bg-inp px-1.5 py-0.5 text-right outline-hidden focus:ring-2 focus:ring-ac';
+ 
   return (
-    <div className={`${cardClass} card ${cashDifference === 0 ? '' : 'border-red-400 bg-errorCard'}`} onKeyDown={handleSheetKeyDown}>
+    <div
+      className={`${cardClass} ${cashDifference === 0 ? "" : "bg-danger! border-2 border-danger-border border-t-danger-border"}`}
+      onKeyDown={handleSheetKeyDown}
+    >
+      <div className={`${cardHeaderClass} flex-col items-start gap-2`}>
+        <div className="flex w-full items-center justify-between gap-2">
+          <h2 className={`${cardHeadingClass} mb-0! text-nowrap`}>Cash in possession</h2>
+            {cashDifference === 0 ? (
+              <div className="ml-4 flex gap-2 items-center bg-transparent rounded-md px-1">
+                <p className="text-success-text font-bold">Cash OK</p>
+               <CircleCheck className="size-7 fill-success stroke-success-text" strokeWidth={2} strokeOpacity={40} />
+              </div>
+            ): (
+               <div className="ml-2 flex w-40 items-center justify-between bg-danger pl-2 py-1 border border-danger rounded-md transition duration-300">
+              <span
+                className={`${cashDifference === 0 ? "" : "text-danger-text"} font-medium`}
+              >
+                {formatRupees(Number(cashDifference))}
+              </span>
 
-         <div className="flex gap-4 w-full justify-between">
-        <div className="max-w-xs">
-          <h2 className={cardHeadingClass}>Cash in possession</h2>
+              <div className="flex flex-end transition duration-200 gap-2">
 
-          <p className="mb-2 text-xs text-mu">
+                <CircleLetterX className="stroke-danger-text" size={30} strokeWidth={2}/>
+            </div>
+            </div>
+            )}
+
+        </div>
+          <p className="mb-2 w-full text-left text-xs text-muted">
             {cashCountsSource === "saved" && "Counts saved for this date."}
             {cashCountsSource === "carried" &&
               "Counts carried over from the last counted date. Update them if the cash in your drawer is different."}
             {cashCountsSource === "none" &&
               "No counts yet. Enter the notes and coins you hold."}
           </p>
-        </div>
-        <div className="flex w-30 justify-between items-center h-8 border-2 rounded-2xl border-slate-300 dark:border-slate-600 shadow-md bg-linear-to-r from-slate-100 to-blue-50 dark:from-slate-800 dark:to-blue-800">
-          <span className={`${cashDifference === 0 ? '' : 'text-red-500'} text-center font-medium w-1/2`}>
-            {formatRupees(Number(cashDifference))}
-          </span>
-          <div className="flex justify-end transition-colors duration-150 relative">
-            <CircleCheck
-              size={30}
-              className={`${cashDifference === 0 ? "fill-green-500" : "fill-red-500 animate-ping"}`}
-              stroke="white"
-              strokeWidth={1}
-            />
-          </div>
-        </div>
+       
+             
+          
+         
       </div>
-
-
+      <div className="mb-2 flex flex-wrap items-center gap-2 ">
+        <button
+          type="button"
+          className={primaryButtonClass}
+          disabled={!canGoBack}
+          onClick={onBack}
+          title="Undo the last change"
+        >
+          <Undo2 className="size-4" aria-hidden="true" strokeWidth={4} />
+          Back
+        </button>
+        <button
+          type="button"
+          className={primaryButtonClass}
+          disabled={!canGoNext}
+          onClick={onNext}
+          title="Apply the change again"
+        >
+          Next
+          <Redo2 className="size-4" aria-hidden="true" strokeWidth={4} />
+        </button>
+        <span role="status" className="text-xs text-muted">
+          {changes.length === 0 && "No changes to review yet."}
+          {changes.length > 0 &&
+            lastAppliedChange &&
+            `Step ${position} of ${changes.length}: ${labelOfCountKey(lastAppliedChange.countKey)} ${lastAppliedChange.from} → ${lastAppliedChange.to} at ${timeOf(lastAppliedChange.at)}`}
+          {changes.length > 0 &&
+            !lastAppliedChange &&
+            `Back at the start. Next brings back ${changes.length} change${changes.length === 1 ? "" : "s"}.`}
+        </span>
+      </div>
+            <div className={tableWrapperClass}>
 
       <table className={tableClass}>
         <thead>
           <tr className={tableHeaderRowClass}>
-            <th className={tableHeaderCellClass}>Denominations</th>
+            <th className={`${tableHeaderCellClass} min-w-50`}>Denominations</th>
             <th className={tableHeaderCellClass}>Count</th>
-            <th className={tableHeaderCellClass}>Amount</th>
+            <th className={`${tableHeaderCellClass} min-w-30`}>Amount</th>
           </tr>
         </thead>
         <tbody>
           {countRows.map((countRow, rowIndex) => (
-            <tr key={countRow.countKey} className={`${tableRowClass} ${cashDifference === 0 ? '' : 'even:bg-errorCard'}`}>
-              <td className={tableCellLeftClass}>{countRow.label}</td>
-              <td className={tableCellClass}>
-                <input 
-                    data-grid="cashCounts" 
-                    data-row={rowIndex} 
-                    data-column={0}
-                    value={cashCountsInHand[countRow.countKey] || ''} 
-                    placeholder="0" 
-                    inputMode={countRow.isRupeeAmount ? 'decimal' : 'numeric'}
-                    onFocus={event =>  event.target.select()}
-                    onChange={event => onCountChange(countRow.countKey, event.target.value)}
-                    className={`${tableInputClass} text-right`}
-                  />
+            <tr
+            key={countRow.countKey}
+              className={`${tableRowClass} ${cashDifference === 0 ? "" : "even:bg-errorCard"}`}
+            >
+              <td
+                className={`${tableCellLeftClass}  ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-table-text " : ""}`}
+              >
+                {lastAppliedChange?.countKey === countRow.countKey ? <Check className="inline-flex mr-4 text-success"/> : ""}
+                {countRow.label}
               </td>
-              <td className={tableCellClass}>{formatRupees(Number(countRow.unitValue) * (cashCountsInHand[countRow.countKey] ?? 0))}</td>
+              <td className={tableCellClass}>
+                <input
+                  data-grid="cashCounts"
+                  data-row={rowIndex}
+                  data-column={0}
+                  value={cashCountsInHand[countRow.countKey] || ""}
+                  placeholder="0"
+                  inputMode={countRow.isRupeeAmount ? "decimal" : "numeric"}
+                  onFocus={(event) => event.target.select()}
+                  onChange={(event) =>
+                    onCountChange(countRow.countKey, event.target.value)
+                  }
+                  className={`${tableInputClass} text-right`}
+                />
+              </td>
+              <td className={tableCellClass}>
+                {formatRupees(
+                  Number(countRow.unitValue) *
+                    (cashCountsInHand[countRow.countKey] ?? 0),
+                )}
+              </td>
             </tr>
           ))}
 
           <tr className={tableRowClass}>
             <td className={tableCellLeftClass}>Imprest Issued</td>
             <td className={tableCellClass}>-</td>
-            <td className={tableCellClass}>{formatRupees(imprestAndAdvanceIssuedTotal)}</td>
-
+            <td className={tableCellClass}>
+              {formatRupees(imprestAndAdvanceIssuedTotal)}
+            </td>
           </tr>
-            <tr className={tableRowClass}>
+          <tr className={tableRowClass}>
             <td className={tableCellLeftClass}>Misc Debit Total</td>
             <td className={tableCellClass}>-</td>
             <td className={tableCellClass}>{formatRupees(miscDebitTotal)}</td>
-
           </tr>
-                <tr className={tableRowClass}>
+          <tr className={tableRowClass}>
             <td className={tableCellLeftClass}>Misc Credit Total</td>
             <td className={tableCellClass}>-</td>
             <td className={tableCellClass}>{formatRupees(miscCreditTotal)}</td>
-
           </tr>
-
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={`${tableTotalCellClass} !text-left`} colSpan={2}>Total</td>
-            <td className={tableTotalCellClass}>{formatRupees(cardTotalAmount)}</td>
+            <td className={`${tableCellLeftClass} font-bold!`} colSpan={2}>
+              Total
+            </td>
+            <td className={tableTotalCellClass}>
+              {formatRupees(cardTotalAmount)}
+            </td>
           </tr>
         </tfoot>
       </table>
-     
-      <small className={`cash-status ${matchesCashInHand ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
-        <i className={`fi ${matchesCashInHand ? 'fi-rr-check' : 'fi-rr-exclamation'} cash-status-icon`} aria-hidden="true" />
+      </div>
+
+      <small
+        className={`cash-status ${matchesCashInHand ? "cash-status-success" : "cash-status-error"}`}
+        role="status"
+        aria-live="polite"
+        >
+       {matchesCashInHand ? (
+    <CircleCheckIcon className='size-8 text-success-text'/>
+  ) : (
+    <CircleLetterX className='size-8 text-danger-text'/>
+  )}
         {matchesCashInHand
-          ? 'Cash in possession matches total cash in hand'
-          : `Cash in possession ${cashDifference > 0 ? 'exceeds' : 'is below'} total cash in hand by ${formatRupees(Math.abs(cashDifference))}`}
+          ? "Cash in possession matches total cash in hand"
+          : `Cash in possession ${cashDifference > 0 ? "exceeds" : "is below"} total cash in hand by ${formatRupees(Math.abs(cashDifference))}`}
       </small>
     </div>
   );

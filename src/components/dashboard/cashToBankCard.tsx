@@ -15,8 +15,10 @@ import {
   tableRowClass,
   tableTotalCellClass,
   tableTotalRowClass,
+  tableWrapperClass,
 } from '../../globalStyles';
 import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
+import { CheckCheck, CircleCheckIcon, CircleLetterX} from 'lucide-react';
 
 export interface CashToBankCardProps { existingTransfer: BankTransfer | undefined; amountDueToBank: number; noteDraft: ReturnType<typeof useBankNoteDraft> }
 
@@ -30,9 +32,11 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
 
         <h2 className={cardHeadingClass}>Cash to bank</h2>
         {!existingTransfer && (
-          <button className={`${secondaryButtonClass} my-1 max-w-40 text-sm`} onClick={resetToSuggestedCounts}>Auto calculate</button>
+          <button className={`${secondaryButtonClass} my-2 max-w-40 text-sm`} onClick={resetToSuggestedCounts}>Auto calculate</button>
         )}
         </div>
+        <div className={tableWrapperClass}>
+
     
       <table className={tableClass} onKeyDown={handleSheetKeyDown}>
         <thead><tr className={tableHeaderRowClass}>
@@ -48,8 +52,8 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
                 {existingTransfer
                   ? noteCountsToSend[noteValue] ?? 0
                   : <input data-grid="cashToBank" data-row={rowIndex} data-column={0} 
-                      value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
-                      className={`${tableInputClass} text-right`} />}
+                  value={inputValueFor(noteValue)} inputMode="numeric" onChange={event => changeNoteCount(noteValue, event.target.value)}
+                  className={`${tableInputClass} text-right max-w-10`} />}
               </td>
               <td className={tableCellClass}>{formatRupees(noteValue * (noteCountsToSend[noteValue] ?? 0))}</td>
             </tr>
@@ -57,25 +61,32 @@ export default function CashToBankCard({ existingTransfer, amountDueToBank, note
         </tbody>
         <tfoot>
           <tr className={tableTotalRowClass}>
-            <td className={`${tableTotalCellClass} !text-left`} colSpan={2}>Total {existingTransfer ? 'sent' : 'entered'}</td>
+            <td className={`${tableCellLeftClass} font-bold!`} colSpan={2}>Total {existingTransfer ? 'Sent' : 'Entered'}</td>
             <td className={tableTotalCellClass}>{formatRupees(existingTransfer ? existingTransfer.amount : noteTotalToSend)}</td>
           </tr>
         </tfoot>
       </table>
+      </div>
       
       {existingTransfer ? (
-        <small className='cash-status cash-status-success' role="status" aria-live="polite">
-          <span className="bank-success-icon" aria-hidden="true"><i className="fi fi-rr-check" /></span>
-          Successfully sent to bank · Slip {existingTransfer.slipNumber}
+        <small className='cash-status-success' role="status" aria-live="polite">
+          <span className="bank-success-icon" aria-hidden="true"><CheckCheck /></span>
+          Successfully sent to bank · Slip No. - {existingTransfer.slipNumber}
         </small>
       ) : (
-      <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
-        <i className={`fi ${matchesAmountDue ? 'fi-rr-check' : 'fi-rr-exclamation'} cash-status-icon`} aria-hidden="true" />
+        <small className={`cash-status ${matchesAmountDue ? 'cash-status-success' : 'cash-status-error'}`} role="status" aria-live="polite">
+       {matchesAmountDue ? (
+    <CircleCheckIcon className='size-8'/>
+  ) : (
+    <CircleLetterX className='size-7 stroke-2'/>
+  )}
         {notesExceedingStock.length
           ? `Count exceeds cash in hand for ₹${notesExceedingStock.join(', ₹')}`
-          : matchesAmountDue
+          :matchesAmountDue
             ? `Cash count matches amount due: ${formatRupees(amountDueToBank)}`
-            : `Enter notes totaling ${formatRupees(amountDueToBank)} (currently ${formatRupees(noteTotalToSend)})`}
+            :noteTotalToSend < amountDueToBank
+            ? `Total Due ${formatRupees(amountDueToBank)} (Entered ${formatRupees(noteTotalToSend)}) Short ${formatRupees(amountDueToBank - noteTotalToSend)}`
+            : `Total Due ${formatRupees(amountDueToBank)} (Entered ${formatRupees(noteTotalToSend)}) Excess ${formatRupees(noteTotalToSend-amountDueToBank)}`}
       </small>
       )}
       </div>

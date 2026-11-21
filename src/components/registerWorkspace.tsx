@@ -1,11 +1,16 @@
-import { useEffect, useMemo, useState } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
+import { useMemo, useState } from "react";
+import { Link, Navigate, Route, Routes } from "react-router-dom";
+import { BookOpen } from "lucide-react";
 import AppHeader from "./layout/appHeader";
-import { effectiveDetailListRows } from '../lib/carriedLists';
-import { updateCarriedDetailListCell } from '../handlers/carriedListsHandlers';
-import { addMiscRow, updateMiscEntryCell } from '../handlers/miscEntryHandlers';
-import { miscRowCountOf, miscRowsOf, type MiscKind } from '../lib/miscEntries';
-import MiscEntryCard from './dashboard/miscEntryCard';
+import {
+  bankRoundingAmount,
+  tomOperators,
+} from "../lib/businessRules";
+import { effectiveDetailListRows } from "../lib/carriedLists";
+import { addCarriedDetailListRow, updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
+import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
+import { miscRowCountOf, miscRowsOf, type MiscKind } from "../lib/miscEntries";
+import MiscEntryCard from "./dashboard/miscEntryCard";
 // import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
 // import type { MiscKind } from '../lib/miscEntries';
 import EarningSheetTable from "./stationEarning/earningSheetTable";
@@ -13,13 +18,15 @@ import CashInHandCard from "./dashboard/cashInHandCard";
 import CashInPossessionCard from "./dashboard/cashInPossessionCard";
 import SendToBankDialog from "./dashboard/sentToBankDialog";
 import { shiftEntryColumns } from "../lib/shiftEntrycolumns";
-import { bankRoundingAmount } from "../lib/businessRules";
+import { finalEarningColumns } from "../lib/finalEarningColumns";
+
 import { updateEntryCell } from "../handlers/entryCellHandler";
 import { updateCashCount } from "../handlers/cashcountHandlers";
 import { recordBankTransfer } from "../handlers/cashToBankHandlers";
 import { useRegisterData } from "../hooks/useRegisterData";
 import { useDashboardFigures } from "../hooks/useDashboardFigures";
 import { useBankNoteDraft } from "../hooks/useBankNoteDraft";
+import { useThemeMode } from "../hooks/useThemeMode";
 import ImprestIssueCard from "./dashboard/imprestIssueCard";
 import AdvanceReceivedCard from "./dashboard/advanceReceivedCard";
 import TvmEarningPage from "./stationEarning/tvmEarningPage";
@@ -27,6 +34,7 @@ import FinalEarningPage from "./stationEarning/finalEarningPage";
 import DailyReportPage from "./dailyReportPage";
 import {
   dashboardGridClass,
+  primaryButtonClass,
   stackedCardsClass,
 } from "../globalStyles";
 // import DetailListCard from "./dashboard/detailListCard";
@@ -39,8 +47,19 @@ import { useWeeklyBackup } from "../hooks/useWeeklyBackup";
 import BackupFolderCard from "./dashboard/backupFolderCard";
 import BackupToolbar from "./dashboard/backupToolbar";
 import SettingsPage from "./settingsPage";
-
+import {
+  stepCashCountBack,
+  stepCashCountForward,
+} from "../lib/cashCountHistory";
+import UserGuide from "./dashboard/userGuide";
+// import { reconcileOperatorAdvance } from "../handlers/advanceReconciliationHandler";
 // const weeklyBackup = useWeeklyBackup(station.name, registerState , isLoading);
+import {
+  getAdvanceMatchView,
+  toggleAdvanceMatch,
+  releaseAdvanceMatchBeforeShiftEdit,
+  releaseAdvanceMatchBeforeAdvanceEdit,
+} from "../handlers/advanceReconciliationHandler";
 
 interface RegisterWorkspaceProps {
   station: StationRecord;
@@ -54,6 +73,14 @@ export default function RegisterWorkspace({
   const visibleShiftColumns = useMemo(
     () =>
       filterByFacilities(shiftEntryColumns, {
+        hasSv4Recharge: station.hasSv4Recharge,
+        hasParking: station.hasParking,
+      }),
+    [station],
+  );
+  const visibleFinalColumns = useMemo(
+    () =>
+      filterByFacilities(finalEarningColumns, {
         hasSv4Recharge: station.hasSv4Recharge,
         hasParking: station.hasParking,
       }),
@@ -76,18 +103,8 @@ export default function RegisterWorkspace({
     new Date().toISOString().slice(0, 10),
   );
   const [isSendDialogOpen, setIsSendDialogOpen] = useState(false);
-  const [isDarkMode, setIsDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    return savedTheme
-      ? savedTheme === "dark"
-      : window.matchMedia("(prefers-color-scheme: dark)").matches;
-  });
+  const { isDarkMode, toggleDarkMode } = useThemeMode();
   const rowsOfSelectedDate = registerState.shiftEntries[selectedDate] ?? {};
-
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", isDarkMode);
-    localStorage.setItem("theme", isDarkMode ? "dark" : "light");
-  }, [isDarkMode]);
 
   // const renderDetailList = (
   //   title: string,
@@ -113,16 +130,33 @@ export default function RegisterWorkspace({
   //     }
   //   />
   // );
-const renderMiscCard = (title: string, kind: MiscKind) => (
-  <MiscEntryCard
-    title={title} kind={kind}
-    rows={miscRowsOf(registerState, kind)} rowCount={miscRowCountOf(registerState, kind)} selectedDate={selectedDate}
-    countedTotal={kind === 'miscDebit' ? figures.miscDebitTotal : figures.miscCreditTotal}
-    onCellChange={(rowIndex, columnIndex, newValue) =>
-      updateRegisterState(draftState => updateMiscEntryCell(draftState, selectedDate, kind, rowIndex, columnIndex, newValue))}
-    onAddRow={() => updateRegisterState(draftState => addMiscRow(draftState, kind))}
-  />
-);
+  const renderMiscCard = (title: string, kind: MiscKind) => (
+    <MiscEntryCard
+      title={title}
+      kind={kind}
+      rows={miscRowsOf(registerState, kind)}
+      rowCount={miscRowCountOf(registerState, kind)}
+      selectedDate={selectedDate}
+      countedTotal={
+        kind === "miscDebit" ? figures.miscDebitTotal : figures.miscCreditTotal
+      }
+      onCellChange={(rowIndex, columnIndex, newValue) =>
+        updateRegisterState((draftState) =>
+          updateMiscEntryCell(
+            draftState,
+            selectedDate,
+            kind,
+            rowIndex,
+            columnIndex,
+            newValue,
+          ),
+        )
+      }
+      onAddRow={() =>
+        updateRegisterState((draftState) => addMiscRow(draftState, kind))
+      }
+    />
+  );
 
   const figures = useDashboardFigures(registerState, selectedDate);
   const noteDraft = useBankNoteDraft(
@@ -168,13 +202,13 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
 
   if (!isLoaded) {
     return (
-      <div className="min-h-screen bg-bg text-tx transition-colors">
+      <div className="app-shell bg-my-gradient min-h-screen text-tx transition-colors">
         <AppHeader
           stationName={station.name}
           selectedDate={selectedDate}
           onDateChange={setSelectedDate}
           isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
+          onToggleDarkMode={toggleDarkMode}
           showNavigation={false}
         />
         <main className="mx-auto max-w-screen-2xl p-4 md:p-6">
@@ -184,21 +218,22 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             onLogout={onLogout}
           />
           <p className="mx-auto mt-4 max-w-2xl text-sm text-mu">
-            Register data could not be loaded. Check that this browser allows IndexedDB before continuing.
+            Register data could not be loaded. Check that this browser allows
+            IndexedDB before continuing.
           </p>
-        </main>
+          </main>
       </div>
     );
   }
   return (
-    <div className="min-h-screen bg-bg text-tx transition-colors">
-        <AppHeader
-          stationName={station.name}
-          selectedDate={selectedDate}
-          onDateChange={setSelectedDate}
-          isDarkMode={isDarkMode}
-          onToggleDarkMode={() => setIsDarkMode(theme => !theme)}
-        />
+    <div className="app-shell min-h-screen text-tx transition-colors">
+      <AppHeader
+        stationName={station.name}
+        selectedDate={selectedDate}
+        onDateChange={setSelectedDate}
+        isDarkMode={isDarkMode}
+        onToggleDarkMode={toggleDarkMode}
+      />
 
       <main className="mx-auto min-h-[calc(100vh-68px)] max-w-screen-2xl p-4 md:p-6">
         <Routes>
@@ -206,6 +241,16 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
             path="/"
             element={
               <div className={dashboardGridClass}>
+                <header className="page-intro col-span-full w-full flex justify-between">
+                  <h1 className="page-info">Station cash dashboard</h1>
+                  <Link
+                    to="/user-guide"
+                    className="inline-flex items-center gap-2 rounded-xl border button-border bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
+                  >
+                    <BookOpen className="size-4" aria-hidden="true" />
+                    User guide
+                  </Link>
+                </header>
                 <CashInHandCard
                   totalCashInHand={figures.totalCashInHand}
                   osTotalPaidAmount={figures.osTotalPaidAmount}
@@ -224,6 +269,17 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   miscDebitTotal={figures.miscDebitTotal}
                   looseCoinAmount={figures.looseCoinsAmount}
                   cashCountsSource={figures.cashCountsSource}
+                  countHistory={registerState.cashCountHistory?.[selectedDate]}
+                  onBack={() =>
+                    updateRegisterState((draftState) => {
+                      stepCashCountBack(draftState, selectedDate);
+                    })
+                  }
+                  onNext={() =>
+                    updateRegisterState((draftState) => {
+                      stepCashCountForward(draftState, selectedDate);
+                    })
+                  }
                   denominationTotalAmount={figures.denominationTotalAmount}
                   imprestAndAdvanceIssuedTotal={
                     figures.imprestAndAdvanceIssuedTotal
@@ -232,22 +288,111 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                   onCountChange={changeCashCount}
                 />
                 <div className={stackedCardsClass}>
-                <ImprestIssueCard
-  listRows={effectiveDetailListRows(registerState, selectedDate, 'imprestIssue')}
+                  <ImprestIssueCard
+                    listRows={effectiveDetailListRows(
+                      registerState,
+                      selectedDate,
+                      "imprestIssue",
+                    )}
+                    onAdvanceChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          2,
+                          typedValue,
+                        ),
+                      )
+                    }
+                    onTomNumberChange={(rowIndex, typedValue) =>
+                      updateRegisterState((draftState) =>
+                        updateCarriedDetailListCell(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          0,
+                          typedValue,
+                        ),
+                      )
+                    }
+                    onAddRow={() =>
+                      updateRegisterState((draftState) => {
+                        const rows = effectiveDetailListRows(draftState, selectedDate, "imprestIssue");
+                        addCarriedDetailListRow(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          tomOperators.map((tomOperator) => [
+                            tomOperator.tomNumber,
+                            String(tomOperator.imprestAmount),
+                            "",
+                          ]),
+                          [`Additional ${Math.max(rows.length - tomOperators.length, 0) + 1}`, "0", ""],
+                        );
+                      })
+                    }
+                  />
+                  <AdvanceReceivedCard
+  listRows={effectiveDetailListRows(
+    registerState,
+    selectedDate,
+    "advanceReceived",
+  )}
   onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'imprestIssue', rowIndex, 2, typedValue))}
-/>
-<AdvanceReceivedCard
-  listRows={effectiveDetailListRows(registerState, selectedDate, 'advanceReceived')}
-  onAdvanceChange={(rowIndex, typedValue) =>
-    updateRegisterState(draftState => updateCarriedDetailListCell(draftState, selectedDate, 'advanceReceived', rowIndex, 1, typedValue))}
+    updateRegisterState((draftState) => {
+      const operatorNumber = tomOperators[rowIndex]?.tomNumber;
+
+      if (operatorNumber) {
+        releaseAdvanceMatchBeforeAdvanceEdit(
+          draftState,
+          selectedDate,
+          operatorNumber,
+        );
+      }
+
+      updateCarriedDetailListCell(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        rowIndex,
+        1,
+        typedValue,
+      );
+    })
+  }
+  onTomNumberChange={(rowIndex, typedValue) =>
+    updateRegisterState((draftState) =>
+      updateCarriedDetailListCell(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        rowIndex,
+        0,
+        typedValue,
+      ),
+    )
+  }
+  onAddRow={() =>
+    updateRegisterState((draftState) => {
+      const rows = effectiveDetailListRows(draftState, selectedDate, "advanceReceived");
+      addCarriedDetailListRow(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        tomOperators.map((tomOperator) => [tomOperator.tomNumber, ""]),
+        [`Additional ${Math.max(rows.length - tomOperators.length, 0) + 1}`, ""],
+      );
+    })
+  }
 />
                 </div>
-                  <div className="col-span-full grid grid-cols-[repeat(auto-fit,minmax(380px,1fr))] gap-3">
-  {renderMiscCard('Misc debit', 'miscDebit')}
-  {renderMiscCard('Misc credit', 'miscCredit')}
-</div>
-                
+                <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
+                  {renderMiscCard("Misc debit", "miscDebit")}
+                  {renderMiscCard("Misc credit", "miscCredit")}
+                </div>
 
                 {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
@@ -270,101 +415,177 @@ const renderMiscCard = (title: string, kind: MiscKind) => (
                     "Address of passenger",
                     "Penalty amount",
                   ])}
-                </div> */}
-                <section className="col-span-full rounded-2xl border border-slate-200 bg-white p-4 shadow-sm dark:border-slate-700 dark:bg-slate-900">
-                  <h2 className="mb-3 text-lg font-semibold text-slate-800 dark:text-slate-100">
-                    Data tools and backups
-                  </h2>
-                  <BackupToolbar
-                    stationName={station.name}
-                    date={selectedDate}
-                    registerState={registerState}
-                    updateRegisterState={updateRegisterState}
-                    facilities={{
-                      hasSv4Recharge: station.hasSv4Recharge,
-                      hasParking: station.hasParking,
-                    }}
-                  />
-                  <BackupFolderCard
-                    {...weeklyBackup}
-                    onChooseFolder={weeklyBackup.chooseFolder}
-                    onBackUpNow={weeklyBackup.backUpNow}
-                  />
-                </section>
+                </div>                 */}
+
               </div>
             }
           />
           <Route
             path="/shift-entry"
             element={
-              <EarningSheetTable
-                columns={visibleShiftColumns}
-                gridName="shift"
-                rowCount={registerState.shiftRowCount}
-                readRow={(rowIndex) => rowsOfSelectedDate[rowIndex] ?? {}}
-                readEntryValue={(rowIndex, fieldKey) =>
-                  rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
-                }
-                writeEntryValue={(rowIndex, fieldKey, newValue) =>
-                  updateRegisterState((draftState) =>
-                    updateEntryCell(
-                      draftState.shiftEntries,
-                      selectedDate,
-                      rowIndex,
-                      fieldKey,
-                      newValue,
-                    ),
-                  )
-                }
-              />
+              <div className="space-y-4">
+                <header className="page-intro">
+                  <h1 className="page-info">CC and TOM Earning</h1>
+                </header>
+               <EarningSheetTable
+  columns={visibleShiftColumns}
+  frozenColumnCount={2}
+  gridName="shift"
+  rowCount={registerState.shiftRowCount}
+  readRow={(rowIndex) => {
+    const row = rowsOfSelectedDate[rowIndex] ?? {};
+
+    const matchView = getAdvanceMatchView(
+      registerState,
+      selectedDate,
+      row,
+    );
+
+    return {
+      ...row,
+      advanceMatchEligible: String(matchView.eligible),
+      advanceMatchDisplay: matchView.display,
+    };
+  }}
+  readEntryValue={(rowIndex, fieldKey) =>
+    rowsOfSelectedDate[rowIndex]?.[fieldKey] ?? ""
+  }
+  writeEntryValue={(rowIndex, fieldKey, newValue) =>
+    updateRegisterState((draftState) => {
+      // Handle manual checkbox confirmation.
+      if (fieldKey === "advanceMatchConfirmed") {
+        toggleAdvanceMatch(
+          draftState,
+          selectedDate,
+          rowIndex,
+          newValue === "true",
+        );
+
+        return;
+      }
+
+      // Restore the advance if a confirmed row is edited.
+      releaseAdvanceMatchBeforeShiftEdit(
+        draftState,
+        selectedDate,
+        rowIndex,
+      );
+
+      // Update the Shift Entry field.
+      updateEntryCell(
+        draftState.shiftEntries,
+        selectedDate,
+        rowIndex,
+        fieldKey,
+        newValue,
+      );
+    })
+  }
+/>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateRegisterState((draftState) => {
+                        draftState.shiftRowCount += 1;
+                      })
+                    }
+                    className={primaryButtonClass}
+                  >
+                    + Add row
+                  </button>
+                </div>
+              </div>
             }
           />
           <Route
             path="/tvm-earning"
             element={
-              <TvmEarningPage
-                registerState={registerState}
-                updateRegisterState={updateRegisterState}
-                date={selectedDate}
-              />
+              <div className="space-y-4">
+                <header className="page-intro">
+                 <h1 className="page-info">TVM Earning</h1>
+                </header>
+                <TvmEarningPage
+                
+                  registerState={registerState}
+                  updateRegisterState={updateRegisterState}
+                  date={selectedDate}
+                />
+              </div>
             }
           />
           <Route
             path="/final-earning"
             element={
+              <div className="space-y-3">
+                <h1 className="page-info">Final Earning</h1>
+
               <FinalEarningPage
+                columns={visibleFinalColumns}
                 registerState={registerState}
                 date={selectedDate}
-              />
+                />
+                </div>
             }
           />
           <Route
             path="/daily-report"
             element={
-              <DailyReportPage
-                registerState={registerState}
-                updateRegisterState={updateRegisterState}
-                date={selectedDate}
-                stationName={station.name}
-              />
+              <div className="space-y-4">
+                <header className="page-intro">
+                  <h1 className="page-info">Morning Report</h1>
+                </header>
+                <DailyReportPage
+                  registerState={registerState}
+                  updateRegisterState={updateRegisterState}
+                  date={selectedDate}
+                  stationName={station.name}
+                />
+              </div>
             }
           />
           <Route
             path="/settings"
             element={
-              <SettingsPage
-                storageStatus={storageStatus}
-                storageError={storageError}
-                onLogout={onLogout}
-              />
+              <div className="space-y-3">
+                <h1 className="page-info">
+                  Settings and Website information
+                </h1>
+                <SettingsPage
+                  storageStatus={storageStatus}
+                  storageError={storageError}
+                  onLogout={onLogout}
+                  backupFolderCard={
+                    <BackupFolderCard
+                      {...weeklyBackup}
+                      onChooseFolder={weeklyBackup.chooseFolder}
+                      onBackUpNow={weeklyBackup.backUpNow}
+                    />
+                  }
+                  backupToolbarCard={
+                    <BackupToolbar
+                      stationName={station.name}
+                      date={selectedDate}
+                      registerState={registerState}
+                      updateRegisterState={updateRegisterState}
+                      facilities={{
+                        hasSv4Recharge: station.hasSv4Recharge,
+                        hasParking: station.hasParking,
+                      }}
+                    />
+                  }
+                />
+              </div>
             }
           />
+          <Route path="/user-guide" element={<UserGuide />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
           <Route
             path="/station-overview"
             element={
               <div className="flex flex-col gap-4">
+                <h1 className="page-info">Station Earning Statistics</h1>
                 <StationStatisticsCard
                   registerState={registerState}
                   date={selectedDate}

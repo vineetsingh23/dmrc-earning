@@ -3,6 +3,7 @@ import type { RegisterState } from '../../lib/registerTypes';
 import type { StationFacilities } from '../../lib/earningColumns';
 import { exportBackupAsJson, exportRowsAsCsv, importBackupFromJson } from '../../handlers/dataTransferHandlers';
 import { fillMonthWithSampleData } from '../../lib/sampleDataGenerator';
+import { cardClass, cardHeadingClass } from '../../globalStyles';
 
 interface BackupToolbarProps {
   stationName: string;
@@ -12,7 +13,7 @@ interface BackupToolbarProps {
   facilities: StationFacilities;
 }
 
-const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac';
+const buttonClass = 'rounded-xl border border-card-border bg-button text-button-text px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-card-hover';
 
 // rows of one date with their row number in front, ready for CSV
 const rowsWithRowNumber = (rowsByIndex: Record<number, Record<string, string>> | undefined, date: string) =>
@@ -33,10 +34,12 @@ export default function BackupToolbar({ stationName, date, registerState, update
     });
 
   return (
-    <div>
-      <h3 className="mb-2 font-medium text-slate-700 dark:text-slate-200">
-        Sample data and import/export
-      </h3>
+    <div className={cardClass}>
+      <div className={`${cardHeadingClass} inline-flex gap-2`}><span className='h-2 w-2 rounded-full bg-danger'></span>
+        <b className='space-x-2'>
+          Sample data and import/export
+          </b>
+      </div>
       <div className="flex flex-wrap gap-2">
         <button className={buttonClass} onClick={loadSampleData}>Load sample data (full month)</button>
         <button className={buttonClass} onClick={() => exportBackupAsJson(stationName, registerState)}>⬇ Export backup</button>

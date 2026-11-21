@@ -2,6 +2,7 @@ import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CalendarDays, Moon, Settings, Sun } from 'lucide-react';
 import { navigationPages } from './navigationPages';
+import { appHeaderClass, appHeaderContentClass, appHeaderControlsClass, datePickerClass, linkActiveClass, linkNotActiveClass, navigationClass, themeButtonClass } from '../../globalStyles';
 
 interface AppHeaderProps {
   stationName: string;
@@ -27,14 +28,13 @@ export default function AppHeader({
   };
 
   return (
-    <header className="sticky top-0 z-10 border-b border-bd bg-card/95 shadow-sm backdrop-blur">
-      <div className="mx-auto grid max-w-screen grid-cols-[1fr_auto] items-center gap-x-2 gap-y-2 px-2 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-4">
+    <header className={appHeaderClass}>
+      <div className={appHeaderContentClass}>
         <div className="flex min-w-70 items-center gap-4">
-          {/* <TrainFront className="size-7 shrink-0 text-ac" aria-hidden="true" /> */}
-            <img src='/Delhi_Metro.png' className='size-10 w-23'/>
+          <img src='/Delhi_Metro.png' className='size-14 w-35'/>
           <div className="min-w-0">
-            <p className="truncate text-lg font-bold text-ac">Earning Register</p>
-            <p className="truncate text-sm text-mu">{stationName}</p>
+            <p className="truncate text-lg font-bold text-primary tracking-wide">Earning Register</p>
+            <p className="truncate text-sm text-card-text">{stationName}</p>
           </div>
         </div>
 
@@ -46,8 +46,8 @@ export default function AppHeader({
                 to={path}
                 end={path === '/'}
                 className={({ isActive }) =>
-                  `inline-flex shrink-0 items-center rounded-lg px-2 py-1.5 text-sm font-medium transition-colors ${
-                    isActive ? 'bg-ac text-onac' : 'text-mu hover:bg-ca hover:text-tx'
+                  `${navigationClass} ${
+                    isActive ? linkActiveClass : linkNotActiveClass
                   }`
                 }
               >
@@ -57,10 +57,10 @@ export default function AppHeader({
           </nav>
         )}
 
-        <div className="col-start-2 row-start-1 flex shrink-0 items-center justify-self-end gap-2 md:col-start-3">
-          <div className="flex items-center gap-2 rounded-lg border border-bd bg-inp px-2 py-1.5">
-            <button type="button" onClick={openDatePicker} aria-label="Open calendar" className="text-mu transition hover:text-ac">
-              <CalendarDays className="size-4" aria-hidden="true" />
+        <div className={appHeaderControlsClass} >
+          <div className={datePickerClass}>
+            <button type="button" onClick={openDatePicker} aria-label="Open calendar" className="">
+              <CalendarDays className="size-6" aria-hidden="true"/>
             </button>
             <input
               ref={dateInputReference}
@@ -68,15 +68,15 @@ export default function AppHeader({
               aria-label="Select date"
               value={selectedDate}
               onChange={event => onDateChange(event.target.value)}
-              className="date-input bg-transparent text-sm outline-hidden"
+              className='date-input'
             />
           </div>
           {showNavigation && (
             <NavLink
               to="/settings"
               className={({ isActive }) =>
-                `inline-flex shrink-0 items-center rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive ? 'bg-ac text-onac' : 'text-mu hover:bg-ca hover:text-tx'
+                `${navigationClass} ${
+                  isActive ? linkActiveClass : ''
                 }`
               }
             >
@@ -88,9 +88,9 @@ export default function AppHeader({
             onClick={onToggleDarkMode}
             aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
             title={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
-            className="rounded-lg border border-bd bg-card p-2 text-mu transition hover:border-ac hover:text-ac"
+            className={themeButtonClass}
           >
-            {isDarkMode ? <Sun className="size-5" aria-hidden="true" /> : <Moon className="size-5" aria-hidden="true" />}
+            {isDarkMode ? <Sun className="size-5 text-yellow-300 " aria-hidden="true"/> : <Moon className="size-5 fill-blue-100 text-blue-100" aria-hidden="true" />}
           </button>
         </div>
       </div>

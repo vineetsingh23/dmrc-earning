@@ -96,6 +96,11 @@ export async function readRegisterState(stationName: string): Promise<RegisterSt
   // remember what the record stores hold now, so the next save sends only the changes
   const knownRecords = new Map<string, StoredRecord>();
   const state: RegisterState = { ...createEmptyRegisterState(), ...(savedSettings ?? {}) };
+  if (savedSettings && !savedSettings.rowCountsInitialized) {
+    state.shiftRowCount = 12;
+    state.tvmRowCount = 12;
+    state.rowCountsInitialized = true;
+  }
   if (hasRecords) { state.shiftEntries = {}; state.tvmEntries = {}; state.bankTransfers = {}; }   // the records win over data kept by older versions
 
   const readRows = (keys: IDBValidKey[], values: unknown[], storeName: string, target: Record<string, Record<number, RegisterRow>>) =>

@@ -11,6 +11,7 @@ export interface BankTransfer{
 export interface RegisterState {
     shiftRowCount:number;
     tvmRowCount:number;
+    rowCountsInitialized?: boolean;
     shiftEntries:Record<string, Record<number, RegisterRow>>;
     tvmEntries: Record<string, Record<number, RegisterRow>>;
     detailLists: Record<string, Partial<Record<DetailListKind, string[][]>>>;
@@ -24,6 +25,7 @@ export interface RegisterState {
 export const createEmptyRegisterState =() : RegisterState =>({
     shiftRowCount:12,
     tvmRowCount:12,
+    rowCountsInitialized:true,
     shiftEntries:{},
     tvmEntries:{},
     detailLists:{},
@@ -31,6 +33,7 @@ export const createEmptyRegisterState =() : RegisterState =>({
     bankTransfers:{},
     imprestIssued:{},
     advanceReceived:{},
+    cashCountHistory: {},
     reportFields:{},
     miscEntries: { miscDebit: [], miscCredit: [] },
     miscRowCounts: { miscDebit: 6, miscCredit: 6 },
@@ -55,4 +58,12 @@ export interface RegisterState {
   // ...your existing properties...
   miscEntries?: Record<MiscKind, string[][]>;      // misc debit / credit: every entry ever added, each with its own date
   miscRowCounts?: Record<MiscKind, number>;        // rows shown in each card; the Add row button raises it
+}
+
+export interface CashCountChange { countKey: string; from: number; to: number; at: number }   // at = time in milliseconds
+export interface CashCountHistory { changes: CashCountChange[]; position: number }              // position = how many changes are applied
+
+export interface RegisterState {
+  // ...your existing properties...
+  cashCountHistory?: Record<string, CashCountHistory>;     // steps of the cash counts, for Back and Next: [date]
 }

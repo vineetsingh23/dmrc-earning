@@ -1,3 +1,4 @@
+import { cardClass, cardHeadingClass } from '../../globalStyles';
 import type { BackupStatus } from '../../hooks/useWeeklyBackup';
 
 interface BackupFolderCardProps {
@@ -13,16 +14,19 @@ const statusTexts: Record<BackupStatus, string> = {
   working: 'Writing the backup…',
   error: 'The backup failed.',
 };
-const buttonClass = 'rounded-xl border border-bd bg-card px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 hover:border-ac hover:text-ac disabled:opacity-50';
+const buttonClass = 'rounded-xl border border-bd bg-button text-button-text px-3.5 py-1.5 font-medium transition hover:-translate-y-0.5 disabled:opacity-50';
 
 export default function BackupFolderCard({ backupStatus, folderName, lastBackupTime, backupMessage, onChooseFolder, onBackUpNow }: BackupFolderCardProps) {
   return (
-    <section className="mt-4 border-t border-slate-200 pt-4 dark:border-slate-700">
-      <h3 className="mb-1 font-medium text-slate-700 dark:text-slate-200">Automatic weekly backup (JSON)</h3>
-      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-bad' : 'text-mu'}`}>{statusTexts[backupStatus]}</p>
+    <section className={cardClass}>
+      <div className={`${cardHeadingClass} inline-flex gap-2`}> <span className='h-2 w-2 bg-danger rounded-full'></span>
+        <b>Automatic weekly backup (JSON)</b>
+        </div>
+      
+      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-danger' : 'text-card-text'}`}>{statusTexts[backupStatus]}</p>
       {folderName && <p className="text-sm">Folder: <b>{folderName}</b></p>}
       {lastBackupTime && <p className="text-sm">Last backup: <b>{new Date(lastBackupTime).toLocaleString()}</b></p>}
-      {backupMessage && <p className="text-xs text-mu">{backupMessage}</p>}
+      {backupMessage && <p className="text-xs">{backupMessage}</p>}
       {backupStatus !== 'unsupported' && (
         <div className="mt-2 flex flex-wrap gap-2">
           <button className={buttonClass} onClick={onChooseFolder}>{folderName ? 'Change folder' : 'Choose backup folder'}</button>

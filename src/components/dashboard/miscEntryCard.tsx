@@ -1,78 +1,208 @@
-import { formatRupees } from '../../lib/earningCalculations';
-import { parseNumber } from '../../lib/earningColumns';
-import { entryCountsOnDate, miscColumnIndex, runningTotalsOfRows, type MiscKind } from '../../lib/miscEntries';
-import { handleSheetKeyDown } from '../../handlers/sheetKeyboardHandlers';
+import { formatRupees } from "../../lib/earningCalculations";
+import { parseNumber } from "../../lib/earningColumns";
+import {
+  entryCountsOnDate,
+  miscColumnIndex,
+  runningTotalsOfRows,
+  type MiscKind,
+} from "../../lib/miscEntries";
+import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
+import {
+  
+  cardClass,
+  cardHeaderClass,
+  cardHeadingClass,
+  primaryButtonClass,
+  tableCellClass,
+  tableCellLeftClass,
+  tableClass,
+  tableHeaderCellClass,
+  tableHeaderRowClass,
+  tableInputClass,
+  tableRowClass,
+  tableTotalCellClass,
+  tableTotalRowClass,
+  tableWrapperClass,
+} from "../../globalStyles";
+import { PlusIcon } from "lucide-react";
 
 interface MiscEntryCardProps {
   title: string;
   kind: MiscKind;
-  rows: string[][];                 // every entry of the ledger: date, name, amount, remark
+  rows: string[][]; // every entry of the ledger: date, name, amount, remark
   rowCount: number;
   selectedDate: string;
-  countedTotal: number;             // the part counted in cash possession on the selected date
-  onCellChange: (rowIndex: number, columnIndex: number, newValue: string) => void;
+  countedTotal: number; // the part counted in cash possession on the selected date
+  onCellChange: (
+    rowIndex: number,
+    columnIndex: number,
+    newValue: string,
+  ) => void;
   onAddRow: () => void;
 }
 
-
-
-export default function MiscEntryCard({ title, kind, rows, rowCount, selectedDate, countedTotal, onCellChange, onAddRow }: MiscEntryCardProps) {
+export default function MiscEntryCard({
+  title,
+  kind,
+  rows,
+  rowCount,
+  selectedDate,
+  countedTotal,
+  onCellChange,
+  onAddRow,
+}: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);
-  const amountTotal = rows.reduce((total, row) => total + parseNumber(row?.[miscColumnIndex.amount]), 0);
+  const amountTotal = rows.reduce(
+    (total, row) => total + parseNumber(row?.[miscColumnIndex.amount]),
+    0,
+  );
 
   // one typed cell; the data-* labels are what the arrow keys use to find the next cell
-  const typedCell = (rowIndex: number, columnIndex: number, minWidthClass: string, isNumber = false) => (
-    <td className="border border-bl p-0">
-      <input
-        data-grid={kind} data-row={rowIndex} data-column={columnIndex}
-        value={rows[rowIndex]?.[columnIndex] ?? ''} inputMode={isNumber ? 'decimal' : 'text'}
-        onFocus={event => event.target.select()} onChange={event => onCellChange(rowIndex, columnIndex, event.target.value)}
-        className={`input-cells ${minWidthClass} ${isNumber ? 'text-right' : ''}`}
-      />
+  const typedCell = (
+    rowIndex: number,
+    columnIndex: number,
+    isNumber = false,
+  ) => (
+    <td className={`${tableCellClass} min-w-0 py-0 text-left`}>
+      {columnIndex === miscColumnIndex.name ||
+      columnIndex === miscColumnIndex.remark ? (
+        <textarea
+          ref={(element) => {
+            if (!element) return;
+            element.style.height = "auto";
+            element.style.height = `${element.scrollHeight}px`;
+          }}
+          data-grid={kind}
+          data-row={rowIndex}
+          data-column={columnIndex}
+          value={rows[rowIndex]?.[columnIndex] ?? ""}
+          rows={1}
+          cols={1}
+          onFocus={(event) => event.target.select()}
+          onChange={(event) => {
+            event.currentTarget.style.height = "auto";
+            event.currentTarget.style.height = `${event.currentTarget.scrollHeight}px`;
+            onCellChange(rowIndex, columnIndex, event.target.value);
+          }}
+          className={`${tableInputClass} min-w-0 resize-none overflow-hidden`}
+        />
+      ) : (
+        <input
+          data-grid={kind}
+          data-row={rowIndex}
+          data-column={columnIndex}
+          value={rows[rowIndex]?.[columnIndex] ?? ""}
+          inputMode={isNumber ? "decimal" : "text"}
+          onFocus={(event) => event.target.select()}
+          onChange={(event) =>
+            onCellChange(rowIndex, columnIndex, event.target.value)
+          }
+          className={`${tableInputClass} min-w-0 ${isNumber ? "text-right" : ""}`}
+        />
+      )}
     </td>
   );
 
+  const headers = [
+    "Date",
+    "Equipment or Person Name",
+    "Amount",
+    "Total Amount",
+    "Remarks",
+  ];
+
   return (
-        <div className="card" onKeyDown={handleSheetKeyDown}>
-    <div className="mb-2 flex items-center justify-between">
-        <h2 className="font-semibold">{title}</h2>
-        <button type="button" onClick={onAddRow}
-          className="button-outline">+ Add row</button>
+    <div className={`${cardClass}`} onKeyDown={handleSheetKeyDown}>
+      {/* DMRC Corporate Branding Accent Top Bar */}
+      {/* <div className="absolute top-0 inset-x-0 h-1 bg-gradient-to-r from-red-600 via-rose-500 to-blue-900 rounded-2xl"></div> */}
+
+      {/* Card Header */}
+      <div className={cardHeaderClass}>
+        <h2 className={cardHeadingClass}>
+          <span className="h-2 w-2 rounded-full bg-danger mr-3"></span>
+          {title}
+        </h2>
+        <button type="button" onClick={onAddRow} className={primaryButtonClass}>
+          <PlusIcon size={18} className="inline-block" /> Add row
+        </button>
       </div>
-      <table className="table">
-        <thead className='table-header'>
-          <tr className='table-header-row'>
-            <th className='table-header-cells'>Date</th>
-            <th className='table-header-cells'>Equipment or Person name</th>
-            <th className='table-header-cells'>Amount</th>
-            <th className='table-header-cells'>Total Amount</th>
-            <th className='table-header-cells'>Remark</th>
-          </tr>
-        </thead>
-        <tbody className='table-body'>
-          {Array.from({ length: rowCount }, (_, rowIndex) => (
-            // an entry dated after the selected date is shown dimmed and is not counted in cash possession yet
-            <tr key={rowIndex} className={`${miscColumnIndex.amount ? 'table-rows' : ''} ${entryCountsOnDate(rows[rowIndex], selectedDate) ? '' : 'opacity-50'}`}>
-              {typedCell(rowIndex, miscColumnIndex.date, 'table-cells min-w-25')}
-              {typedCell(rowIndex, miscColumnIndex.name, 'table-cells min-w-50')}
-              {typedCell(rowIndex, miscColumnIndex.amount, 'table-cells min-w-30', true)}
-              <td className={`${runningTotals[rowIndex]=== null ? 'table-cells' : ''} total-cells`}>
-                {runningTotals[rowIndex] === null ? '' : formatRupees(runningTotals[rowIndex])}
-              </td>
-              {typedCell(rowIndex, miscColumnIndex.remark, 'table-cells min-w-35')}
+
+      {/* Table Section */}
+      <div className={`${tableWrapperClass} overflow-hidden`}>
+        <table className={`${tableClass} w-full min-w-0 table-fixed`}>
+          <colgroup>
+            <col className="w-[15%]" />
+            <col className="w-[27%]" />
+            <col className="w-[16%]" />
+            <col className="w-[20%]" />
+            <col className="w-[22%]" />
+          </colgroup>
+          <thead className={tableHeaderRowClass}>
+            <tr>
+              {headers.map((header) => (
+                <th
+                  key={header}
+                  className={`${tableHeaderCellClass} whitespace-normal wrap-break-word`}
+                >
+                  {header}
+                </th>
+              ))}
             </tr>
-          ))}
-        </tbody>
-        <tfoot>
-          <tr className="table-footer">
-            <td className="footer-cells text-center" colSpan={2}>Total</td>
-            <td className="footer-cells">{formatRupees(amountTotal)}</td>
-            <td className="footer-cells">{formatRupees(amountTotal)}</td>
-            <td className="footer-cells" />
-          </tr>
-        </tfoot>
-      </table>
-      <small className="mt-1 block text-mu">Counted in cash possession up to this date: {formatRupees(countedTotal)}</small>
+          </thead>
+          <tbody>
+            {Array.from({ length: rowCount }, (_, rowIndex) => {
+              const isCounted = entryCountsOnDate(rows[rowIndex], selectedDate);
+              return (
+                <tr
+                  key={rowIndex}
+                  className={`${tableRowClass}${isCounted ? "" : "bg-inp opacity-50"}`}
+                >
+                  {typedCell(rowIndex, miscColumnIndex.date)}
+                  {typedCell(rowIndex, miscColumnIndex.name)}
+                  {typedCell(rowIndex, miscColumnIndex.amount, true)}
+                  <td className={`${tableCellClass} min-w-0 break-all`}>
+                    {runningTotals[rowIndex] === null
+                      ? "—"
+                      : formatRupees(runningTotals[rowIndex])}
+                  </td>
+                  {typedCell(rowIndex, miscColumnIndex.remark)}
+                </tr>
+              );
+            })}
+          </tbody>
+          <tfoot>
+            <tr className={tableTotalRowClass}>
+              <td
+                className={`${tableCellLeftClass} min-w-0 whitespace-normal wrap-break-words font-bold!`}
+                colSpan={2}
+              >
+                Total
+              </td>
+              <td className={tableTotalCellClass}>
+                {formatRupees(amountTotal)}
+              </td>
+              <td className={tableTotalCellClass}>
+                {formatRupees(amountTotal)}
+              </td>
+              <td className={tableTotalCellClass} />
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+
+      {/* Footer Info Notice */}
+      <div className="mt-2 flex items-center justify-between border-t border-bd bg-inp/70 px-6 py-3 text-xs">
+        <span className="text-slate-500 dark:text-slate-400 font-bold">
+          {kind === "miscDebit" ? (
+            <span>
+              Counted in cash possession up to this date (deposited as extra) :{" "}
+              <span className="font-bold">{formatRupees(countedTotal)}</span>
+            </span>
+          ) : (
+            `Counted in cash possession up to this date (as loss to SCR) : ${formatRupees(countedTotal)}`
+          )}
+        </span>
+      </div>
     </div>
   );
 }

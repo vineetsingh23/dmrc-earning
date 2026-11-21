@@ -9,4 +9,5 @@ export const navigationPages: NavigationPage[] = [
   { label: 'Final Earning', path: '/final-earning', Icon: FileSpreadsheet },
   { label: 'Station Overview', path: '/station-overview', Icon: FileSpreadsheet },
   { label: 'WhatsApp Report', path: '/daily-report', Icon: MessageCircleCheck },
+
 ];

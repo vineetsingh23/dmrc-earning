@@ -14,7 +14,10 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
   const tvmRows = registerState.tvmEntries?.[date] ?? {};
   return (
     <>
-    
+      <button className={`${primaryButtonClass}`}
+        onClick={() => updateRegisterState(draftState => { draftState.tvmRowCount++; })}>
+        + Add row
+      </button>
       <EarningSheetTable
         columns={tvmEarningColumns}
         gridName='tvm'
@@ -28,10 +31,7 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
             updateEntryCell(draftState.tvmEntries, date, rowIndex, fieldKey, newValue);
           })}
       />
-      <button className={`${primaryButtonClass} mt-3`}
-        onClick={() => updateRegisterState(draftState => { draftState.tvmRowCount++; })}>
-        + Add row
-      </button>
+      
     </>
   );
 }

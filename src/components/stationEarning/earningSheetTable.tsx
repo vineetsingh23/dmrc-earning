@@ -471,7 +471,7 @@ export default function EarningSheetTable({
   return (
     <>
       {onAddRow && (
-        <div className="mb-2 flex justify-end">
+        <div className="mb-2 flex">
           <button
             type="button"
             onClick={onAddRow}

@@ -206,26 +206,15 @@ export function releaseAdvanceMatchBeforeShiftEdit(
 }
 
 /**
- * Restore a confirmed advance before manually editing
- * that operator's Advance Received amount.
+ * Advance Received is a running daily balance for a TOM. Once a shift's
+ * match is confirmed, later entries here belong to subsequent shifts and
+ * must not release or uncheck that earlier confirmation.
  */
 export function releaseAdvanceMatchBeforeAdvanceEdit(
-  state: RegisterState,
-  date: string,
-  operatorNumber: string
+  _state: RegisterState,
+  _date: string,
+  _operatorNumber: string
 ): void {
-  const shiftRows = state.shiftEntries?.[date] ?? {};
-
-  Object.entries(shiftRows).forEach(([rowIndex, row]) => {
-    if (
-      row.advanceMatchConfirmed === "true" &&
-      row.advanceMatchOperatorSnapshot === operatorNumber
-    ) {
-      releaseAdvanceMatchBeforeShiftEdit(
-        state,
-        date,
-        Number(rowIndex)
-      );
-    }
-  });
+  // Intentionally keep confirmed shift matches unchanged when the daily
+  // Advance Received value is edited for another shift.
 }

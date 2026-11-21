@@ -193,7 +193,7 @@ export default function CashInPossessionCard({
               <td
                 className={`${tableCellLeftClass}  ${lastAppliedChange?.countKey === countRow.countKey ? "font-bold text-table-text " : ""}`}
               >
-                {lastAppliedChange?.countKey === countRow.countKey ? <Check className="inline-flex mr-4 text-success"/> : ""}
+                {lastAppliedChange?.countKey === countRow.countKey ? <Check className="inline-flex mr-4 text-success-text"/> : ""}
                 {countRow.label}
               </td>
               <td className={tableCellClass}>

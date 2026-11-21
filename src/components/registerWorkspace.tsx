@@ -501,17 +501,14 @@ export default function RegisterWorkspace({
           <Route
             path="/tvm-earning"
             element={
-              <div className="space-y-4">
-                <header className="page-intro">
-                 <h1 className="page-info">TVM Earning</h1>
-                </header>
+             
                 <TvmEarningPage
                 
                   registerState={registerState}
                   updateRegisterState={updateRegisterState}
                   date={selectedDate}
                 />
-              </div>
+              
             }
           />
           <Route

@@ -234,7 +234,7 @@ export default function StationStatisticsCard({
                 </tr>
               </thead>
               <tbody>
-                {machineCAtegoryRows.map(({ key, label }) => {
+                {machineCategoryRows.map(({ key, label }) => {
                   const row = machineCategoryStats[key];
                   const isOverall = key === "overall";
                   return (

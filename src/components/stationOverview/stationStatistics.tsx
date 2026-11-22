@@ -199,6 +199,7 @@ export default function StationStatisticsCard({
                
 
             return (
+           
               <div key={title} className={statisticsCard}>
                 <small className="block text-card-text">{title}</small>
                 <b className="text-xl text-big-number">{formatRupees(current)}</b>
@@ -216,11 +217,13 @@ export default function StationStatisticsCard({
             );
           })}
         </div>
-        <section className="mt-5">
-          <h2 className={cardButtonClass}>
+      </div>
+      
+  
+         <h2 className={cardSeparator}>
             Earning by Machine Category . {date}
           </h2>
-          <div className={`${cardContainer} overflow-x-auto shadow-sm shadow-card-shadow`}>
+          <div className={`${cardClass} overflow-x-auto}>
             <table className="w-full min-w-[720px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-table-border text-card-text">
@@ -259,8 +262,11 @@ export default function StationStatisticsCard({
               </tbody>
             </table>
           </div>
-        </section>
-      </div>
+      
+    
+
+    
     </div>
+
   );
 }

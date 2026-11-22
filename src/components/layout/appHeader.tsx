@@ -39,14 +39,14 @@ export default function AppHeader({
         </div>
 
         {showNavigation && (
-          <nav aria-label="Main navigation" className="w-full flex gap-2">
+          <nav aria-label="Main navigation" className="flex w-full items-center gap-2">
             {navigationPages.map(({ label, path }) => (
               <NavLink
                 key={path}
                 to={path}
                 end={path === '/'}
                 className={({ isActive }) =>
-                  `${primaryButtonClass} ${
+                  `${primaryButtonClass} self-center justify-center ${
                     isActive ? linkActiveClass : ''
                   }`
                 }
@@ -57,9 +57,9 @@ export default function AppHeader({
           </nav>
         )}
 
-        <div className={appHeaderControlsClass} >
+        <div className={appHeaderControlsClass}>
           <div className={datePickerClass}>
-            <button type="button" onClick={openDatePicker} aria-label="Open calendar" className="">
+            <button type="button" onClick={openDatePicker} aria-label="Open calendar" className="inline-flex items-center justify-center">
               <CalendarDays className="size-6" aria-hidden="true"/>
             </button>
             <input
@@ -75,7 +75,7 @@ export default function AppHeader({
             <NavLink
               to="/settings"
               className={({ isActive }) =>
-                `${primaryButtonClass} ${
+                `${primaryButtonClass} self-center justify-center ${
                   isActive ? linkActiveClass : ''
                 }`
               }
@@ -88,7 +88,7 @@ export default function AppHeader({
             onClick={onToggleDarkMode}
             aria-label={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
             title={`Switch to ${isDarkMode ? 'light' : 'dark'} mode`}
-            className={themeButtonClass}
+            className={`${themeButtonClass} inline-flex items-center justify-center self-center`}
           >
             {isDarkMode ? <Sun className="size-5 text-yellow-300 " aria-hidden="true"/> : <Moon className="size-5 fill-blue-100 text-blue-100" aria-hidden="true" />}
           </button>

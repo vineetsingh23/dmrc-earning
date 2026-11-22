@@ -74,7 +74,7 @@ export const tableInputClass = `${tableCellClass} rounded-md border-table-border
 
 export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-row-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
-export const summaryRowClass ="flex justify-between border-b border-dashed border-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
+export const summaryRowClass ="flex justify-between border-b border-dashed border-b-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
 
 /* Buttons and dialogs */
 export const primaryButtonClass ="border border-button-border px-2 flex gap-4 items-center text-nowrap py-1 rounded-md bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";

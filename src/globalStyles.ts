@@ -8,14 +8,14 @@ export const appHeaderClass ="sticky top-0 z-50 border-b border-header-border bg
 export const appHeaderContentClass ="mx-auto grid max-w-screen grid-cols-[1fr_auto] items-center gap-x-2 gap-y-2 px-2 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-4";
 export const appHeaderGroupClass = "flex flex-wrap items-center gap-4";
 
-export const navigationClass = "inline-flex shrink-0 items-center rounded-lg px-2 py-1.5 text-sm font-medium transition-color";
+// export const navigationClass = "inline-flex shrink-0 items-center rounded-lg px-2 py-1.5 text-sm font-medium transition-color";
 // export const navLinkClass ="rounded-md border border-border bg-header px-3.5 py-1.5 text-sm font-medium  transition-colors hover:button-border hover:bg-header-hover  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const linkActiveClass ="bg-isActive text-button-text border";
-export const linkNotActiveClass ="border border-button-border bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";
+// export const linkNotActiveClass ="border border-button-border bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";
 export const datePickerClass = "flex gap-3 items-center justify-center px-2 py-1.5 outline-hidden bg-isActive/80 text-button-text rounded-lg border-button-border hover:bg-isActive/90"
 export const appHeaderControlsClass = "col-start-2 row-start-1 flex shrink-0 items-center justify-self-end gap-2 md:col-start-3";
-export const themeButtonClass ="rounded-md border border-button-border bg-isActive px-3 py-1.5 text-sm font-medium transition-colors hover:button-border hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus shadow-md shadow-button-shadow";
+export const themeButtonClass ="rounded-md border border-button-border bg-isActive px-3 py-1.5 text-sm font-medium transition-colors hover:button-border hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus shadow-sm shadow-button-shadow";
 
 export const dateInputClass ="rounded-lg border border-border bg-input-background px-2 py-1.5 text-lg  focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
@@ -77,15 +77,15 @@ export const amountInputClass = `${tableCellClass} text-right text-table-text ou
 export const summaryRowClass ="flex justify-between border-b border-dashed border-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
 
 /* Buttons and dialogs */
-export const primaryButtonClass ="flex gap-4 items-center  rounded-lg bg-button text-button-text px-3 py-1.5 font-semibold  transition-colors hover:bg-button-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus disabled:pointer-events-none disabled:opacity-50 shadow-md shadow-button-shadow";
+export const primaryButtonClass ="border border-button-border px-2 flex gap-4 items-center text-nowrap py-1 rounded-md bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";
 
 export const secondaryButtonClass ="rounded-lg border border-button-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-header transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 
 export const pageHeadingClass = "text-xl font-bold";
 
-export const dialogOverlayClass ="fixed inset-0 z-20 grid place-items-center bg-slate-950/50 p-4";
+export const dialogOverlayClass ="fixed inset-0 z-30 grid place-items-center bg-slate-950/50 p-4";
 
-export const dialogClass ="w-[min(360px,90%)] rounded-2xl border border-border bg-header p-5 shadow-xl";
+export const dialogClass ="w-[min(400px,90%)] rounded-2xl border border-border bg-card p-5 shadow-xl";
 
 /*
  * Keep the two entries because callers may select them by index.

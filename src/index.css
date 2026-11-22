@@ -90,7 +90,7 @@
   color-scheme: dark;
   --background:  linear-gradient(to right, #2b2525,#33332c, #3b3939);
   --page-info: linear-gradient(to top, #e88d8d, #76ddfc, #f27ce2);
-  --primary:#4efafa;
+  --primary:#1148e2;
   --primary-foreground: #604848;
 
   
@@ -126,12 +126,12 @@
   --table-shadow: #141313;
   --calculated: #786C12;
   --focus: #37d5dd;
-  --input-focus: #7e4d03;
+  --input-focus: #52423f;
 
   /* Buttons */
   --button:#15825F;
   --button-text:#D8F0E8;
-  --button-hover:#0;
+  --button-hover:#123d2f;
   --button-border:#5DDEAF;
   --isActive:#8A43CC;
 

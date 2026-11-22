@@ -18,11 +18,11 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
   return (
     <>
       <h2 className={`${cardHeadingClass} mb-0!`}>Daily earning histogram ({daysShown} days to {date})</h2>
-    <div className={`${cardContainer} min-h-44 items-center p-2`}>
+    <div className={`${cardContainer} min-h-44 items-center p-2 drop-shadow-sm shadow-card-shadow`}>
       <small className="text-mu flex flex-col">
         <ul className='flex flex-col min-w-30 text-nowrap'>
-          <li className="text-primary">■<span> Total earning</span></li>
-          <li className="text-success">■<span> Cashless earning</span></li>
+          <li className="text-focus">■<span> Total earning</span></li>
+          <li className="text-success-text">■<span> Cashless earning</span></li>
           <li className="text-danger">■<span> Selected day (per date) </span></li>
         </ul>
      
@@ -35,9 +35,9 @@ export default function EarningHistogramCard({ registerState, date }: EarningHis
           return (
             <g key={dayDate}>
               <rect x={dayIndex * slotWidth + 5} y={chartHeight - 20 - earningBarHeight} width={barWidth} height={earningBarHeight} rx={2}
-                fill={dayDate === date ? 'var(--primary)' : 'var(--primary)'}><title>{`${dayDate} total earning: ${formatRupees(earning)}`}</title></rect>
+                fill={dayDate === date ? 'var(--focus)' : 'var(--focus)'}><title>{`${dayDate} total earning: ${formatRupees(earning)}`}</title></rect>
               <rect x={dayIndex * slotWidth + 5 + barWidth} y={chartHeight - 20 - cashlessBarHeight} width={barWidth} height={cashlessBarHeight} rx={2}
-                fill="var(--success)"><title>{`${dayDate} cashless: ${formatRupees(cashless)}`}</title></rect>
+                fill="var(--success-text)"><title>{`${dayDate} cashless: ${formatRupees(cashless)}`}</title></rect>
               <text x={dayIndex * slotWidth + slotWidth / 2} y={chartHeight - 6} fontSize={15} textAnchor="middle" fill='var(--danger)'>{dayDate.slice(8)}</text>
             </g>
           );

@@ -49,13 +49,13 @@ export default function CashInHandCard({
       <hr className='my-2 border-card-border'/>
       <div className='py-2'>
 
-      <div className={summaryRowClass}><span>Sent to bank{existingTransfer ?( <>{`. Slip No.  ${existingTransfer.slipNumber} ` }<CircleCheck size={20} className='inline-block ml-2 text-green-500 align-top'/></>): ''}</span><b>{formatRupees(existingTransfer ? existingTransfer.amount : 0)}</b></div>
+      <div className={summaryRowClass}><span>Sent to bank{existingTransfer ?( <>{`. Slip No.  ${existingTransfer.slipNumber} ` }<CircleCheck size={23} className='inline-block ml-2 text-success-text fill-success align-top'/></>): ''}</span><b>{formatRupees(existingTransfer ? existingTransfer.amount : 0)}</b></div>
       <div className={summaryRowClass}><span>Due to bank (rounded down to ₹100)</span><b>{formatRupees(amountDueToBank)}</b></div>
       </div>
 
       <div className="py-2 font-bold tracking-wide">
         <button disabled={!canSendToBank} onClick={onSendToBankClick}
-          className={primaryButtonClass}>
+          className={`${primaryButtonClass} py-2 rounded-2xl! px-4  flex disabled:opacity-50 disabled:pointer-events-none bg-primary`}>
             <span><Landmark/></span> <span>
 
           Send {formatRupees(amountDueToBank)} to bank

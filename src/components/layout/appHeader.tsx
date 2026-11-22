@@ -2,7 +2,7 @@ import { useRef } from 'react';
 import { NavLink } from 'react-router-dom';
 import { CalendarDays, Moon, Settings, Sun } from 'lucide-react';
 import { navigationPages } from './navigationPages';
-import { appHeaderClass, appHeaderContentClass, appHeaderControlsClass, datePickerClass, linkActiveClass, linkNotActiveClass, navigationClass, themeButtonClass } from '../../globalStyles';
+import { appHeaderClass, appHeaderContentClass, appHeaderControlsClass, datePickerClass, linkActiveClass, primaryButtonClass, themeButtonClass } from '../../globalStyles';
 
 interface AppHeaderProps {
   stationName: string;
@@ -46,8 +46,8 @@ export default function AppHeader({
                 to={path}
                 end={path === '/'}
                 className={({ isActive }) =>
-                  `${navigationClass} ${
-                    isActive ? linkActiveClass : linkNotActiveClass
+                  `${primaryButtonClass} ${
+                    isActive ? linkActiveClass : ''
                   }`
                 }
               >
@@ -75,7 +75,7 @@ export default function AppHeader({
             <NavLink
               to="/settings"
               className={({ isActive }) =>
-                `${navigationClass} ${
+                `${primaryButtonClass} ${
                   isActive ? linkActiveClass : ''
                 }`
               }

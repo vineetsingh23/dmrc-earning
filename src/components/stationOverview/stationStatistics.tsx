@@ -192,16 +192,17 @@ export default function StationStatisticsCard({
               previous === 0 ? null : ((current - previous) / previous) * 100;
             const changeClass =
               current > previous
-                ? "text-emerald-700 dark:text-emerald-300"
+                ? "text-big-number"
                 : current < previous
-                  ? "text-red-700 dark:text-red-300"
-                  : "text-mu";
+                  ? "text-danger"
+                  : "text-white"
+               
 
             return (
               <div key={title} className={statisticsCard}>
-                <small className="block text-mu">{title}</small>
-                <b className="text-xl">{formatRupees(current)}</b>
-                <small className="block text-mu">
+                <small className="block text-card-text">{title}</small>
+                <b className="text-xl text-big-number">{formatRupees(current)}</b>
+                <small className="block text-card-text">
                   Previous day ({previousDate}): {formatRupees(previous)}
                 </small>
                 <small className={changeClass}>
@@ -219,7 +220,7 @@ export default function StationStatisticsCard({
           <h2 className={cardButtonClass}>
             Earning by Machine Category . {date}
           </h2>
-          <div className={`${cardContainer} overflow-x-auto`}>
+          <div className={`${cardContainer} overflow-x-auto shadow-sm shadow-card-shadow`}>
             <table className="w-full min-w-[720px] border-collapse text-sm">
               <thead>
                 <tr className="border-b border-table-border text-card-text">

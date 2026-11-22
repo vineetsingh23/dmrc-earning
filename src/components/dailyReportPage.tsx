@@ -195,7 +195,7 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
 
       <div className={`${cardClass}`}>
         <h2 className={cardHeadingClass}>Morning Report · Digital Payments</h2>
-        <div className={`${cardClass} flex-col p-4 mb-4 border-2`}>
+        <div className={`${cardClass} flex-col p-4 mb-4`}>
           {summaryRows.map(({ label, value }) => (
             <div key={label} className={summaryRowClass}>
               <span>{label}</span>

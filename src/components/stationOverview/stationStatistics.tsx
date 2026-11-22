@@ -1,23 +1,16 @@
-import {
-  cardClass,
-  cardContainer,
-  cardHeadingClass,
-} from "../../globalStyles";
+import { cardClass, cardHeadingClass } from "../../globalStyles";
 import {
   MachineCategoryStatisticsOfDate,
   type EarningMachineCategory,
 } from "../../lib/machineCategoryStatistics";
-// import { formatRupees, highestEarningSoFar } from "../../lib/earningCalculations";999
-import { type RegisterState } from "../../lib/registerTypes";
+import type { RegisterState } from "../../lib/registerTypes";
 import {
   addDays,
+  dailyCashlessOfDate,
   dailyCashlessStatisticsOfDate,
   dailyEarningOfDate,
-  dailyQrSaleOfDate,
   datesWithEntriesUpTo,
   formatRupees,
-  tvmQrSaleOfDate,
-  dailyCashlessOfDate
 } from "../../lib/earningCalculations";
 
 interface StationStatisticsCardProps {
@@ -32,10 +25,12 @@ export function findBestDay(
   measureOfDate: (entryDate: string) => number,
 ): BestDay {
   let bestDay: BestDay = null;
+
   dates.forEach((entryDate) => {
     const measuredAmount = measureOfDate(entryDate);
-    if (measuredAmount > 0 && (!bestDay || measuredAmount > bestDay.amount))
+    if (measuredAmount > 0 && (!bestDay || measuredAmount > bestDay.amount)) {
       bestDay = { date: entryDate, amount: measuredAmount };
+    }
   });
 
   return bestDay;
@@ -48,6 +43,10 @@ export default function StationStatisticsCard({
   const datesTillDate = datesWithEntriesUpTo(registerState, date);
   const datesInSelectedMonth = datesTillDate.filter((entryDate) =>
     entryDate.startsWith(date.slice(0, 7)),
+  );
+  const machineCategoryStats = MachineCategoryStatisticsOfDate(
+    registerState,
+    date,
   );
   const statistics: { title: string; bestDay: BestDay }[] = [
     {
@@ -63,39 +62,39 @@ export default function StationStatisticsCard({
       ),
     },
     {
-      title: "Highest Earning TVM this month",
+      title: "Highest TVM QR sale this month",
       bestDay: findBestDay(datesInSelectedMonth, (entryDate) =>
-        dailyQrSaleOfDate(registerState, entryDate),
+        MachineCategoryStatisticsOfDate(registerState, entryDate).TVM.qrSale,
       ),
     },
     {
-      title: "Highest Earning TVM till date",
+      title: "Highest TVM QR sale till date",
       bestDay: findBestDay(datesTillDate, (entryDate) =>
-        dailyQrSaleOfDate(registerState, entryDate),
+        MachineCategoryStatisticsOfDate(registerState, entryDate).TVM.qrSale,
       ),
     },
     {
-      title: "Highest Earning TOM this month",
-      bestDay: findBestDay(datesTillDate, (entryDate) =>
-        tvmQrSaleOfDate(registerState, entryDate),
+      title: "Highest TOM QR sale this month",
+      bestDay: findBestDay(datesInSelectedMonth, (entryDate) =>
+        MachineCategoryStatisticsOfDate(registerState, entryDate).TOM.qrSale,
       ),
     },
     {
-      title: "Highest Earning TOM till date",
+      title: "Highest TOM QR sale till date",
       bestDay: findBestDay(datesTillDate, (entryDate) =>
-        tvmQrSaleOfDate(registerState, entryDate),
+        MachineCategoryStatisticsOfDate(registerState, entryDate).TOM.qrSale,
       ),
     },
     {
-      title: "Highest Cashless Earning this month",
-      bestDay: findBestDay(datesTillDate, (entryDate) =>
+      title: "Highest cashless earning this month",
+      bestDay: findBestDay(datesInSelectedMonth, (entryDate) =>
         dailyCashlessOfDate(registerState, entryDate),
       ),
     },
     {
-      title: "Highest Cashless Earning till date",
+      title: "Highest cashless earning till date",
       bestDay: findBestDay(datesTillDate, (entryDate) =>
-       dailyCashlessOfDate(registerState, entryDate),
+        dailyCashlessOfDate(registerState, entryDate),
       ),
     },
   ];
@@ -105,9 +104,10 @@ export default function StationStatisticsCard({
     registerState,
     date,
   );
-  const previousCashlessStatistics: ReturnType<
-    typeof dailyCashlessStatisticsOfDate
-  > = dailyCashlessStatisticsOfDate(registerState, previousDate);
+  const previousCashlessStatistics = dailyCashlessStatisticsOfDate(
+    registerState,
+    previousDate,
+  );
   const cashlessTransactions = [
     {
       title: "Total AFC earning",
@@ -140,28 +140,24 @@ export default function StationStatisticsCard({
       previous: previousCashlessStatistics.tvmUpi,
     },
   ];
-  const machineCategoryStats = MachineCategoryStatisticsOfDate(
-    registerState,
-    date,
-  );
   const machineCategoryRows: {
     key: EarningMachineCategory | "overall";
     label: string;
   }[] = [
-    { key: "CC", label: "CC(80,81,82)" },
-    { key: "TOM", label: "TOM(50,51,52,..." },
-    { key: "TVM", label: "TVM(1,2,3,...)" },
+    { key: "CC", label: "CC (80, 81, 82)" },
+    { key: "TOM", label: "TOM (50, 51, 52, ...)" },
+    { key: "TVM", label: "TVM (1, 2, 3, ...)" },
     { key: "RCTM", label: "RCTM" },
-    { key: "overall", label: "overall Total" },
+    { key: "overall", label: "Overall total" },
   ];
-  const cardSeparator = `${cardHeadingClass} mb-0! mt-4!  text-sm font-bold uppercase tracking-[0.12em]`;
-  const staticCardClass = "grid grid-cols-4 gap-4 p-4 ";
+  const cardSeparator = `${cardHeadingClass} mb-0! mt-4! text-sm font-bold uppercase tracking-[0.12em]`;
+  const staticCardClass = "grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 xl:grid-cols-4";
   const statisticsCard =
-    "border border-table-border rounded-2xl p-2 items-center flex flex-col bg-header text-card-text hover:bg-card-hover shadow-md shadow-card-shadow transition-colors duration-200";
+    "flex flex-col items-center rounded-2xl border border-table-border bg-header p-2 text-card-text shadow-md shadow-card-shadow transition-colors duration-200 hover:bg-card-hover";
+
   return (
     <div>
       <h2 className={cardSeparator}>Statistics</h2>
-
       <div className={cardClass}>
         <div className={staticCardClass}>
           {statistics.map(({ title, bestDay }) => (
@@ -183,7 +179,6 @@ export default function StationStatisticsCard({
       </div>
 
       <h2 className={cardSeparator}>Cashless Transactions · day-over-day</h2>
-
       <div className={cardClass}>
         <div className={staticCardClass}>
           {cashlessTransactions.map(({ title, current, previous }) => {
@@ -194,11 +189,9 @@ export default function StationStatisticsCard({
                 ? "text-big-number"
                 : current < previous
                   ? "text-red-400"
-                  : "text-white"
-               
+                  : "text-card-text";
 
             return (
-           
               <div key={title} className={statisticsCard}>
                 <small className="block text-card-text">{title}</small>
                 <b className="text-xl text-big-number">{formatRupees(current)}</b>
@@ -217,55 +210,48 @@ export default function StationStatisticsCard({
           })}
         </div>
       </div>
-      
-  
-         <h2 className={cardSeparator}>
-            Earning by Machine Category . {date}
-          </h2>
-          <div className={`${cardClass} overflow-x-auto}>
-            <table className="w-full min-w-[720px] border-collapse text-sm">
-              <thead>
-                <tr className="border-b border-table-border text-card-text">
-                  <th className="px-3 py-3">Category</th>
-                  <th className="px-3 py-3 text-right">QR Sale</th>
-                  <th className="px-3 py-3 text-right">Add Value</th>
-                  <th className="px-3 py-3 text-right">UPI</th>
-                  <th className="px-3 py-3 text-right">POS</th>
+
+      <h2 className={cardSeparator}>Earning by Machine Category · {date}</h2>
+      <div className={`${cardClass} overflow-x-auto`}>
+        <table className="w-full min-w-[720px] border-collapse text-sm">
+          <thead>
+            <tr className="border-b border-table-border text-card-text">
+              <th className="px-3 py-3 text-left">Category</th>
+              <th className="px-3 py-3 text-right">QR Sale</th>
+              <th className="px-3 py-3 text-right">Add Value</th>
+              <th className="px-3 py-3 text-right">UPI</th>
+              <th className="px-3 py-3 text-right">POS</th>
+            </tr>
+          </thead>
+          <tbody>
+            {machineCategoryRows.map(({ key, label }) => {
+              const row = machineCategoryStats[key];
+              const isOverall = key === "overall";
+
+              return (
+                <tr
+                  key={key}
+                  className={`border-b border-table-border ${isOverall ? "bg-table font-bold" : ""}`}
+                >
+                  <td className="px-3 py-3">{label}</td>
+                  <td className="px-3 py-3 text-right tabular-nums">
+                    {formatRupees(row.qrSale)}
+                  </td>
+                  <td className="px-3 py-3 text-right tabular-nums">
+                    {formatRupees(row.addValue)}
+                  </td>
+                  <td className="px-3 py-3 text-right tabular-nums">
+                    {formatRupees(row.upi)}
+                  </td>
+                  <td className="px-3 py-3 text-right tabular-nums">
+                    {formatRupees(row.pos)}
+                  </td>
                 </tr>
-              </thead>
-              <tbody>
-                {machineCategoryRows.map(({ key, label }) => {
-                  const row = machineCategoryStats[key];
-                  const isOverall = key === "overall";
-                  return (
-                    <tr
-                      key={key}
-                      className={`border-b border-table-border ${isOverall ? "font-bold bg-table" : ""}`}
-                    >
-                      <td className="px-3 py-3">{label}</td>
-                      <td className="px-3 py-3 text-right tabular-nums">
-                        {formatRupees(row.qrSale)}
-                      </td>
-                      <td className="px-3 py-3 text-right tabular-nums">
-                        {formatRupees(row.addValue)}
-                      </td>
-                      <td className="px-3 py-3 text-right tabular-nums">
-                        {formatRupees(row.upi)}
-                      </td>
-                      <td className="px-3 py-3 text-right tabular-nums">
-                        {formatRupees(row.pos)}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-      
-    
-
-    
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
     </div>
-
   );
 }

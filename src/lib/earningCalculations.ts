@@ -1,6 +1,6 @@
 import { parseNumber, type ColumnLeaf, tvmAfcTotal } from './earningColumns';
 import type { RegisterRow, RegisterState } from './registerTypes';
-import { cashDepositedByOperator, cashlessTotal, osTotalPaidAmount, totalEarning } from './shiftEntrycolumns';
+import { cashDepositedByOperator, cashlessTotal, osTotalPaidAmount, totalEarning,afcCollectionTotal } from './shiftEntrycolumns';
 export const formatRupees = (amount: unknown) => '₹\u00A0\u00A0' + Math.round(parseNumber(amount)).toLocaleString('en-IN');
 import { tomOperators } from './businessRules';
 import { tvmFinalTotal } from './earningColumns';
@@ -140,7 +140,7 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
     const pos = ['posAtCcc', 'posAtTvm', 'posAtRctm', 'posAtScvm']
       .reduce((total, field) => total + parseNumber(row[field]), 0);
 
-    statistics.afcEarning += totalEarning(row);
+    statistics.afcEarning += afcCollectionTotal(row);
     statistics.upiTotal += tomUpi + tvmUpi;
     statistics.posTotal += pos;
     statistics.tvmUpi += tvmUpi;

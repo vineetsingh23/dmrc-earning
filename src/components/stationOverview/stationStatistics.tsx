@@ -144,7 +144,7 @@ export default function StationStatisticsCard({
     registerState,
     date,
   );
-  const machineCAtegoryRows: {
+  const machineCategoryRows: {
     key: EarningMachineCategory | "overall";
     label: string;
   }[] = [

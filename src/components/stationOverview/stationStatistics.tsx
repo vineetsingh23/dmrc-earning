@@ -194,7 +194,7 @@ export default function StationStatisticsCard({
               current > previous
                 ? "text-big-number"
                 : current < previous
-                  ? "text-danger"
+                  ? "text-red-400"
                   : "text-white"
                
 

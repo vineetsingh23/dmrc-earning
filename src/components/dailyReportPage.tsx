@@ -2,7 +2,7 @@ import { useMemo, useState } from 'react';
 import type { RegisterState } from '../lib/registerTypes';
 import { buildDailyReportPaymentSummary, buildWhatsAppMessage, reportFieldValue, reportFields, whatsAppLink } from '../lib/dailyReport';
 import { copyReportFieldsFromPreviousDate, updateReportField } from '../handlers/reportFieldHandlers';
-import { cardClass, cardContainer, cardHeadingClass, summaryRowClass } from '../globalStyles';
+import { cardClass, cardHeadingClass, summaryRowClass } from '../globalStyles';
 import { formatRupees } from '../lib/earningCalculations';
 import { handleSheetKeyDown } from '../handlers/sheetKeyboardHandlers';
 import { MessageCircleCheck} from 'lucide-react';

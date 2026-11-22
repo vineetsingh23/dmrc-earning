@@ -33,7 +33,7 @@ export default function AppHeader({
         <div className="flex min-w-70 items-center gap-4">
           <img src='/Delhi_Metro.png' className='size-14 w-35'/>
           <div className="min-w-0">
-            <p className="truncate text-lg font-bold text-primary tracking-wide">Earning Register</p>
+            <p className="truncate text-lg font-bold text-big-number tracking-wide">Earning Register</p>
             <p className="truncate text-sm text-card-text">{stationName}</p>
           </div>
         </div>

@@ -186,10 +186,10 @@ export default function StationStatisticsCard({
               previous === 0 ? null : ((current - previous) / previous) * 100;
             const changeClass =
               current > previous
-                ? "text-big-number"
+                ? "text-success-text"
                 : current < previous
                   ? "text-danger-text"
-                  : "text-success-text";
+                  : "text-card-text";
 
             return (
               <div key={title} className={statisticsCard}>

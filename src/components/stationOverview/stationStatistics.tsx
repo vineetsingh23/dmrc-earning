@@ -188,8 +188,8 @@ export default function StationStatisticsCard({
               current > previous
                 ? "text-big-number"
                 : current < previous
-                  ? "text-red-400"
-                  : "text-card-text";
+                  ? "text-danger-text"
+                  : "text-success-text";
 
             return (
               <div key={title} className={statisticsCard}>

@@ -175,9 +175,9 @@ export default function MiscEntryCard({
                           onClick={() => onDeleteRow(rowIndex)}
                           aria-label={`Delete added row ${rowIndex - minimumAdditionalRowCount + 1}`}
                           title="Delete added row"
-                          className="inline-flex size-6 items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
+                          className="inline-flex items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
                         >
-                          <Trash2 className="size-3.5" aria-hidden="true" />
+                          <Trash2 className="size-5 text-danger-text" aria-hidden="true" />
                         </button>
                       )}
                     </td>

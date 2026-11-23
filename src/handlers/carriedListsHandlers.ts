@@ -26,3 +26,20 @@ export function addCarriedDetailListRow(
   const listsOfDate = (state.detailLists[date] ??= {});
   listsOfDate[kind] = rows;
 }
+
+export function deleteCarriedDetailListRow(
+  state: RegisterState,
+  date: string,
+  kind: DetailListKind,
+  rowIndex: number,
+  minimumRowCount: number,
+) {
+  if (rowIndex < minimumRowCount) return;
+
+  const rows = effectiveDetailListRows(state, date, kind).map(row => [...row]);
+  rows.splice(rowIndex, 1);
+
+  state.detailLists ??= {};
+  const listsOfDate = (state.detailLists[date] ??= {});
+  listsOfDate[kind] = rows;
+}

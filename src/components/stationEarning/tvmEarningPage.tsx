@@ -1,7 +1,7 @@
 import EarningSheetTable from './earningSheetTable';
 import type { RegisterState } from '../../lib/registerTypes';
 import { tvmEarningColumns } from '../../lib/earningColumns';
-import { updateEntryCell } from '../../handlers/entryCellHandler';
+import { deleteEntryRow, updateEntryCell } from '../../handlers/entryCellHandler';
 import { primaryButtonClass } from '../../globalStyles';
 
 interface TvmEarningPageProps {
@@ -28,6 +28,13 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
         gridName='tvm'
         frozenColumnCount={0}
         rowCount={registerState.tvmRowCount}
+        minimumAdditionalRowCount={12}
+        onDeleteRow={rowIndex =>
+          updateRegisterState(draftState => {
+            deleteEntryRow(draftState.tvmEntries, date, rowIndex, 12);
+            draftState.tvmRowCount = Math.max(12, draftState.tvmRowCount - 1);
+          })
+        }
         readRow={rowIndex => tvmRows[rowIndex] ?? {}}
         readEntryValue={(rowIndex, fieldKey) => tvmRows[rowIndex]?.[fieldKey] ?? ''}
         writeEntryValue={(rowIndex, fieldKey, newValue) =>

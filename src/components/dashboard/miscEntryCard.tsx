@@ -24,7 +24,7 @@ import {
   tableTotalRowClass,
   tableWrapperClass,
 } from "../../globalStyles";
-import { PlusIcon } from "lucide-react";
+import { PlusIcon, Trash2 } from "lucide-react";
 
 interface MiscEntryCardProps {
   title: string;
@@ -39,6 +39,7 @@ interface MiscEntryCardProps {
     newValue: string,
   ) => void;
   onAddRow: () => void;
+  onDeleteRow: (rowIndex: number) => void;
 }
 
 export default function MiscEntryCard({
@@ -50,12 +51,15 @@ export default function MiscEntryCard({
   countedTotal,
   onCellChange,
   onAddRow,
+  onDeleteRow,
 }: MiscEntryCardProps) {
   const runningTotals = runningTotalsOfRows(rows, rowCount);
   const amountTotal = rows.reduce(
     (total, row) => total + parseNumber(row?.[miscColumnIndex.amount]),
     0,
   );
+  const minimumAdditionalRowCount = 6;
+  const showActionColumn = rowCount > minimumAdditionalRowCount;
 
   // one typed cell; the data-* labels are what the arrow keys use to find the next cell
   const typedCell = (
@@ -131,14 +135,20 @@ export default function MiscEntryCard({
       <div className={`${tableWrapperClass} overflow-hidden`}>
         <table className={`${tableClass} w-full min-w-0 table-fixed`}>
           <colgroup>
-            <col className="w-[17%]" />
-            <col className="w-[27%]" />
-            <col className="w-[16%]" />
-            <col className="w-[20%]" />
-            <col className="w-[20%]" />
+            {showActionColumn && <col className="w-[10%]" />}
+            <col className={showActionColumn ? "w-[15%]" : "w-[17%]"} />
+            <col className={showActionColumn ? "w-[24%]" : "w-[27%]"} />
+            <col className={showActionColumn ? "w-[14%]" : "w-[16%]"} />
+            <col className={showActionColumn ? "w-[18%]" : "w-[20%]"} />
+            <col className={showActionColumn ? "w-[19%]" : "w-[20%]"} />
           </colgroup>
           <thead className={tableHeaderRowClass}>
             <tr>
+              {showActionColumn && (
+                <th className={`${tableHeaderCellClass} whitespace-nowrap`}>
+                  Action
+                </th>
+              )}
               {headers.map((header) => (
                 <th
                   key={header}
@@ -157,6 +167,21 @@ export default function MiscEntryCard({
                   key={rowIndex}
                   className={`${tableRowClass}${isCounted ? "" : "bg-inp opacity-50"}`}
                 >
+                  {showActionColumn && (
+                    <td className={`${tableCellClass} text-center`}>
+                      {rowIndex >= minimumAdditionalRowCount && (
+                        <button
+                          type="button"
+                          onClick={() => onDeleteRow(rowIndex)}
+                          aria-label={`Delete added row ${rowIndex - minimumAdditionalRowCount + 1}`}
+                          title="Delete added row"
+                          className="inline-flex size-6 items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
+                        >
+                          <Trash2 className="size-3.5" aria-hidden="true" />
+                        </button>
+                      )}
+                    </td>
+                  )}
                   {typedCell(rowIndex, miscColumnIndex.date)}
                   {typedCell(rowIndex, miscColumnIndex.name)}
                   {typedCell(rowIndex, miscColumnIndex.amount, true)}
@@ -172,6 +197,9 @@ export default function MiscEntryCard({
           </tbody>
           <tfoot>
             <tr className={tableTotalRowClass}>
+              {showActionColumn && (
+                <td className={tableTotalCellClass} />
+              )}
               <td
                 className={`${tableCellLeftClass} min-w-0 whitespace-normal wrap-break-words font-bold!`}
                 colSpan={2}

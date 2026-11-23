@@ -521,9 +521,9 @@ export default function EarningSheetTable({
   }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 290px)" }
+            ? { height: "calc(100dvh - 50px)" }
             : onAddRow
-              ? { height: "calc(100dvh - 170px)" }
+              ? { height: "calc(100dvh - 10px)" }
               : undefined
         }
         onKeyDown={handleSheetKeyDown}

@@ -504,7 +504,7 @@ export default function EarningSheetTable({
   }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 280px)" }
+            ? { height: "calc(100dvh - 160px)" }
             : onAddRow
               ? { height: "calc(100dvh - 170px)" }
               : undefined

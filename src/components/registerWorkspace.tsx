@@ -128,6 +128,21 @@ export default function RegisterWorkspace({
           ),
         )
       }
+      onAddRow={() =>
+        updateRegisterState((draftState) => {
+          draftState.detailLists ??= {};
+          const dateLists = (draftState.detailLists[selectedDate] ??= {});
+          const rows = (dateLists[listKind] ??= []);
+          while (rows.length < 3) rows.push(columnTitles.map(() => ""));
+          rows.push(columnTitles.map(() => ""));
+        })
+      }
+      onDeleteRow={(rowIndex) =>
+        updateRegisterState((draftState) => {
+          const rows = draftState.detailLists?.[selectedDate]?.[listKind];
+          if (rows && rowIndex < rows.length) rows.splice(rowIndex, 1);
+        })
+      }
     />
   );
   const renderMiscCard = (title: string, kind: MiscKind) => (
@@ -421,6 +436,21 @@ export default function RegisterWorkspace({
                   {renderMiscCard("Misc credit", "miscCredit")}
                 </div>
 
+                
+                <div className="mb-4 col-span-3">
+                  {renderDetailList("Penalty details", "penaltyDetails", [
+                    "ID",
+                    "Date & time",
+                    "Penalty section",
+                    "Penalty Detail",
+                    "Penalty type", // Manual Penalty | Cash by HHT | Penalty by Purse
+                    "Passenger name",
+                    "Passenger contact no.",
+                    "Address of passenger",
+                    "Penalty amount",
+                  
+                  ])}
+                </div>    
                 <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
                     "Details of out-source earning",
@@ -431,18 +461,7 @@ export default function RegisterWorkspace({
                     "Reason",
                     "Amount",
                   ])}
-                </div>
-                <div className="mb-4">
-                  {renderDetailList("Penalty details", "penaltyDetails", [
-                    "ID",
-                    "Date & time",
-                    "Penalty section",
-                    "Passenger name",
-                    "Passenger contact no.",
-                    "Address of passenger",
-                    "Penalty amount",
-                  ])}
-                </div>                
+                </div>            
 
               </div>
             }

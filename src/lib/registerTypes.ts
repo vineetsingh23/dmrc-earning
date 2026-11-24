@@ -45,6 +45,7 @@ export type DetailListKind =
 
 
 
+
 export interface StationRecord { name: string; hasSv4Recharge: boolean; hasParking: boolean }
 
 export const stations: StationRecord[] = [
@@ -55,6 +56,7 @@ export const stations: StationRecord[] = [
 export type MiscKind = 'miscDebit' | 'miscCredit';
 
 export interface RegisterState {
+  
   // ...your existing properties...
   miscEntries?: Record<MiscKind, string[][]>;      // misc debit / credit: every entry ever added, each with its own date
   miscRowCounts?: Record<MiscKind, number>;        // rows shown in each card; the Add row button raises it

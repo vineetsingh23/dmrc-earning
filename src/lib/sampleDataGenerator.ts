@@ -59,12 +59,19 @@ export function fillMonthWithSampleData(registerState: RegisterState, dateInMont
     registerState.detailLists[date] = {
       outsourceEarning: [['Parking contractor', asText(randomBetween(2, 8) * 100)], ['Advertising stall', asText(randomBetween(1, 4) * 100)]],
       miscEarning: [['Locker fee', asText(randomBetween(1, 5) * 50)]],
-      penaltyDetails: Array.from({ length: randomBetween(1, 3) }, (_, penaltyIndex) => [
-        `PN-${date.slice(8)}-${penaltyIndex + 1}`,
-        `${date.slice(8)}-${date.slice(5, 7)}-${date.slice(0, 4)} ${padTwoDigits(randomBetween(6, 22))}:${padTwoDigits(randomBetween(0, 5) * 10)}`,
-        penaltySections[randomBetween(0, penaltySections.length - 1)], `Passenger ${penaltyIndex + 1}`,
-        `98${randomBetween(10000000, 99999999)}`, `Sector ${randomBetween(1, 90)}, Noida`, asText(randomBetween(1, 4) * 50),
-      ]),
+      penaltyDetails: Array.from({ length: randomBetween(1, 3) }, (_, penaltyIndex) => {
+        const rule = penaltySections[randomBetween(0, penaltySections.length - 1)];
+        return [
+          `PN-${date.slice(8)}-${penaltyIndex + 1}`,
+          `${date.slice(8)}-${date.slice(5, 7)}-${date.slice(0, 4)} ${padTwoDigits(randomBetween(6, 22))}:${padTwoDigits(randomBetween(0, 5) * 10)}`,
+          rule.section,
+          rule.penaltyDetail,
+          `Passenger ${penaltyIndex + 1}`,
+          `98${randomBetween(10000000, 99999999)}`,
+          `Sector ${randomBetween(1, 90)}, Noida`,
+          String(rule.penaltyAmount),
+        ];
+      }),
       // rows follow the order of tomOperators: [tomNumber, imprest issued, advance issued]
       imprestIssue: tomOperators.map(tomOperator => [tomOperator.tomNumber, asText(tomOperator.imprestAmount), asText(randomBetween(0, 4) * 100)]),
       // [tomNumber, advance received]

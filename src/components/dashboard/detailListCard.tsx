@@ -44,14 +44,14 @@ function formatPenaltyDateTime(value: string) {
 
 function penaltyColumnClass(columnIndex: number) {
   if (columnIndex === 0) return 'w-[90px]';
-  if (columnIndex === 1) return 'w-[190px]';
-  if (columnIndex === 2) return 'w-[140px]';
+  if (columnIndex === 1) return 'w-[120px]';
+  if (columnIndex === 2) return 'w-[120px]';
   if (columnIndex === 3) return 'w-[210px]';
   if (columnIndex === 4) return 'w-[140px]';
-  if (columnIndex === 5) return 'w-[150px]';
-  if (columnIndex === 6) return 'w-[190px]';
+  if (columnIndex === 5) return 'w-[110px]';
+  if (columnIndex === 6) return 'w-[90px]';
   if (columnIndex === 7) return 'w-[75px]';
-  if (columnIndex === 8) return 'w-[150px]';
+  if (columnIndex === 8) return 'w-[70px]';
 
   return '';
 }
@@ -195,7 +195,20 @@ export default function DetailListCard({ title, listKind, columnTitles, listRows
           </tfoot>
         )}
       </table>
+    
           </div>
+        <div className="mt-2 flex items-center justify-between border-t border-bd bg-inp/70 px-6 py-3 text-xs">
+                <span className="text-slate-500 dark:text-slate-400 font-bold">
+                  {listKind === "penaltyDetails" ? (
+                    <span>
+                      Every Penalty will be added in final earning simultaneouly
+                     
+                    </span>
+                  ) : (
+                    ''
+                  )}
+                </span>
+              </div>
     </div>
   );
 }

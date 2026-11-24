@@ -346,7 +346,7 @@ button:not(:disabled) {
   padding: 1rem;
   border: 1px solid var(--card-border);
   border-radius: 1rem;
-  background: var(--table-header);
+  background: var(--background);
   box-shadow: 0 16px 40px rgb(15 23 42 / 18%);
   pointer-events: none;
 }
@@ -362,8 +362,8 @@ button:not(:disabled) {
   flex: none;
   place-items: center;
   border-radius: 0.75rem;
-  background: color-mix(in srgb, var(--background) 12%, var(--card));
-  color: var(--primary);
+  background: color-mix(in srgb, var(--primary) 12%, var(--card));
+  color: var(--card-text);
 }
 
 .pwa-notice-primary,

@@ -44,15 +44,15 @@ export default function PwaUpdatePrompt() {
           <i className={`fi ${needRefresh ? 'fi-rr-refresh' : 'fi-rr-cloud-check'}`} />
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className="font-semibold text-tx">
+          <h2 className="font-semibold text-header-text">
             {needRefresh ? 'Update available' : 'Ready to use offline'}
           </h2>
-          <p className="mt-1 text-sm text-mu">
+          <p className="mt-1 text-sm text-header-text">
             {needRefresh
               ? 'A newer version is ready. Reload to update the app.'
               : 'This app is saved on this device for offline use.'}
           </p>
-          {updateError && <p className="mt-2 text-sm text-bad" role="alert">{updateError}</p>}
+          {updateError && <p className="mt-2 text-sm text-danger-text" role="alert">{updateError}</p>}
           <div className="mt-3 flex flex-wrap gap-2">
             {needRefresh && (
               <button type="button" className="pwa-notice-primary" onClick={() => void applyUpdate()}>

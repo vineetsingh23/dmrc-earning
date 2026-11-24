@@ -10,30 +10,28 @@
 :root {
   color-scheme: light;
   /*  common colors used anywhere */
-  --background:  linear-gradient(to right, #c4c5c6,#9da784, #d1cfcf);
+  --background: linear-gradient(to right, #c4c5c6, #9da784, #d1cfcf);
   --page-info: linear-gradient(to top, #850808, #064b60, #6d0960);
-  --primary:#0c3eb4;
+  --primary: #0c3eb4;
   --primary-foreground: #726b6b;
   --watermark-img: #ffffff;
-  
-  --nav-header:linear-gradient(to left, #a09d80, #c9c092, #37aaa4);
+
+  --nav-header: linear-gradient(to left, #a09d80, #c9c092, #37aaa4);
   --header-muted: #3c4b5a;
   --header-hover: #373a3d;
   --header-border: var(--card-border);
   --header-shadow: var(--card-shadow);
-  
-  
+
   /* card colors */
   --card: linear-gradient(to top right, #e88a42, #fefff8, #10877b);
   --card-text: #4b057a;
-  --card-border: #F27611;
+  --card-border: #f27611;
   --card-shadow: rgb(52, 30, 30);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
-  --muted:#212425;
-  --header-text:#534a3d;
-  --big-number:#7916c0;
-
+  --muted: #212425;
+  --header-text: #534a3d;
+  --big-number: #7916c0;
 
   /* table colors */
   --table-body: #a5e6dd;
@@ -44,27 +42,27 @@
   --table-footer: var(--table-header);
   --table-border: #648286;
   --table-text: #2e2e30;
-  --table-text-muted:#2e2121;
+  --table-text-muted: #2e2121;
   --table-shadow: #0d0c0c;
   --calculated: #29e1c2;
   --focus: #3b82f6;
   --input-focus: #f1f0be;
 
   /* Buttons */
-  --button: #088F8F;
-  --button-text:#ffffff;
+  --button: #088f8f;
+  --button-text: #ffffff;
   --button-hover: #0d4749;
-  --button-border:#9ef7dc;
+  --button-border: #9ef7dc;
   --button-shadow: var(--card-shadow);
-  --isActive:#4f0583;
+  --isActive: #4f0583;
 
- /* Feedback */
+  /* Feedback */
   --success: #a2f4c0;
   --success-border: #b6fac5;
   --success-text: #166534;
   --danger: #f1c8c8;
-  --danger-border:#ae0412;
-  --danger-text:#ae0412;
+  --danger-border: #ae0412;
+  --danger-text: #ae0412;
 
   /* Station login page */
   --login-bg: linear-gradient(160deg, #f6f3ee 0%, #ece7df 55%, #e3e8ef 100%);
@@ -88,29 +86,26 @@
 
 .dark {
   color-scheme: dark;
-  --background:  linear-gradient(to right, #2b2525,#33332c, #3b3939);
+  --background: linear-gradient(to right, #2b2525, #33332c, #3b3939);
   --page-info: linear-gradient(to top, #e88d8d, #76ddfc, #f27ce2);
-  --primary:#1148e2;
+  --primary: #1148e2;
   --primary-foreground: #604848;
 
-  
-  --nav-header:linear-gradient(to top, #535050, #3f3333, #524c4c);
+  --nav-header: linear-gradient(to top, #535050, #3f3333, #524c4c);
   --header-hover: #aabfd3;
   --header-border: var(--card-border);
   --header-shadow: var(--card-shadow);
-  
-  
+
   /* card colors */
   --card: linear-gradient(to top, #3d3838, #524c46, #504c4c);
-  --card-text: #D7FCDF;
-  --card-border: #7D4211;
+  --card-text: #d7fcdf;
+  --card-border: #7d4211;
   --card-shadow: rgb(3, 2, 2);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
-  --muted:#74939e;
-  --header-text:#ebbb78;
-  --big-number:#3cf051;
-
+  --muted: #74939e;
+  --header-text: #ebbb78;
+  --big-number: #3cf051;
 
   /* table colors */
   --table: #474343;
@@ -122,26 +117,26 @@
   --table-footer: var(--table-header);
   --table-border: #5a5353;
   --table-text: #aec4ae;
-  --table-text-muted:#a18383;
+  --table-text-muted: #a18383;
   --table-shadow: #141313;
-  --calculated: #786C12;
+  --calculated: #786c12;
   --focus: #37d5dd;
   --input-focus: #52423f;
 
   /* Buttons */
-  --button:#15825F;
-  --button-text:#D8F0E8;
-  --button-hover:#123d2f;
-  --button-border:#5DDEAF;
-  --isActive:#8A43CC;
+  --button: #15825f;
+  --button-text: #d8f0e8;
+  --button-hover: #123d2f;
+  --button-border: #5ddeaf;
+  --isActive: #8a43cc;
 
- /* Feedback */
+  /* Feedback */
   --success: #0a3319;
   --success-border: #3d9450;
   --success-text: #51f77a;
   --danger: #d68989;
-  --danger-border:#ae0412;
-  --danger-text:#ae0412;
+  --danger-border: #ae0412;
+  --danger-text: #ae0412;
 
   /* Station login page */
   --login-bg: linear-gradient(160deg, #0b1220 0%, #101a2c 55%, #161226 100%);
@@ -163,25 +158,23 @@
   --login-chip: #1a263b;
 }
 
-
 @theme inline {
-
-/* app background and colors */
-  --background-image-background:var(--background);
+  /* app background and colors */
+  --background-image-background: var(--background);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
   --background-image-page-info: var(--page-info);
 
- /* header and navigation bar */
+  /* header and navigation bar */
   --background-image-nav-header: var(--nav-header);
   --color-header-muted: var(--header-muted);
   --color-header-hover: var(--header-hover);
-  --color-header-border:var(--header-border);
+  --color-header-border: var(--header-border);
   --color-header-text: var(--header-text);
   --color-text-muted: var(--text-muted);
   --color-header-shadow: var(--header-shadow);
-  
-/* cards */
+
+  /* cards */
   --background-image-card: var(--card);
   --color-card-border: var(--card-border);
   --color-card-text: var(--card-text);
@@ -214,14 +207,11 @@
   --color-button-shadow: var(--button-shadow);
   --color-isActive: var(--isActive);
 
-
-  
   /* header */
   --background-image-header: var(--header);
   --color-header-muted: var(--header-muted);
   --color-header-hover: var(--header-hover);
   --color-input-background: var(--input-background);
-
 
   --color-success: var(--success);
   --color-success-text: var(--success-text);
@@ -245,12 +235,9 @@
 }
 
 @layer components {
-
-
-
   .page-info {
-    @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-page-info
-   }
+    @apply text-xl capitalize font-bold tracking-wide text-transparent bg-clip-text bg-page-info;
+  }
 
   .cash-status-error {
     @apply bg-danger text-danger-text font-bold border border-danger-border inline-flex items-center gap-3 mt-3 rounded-xl px-3 py-2;
@@ -354,7 +341,7 @@ button:not(:disabled) {
   position: fixed;
   right: max(1rem, env(safe-area-inset-right));
   bottom: max(1rem, env(safe-area-inset-bottom));
-  z-index: 100;
+  z-index: 120;
   width: min(25rem, calc(100vw - 2rem));
   padding: 1rem;
   border: 1px solid var(--card-border);
@@ -389,14 +376,11 @@ button:not(:disabled) {
 }
 
 .pwa-notice-primary {
-  border-color: var(--primary);
-  background: var(--primary);
-  color: var(--button-text);
+  @apply bg-primary text-button-text border border-button-border shadow-sm shadow-card-shadow;
 }
 
 .pwa-notice-secondary {
-  background: var(--primary-foreground);
-  color: var(--button-text);
+  @apply bg-table-header text-button-text shadow-sm shadow-card-shadow border border-button-border;
 }
 
 .pwa-notice-primary:hover,
@@ -457,7 +441,7 @@ button:not(:disabled) {
 
 .sheet-frozen-cell {
   isolation: isolate;
-  
+
   background-clip: border-box;
   background-color: color-mix(
     in srgb,
@@ -469,13 +453,12 @@ button:not(:disabled) {
 .sheet-frozen-cell input,
 .sheet-frozen-cell > div {
   text-align: center !important;
-  
 }
 
 .sheet-frozen-cell-even {
   background-color: color-mix(
     in srgb,
-    var(--table-body) ,
+    var(--table-body),
     var(--table-header) 85%
   ) !important;
 }
@@ -534,8 +517,12 @@ button:not(:disabled) {
   pointer-events: none;
 }
 
-.login-glow-1 { background: var(--login-glow-1); }
-.login-glow-2 { background: var(--login-glow-2); }
+.login-glow-1 {
+  background: var(--login-glow-1);
+}
+.login-glow-2 {
+  background: var(--login-glow-2);
+}
 
 .login-card {
   background: var(--login-card);

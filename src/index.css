@@ -357,7 +357,7 @@ button:not(:disabled) {
 
 .pwa-notice-icon {
   display: grid;
-  width: 4rem;
+  width: 2.5rem;
   height: 2.5rem;
   flex: none;
   place-items: center;

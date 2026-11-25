@@ -4,7 +4,7 @@
  */
 
 export const appShellClass ="min-h-screen w-full bg-no-repeat bg-background  transition-colors";
-export const appHeaderClass ="sticky top-0 z-50  bg-nav-header shadow-lg shadow-header-shadow backdrop-blur";
+export const appHeaderClass ="sticky top-0 z-[70] bg-nav-header shadow-lg shadow-header-shadow backdrop-blur";
 export const appHeaderContentClass ="mx-auto grid max-w-screen grid-cols-[1fr_auto] items-center gap-x-2 gap-y-2 px-2 py-2 md:min-h-16 md:grid-cols-[1fr_auto_1fr] md:px-4";
 export const appHeaderGroupClass = "flex flex-wrap items-center gap-4";
 
@@ -54,7 +54,7 @@ export const sheetTableClass = "w-full";
 export const tableHeaderRowClass = "bg-table-header border border-table-border";
 
 export const tableHeaderCellClass =
-  "px-2 py-2 text-sm text-center  text-table-text";
+  "px-2 py-2 text-sm text-center  text-table-text  border border-table-border";
 
 export const tableCellClass =
   "border border-table-border text-right text-xs px-2 tracking-wide font-medium  transition-colors duration-150";
@@ -77,7 +77,7 @@ export const amountInputClass = `${tableCellClass} text-right text-table-text ou
 export const summaryRowClass ="flex justify-between border-b border-dashed border-b-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
 
 /* Buttons and dialogs */
-export const primaryButtonClass ="border border-button-border px-2 flex gap-4 items-center text-nowrap py-1 rounded-md bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-95 hover:scale-100 duration-150 shadow-md shadow-button-shadow";
+export const primaryButtonClass ="border border-button-border px-2 flex gap-4 items-center text-nowrap py-1 rounded-md bg-button text-button-text hover:bg-button-hover hover:border-button-border scale-100 hover:scale-103 duration-150 shadow-md shadow-button-shadow";
 
 export const secondaryButtonClass ="rounded-lg border border-button-border bg-linear-to-r from-pink-400 via-violet-500 to-blue-400 px-3 py-1.5 font-semibold text-header transition-colors hover:button-border hover:bg-header-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus";
 

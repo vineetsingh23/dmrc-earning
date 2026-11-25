@@ -153,7 +153,7 @@ export default function StationStatisticsCard({
   const cardSeparator = `${cardHeadingClass} mb-0! mt-4! text-sm font-bold uppercase tracking-[0.12em]`;
   const staticCardClass = "grid grid-cols-1 gap-4 p-4 sm:grid-cols-2 xl:grid-cols-4";
   const statisticsCard =
-    "flex flex-col items-center rounded-2xl border border-table-border bg-header p-2 text-card-text shadow-md shadow-card-shadow transition-colors duration-200 hover:bg-card-hover";
+    "flex flex-col items-center rounded-2xl bg-card-header p-2 text-card-text shadow-md shadow-card-shadow  transition-colors duration-200 hover:bg-success-text/10";
 
   return (
     <div>

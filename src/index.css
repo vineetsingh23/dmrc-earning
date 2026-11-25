@@ -97,7 +97,7 @@
   --header-shadow: var(--card-shadow);
 
   /* card colors */
-  --card: linear-gradient(to top, #3d3838, #524c46, #504c4c);
+  --card: linear-gradient(to top, #3d3838, #5f5041, #504c4c);
   --card-text: #d7fcdf;
   --card-border: #7d4211;
   --card-shadow: rgb(3, 2, 2);

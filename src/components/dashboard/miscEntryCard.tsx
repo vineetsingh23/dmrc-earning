@@ -219,8 +219,8 @@ export default function MiscEntryCard({
       </div>
 
       {/* Footer Info Notice */}
-      <div className="mt-2 flex items-center justify-between border-t border-bd bg-inp/70 px-6 py-3 text-xs">
-        <span className="text-slate-500 dark:text-slate-400 font-bold">
+      <div className="mt-2 flex items-center justify-between  px-6 py-3 text-xs">
+        <span className="text-table-text">
           {kind === "miscDebit" ? (
             <span>
               Counted in cash possession up to this date (deposited as extra) :{" "}

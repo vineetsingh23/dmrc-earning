@@ -445,6 +445,12 @@ export default function EarningSheetTable({
     writeValueReference.current = writeEntryValue;
   }, [writeEntryValue]);
 
+  useLayoutEffect(() => {
+    if (isShiftGrid) {
+      window.scrollTo(0, 0);
+    }
+  }, [isShiftGrid]);
+
   useEffect(() => {
     const rootOverflow = document.documentElement.style.overflow;
     const bodyOverflow = document.body.style.overflow;

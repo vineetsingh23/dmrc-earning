@@ -1,4 +1,4 @@
-```typescript
+
 import type { KeyboardEvent } from "react";
 
 // Arrow / Enter / Tab navigation for tables whose cells carry data-grid (table name), data-row and data-column
@@ -155,4 +155,4 @@ export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
     gridElement.scrollLeft += targetRect.right - pinnedRight;
   }
 }
-```
+

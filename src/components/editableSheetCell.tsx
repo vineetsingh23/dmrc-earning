@@ -1,6 +1,7 @@
 import { memo, useEffect, useState } from "react";
 import { tableCellClass, tableInputClass } from "../globalStyles";
 import { settledCellText } from "../lib/calculatorInput";
+import { keepSheetCellVisible } from "../handlers/sheetKeyboardHandlers";
 
 type WriteEntryValue = (
   rowIndex: number,
@@ -67,7 +68,10 @@ const EditableSheetCell = memo(
           data-row={rowIndex}
           data-column={columnIndex}
           value={isTime ? timeDraft : value}
-          onFocus={(event) => event.target.select()}
+          onFocus={(event) => {
+            event.currentTarget.select();
+            keepSheetCellVisible(event.currentTarget);
+          }}
           onChange={(event) => {
             const inputValue = event.target.value;
             if (!isTime) {

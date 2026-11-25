@@ -1,5 +1,40 @@
 import type { KeyboardEvent } from 'react';
 
+/** Keep a focused sheet cell in the scrollport without moving the page vertically. */
+export function keepSheetCellVisible(cell: HTMLElement) {
+  const targetCell = cell.closest<HTMLElement>('td');
+  const table = cell.closest<HTMLTableElement>('table');
+  const scrollContainer = table?.parentElement;
+  const row = targetCell?.closest('tr');
+
+  if (!targetCell || !scrollContainer || !row) return;
+  if (window.getComputedStyle(targetCell).position === 'sticky') return;
+
+  const containerRect = scrollContainer.getBoundingClientRect();
+  const containerLeft = containerRect.left + scrollContainer.clientLeft;
+  const containerRight = containerLeft + scrollContainer.clientWidth;
+  const stickyCells = Array.from(row.querySelectorAll<HTMLElement>('td')).filter(
+    (rowCell) => window.getComputedStyle(rowCell).position === 'sticky',
+  );
+
+  const frozenRight = stickyCells
+    .filter((rowCell) => window.getComputedStyle(rowCell).left !== 'auto')
+    .reduce((right, rowCell) => Math.max(right, rowCell.getBoundingClientRect().right), containerLeft);
+  const pinnedLeft = stickyCells
+    .filter((rowCell) => window.getComputedStyle(rowCell).right !== 'auto')
+    .reduce((left, rowCell) => Math.min(left, rowCell.getBoundingClientRect().left), containerRight);
+
+  const visibleLeft = Math.max(containerLeft, frozenRight);
+  const visibleRight = Math.min(containerRight, pinnedLeft);
+  const targetRect = targetCell.getBoundingClientRect();
+
+  if (targetRect.left < visibleLeft) {
+    scrollContainer.scrollLeft -= visibleLeft - targetRect.left;
+  } else if (targetRect.right > visibleRight) {
+    scrollContainer.scrollLeft += targetRect.right - visibleRight;
+  }
+}
+
 // Arrow / Enter / Tab navigation for tables whose cells carry data-grid (table name), data-row and data-column
 export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
   const focusedCell = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;
@@ -32,19 +67,5 @@ export function handleSheetKeyDown(event: KeyboardEvent<HTMLElement>) {
   if (targetCell instanceof HTMLInputElement || targetCell instanceof HTMLTextAreaElement) {
     targetCell.select();
   }
-
-  const targetRow = targetCell.closest('tr');
-  const targetCellElement = targetCell.closest('td');
-  const targetStyle = targetCellElement && window.getComputedStyle(targetCellElement);
-  if (!targetRow || !targetCellElement || targetStyle?.position === 'sticky') return;
-
-  const frozenRight = Array.from(targetRow.querySelectorAll<HTMLElement>('td'))
-    .filter(cell => window.getComputedStyle(cell).position === 'sticky')
-    .reduce((right, cell) => Math.max(right, cell.getBoundingClientRect().right), 0);
-  const containerLeft = gridElement.getBoundingClientRect().left + gridElement.clientLeft;
-  const hiddenWidth = frozenRight - targetCellElement.getBoundingClientRect().left;
-
-  if (frozenRight > containerLeft && hiddenWidth > 0) {
-    gridElement.scrollLeft += hiddenWidth;
-  }
+  keepSheetCellVisible(targetCell);
 }

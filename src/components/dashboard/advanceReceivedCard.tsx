@@ -68,7 +68,7 @@ export default function AdvanceReceivedCard({ listRows, onAdvanceChange, onTomNu
                   <input data-grid="advanceReceived" data-row={rowIndex} data-column={tomOperator ? 0 : 1}
                     value={listRows[rowIndex]?.[advanceColumnIndex] ?? ''} placeholder="0" inputMode="decimal"
                     onFocus={event => event.target.select()} onChange={event => onAdvanceChange(rowIndex, event.target.value)}
-                    className={`${tableInputClass} min-w-20 !text-center`} />
+                    className={`${tableInputClass} min-w-20 !text-right`} />
                 </td>
               </tr>
             );

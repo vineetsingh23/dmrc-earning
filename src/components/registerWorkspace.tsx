@@ -265,7 +265,7 @@ export default function RegisterWorkspace({
                   <h1 className="page-info">Station cash dashboard</h1>
                   <Link
                     to="/user-guide"
-                    className="inline-flex items-center gap-2 rounded-xl border button-border bg-card px-4 py-2 text-sm font-semibold text-card-text shadow-sm shadow-card-shadow"
+                    className="inline-flex items-center gap-2 rounded-xl border button-border bg-card px-4 py-2 text-sm font-semibold text-primary shadow-sm transition hover:bg-surface-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-focus"
                   >
                     <BookOpen className="size-4" aria-hidden="true" />
                     User guide
@@ -469,26 +469,14 @@ export default function RegisterWorkspace({
           <Route
             path="/shift-entry"
             element={
-           <>
-                <header className="flex justify-between mb-4">
+              <div className="space-y-4">
+                <header className="page-intro">
                   <h1 className="page-info">CC and TOM Earning</h1>
-                  <button
-                    type="button"
-                    onClick={() =>
-                      updateRegisterState((draftState) => {
-                        draftState.shiftRowCount += 1;
-                      })
-                    }
-                    className={primaryButtonClass}
-                  >
-                    + Add row
-                  </button>
                 </header>
-               
-      
                <EarningSheetTable
   columns={visibleShiftColumns}
   frozenColumnCount={2}
+  pinnedRightColumnCount={2}
   gridName="shift"
   rowCount={registerState.shiftRowCount}
   minimumAdditionalRowCount={12}
@@ -553,21 +541,36 @@ export default function RegisterWorkspace({
     })
   }
 />
-                
-        </>
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={() =>
+                      updateRegisterState((draftState) => {
+                        draftState.shiftRowCount += 1;
+                      })
+                    }
+                    className={primaryButtonClass}
+                  >
+                    + Add row
+                  </button>
+                </div>
+              </div>
             }
           />
           <Route
             path="/tvm-earning"
             element={
-             
+              <div className="space-y-4">
+                <header className="page-intro">
+                 <h1 className="page-info">TVM Earning</h1>
+                </header>
                 <TvmEarningPage
                 
                   registerState={registerState}
                   updateRegisterState={updateRegisterState}
                   date={selectedDate}
                 />
-              
+              </div>
             }
           />
           <Route

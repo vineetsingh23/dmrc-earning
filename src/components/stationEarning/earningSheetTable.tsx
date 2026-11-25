@@ -33,6 +33,7 @@ import {
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import { Trash2 } from "lucide-react";
+import { pinnedColumnStyle } from "../sheetFrozenColumns";
 
 
 export interface SheetStyle {
@@ -161,9 +162,11 @@ function buildHeaderRows(
   headerRowOffsets: number[],
   columnOffsets: number[],
   frozenColumnCount: number,
+  pinnedRightColumnCount: number,
   columnWidths: number[],
 ): ReactNode[][] {
   const headerLevelCount = Math.max(...columns.map(columnDepth));
+  const pinnedRightStartIndex = columnWidths.length - pinnedRightColumnCount;
   const headerRows: ReactNode[][] = Array.from(
     { length: headerLevelCount },
     () => [],
@@ -191,20 +194,24 @@ function buildHeaderRows(
       if (isColumnGroup(node)) {
         const groupLeafCount = collectLeafColumns(node).length;
         const currentLeafStart = leafIndexCounter;
+        const groupLeafEnd = currentLeafStart + groupLeafCount;
 
         const isFrozen =
           frozenColumnCount > 0 &&
-          currentLeafStart + groupLeafCount <= frozenColumnCount;
+          groupLeafEnd <= frozenColumnCount;
+        const isPinnedRight =
+          pinnedRightColumnCount > 0 &&
+          currentLeafStart >= pinnedRightStartIndex;
         const freezeBoundaryClass =
           frozenColumnCount > 0 &&
-          currentLeafStart + groupLeafCount === frozenColumnCount
+          groupLeafEnd === frozenColumnCount
             ? "sheet-freeze-boundary"
             : "";
         let zIndex = "z-20";
 
-        if (isFrozen) zIndex = "z-30";
+        if (isFrozen || isPinnedRight) zIndex = "z-30";
 
-        const headerClass = `sticky ${zIndex} ${isFrozen ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
+        const headerClass = `sticky ${zIndex} ${isFrozen || isPinnedRight ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -213,6 +220,16 @@ function buildHeaderRows(
             style={{
               top,
               ...(isFrozen ? { left: columnOffsets[currentLeafStart] ?? 0 } : {}),
+              ...(isPinnedRight
+                ? {
+                    ...pinnedColumnStyle(
+                      columnWidths
+                        .slice(groupLeafEnd)
+                        .reduce((total, width) => total + width, 0),
+                      30,
+                    ),
+                  }
+                : {}),
             }}
           >
             {node.label}
@@ -230,6 +247,8 @@ function buildHeaderRows(
           columnWidth,
         );
         const zIndex = freeze.isFrozen ? "z-30" : "z-20";
+        const isPinnedRight =
+          pinnedRightColumnCount > 0 && leafIndex >= pinnedRightStartIndex;
         const calculatedHeaderClass =
           node.kind === "calculated" ? "calculated-header" : "";
         const freezeBoundaryClass =
@@ -240,13 +259,28 @@ function buildHeaderRows(
           frozenColumnCount > 0 && leafIndex === frozenColumnCount - 1
             ? "sheet-freeze-seam"
             : "";
-        const headerClass = `sticky ${zIndex} ${freeze.className} ${freeze.isFrozen ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${freezeSeamClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${calculatedHeaderClass} ${earningHeaderStyle}`;
+        const headerClass = `sticky ${isPinnedRight ? "z-30" : zIndex} ${freeze.className} ${freeze.isFrozen || isPinnedRight ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${freezeSeamClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${calculatedHeaderClass} ${earningHeaderStyle}`;
         headerRows[levelIndex].push(
           <th
             key={headerKey}
             rowSpan={headerLevelCount - levelIndex}
             className={headerClass}
-            style={{ ...freeze.style, top, width: columnWidth }}
+            style={{
+              ...freeze.style,
+              ...(isPinnedRight
+                ? {
+                    ...pinnedColumnStyle(
+                      columnWidths
+                        .slice(leafIndex + 1)
+                        .reduce((total, width) => total + width, 0),
+                      30,
+                      columnWidth,
+                    ),
+                  }
+                : {}),
+              top,
+              width: columnWidth,
+            }}
           >
             {node.label}
           </th>,
@@ -274,6 +308,7 @@ interface EarningSheetTableProps {
   onDeleteRow?: (rowIndex: number) => void;
   minimumAdditionalRowCount?: number;
   frozenColumnCount?: number;
+  pinnedRightColumnCount?: number;
   uniformColumnWidth?: number;
   mergeFooterLabel?: boolean;
   showTotalRow?: boolean; // default true
@@ -291,6 +326,7 @@ export default function EarningSheetTable({
   onDeleteRow,
   minimumAdditionalRowCount = 0,
   frozenColumnCount = 2,
+  pinnedRightColumnCount = 0,
   uniformColumnWidth,
   mergeFooterLabel = true,
   showTotalRow = true,
@@ -343,6 +379,25 @@ export default function EarningSheetTable({
     return Math.max(baseWidth, longestValueLength * 9 + 24);
   });
   const getColumnWidth = (columnIndex: number) => columnWidths[columnIndex];
+  const effectivePinnedRightColumnCount = Math.min(
+    Math.max(0, pinnedRightColumnCount),
+    Math.max(0, leafColumns.length - Math.max(0, frozenColumnCount)),
+  );
+  const pinnedRightStartIndex =
+    leafColumns.length - effectivePinnedRightColumnCount;
+  const isPinnedRightColumn = (columnIndex: number) =>
+    effectivePinnedRightColumnCount > 0 &&
+    columnIndex >= pinnedRightStartIndex;
+  const getPinnedRightStyle = (columnIndex: number, zIndex: number) =>
+    isPinnedRightColumn(columnIndex)
+      ? pinnedColumnStyle(
+          columnWidths
+            .slice(columnIndex + 1)
+            .reduce((total, width) => total + width, 0),
+          zIndex,
+          getColumnWidth(columnIndex),
+        )
+      : {};
   const isEditable = Boolean(readEntryValue && writeEntryValue);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const headerRef = useRef<HTMLTableSectionElement>(null);
@@ -555,6 +610,7 @@ export default function EarningSheetTable({
               headerRowOffsets,
               frozenColumnOffsets,
               frozenColumnCount,
+              effectivePinnedRightColumnCount,
               columnWidths,
             ).map((headerRow, headerRowIndex, headerRows) => (
               <tr key={headerRowIndex} className={`${tableHeaderCellClass} font-bold!`}>
@@ -635,6 +691,11 @@ export default function EarningSheetTable({
                           rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
                         }`
                       : "",
+                    isPinnedRightColumn(colIndex)
+                      ? `sticky z-10 sheet-frozen-cell ${
+                          rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
+                        }`
+                      : "",
                     frozenColumnCount > 0 &&
                     colIndex === frozenColumnCount - 1
                       ? "sheet-freeze-boundary sheet-freeze-seam"
@@ -650,7 +711,11 @@ if (column.fieldKey === "advanceMatchConfirmed") {
     <td
       key={column.fieldKey}
       className={`${tableCellClass} ${stickyClass} text-center`}
-      style={{ ...freeze.style, width: columnWidth }}
+      style={{
+        ...freeze.style,
+        ...getPinnedRightStyle(colIndex, 10),
+        width: columnWidth,
+      }}
     >
       {isEligible || isConfirmed ? (
         <input
@@ -685,7 +750,11 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                           ${sheetStyle.bodyCellClass} 
                           ${tableCalculatedCellClass}
                           ${stickyClass}`} 
-                          style={{ ...freeze.style, width: columnWidth }}>
+                          style={{
+                            ...freeze.style,
+                            ...getPinnedRightStyle(colIndex, 10),
+                            width: columnWidth,
+                          }}>
 
                         {formatRupees(column.formula!(row))}
                       </td>
@@ -697,7 +766,11 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                       <td
                         key={column.fieldKey}
                         className={`${tableMirrorCellClass} ${stickyClass}`}
-                        style={{ ...freeze.style, width: columnWidth }}
+                        style={{
+                          ...freeze.style,
+                          ...getPinnedRightStyle(colIndex, 10),
+                          width: columnWidth,
+                        }}
                       >
                         <div className="min-w-[70px] p-1.5 text-right text-sm">
                           {row[column.sourceFieldKey!] ?? ""}
@@ -723,7 +796,11 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                         value={readEntryValue!(rowIndex, column.fieldKey)}
                         writeValueReference={writeValueReference}
                         extraClass={stickyClass}
-                        style={{ ...freeze.style, width: columnWidth }}
+                        style={{
+                          ...freeze.style,
+                          ...getPinnedRightStyle(colIndex, 10),
+                          width: columnWidth,
+                        }}
                       />
                     );
                   }
@@ -779,8 +856,9 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                     getColumnWidth(columnIndex),
                   );
                   const zIndex = freeze.isFrozen ? 50 : 40;
+                  const isPinnedRight = isPinnedRightColumn(columnIndex);
                   const isTotalLabel = columnIndex === 0;
-                  const footerStickyClass = `sticky ${freeze.className} ${sheetStyle.footerCellClass} border border-border px-2 py-3 font-semibold ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
+                  const footerStickyClass = `sticky ${freeze.className} ${isPinnedRight ? "z-40 sheet-frozen-cell" : ""} ${sheetStyle.footerCellClass} border border-border px-2 py-3 font-semibold ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
                   const freezeBoundaryClass =
                     (isTotalLabel && mergeFooterLabel) ||
                     (frozenColumnCount > 0 &&
@@ -807,12 +885,16 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                       className={`${footerStickyClass} ${freezeBoundaryClass}`}
                       style={{
                         ...footerStyle,
+                        ...getPinnedRightStyle(
+                          columnIndex,
+                          isPinnedRight ? 50 : zIndex,
+                        ),
                         width: isTotalLabel && mergeFooterLabel
                           ? totalLabelWidth
                           : getColumnWidth(columnIndex),
                         position: "sticky",
                         bottom: 0,
-                        zIndex,
+                        zIndex: freeze.isFrozen || isPinnedRight ? 50 : zIndex,
                         borderTop: "2px solid var(--sheet-border)",
                         boxShadow: `${freezeBoundaryClass ? "inset -2px 0 0 var(--border), " : ""}0 -2px 6px rgb(0 0 0 / 0.15)`,
                       }}

@@ -265,7 +265,7 @@ export default function RegisterWorkspace({
                   <h1 className="page-info">Station cash dashboard</h1>
                   <Link
                     to="/user-guide"
-                    className="inline-flex items-center gap-2 rounded-xl bg-card px-4 py-2 text-sm font-semibold text-button-text hover:ring-1 hover:ring-focus transition duration-150 ring-1"
+                    className="inline-flex items-center gap-2 rounded-xl bg-card px-4 py-2 text-sm font-semibold text-card-text hover:ring-1 hover:ring-focus transition duration-150 ring-1"
                   >
                     <BookOpen className="size-4" aria-hidden="true" />
                     User guide

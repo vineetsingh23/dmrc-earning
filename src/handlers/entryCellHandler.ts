@@ -33,3 +33,25 @@ export function updateEntryCell(
 
         row[fieldKey] = newValue;
 }
+
+export function deleteEntryRow(
+  entriesByDate: EntriesByDate,
+  date: string,
+  rowIndex: number,
+  minimumRowCount: number,
+) {
+  if (rowIndex < minimumRowCount) return;
+  const entriesOfDate = entriesByDate[date];
+  if (!entriesOfDate) return;
+
+  delete entriesOfDate[rowIndex];
+  const indexes = Object.keys(entriesOfDate)
+    .map(Number)
+    .filter(index => index > rowIndex)
+    .sort((a, b) => a - b);
+
+  indexes.forEach(index => {
+    entriesOfDate[index - 1] = entriesOfDate[index];
+    delete entriesOfDate[index];
+  });
+}

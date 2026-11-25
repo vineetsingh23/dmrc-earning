@@ -36,9 +36,9 @@ columnGroup('RCTM Add Value',  numberColumn('tvmRctmAddValueQuantity', 'Qty'), n
   
   columnGroup('Add Value NCMC',
     columnGroup('Add Value NCMC TOM', numberColumn('addValueNcmcTomQuantity', 'Qty'), numberColumn('addValueNcmcTomAmount', 'Amt')),
-    columnGroup('Add Value NCMC TVM', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amt')),
+    columnGroup('Add Value NCMC TVM', numberColumn('tvmNcmcAddValueQuantity', 'Qty'), numberColumn('tvmNcmcAddValueAmount', 'Amt')))),
     
-    columnGroup('Add Value Cancel', numberColumn('addValueCancelQuantity', 'Qty'), numberColumn('addValueCancelAmount', 'Amt')))),
+    // columnGroup('Add Value Cancel', numberColumn('addValueCancelQuantity', 'Qty'), numberColumn('addValueCancelAmount', 'Amt')))),
 
   columnGroup('Surcharge',
     columnGroup('Surcharge by Cash/Cashless', numberColumn('surchargeCashQuantity','Qty'), numberColumn('surchargeCashAmount','Amt')),

@@ -1,5 +1,6 @@
 import { memo, useEffect, useState } from "react";
 import { tableCellClass, tableInputClass } from "../globalStyles";
+import { settledCellText } from "../lib/calculatorInput";
 
 type WriteEntryValue = (
   rowIndex: number,
@@ -100,15 +101,24 @@ const EditableSheetCell = memo(
             }
           }}
           onBlur={(event) => {
-            if (!isTime || timeDraft === "") return;
-            const parsedTime = parseTimeInput(timeDraft);
-            if (!parsedTime.value) {
-              event.currentTarget.setCustomValidity(
-                "Enter a valid 24-hour time from 00:00 to 23:59.",
-              );
-              event.currentTarget.reportValidity();
-            } else {
-              event.currentTarget.setCustomValidity("");
+            if (isTime) {
+              if (timeDraft === "") return;
+              const parsedTime = parseTimeInput(timeDraft);
+              if (!parsedTime.value) {
+                event.currentTarget.setCustomValidity(
+                  "Enter a valid 24-hour time from 00:00 to 23:59.",
+                );
+                event.currentTarget.reportValidity();
+              } else {
+                event.currentTarget.setCustomValidity("");
+              }
+              return;
+            }
+
+            if (!isNumeric) return;
+            const settledText = settledCellText(event.currentTarget.value);
+            if (settledText !== event.currentTarget.value) {
+              writeValueReference.current?.(rowIndex, fieldKey, settledText);
             }
           }}
           className={`${tableInputClass} ${isNumeric ? "text-right tabular-nums" : "text-left"} ${

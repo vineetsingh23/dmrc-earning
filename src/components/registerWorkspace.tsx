@@ -7,11 +7,11 @@ import {
   tomOperators,
 } from "../lib/businessRules";
 import { effectiveDetailListRows } from "../lib/carriedLists";
-import { addCarriedDetailListRow, updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
-import { addMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
+import { addCarriedDetailListRow, deleteCarriedDetailListRow, updateCarriedDetailListCell } from "../handlers/carriedListsHandlers";
+import { addMiscRow, deleteMiscRow, updateMiscEntryCell } from "../handlers/miscEntryHandlers";
 import { miscRowCountOf, miscRowsOf, type MiscKind } from "../lib/miscEntries";
 import MiscEntryCard from "./dashboard/miscEntryCard";
-// import { updateMiscEntryCell } from '../handlers/miscEntryHandlers';
+import { updateDetailListCell } from "../handlers/detailListHandlers";
 // import type { MiscKind } from '../lib/miscEntries';
 import EarningSheetTable from "./stationEarning/earningSheetTable";
 import CashInHandCard from "./dashboard/cashInHandCard";
@@ -20,7 +20,7 @@ import SendToBankDialog from "./dashboard/sentToBankDialog";
 import { shiftEntryColumns } from "../lib/shiftEntrycolumns";
 import { finalEarningColumns } from "../lib/finalEarningColumns";
 
-import { updateEntryCell } from "../handlers/entryCellHandler";
+import { deleteEntryRow, updateEntryCell } from "../handlers/entryCellHandler";
 import { updateCashCount } from "../handlers/cashcountHandlers";
 import { recordBankTransfer } from "../handlers/cashToBankHandlers";
 import { useRegisterData } from "../hooks/useRegisterData";
@@ -37,8 +37,8 @@ import {
   primaryButtonClass,
   stackedCardsClass,
 } from "../globalStyles";
-// import DetailListCard from "./dashboard/detailListCard";
-// import {type DetailListKind } from "../lib/registerTypes";
+import DetailListCard from "./dashboard/detailListCard";
+import {type DetailListKind } from "../lib/registerTypes";
 import StationStatisticsCard from "./stationOverview/stationStatistics";
 import type { StationRecord } from "../lib/registerTypes";
 import { filterByFacilities } from "../lib/earningColumns";
@@ -106,30 +106,45 @@ export default function RegisterWorkspace({
   const { isDarkMode, toggleDarkMode } = useThemeMode();
   const rowsOfSelectedDate = registerState.shiftEntries[selectedDate] ?? {};
 
-  // const renderDetailList = (
-  //   title: string,
-  //   listKind: DetailListKind,
-  //   columnTitles: string[],
-  // ) => (
-  //   <DetailListCard
-  //     title={title}
-  //     listKind={listKind}
-  //     columnTitles={columnTitles}
-  //     listRows={registerState.detailLists?.[selectedDate]?.[listKind] ?? []}
-  //     onCellChange={(rowIndex, columnIndex, newValue) =>
-  //       updateRegisterState((draftState) =>
-  //         updateDetailListCell(
-  //           draftState,
-  //           selectedDate,
-  //           listKind,
-  //           rowIndex,
-  //           columnIndex,
-  //           newValue,
-  //         ),
-  //       )
-  //     }
-  //   />
-  // );
+  const renderDetailList = (
+    title: string,
+    listKind: DetailListKind,
+    columnTitles: string[],
+  ) => (
+    <DetailListCard
+      title={title}
+      listKind={listKind}
+      columnTitles={columnTitles}
+      listRows={registerState.detailLists?.[selectedDate]?.[listKind] ?? []}
+      onCellChange={(rowIndex, columnIndex, newValue) =>
+        updateRegisterState((draftState) =>
+          updateDetailListCell(
+            draftState,
+            selectedDate,
+            listKind,
+            rowIndex,
+            columnIndex,
+            newValue,
+          ),
+        )
+      }
+      onAddRow={() =>
+        updateRegisterState((draftState) => {
+          draftState.detailLists ??= {};
+          const dateLists = (draftState.detailLists[selectedDate] ??= {});
+          const rows = (dateLists[listKind] ??= []);
+          while (rows.length < 3) rows.push(columnTitles.map(() => ""));
+          rows.push(columnTitles.map(() => ""));
+        })
+      }
+      onDeleteRow={(rowIndex) =>
+        updateRegisterState((draftState) => {
+          const rows = draftState.detailLists?.[selectedDate]?.[listKind];
+          if (rows && rowIndex < rows.length) rows.splice(rowIndex, 1);
+        })
+      }
+    />
+  );
   const renderMiscCard = (title: string, kind: MiscKind) => (
     <MiscEntryCard
       title={title}
@@ -154,6 +169,11 @@ export default function RegisterWorkspace({
       }
       onAddRow={() =>
         updateRegisterState((draftState) => addMiscRow(draftState, kind))
+      }
+      onDeleteRow={(rowIndex) =>
+        updateRegisterState((draftState) =>
+          deleteMiscRow(draftState, kind, rowIndex),
+        )
       }
     />
   );
@@ -334,6 +354,17 @@ export default function RegisterWorkspace({
                         );
                       })
                     }
+                    onDeleteRow={(rowIndex) =>
+                      updateRegisterState((draftState) =>
+                        deleteCarriedDetailListRow(
+                          draftState,
+                          selectedDate,
+                          "imprestIssue",
+                          rowIndex,
+                          tomOperators.length,
+                        ),
+                      )
+                    }
                   />
                   <AdvanceReceivedCard
   listRows={effectiveDetailListRows(
@@ -387,6 +418,17 @@ export default function RegisterWorkspace({
       );
     })
   }
+  onDeleteRow={(rowIndex) =>
+    updateRegisterState((draftState) =>
+      deleteCarriedDetailListRow(
+        draftState,
+        selectedDate,
+        "advanceReceived",
+        rowIndex,
+        tomOperators.length,
+      ),
+    )
+  }
 />
                 </div>
                 <div className="col-span-full grid grid-cols-1 gap-4 xl:grid-cols-2">
@@ -394,7 +436,22 @@ export default function RegisterWorkspace({
                   {renderMiscCard("Misc credit", "miscCredit")}
                 </div>
 
-                {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+                
+                <div className="mb-4 col-span-3">
+                  {renderDetailList("Penalty details", "penaltyDetails", [
+                    "ID",
+                    "Date & time",
+                    "Penalty section",
+                    "Penalty Detail",
+                    "Penalty type", // Manual Penalty | Cash by HHT | Penalty by Purse
+                    "Passenger name",
+                    "Passenger contact no.",
+                    "Address of passenger",
+                    "Penalty amount",
+                  
+                  ])}
+                </div>    
+                <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
                     "Details of out-source earning",
                     "outsourceEarning",
@@ -404,18 +461,7 @@ export default function RegisterWorkspace({
                     "Reason",
                     "Amount",
                   ])}
-                </div>
-                <div className="mb-4">
-                  {renderDetailList("Penalty details", "penaltyDetails", [
-                    "ID",
-                    "Date & time",
-                    "Penalty section",
-                    "Passenger name",
-                    "Passenger contact no.",
-                    "Address of passenger",
-                    "Penalty amount",
-                  ])}
-                </div>                 */}
+                </div>            
 
               </div>
             }
@@ -432,6 +478,18 @@ export default function RegisterWorkspace({
   frozenColumnCount={2}
   gridName="shift"
   rowCount={registerState.shiftRowCount}
+  minimumAdditionalRowCount={12}
+  onDeleteRow={(rowIndex) =>
+    updateRegisterState((draftState) => {
+      deleteEntryRow(
+        draftState.shiftEntries,
+        selectedDate,
+        rowIndex,
+        12,
+      );
+      draftState.shiftRowCount = Math.max(12, draftState.shiftRowCount - 1);
+    })
+  }
   readRow={(rowIndex) => {
     const row = rowsOfSelectedDate[rowIndex] ?? {};
 

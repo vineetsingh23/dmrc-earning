@@ -15,3 +15,17 @@ export function addMiscRow(state: RegisterState, kind: MiscKind) {
   const currentRowCount = miscRowCountOf(state, kind);
   state.miscRowCounts = { ...createEmptyRegisterState().miscRowCounts!, ...(state.miscRowCounts ?? {}), [kind]: currentRowCount + 1 };
 }
+
+export function deleteMiscRow(state: RegisterState, kind: MiscKind, rowIndex: number) {
+  const minimumRowCount = createEmptyRegisterState().miscRowCounts![kind];
+  if (rowIndex < minimumRowCount) return;
+
+  state.miscEntries ??= createEmptyRegisterState().miscEntries;
+  state.miscEntries![kind]?.splice(rowIndex, 1);
+  const currentRowCount = miscRowCountOf(state, kind);
+  state.miscRowCounts = {
+    ...createEmptyRegisterState().miscRowCounts!,
+    ...(state.miscRowCounts ?? {}),
+    [kind]: Math.max(minimumRowCount, currentRowCount - 1),
+  };
+}

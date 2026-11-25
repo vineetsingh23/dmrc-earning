@@ -192,10 +192,10 @@ export default function StationStatisticsCard({
               previous === 0 ? null : ((current - previous) / previous) * 100;
             const changeClass =
               current > previous
-                ? "text-emerald-700 dark:text-emerald-300"
+                ? "text-big-number"
                 : current < previous
-                  ? "text-red-700 dark:text-red-300"
-                  : "text-mu";
+                  ? "text-red-400"
+                  : "text-card-text";
 
             return (
               <div key={title} className={statisticsCard}>

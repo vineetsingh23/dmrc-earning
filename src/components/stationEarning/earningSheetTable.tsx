@@ -32,6 +32,7 @@ import {
   tableHeaderCellClass,
 } from "../../globalStyles";
 import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
+import { Trash2 } from "lucide-react";
 
 
 export interface SheetStyle {
@@ -50,6 +51,7 @@ const defaultSheetStyle: SheetStyle = {
 };
 
 const firstColumnWidth = 64;
+const actionColumnWidth = 56;
 const inputWidthCanvas =
   typeof document === "undefined"
     ? undefined
@@ -269,6 +271,8 @@ interface EarningSheetTableProps {
     newValue: string,
   ) => void;
   onAddRow?: () => void;
+  onDeleteRow?: (rowIndex: number) => void;
+  minimumAdditionalRowCount?: number;
   frozenColumnCount?: number;
   uniformColumnWidth?: number;
   mergeFooterLabel?: boolean;
@@ -284,6 +288,8 @@ export default function EarningSheetTable({
   readEntryValue,
   writeEntryValue,
   onAddRow,
+  onDeleteRow,
+  minimumAdditionalRowCount = 0,
   frozenColumnCount = 2,
   uniformColumnWidth,
   mergeFooterLabel = true,
@@ -295,6 +301,10 @@ export default function EarningSheetTable({
   const isFinalGrid = gridName === "final";
   const isEarningGrid =
     isShiftGrid || gridName === "tvm" || isFinalGrid;
+  const showActionColumn = Boolean(
+    onDeleteRow && rowCount > minimumAdditionalRowCount,
+  );
+  const freezeActionColumn = showActionColumn && frozenColumnCount > 0;
   const leafColumns = columns.flatMap(collectLeafColumns);
   const allRows = Array.from({ length: rowCount }, (_, rowIndex) =>
     readRow(rowIndex),
@@ -339,6 +349,11 @@ export default function EarningSheetTable({
   const tableRef = useRef<HTMLTableElement>(null);
   const [headerRowHeights, setHeaderRowHeights] = useState<number[]>([]);
   const [columnOffsets, setColumnOffsets] = useState([0, 64, 204]);
+  const frozenColumnOffsets = showActionColumn
+    ? columnOffsets
+        .slice(1)
+        .map((offset) => offset - (freezeActionColumn ? 0 : actionColumnWidth))
+    : columnOffsets;
   const headerRowOffsets = headerRowHeights.reduce<number[]>(
     (offsets, height) => {
       offsets.push(offsets[offsets.length - 1] + height);
@@ -428,17 +443,19 @@ export default function EarningSheetTable({
 
   useLayoutEffect(() => {
     const firstRow = tableRef.current?.tBodies[0]?.rows[0];
+    const offsetCellCount =
+      frozenColumnCount + (showActionColumn ? 1 : 0);
     if (
       frozenColumnCount === 0 ||
       !firstRow ||
-      firstRow.cells.length < frozenColumnCount
+      firstRow.cells.length < offsetCellCount
     ) {
       return;
     }
 
     const updateColumnOffsets = () => {
       const widths = Array.from(firstRow.cells)
-        .slice(0, frozenColumnCount)
+        .slice(0, offsetCellCount)
         .map((cell) => cell.getBoundingClientRect().width);
       const offsets = widths.reduce<number[]>(
         (currentOffsets, width) => [
@@ -462,11 +479,11 @@ export default function EarningSheetTable({
     updateColumnOffsets();
     const observer = new ResizeObserver(updateColumnOffsets);
     Array.from(firstRow.cells)
-      .slice(0, frozenColumnCount)
+      .slice(0, offsetCellCount)
       .forEach((cell) => observer.observe(cell));
 
     return () => observer.disconnect();
-  }, [columns, rowCount, frozenColumnCount]);
+  }, [columns, rowCount, frozenColumnCount, showActionColumn]);
 
   return (
     <>
@@ -504,9 +521,9 @@ export default function EarningSheetTable({
   }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 160px)" }
+            ? { height: "calc(100dvh - 150px)" }
             : onAddRow
-              ? { height: "calc(100dvh - 170px)" }
+              ? { height: "calc(100dvh - 110px)" }
               : undefined
         }
         onKeyDown={handleSheetKeyDown}
@@ -519,6 +536,7 @@ export default function EarningSheetTable({
           }`}
         >
           <colgroup>
+            {showActionColumn && <col style={{ width: actionColumnWidth }} />}
             {leafColumns.map((column, columnIndex) => (
               <col
                 key={column.fieldKey}
@@ -535,16 +553,23 @@ export default function EarningSheetTable({
               sheetStyle,
               isEarningGrid,
               headerRowOffsets,
-              columnOffsets,
+              frozenColumnOffsets,
               frozenColumnCount,
               columnWidths,
-            ).map(
-              (headerRow, headerRowIndex) => (
-                <tr key={headerRowIndex} className={`${tableHeaderCellClass} font-bold!`}>
-                  {headerRow}
-                </tr>
-              ),
-            )}
+            ).map((headerRow, headerRowIndex, headerRows) => (
+              <tr key={headerRowIndex} className={`${tableHeaderCellClass} font-bold!`}>
+                {showActionColumn && headerRowIndex === 0 && (
+                  <th
+                    rowSpan={headerRows.length}
+                    className={`sticky z-20 ${freezeActionColumn ? "sheet-frozen-header" : ""} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[0] ?? ""} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${isEarningGrid ? "border border-table-border bg-table-header text-table-header-text" : ""}`}
+                    style={freezeActionColumn ? { left: 0 } : undefined}
+                  >
+                    Action
+                  </th>
+                )}
+                {headerRow}
+              </tr>
+            ))}
           </thead>
 
           <tbody>
@@ -558,11 +583,49 @@ export default function EarningSheetTable({
                     : ""
                 }`}
               >
+                {showActionColumn && (
+                  <td
+                    className={`${tableCellClass} text-center ${
+                      freezeActionColumn
+                        ? `sticky z-10 sheet-frozen-cell ${
+                            rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
+                          }`
+                        : ""
+                    }`}
+                    style={
+                      freezeActionColumn
+                        ? {
+                            left: 0,
+                            width: actionColumnWidth,
+                            minWidth: actionColumnWidth,
+                            maxWidth: actionColumnWidth,
+                          }
+                        : undefined
+                    }
+                  >
+                    <div className="flex items-center justify-center gap-1">
+                      {rowIndex >= minimumAdditionalRowCount && (
+                        <button
+                          type="button"
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            onDeleteRow?.(rowIndex);
+                          }}
+                          aria-label={`Delete row ${rowIndex + 1}`}
+                          title="Delete added row"
+                          className="inline-flex items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
+                        >
+                          <Trash2 className="size-5 text-danger-text" aria-hidden="true" />
+                        </button>
+                      )}
+                    </div>
+                  </td>
+                )}
                 {leafColumns.map((column, colIndex) => {
                   const columnWidth = getColumnWidth(colIndex);
                   const freeze = getColumnFreezeProps(
                     colIndex,
-                    columnOffsets,
+                    frozenColumnOffsets,
                     frozenColumnCount,
                     columnWidth,
                   );
@@ -686,6 +749,24 @@ if (column.fieldKey === "advanceMatchConfirmed") {
           {showTotalRow && (
             <tfoot>
               <tr>
+                {showActionColumn && (
+                  <td
+                    className={sheetStyle.footerCellClass}
+                    style={
+                      freezeActionColumn
+                        ? {
+                            position: "sticky",
+                            left: 0,
+                            bottom: 0,
+                            zIndex: 50,
+                            width: actionColumnWidth,
+                            minWidth: actionColumnWidth,
+                            maxWidth: actionColumnWidth,
+                          }
+                        : undefined
+                    }
+                  />
+                )}
                 {leafColumns.map((column, columnIndex) => {
                   if (mergeFooterLabel && columnIndex > 0 && columnIndex < 2) {
                     return null;
@@ -693,7 +774,7 @@ if (column.fieldKey === "advanceMatchConfirmed") {
 
                   const freeze = getColumnFreezeProps(
                     columnIndex,
-                    columnOffsets,
+                    frozenColumnOffsets,
                     frozenColumnCount,
                     getColumnWidth(columnIndex),
                   );
@@ -727,7 +808,7 @@ if (column.fieldKey === "advanceMatchConfirmed") {
                       style={{
                         ...footerStyle,
                         width: isTotalLabel && mergeFooterLabel
-                          ? columnOffsets[2]
+                          ? totalLabelWidth
                           : getColumnWidth(columnIndex),
                         position: "sticky",
                         bottom: 0,

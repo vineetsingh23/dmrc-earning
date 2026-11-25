@@ -83,3 +83,17 @@ export default defineConfig([
 ])
 
 ```
+# button txt 
+
+ ## Side bar list
+
+ dashboard
+ shift entry
+ tvm entry
+ penalty
+ outstanding
+ outsource earning
+ final earning
+ morning report
+ user guide
+ 

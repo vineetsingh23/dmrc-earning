@@ -1,6 +1,6 @@
 import type { KeyboardEvent } from 'react';
 
-/** Keep a focused sheet cell in the scrollport without moving the page vertically. */
+/** Center a focused sheet cell in the visible scrollport without moving the page vertically. */
 export function keepSheetCellVisible(cell: HTMLElement) {
   const targetCell = cell.closest<HTMLElement>('td');
   const table = cell.closest<HTMLTableElement>('table');
@@ -27,12 +27,12 @@ export function keepSheetCellVisible(cell: HTMLElement) {
   const visibleLeft = Math.max(containerLeft, frozenRight);
   const visibleRight = Math.min(containerRight, pinnedLeft);
   const targetRect = targetCell.getBoundingClientRect();
+  const targetCenter = (targetRect.left + targetRect.right) / 2;
+  const visibleCenter = (visibleLeft + visibleRight) / 2;
 
-  if (targetRect.left < visibleLeft) {
-    scrollContainer.scrollLeft -= visibleLeft - targetRect.left;
-  } else if (targetRect.right > visibleRight) {
-    scrollContainer.scrollLeft += targetRect.right - visibleRight;
-  }
+  // Centering leaves neighboring columns visible on both sides of the focused cell.
+  // The browser clamps scrollLeft at the sheet's start/end, where centering may not be possible.
+  scrollContainer.scrollLeft += targetCenter - visibleCenter;
 }
 
 // Arrow / Enter / Tab navigation for tables whose cells carry data-grid (table name), data-row and data-column

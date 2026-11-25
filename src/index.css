@@ -428,7 +428,22 @@ button:not(:disabled) {
   top: 0;
   z-index: 20;
 }
-
+/* the sheet fills the window below the app header; the rows scroll inside it, the header and footer stay put */
+.sheet-frame {
+  display: flex;
+  flex-direction: column;
+  height: var(--sheet-height, calc(100dvh - 5rem));
+  min-height: 12rem;
+  overflow: hidden;
+  border: 1px solid var(--bd);
+  border-radius: 0.75rem;
+  background: var(--card);
+}
+.sheet-scroll {
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: auto;
+}
 .sheet-sticky-table {
   border-collapse: separate !important;
   border-spacing: 0 !important;

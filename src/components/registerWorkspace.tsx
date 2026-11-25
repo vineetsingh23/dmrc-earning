@@ -476,6 +476,7 @@ export default function RegisterWorkspace({
                <EarningSheetTable
   columns={visibleShiftColumns}
   frozenColumnCount={2}
+  pinnedRightColumnCount={2}
   gridName="shift"
   rowCount={registerState.shiftRowCount}
   minimumAdditionalRowCount={12}

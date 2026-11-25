@@ -2,6 +2,7 @@ import type { CSSProperties } from 'react';
 
 // widths (rem) of the columns that stay in place when scrolling sideways, from the left: the # column, then the first data columns
 export const frozenColumnWidthsRem = [3, 6, 6];
+export const pinnedLastColumnWidthRem = 10;
 
 export const frozenBodyCellClass = (rowIndex: number) =>
   rowIndex % 2 === 0
@@ -9,6 +10,23 @@ export const frozenBodyCellClass = (rowIndex: number) =>
     : 'bg-[#eafdf9] dark:bg-slate-800';
 
 const leftOffsetRem = (frozenIndex: number) => frozenColumnWidthsRem.slice(0, frozenIndex).reduce((total, width) => total + width, 0);
+
+export const pinnedColumnStyle = (
+  rightOffset: number,
+  zIndex: number,
+  width?: CSSProperties["width"],
+): CSSProperties => ({
+  position: 'sticky',
+  right: rightOffset,
+  zIndex,
+  ...(width === undefined
+    ? {}
+    : {
+        width,
+        minWidth: width,
+        maxWidth: width,
+      }),
+});
 
 // style of a cell in a frozen column; zIndex keeps it above the cells that scroll under it
 export const frozenCellStyle = (frozenIndex: number, zIndex: number): CSSProperties => ({
@@ -19,3 +37,7 @@ export const frozenCellStyle = (frozenIndex: number, zIndex: number): CSSPropert
   minWidth: `${frozenColumnWidthsRem[frozenIndex]}rem`,
   maxWidth: `${frozenColumnWidthsRem[frozenIndex]}rem`,
 });
+
+// a cell in the last column: sticks to the right
+export const pinnedLastCellStyle = (zIndex: number): CSSProperties =>
+  pinnedColumnStyle(0, zIndex, `${pinnedLastColumnWidthRem}rem`);

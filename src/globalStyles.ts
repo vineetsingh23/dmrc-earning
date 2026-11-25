@@ -64,7 +64,7 @@ export const tableTotalRowClass = " bg-table-footer text-table-text text-right  
 
 export const tableTotalCellClass = `${tableCellClass} font-bold!  `
 
-export const tableCalculatedCellClass = `${tableCellClass} font-semibold! bg-calculated/40`;
+export const tableCalculatedCellClass = `${tableCellClass} font-semibold! bg-calculated/20`;
 
 export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold bg-calculated/20`;
 

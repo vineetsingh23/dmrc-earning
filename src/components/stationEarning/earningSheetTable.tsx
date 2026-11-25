@@ -21,11 +21,9 @@ import {
   tableCalculatedCellClass,
   tableCellClass,
   tableClass,
-   tableMirrorCellClass,
+  tableMirrorCellClass,
   tableHeaderGroupClasses,
-  // tableInputClass,
   tableRowClass,
-
   tableWrapperClass,
   tableHeaderRowClass,
   tableTotalRowClass,
@@ -35,13 +33,11 @@ import { handleSheetKeyDown } from "../../handlers/sheetKeyboardHandlers";
 import { Trash2 } from "lucide-react";
 import { pinnedColumnStyle } from "../sheetFrozenColumns";
 
-
 export interface SheetStyle {
-  headerCellClass: string; // padding, text alignment and font of every header cell
-  headerColorClasses: string[]; // one colour per top-level header group; sub-headers share it
-  bodyCellClass: string; // read-only value cells and calculated cells
+  headerCellClass: string;
+  headerColorClasses: string[];
+  bodyCellClass: string;
   footerCellClass: string;
-  // cells of the total row
 }
 
 const defaultSheetStyle: SheetStyle = {
@@ -53,10 +49,12 @@ const defaultSheetStyle: SheetStyle = {
 
 const firstColumnWidth = 64;
 const actionColumnWidth = 56;
+
 const inputWidthCanvas =
   typeof document === "undefined"
     ? undefined
     : document.createElement("canvas").getContext("2d");
+
 if (inputWidthCanvas) {
   inputWidthCanvas.font =
     '14px Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
@@ -73,6 +71,7 @@ function measureEditableValueWidth(value: unknown) {
 const widestDigitWidth = Math.max(
   ...Array.from("0123456789", (digit) => measureInputTextWidth(digit)),
 );
+
 const minimumEditableColumnWidth = Math.ceil(widestDigitWidth * 6 + 24);
 
 const compactColumnWidths: Record<string, number> = {
@@ -117,7 +116,6 @@ function getSheetColumnWidth(
   return 100;
 }
 
-// return column freeze properties based on index
 function getColumnFreezeProps(
   columnIndex: number,
   columnOffsets: number[],
@@ -154,7 +152,6 @@ function getColumnFreezeProps(
   };
 }
 
-// turns the nested column list into rows of <th> cells (one row per header level)
 function buildHeaderRows(
   columns: ColumnNode[],
   sheetStyle: SheetStyle,
@@ -173,6 +170,7 @@ function buildHeaderRows(
   );
 
   let leafIndexCounter = 0;
+
   const earningHeaderStyle = isEarningGrid
     ? "border border-table-border bg-table-header text-table-header-text"
     : "";
@@ -191,6 +189,7 @@ function buildHeaderRows(
 
       const headerKey = `${parentKey}-${levelIndex}-${nodeIndex}-${node.label}`;
       const top = headerRowOffsets[levelIndex] ?? 0;
+
       if (isColumnGroup(node)) {
         const groupLeafCount = collectLeafColumns(node).length;
         const currentLeafStart = leafIndexCounter;
@@ -199,19 +198,26 @@ function buildHeaderRows(
         const isFrozen =
           frozenColumnCount > 0 &&
           groupLeafEnd <= frozenColumnCount;
+
         const isPinnedRight =
           pinnedRightColumnCount > 0 &&
           currentLeafStart >= pinnedRightStartIndex;
+
         const freezeBoundaryClass =
           frozenColumnCount > 0 &&
           groupLeafEnd === frozenColumnCount
             ? "sheet-freeze-boundary"
             : "";
-        let zIndex = "z-20";
 
+        let zIndex = "z-20";
         if (isFrozen || isPinnedRight) zIndex = "z-30";
 
-        const headerClass = `sticky ${zIndex} ${isFrozen || isPinnedRight ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
+        const headerClass = `sticky ${zIndex} ${
+          isFrozen || isPinnedRight ? "sheet-frozen-header" : ""
+        } ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${
+          sheetStyle.headerColorClasses[colorIndex]
+        } whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
+
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -219,7 +225,9 @@ function buildHeaderRows(
             className={headerClass}
             style={{
               top,
-              ...(isFrozen ? { left: columnOffsets[currentLeafStart] ?? 0 } : {}),
+              ...(isFrozen
+                ? { left: columnOffsets[currentLeafStart] ?? 0 }
+                : {}),
               ...(isPinnedRight
                 ? {
                     ...pinnedColumnStyle(
@@ -240,26 +248,43 @@ function buildHeaderRows(
       } else {
         const leafIndex = leafIndexCounter++;
         const columnWidth = columnWidths[leafIndex];
+
         const freeze = getColumnFreezeProps(
           leafIndex,
           columnOffsets,
           frozenColumnCount,
           columnWidth,
         );
+
         const zIndex = freeze.isFrozen ? "z-30" : "z-20";
+
         const isPinnedRight =
-          pinnedRightColumnCount > 0 && leafIndex >= pinnedRightStartIndex;
+          pinnedRightColumnCount > 0 &&
+          leafIndex >= pinnedRightStartIndex;
+
         const calculatedHeaderClass =
           node.kind === "calculated" ? "calculated-header" : "";
+
         const freezeBoundaryClass =
-          frozenColumnCount > 0 && leafIndex === frozenColumnCount - 1
+          frozenColumnCount > 0 &&
+          leafIndex === frozenColumnCount - 1
             ? "sheet-freeze-boundary"
             : "";
+
         const freezeSeamClass =
-          frozenColumnCount > 0 && leafIndex === frozenColumnCount - 1
+          frozenColumnCount > 0 &&
+          leafIndex === frozenColumnCount - 1
             ? "sheet-freeze-seam"
             : "";
-        const headerClass = `sticky ${isPinnedRight ? "z-30" : zIndex} ${freeze.className} ${freeze.isFrozen || isPinnedRight ? "sheet-frozen-header" : ""} ${freezeBoundaryClass} ${freezeSeamClass} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${calculatedHeaderClass} ${earningHeaderStyle}`;
+
+        const headerClass = `sticky ${
+          isPinnedRight ? "z-30" : zIndex
+        } ${freeze.className} ${
+          freeze.isFrozen || isPinnedRight ? "sheet-frozen-header" : ""
+        } ${freezeBoundaryClass} ${freezeSeamClass} ${
+          sheetStyle.headerCellClass
+        } ${sheetStyle.headerColorClasses[colorIndex]} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${calculatedHeaderClass} ${earningHeaderStyle}`;
+
         headerRows[levelIndex].push(
           <th
             key={headerKey}
@@ -297,8 +322,10 @@ interface EarningSheetTableProps {
   columns: ColumnNode[];
   rowCount: number;
   readRow: (rowIndex: number) => RegisterRow;
-  // give both of these for an editable sheet; leave them out for a read-only sheet
-  readEntryValue?: (rowIndex: number, fieldKey: string) => string;
+  readEntryValue?: (
+    rowIndex: number,
+    fieldKey: string,
+  ) => string;
   writeEntryValue?: (
     rowIndex: number,
     fieldKey: string,
@@ -311,9 +338,9 @@ interface EarningSheetTableProps {
   pinnedRightColumnCount?: number;
   uniformColumnWidth?: number;
   mergeFooterLabel?: boolean;
-  showTotalRow?: boolean; // default true
+  showTotalRow?: boolean;
   sheetStyle?: SheetStyle;
-  gridName?: string; // default: the look of the Shift and TVM sheets
+  gridName?: string;
 }
 
 export default function EarningSheetTable({
@@ -335,114 +362,234 @@ export default function EarningSheetTable({
 }: EarningSheetTableProps) {
   const isShiftGrid = gridName === "shift";
   const isFinalGrid = gridName === "final";
+
   const isEarningGrid =
     isShiftGrid || gridName === "tvm" || isFinalGrid;
-  const showActionColumn = Boolean(
-    onDeleteRow && rowCount > minimumAdditionalRowCount,
-  );
-  const freezeActionColumn = showActionColumn && frozenColumnCount > 0;
-  const leafColumns = columns.flatMap(collectLeafColumns);
-  const allRows = Array.from({ length: rowCount }, (_, rowIndex) =>
-    readRow(rowIndex),
-  );
-  const columnWidths = leafColumns.map((column, columnIndex) => {
-    const baseWidth = getSheetColumnWidth(
-      column,
-      columnIndex,
-      uniformColumnWidth,
-    );
-    if (uniformColumnWidth !== undefined) return baseWidth;
 
-    if (
-      isShiftGrid &&
-      (column.kind === "text" || column.kind === "number")
-    ) {
-      const longestValueLength = allRows.reduce((longest, row) => {
-        const value = row[column.fieldKey];
-        return Math.max(longest, measureEditableValueWidth(value));
-      }, 0);
+  const showActionColumn = Boolean(
+    onDeleteRow &&
+    rowCount > minimumAdditionalRowCount,
+  );
+
+  const freezeActionColumn =
+    showActionColumn && frozenColumnCount > 0;
+
+  const leafColumns = columns.flatMap(collectLeafColumns);
+
+  const allRows = Array.from(
+    { length: rowCount },
+    (_, rowIndex) => readRow(rowIndex),
+  );
+
+  const columnWidths = leafColumns.map(
+    (column, columnIndex) => {
+      const baseWidth = getSheetColumnWidth(
+        column,
+        columnIndex,
+        uniformColumnWidth,
+      );
+
+      if (uniformColumnWidth !== undefined) {
+        return baseWidth;
+      }
+
+      if (
+        isShiftGrid &&
+        (
+          column.kind === "text" ||
+          column.kind === "number"
+        )
+      ) {
+        const longestValueLength = allRows.reduce(
+          (longest, row) => {
+            const value = row[column.fieldKey];
+            return Math.max(
+              longest,
+              measureEditableValueWidth(value),
+            );
+          },
+          0,
+        );
+
+        return Math.max(
+          baseWidth,
+          minimumEditableColumnWidth,
+          longestValueLength,
+        );
+      }
+
+      if (columnIndex >= 6) return baseWidth;
+
+      const longestValueLength = allRows.reduce(
+        (longest, row) => {
+          const value = row[column.fieldKey];
+          return Math.max(
+            longest,
+            value == null
+              ? 0
+              : String(value).length,
+          );
+        },
+        0,
+      );
 
       return Math.max(
         baseWidth,
-        minimumEditableColumnWidth,
-        longestValueLength,
+        longestValueLength * 9 + 24,
       );
-    }
+    },
+  );
 
-    if (columnIndex >= 6) return baseWidth;
+  const getColumnWidth = (columnIndex: number) =>
+    columnWidths[columnIndex];
 
-    const longestValueLength = allRows.reduce((longest, row) => {
-      const value = row[column.fieldKey];
-      return Math.max(longest, value == null ? 0 : String(value).length);
-    }, 0);
-
-    return Math.max(baseWidth, longestValueLength * 9 + 24);
-  });
-  const getColumnWidth = (columnIndex: number) => columnWidths[columnIndex];
   const effectivePinnedRightColumnCount = Math.min(
     Math.max(0, pinnedRightColumnCount),
-    Math.max(0, leafColumns.length - Math.max(0, frozenColumnCount)),
+    Math.max(
+      0,
+      leafColumns.length -
+      Math.max(0, frozenColumnCount),
+    ),
   );
+
   const pinnedRightStartIndex =
-    leafColumns.length - effectivePinnedRightColumnCount;
+    leafColumns.length -
+    effectivePinnedRightColumnCount;
+
   const isPinnedRightColumn = (columnIndex: number) =>
     effectivePinnedRightColumnCount > 0 &&
     columnIndex >= pinnedRightStartIndex;
-  const getPinnedRightStyle = (columnIndex: number, zIndex: number) =>
+
+  const getPinnedRightStyle = (
+    columnIndex: number,
+    zIndex: number,
+  ) =>
     isPinnedRightColumn(columnIndex)
       ? pinnedColumnStyle(
           columnWidths
             .slice(columnIndex + 1)
-            .reduce((total, width) => total + width, 0),
+            .reduce(
+              (total, width) =>
+                total + width,
+              0,
+            ),
           zIndex,
           getColumnWidth(columnIndex),
         )
       : {};
-  const isEditable = Boolean(readEntryValue && writeEntryValue);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const headerRef = useRef<HTMLTableSectionElement>(null);
-  const tableRef = useRef<HTMLTableElement>(null);
-  const [headerRowHeights, setHeaderRowHeights] = useState<number[]>([]);
-  const [columnOffsets, setColumnOffsets] = useState([0, 64, 204]);
+
+  const isEditable = Boolean(
+    readEntryValue &&
+    writeEntryValue,
+  );
+
+  const scrollContainerRef =
+    useRef<HTMLDivElement>(null);
+
+  const headerRef =
+    useRef<HTMLTableSectionElement>(null);
+
+  const tableRef =
+    useRef<HTMLTableElement>(null);
+
+  const [headerRowHeights, setHeaderRowHeights] =
+    useState<number[]>([]);
+
+  const [columnOffsets, setColumnOffsets] =
+    useState([0, 64, 204]);
+
   const frozenColumnOffsets = showActionColumn
     ? columnOffsets
         .slice(1)
-        .map((offset) => offset - (freezeActionColumn ? 0 : actionColumnWidth))
+        .map((offset) =>
+          offset -
+          (
+            freezeActionColumn
+              ? 0
+              : actionColumnWidth
+          ),
+        )
     : columnOffsets;
-  const headerRowOffsets = headerRowHeights.reduce<number[]>(
-    (offsets, height) => {
-      offsets.push(offsets[offsets.length - 1] + height);
-      return offsets;
-    },
-    [0],
-  );
+
+  const headerRowOffsets =
+    headerRowHeights.reduce<number[]>(
+      (offsets, height) => {
+        offsets.push(
+          offsets[
+            offsets.length - 1
+          ] + height,
+        );
+        return offsets;
+      },
+      [0],
+    );
+
   const typedColumnIndexByFieldKey = new Map(
     leafColumns
       .filter(
-        (column) => column.kind !== "calculated" && column.kind !== "mirror",
+        (column) =>
+          column.kind !== "calculated" &&
+          column.kind !== "mirror",
       )
-      .map((column, typedColumnIndex) => [column.fieldKey, typedColumnIndex]),
+      .map(
+        (column, typedColumnIndex) => [
+          column.fieldKey,
+          typedColumnIndex,
+        ],
+      ),
   );
-  // total of one column over all rows (calculated columns add up their formula results)
-  const totalOfColumn = (column: ColumnLeaf) =>
-    allRows.reduce((runningTotal, row) => {
 
-      if (column.kind === "calculated")
-        return runningTotal + column.formula!(row);
-      if (column.kind === "mirror")
-        return runningTotal + parseNumber(row[column.sourceFieldKey!]);
-      return runningTotal + parseNumber(row[column.fieldKey]);
-    }, 0);
-  const totalLabelWidth = leafColumns
-    .slice(0, Math.min(2, leafColumns.length))
-    .reduce(
-      (width, _, index) => width + columnWidths[index],
+  const totalOfColumn = (
+    column: ColumnLeaf,
+  ) =>
+    allRows.reduce(
+      (runningTotal, row) => {
+        if (column.kind === "calculated") {
+          return (
+            runningTotal +
+            column.formula!(row)
+          );
+        }
+
+        if (column.kind === "mirror") {
+          return (
+            runningTotal +
+            parseNumber(
+              row[
+                column.sourceFieldKey!
+              ],
+            )
+          );
+        }
+
+        return (
+          runningTotal +
+          parseNumber(
+            row[column.fieldKey],
+          )
+        );
+      },
       0,
     );
-  //     runningTotal + (column.kind === 'calculated' ? column.formula!(row) : parseNumber(row[column.fieldKey])), 0);
-  const writeValueReference = useRef(writeEntryValue);
+
+  const totalLabelWidth = leafColumns
+    .slice(
+      0,
+      Math.min(2, leafColumns.length),
+    )
+    .reduce(
+      (width, _, index) =>
+        width +
+        columnWidths[index],
+      0,
+    );
+
+  const writeValueReference =
+    useRef(writeEntryValue);
+
   useLayoutEffect(() => {
-    writeValueReference.current = writeEntryValue;
+    writeValueReference.current =
+      writeEntryValue;
   }, [writeEntryValue]);
 
   useLayoutEffect(() => {
@@ -452,14 +599,24 @@ export default function EarningSheetTable({
   }, [isShiftGrid]);
 
   useEffect(() => {
-    const rootOverflow = document.documentElement.style.overflow;
-    const bodyOverflow = document.body.style.overflow;
-    document.documentElement.style.overflow = "hidden";
-    document.body.style.overflow = "hidden";
+    const rootOverflow =
+      document.documentElement.style.overflow;
+
+    const bodyOverflow =
+      document.body.style.overflow;
+
+    document.documentElement.style.overflow =
+      "hidden";
+
+    document.body.style.overflow =
+      "hidden";
 
     return () => {
-      document.documentElement.style.overflow = rootOverflow;
-      document.body.style.overflow = bodyOverflow;
+      document.documentElement.style.overflow =
+        rootOverflow;
+
+      document.body.style.overflow =
+        bodyOverflow;
     };
   }, []);
 
@@ -468,69 +625,127 @@ export default function EarningSheetTable({
     if (!header) return;
 
     const updateHeaderRowHeights = () => {
-      const heights = Array.from(header.rows, (row) =>
-        row.getBoundingClientRect().height,
+      const heights = Array.from(
+        header.rows,
+        (row) =>
+          row.getBoundingClientRect().height,
       );
+
       setHeaderRowHeights((current) =>
         heights.length === current.length &&
-        heights.every((height, index) => Math.abs(height - current[index]) < 0.5)
+        heights.every(
+          (height, index) =>
+            Math.abs(
+              height -
+              current[index],
+            ) < 0.5,
+        )
           ? current
           : heights,
       );
     };
 
     updateHeaderRowHeights();
-    const observer = new ResizeObserver(updateHeaderRowHeights);
+
+    const observer =
+      new ResizeObserver(
+        updateHeaderRowHeights,
+      );
+
     observer.observe(header);
-    Array.from(header.rows).forEach((row) => observer.observe(row));
 
-    return () => observer.disconnect();
+    Array.from(header.rows).forEach(
+      (row) =>
+        observer.observe(row),
+    );
+
+    return () =>
+      observer.disconnect();
   }, [columns]);
-  
-  useLayoutEffect(() => {
-  if (!isShiftGrid) return;
-
-  const container = scrollContainerRef.current;
-  if (!container) return;
-
-  const savedPosition = sessionStorage.getItem(
-    "shift-entry-horizontal-scroll"
-  );
-
-  if (savedPosition !== null) {
-    container.scrollLeft = Number(savedPosition);
-  }
-}, [isShiftGrid, columns]);
 
   useLayoutEffect(() => {
-    const firstRow = tableRef.current?.tBodies[0]?.rows[0];
+    if (!isShiftGrid) return;
+
+    const container =
+      scrollContainerRef.current;
+
+    if (!container) return;
+
+    const savedPosition =
+      sessionStorage.getItem(
+        "shift-entry-horizontal-scroll",
+      );
+
+    if (savedPosition !== null) {
+      container.scrollLeft =
+        Number(savedPosition);
+    }
+  }, [isShiftGrid, columns]);
+
+  useLayoutEffect(() => {
+    const firstRow =
+      tableRef.current
+        ?.tBodies[0]
+        ?.rows[0];
+
     const offsetCellCount =
-      frozenColumnCount + (showActionColumn ? 1 : 0);
+      frozenColumnCount +
+      (
+        showActionColumn
+          ? 1
+          : 0
+      );
+
     if (
       frozenColumnCount === 0 ||
       !firstRow ||
-      firstRow.cells.length < offsetCellCount
+      firstRow.cells.length <
+        offsetCellCount
     ) {
       return;
     }
 
     const updateColumnOffsets = () => {
-      const widths = Array.from(firstRow.cells)
-        .slice(0, offsetCellCount)
-        .map((cell) => cell.getBoundingClientRect().width);
-      const offsets = widths.reduce<number[]>(
-        (currentOffsets, width) => [
-          ...currentOffsets,
-          currentOffsets[currentOffsets.length - 1] + width,
-        ],
-        [0],
-      );
+      const widths = Array.from(
+        firstRow.cells,
+      )
+        .slice(
+          0,
+          offsetCellCount,
+        )
+        .map(
+          (cell) =>
+            cell
+              .getBoundingClientRect()
+              .width,
+        );
+
+      const offsets =
+        widths.reduce<number[]>(
+          (
+            currentOffsets,
+            width,
+          ) => [
+            ...currentOffsets,
+            currentOffsets[
+              currentOffsets.length - 1
+            ] + width,
+          ],
+          [0],
+        );
 
       setColumnOffsets((current) =>
-        offsets.length === current.length &&
+        offsets.length ===
+          current.length &&
         offsets.every(
           (offset, index) =>
-            Math.abs(offset - (current[index] ?? 0)) < 0.5,
+            Math.abs(
+              offset -
+              (
+                current[index] ??
+                0
+              ),
+            ) < 0.5,
         )
           ? current
           : offsets,
@@ -538,13 +753,34 @@ export default function EarningSheetTable({
     };
 
     updateColumnOffsets();
-    const observer = new ResizeObserver(updateColumnOffsets);
-    Array.from(firstRow.cells)
-      .slice(0, offsetCellCount)
-      .forEach((cell) => observer.observe(cell));
 
-    return () => observer.disconnect();
-  }, [columns, rowCount, frozenColumnCount, showActionColumn]);
+    const observer =
+      new ResizeObserver(
+        updateColumnOffsets,
+      );
+
+    Array.from(
+      firstRow.cells,
+    )
+      .slice(
+        0,
+        offsetCellCount,
+      )
+      .forEach(
+        (cell) =>
+          observer.observe(
+            cell,
+          ),
+      );
+
+    return () =>
+      observer.disconnect();
+  }, [
+    columns,
+    rowCount,
+    frozenColumnCount,
+    showActionColumn,
+  ]);
 
   return (
     <>
@@ -553,7 +789,7 @@ export default function EarningSheetTable({
           <button
             type="button"
             onClick={onAddRow}
-            className={`rounded-xl border border-table-border bg-table px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:table-hover  ${
+            className={`rounded-xl border border-table-border bg-table px-3 py-1 text-sm font-medium transition hover:-translate-y-0.5 hover:table-hover ${
               isShiftGrid
                 ? "shadow-sm hover:table-hover"
                 : ""
@@ -563,52 +799,92 @@ export default function EarningSheetTable({
           </button>
         </div>
       )}
- <div
-  ref={scrollContainerRef}
-  onScroll={(event) => {
-    if (isShiftGrid) {
-      sessionStorage.setItem(
-        "shift-entry-horizontal-scroll",
-        String(event.currentTarget.scrollLeft)
-      );
-    }
-  }}
-  className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header  scrollbar-track-table-header/30 ${
-    isShiftGrid
-      ? "overflow-auto! rounded-xl"
-      : isFinalGrid
-        ? "overflow-auto!"
-        : ""
-  }`}
+
+      <div
+        ref={scrollContainerRef}
+        onScroll={(event) => {
+          if (isShiftGrid) {
+            sessionStorage.setItem(
+              "shift-entry-horizontal-scroll",
+              String(
+                event.currentTarget
+                  .scrollLeft,
+              ),
+            );
+          }
+        }}
+        className={`${tableWrapperClass} snap-x scroll-p-6 scrollbar-thumb-table-header scrollbar-track-table-header/30 ${
+          isShiftGrid
+            ? "overflow-auto! rounded-xl"
+            : isFinalGrid
+              ? "overflow-auto!"
+              : ""
+        }`}
         style={
           gridName === "shift"
-            ? { height: "calc(100dvh - 150px)" }
+            ? {
+                height:
+                  "calc(100dvh - 150px)",
+              }
             : onAddRow
-              ? { height: "calc(100dvh - 110px)" }
+              ? {
+                  height:
+                    "calc(100dvh - 110px)",
+                }
               : undefined
         }
-        onKeyDown={handleSheetKeyDown}
-        tabIndex={isEditable ? undefined : 0}
+        onKeyDown={
+          handleSheetKeyDown
+        }
+        tabIndex={
+          isEditable
+            ? undefined
+            : 0
+        }
       >
         <table
           ref={tableRef}
           className={`sheet-sticky-table ${tableClass} ${
-            isShiftGrid || isFinalGrid ? "!w-max" : ""
+            isShiftGrid ||
+            isFinalGrid
+              ? "!w-max"
+              : ""
           }`}
         >
           <colgroup>
-            {showActionColumn && <col style={{ width: actionColumnWidth }} />}
-            {leafColumns.map((column, columnIndex) => (
+            {showActionColumn && (
               <col
-                key={column.fieldKey}
                 style={{
-                  width: getColumnWidth(columnIndex),
+                  width:
+                    actionColumnWidth,
                 }}
               />
-            ))}
+            )}
+
+            {leafColumns.map(
+              (
+                column,
+                columnIndex,
+              ) => (
+                <col
+                  key={
+                    column.fieldKey
+                  }
+                  style={{
+                    width:
+                      getColumnWidth(
+                        columnIndex,
+                      ),
+                  }}
+                />
+              ),
+            )}
           </colgroup>
-          <thead ref={headerRef} className="sheet-sticky-header">
-          
+
+          <thead
+            ref={headerRef}
+            className="sheet-sticky-header"
+          >
             {buildHeaderRows(
               columns,
               sheetStyle,
@@ -618,215 +894,400 @@ export default function EarningSheetTable({
               frozenColumnCount,
               effectivePinnedRightColumnCount,
               columnWidths,
-            ).map((headerRow, headerRowIndex, headerRows) => (
-              <tr key={headerRowIndex} className={`${tableHeaderCellClass} font-bold!`}>
-                {showActionColumn && headerRowIndex === 0 && (
-                  <th
-                    rowSpan={headerRows.length}
-                    className={`sticky z-20 ${freezeActionColumn ? "sheet-frozen-header" : ""} ${sheetStyle.headerCellClass} ${sheetStyle.headerColorClasses[0] ?? ""} whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${isEarningGrid ? "border border-table-border bg-table-header text-table-header-text" : ""}`}
-                    style={freezeActionColumn ? { left: 0 } : undefined}
-                  >
-                    Action
-                  </th>
-                )}
-                {headerRow}
-              </tr>
-            ))}
+            ).map(
+              (
+                headerRow,
+                headerRowIndex,
+                headerRows,
+              ) => (
+                <tr
+                  key={
+                    headerRowIndex
+                  }
+                  className={`${tableHeaderCellClass} font-bold!`}
+                >
+                  {showActionColumn &&
+                    headerRowIndex === 0 && (
+                      <th
+                        rowSpan={
+                          headerRows.length
+                        }
+                        className={`sticky z-20 ${
+                          freezeActionColumn
+                            ? "sheet-frozen-header"
+                            : ""
+                        } ${
+                          sheetStyle.headerCellClass
+                        } ${
+                          sheetStyle
+                            .headerColorClasses[0] ??
+                          ""
+                        } whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${
+                          isEarningGrid
+                            ? "border border-table-border bg-table-header text-table-header-text"
+                            : ""
+                        }`}
+                        style={
+                          freezeActionColumn
+                            ? {
+                                left: 0,
+                              }
+                            : undefined
+                        }
+                      >
+                        Action
+                      </th>
+                    )}
+
+                  {headerRow}
+                </tr>
+              ),
+            )}
           </thead>
 
           <tbody>
-            
-            {allRows.map((row, rowIndex) => (
-              <tr
-                key={rowIndex}
-                className={`${tableRowClass} ${
-                  isShiftGrid
-                    ? "even:bg-table-row-alt hover:bg-table-row-hover"
-                    : ""
-                }`}
-              >
-                {showActionColumn && (
-                  <td
-                    className={`${tableCellClass} text-center ${
-                      freezeActionColumn
-                        ? `sticky z-10 sheet-frozen-cell ${
-                            rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
-                          }`
-                        : ""
-                    }`}
-                    style={
-                      freezeActionColumn
-                        ? {
-                            left: 0,
-                            width: actionColumnWidth,
-                            minWidth: actionColumnWidth,
-                            maxWidth: actionColumnWidth,
+            {allRows.map(
+              (
+                row,
+                rowIndex,
+              ) => (
+                <tr
+                  key={rowIndex}
+                  className={`${tableRowClass} ${
+                    isShiftGrid
+                      ? "even:bg-table-row-alt hover:bg-table-row-hover"
+                      : ""
+                  }`}
+                >
+                  {showActionColumn && (
+                    <td
+                      className={`${tableCellClass} text-center ${
+                        freezeActionColumn
+                          ? `sticky z-10 sheet-frozen-cell ${
+                              rowIndex %
+                                2 ===
+                              1
+                                ? "sheet-frozen-cell-even"
+                                : ""
+                            }`
+                          : ""
+                      }`}
+                      style={
+                        freezeActionColumn
+                          ? {
+                              left: 0,
+                              width:
+                                actionColumnWidth,
+                              minWidth:
+                                actionColumnWidth,
+                              maxWidth:
+                                actionColumnWidth,
+                            }
+                          : undefined
+                      }
+                    >
+                      <div className="flex items-center justify-center gap-1">
+                        {rowIndex >=
+                          minimumAdditionalRowCount && (
+                          <button
+                            type="button"
+                            onClick={(
+                              event,
+                            ) => {
+                              event.stopPropagation();
+                              onDeleteRow?.(
+                                rowIndex,
+                              );
+                            }}
+                            aria-label={`Delete row ${
+                              rowIndex +
+                              1
+                            }`}
+                            title="Delete added row"
+                            className="inline-flex items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
+                          >
+                            <Trash2
+                              className="size-5 text-danger-text"
+                              aria-hidden="true"
+                            />
+                          </button>
+                        )}
+                      </div>
+                    </td>
+                  )}
+
+                  {leafColumns.map(
+                    (
+                      column,
+                      colIndex,
+                    ) => {
+                      const columnWidth =
+                        getColumnWidth(
+                          colIndex,
+                        );
+
+                      const freeze =
+                        getColumnFreezeProps(
+                          colIndex,
+                          frozenColumnOffsets,
+                          frozenColumnCount,
+                          columnWidth,
+                        );
+
+                      const stickyClass = [
+                        freeze.isFrozen
+                          ? `${freeze.className} z-10 sheet-frozen-cell ${
+                              rowIndex %
+                                2 ===
+                              1
+                                ? "sheet-frozen-cell-even"
+                                : ""
+                            }`
+                          : "",
+                        isPinnedRightColumn(
+                          colIndex,
+                        )
+                          ? `sticky z-10 sheet-frozen-cell ${
+                              rowIndex %
+                                2 ===
+                              1
+                                ? "sheet-frozen-cell-even"
+                                : ""
+                            }`
+                          : "",
+                        frozenColumnCount >
+                          0 &&
+                        colIndex ===
+                          frozenColumnCount -
+                            1
+                          ? "sheet-freeze-boundary sheet-freeze-seam"
+                          : "",
+                      ].join(" ");
+
+                      if (
+                        column.fieldKey ===
+                        "advanceMatchConfirmed"
+                      ) {
+                        const isEligible =
+                          row.advanceMatchEligible ===
+                          "true";
+
+                        const isConfirmed =
+                          row.advanceMatchConfirmed ===
+                          "true";
+
+                        const difference =
+                          row.advanceMatchDisplay ??
+                          "";
+
+                        return (
+                          <td
+                            key={
+                              column.fieldKey
+                            }
+                            className={`${tableCellClass} ${stickyClass} text-center`}
+                            style={{
+                              ...freeze.style,
+                              ...getPinnedRightStyle(
+                                colIndex,
+                                10,
+                              ),
+                              width:
+                                columnWidth,
+                            }}
+                          >
+                            {isEligible ||
+                            isConfirmed ? (
+                              <input
+                                type="checkbox"
+                                checked={
+                                  isConfirmed
+                                }
+                                disabled={
+                                  !isEligible
+                                }
+                                aria-label={`Confirm advance match for row ${
+                                  rowIndex +
+                                  1
+                                }`}
+                                onChange={(
+                                  event,
+                                ) =>
+                                  writeValueReference
+                                    .current?.(
+                                      rowIndex,
+                                      column.fieldKey,
+                                      event
+                                        .target
+                                        .checked
+                                        ? "true"
+                                        : "",
+                                    )
+                                }
+                                className="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-not-allowed"
+                              />
+                            ) : (
+                              <span className="whitespace-nowrap text-sm font-semibold text-amber-600">
+                                {difference ||
+                                  "—"}
+                              </span>
+                            )}
+                          </td>
+                        );
+                      }
+
+                      if (
+                        column.kind ===
+                        "calculated"
+                      ) {
+                        return (
+                          <td
+                            key={
+                              column.fieldKey
+                            }
+                            className={`
+                              ${sheetStyle.bodyCellClass}
+                              ${tableCalculatedCellClass}
+                              ${stickyClass}
+                            `}
+                            style={{
+                              ...freeze.style,
+                              ...getPinnedRightStyle(
+                                colIndex,
+                                10,
+                              ),
+                              width:
+                                columnWidth,
+                            }}
+                          >
+                            {formatRupees(
+                              column.formula!(
+                                row,
+                              ),
+                            )}
+                          </td>
+                        );
+                      }
+
+                      if (
+                        column.kind ===
+                        "mirror"
+                      ) {
+                        return (
+                          <td
+                            key={
+                              column.fieldKey
+                            }
+                            className={`${tableMirrorCellClass} ${stickyClass}`}
+                            style={{
+                              ...freeze.style,
+                              ...getPinnedRightStyle(
+                                colIndex,
+                                10,
+                              ),
+                              width:
+                                columnWidth,
+                            }}
+                          >
+                            <div className="min-w-[70px] p-1.5 text-right text-sm">
+                              {row[
+                                column.sourceFieldKey!
+                              ] ??
+                                ""}
+                            </div>
+                          </td>
+                        );
+                      }
+
+                      if (isEditable) {
+                        return (
+                          <EditableSheetCell
+                            key={
+                              column.fieldKey
+                            }
+                            gridName={
+                              gridName
+                            }
+                            rowIndex={
+                              rowIndex
+                            }
+                            columnIndex={
+                              typedColumnIndexByFieldKey.get(
+                                column.fieldKey,
+                              ) ??
+                              0
+                            }
+                            fieldKey={
+                              column.fieldKey
+                            }
+                            isNumeric={
+                              column.kind ===
+                              "number"
+                            }
+                            isTime={
+                              column.fieldKey ===
+                                "shiftStartTime" ||
+                              column.fieldKey ===
+                                "shiftEndTime"
+                            }
+                            value={readEntryValue!(
+                              rowIndex,
+                              column.fieldKey,
+                            )}
+                            writeValueReference={
+                              writeValueReference
+                            }
+                            extraClass={
+                              stickyClass
+                            }
+                            style={{
+                              ...freeze.style,
+                              ...getPinnedRightStyle(
+                                colIndex,
+                                10,
+                              ),
+                              width:
+                                columnWidth,
+                            }}
+                          />
+                        );
+                      }
+
+                      return (
+                        <td
+                          key={
+                            column.fieldKey
                           }
-                        : undefined
-                    }
-                  >
-                    <div className="flex items-center justify-center gap-1">
-                      {rowIndex >= minimumAdditionalRowCount && (
-                        <button
-                          type="button"
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            onDeleteRow?.(rowIndex);
-                          }}
-                          aria-label={`Delete row ${rowIndex + 1}`}
-                          title="Delete added row"
-                          className="inline-flex items-center justify-center rounded-md text-danger transition hover:bg-danger/10"
-                        >
-                          <Trash2 className="size-5 text-danger-text" aria-hidden="true" />
-                        </button>
-                      )}
-                    </div>
-                  </td>
-                )}
-                {leafColumns.map((column, colIndex) => {
-                  const columnWidth = getColumnWidth(colIndex);
-                  const freeze = getColumnFreezeProps(
-                    colIndex,
-                    frozenColumnOffsets,
-                    frozenColumnCount,
-                    columnWidth,
-                  );
-                  const stickyClass = [
-                    freeze.isFrozen
-                      ? `${freeze.className} z-10 sheet-frozen-cell ${
-                          rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
-                        }`
-                      : "",
-                    isPinnedRightColumn(colIndex)
-                      ? `sticky z-10 sheet-frozen-cell ${
-                          rowIndex % 2 === 1 ? "sheet-frozen-cell-even" : ""
-                        }`
-                      : "",
-                    frozenColumnCount > 0 &&
-                    colIndex === frozenColumnCount - 1
-                      ? "sheet-freeze-boundary sheet-freeze-seam"
-                      : "",
-                  ].join(" ");
-
-if (column.fieldKey === "advanceMatchConfirmed") {
-  const isEligible = row.advanceMatchEligible === "true";
-  const isConfirmed = row.advanceMatchConfirmed === "true";
-  const difference = row.advanceMatchDisplay ?? "";
-
-  return (
-    <td
-      key={column.fieldKey}
-      className={`${tableCellClass} ${stickyClass} text-center`}
-      style={{
-        ...freeze.style,
-        ...getPinnedRightStyle(colIndex, 10),
-        width: columnWidth,
-      }}
-    >
-      {isEligible || isConfirmed ? (
-        <input
-          type="checkbox"
-          checked={isConfirmed}
-          disabled={!isEligible}
-          aria-label={`Confirm advance match for row ${rowIndex + 1}`}
-          onChange={(event) =>
-            writeValueReference.current?.(
-              rowIndex,
-              column.fieldKey,
-              event.target.checked ? "true" : ""
-            )
-          }
-          className="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-not-allowed"
-        />
-      ) : (
-        <span className="whitespace-nowrap text-sm font-semibold text-amber-600">
-          {difference || "—"}
-        </span>
-      )}
-    </td>
-  );
-}
-
-
-                  if (column.kind === "calculated") {
-                    return (
-                      <td 
-                        key={column.fieldKey} 
-                        className={`
-                          ${sheetStyle.bodyCellClass} 
-                          ${tableCalculatedCellClass}
-                          ${stickyClass}`} 
+                          className={`${tableCellClass} ${stickyClass}`}
                           style={{
                             ...freeze.style,
-                            ...getPinnedRightStyle(colIndex, 10),
-                            width: columnWidth,
-                          }}>
-
-                        {formatRupees(column.formula!(row))}
-                      </td>
-                    );
-                  }
-                  if (column.kind === "mirror") {
-                    // looks like a typed number cell, but is read-only and follows another column
-                    return (
-                      <td
-                        key={column.fieldKey}
-                        className={`${tableMirrorCellClass} ${stickyClass}`}
-                        style={{
-                          ...freeze.style,
-                          ...getPinnedRightStyle(colIndex, 10),
-                          width: columnWidth,
-                        }}
-                      >
-                        <div className="min-w-[70px] p-1.5 text-right text-sm">
-                          {row[column.sourceFieldKey!] ?? ""}
-                        </div>
-                      </td>
-                    );
-                  }
-                  if (isEditable) {
-                    return (
-                      <EditableSheetCell
-                        key={column.fieldKey}
-                        gridName={gridName}
-                        rowIndex={rowIndex}
-                        columnIndex={
-                          typedColumnIndexByFieldKey.get(column.fieldKey) ?? 0
-                        }
-                        fieldKey={column.fieldKey}
-                        isNumeric={column.kind === "number"}
-                        isTime={
-                          column.fieldKey === "shiftStartTime" ||
-                          column.fieldKey === "shiftEndTime"
-                        }
-                        value={readEntryValue!(rowIndex, column.fieldKey)}
-                        writeValueReference={writeValueReference}
-                        extraClass={stickyClass}
-                        style={{
-                          ...freeze.style,
-                          ...getPinnedRightStyle(colIndex, 10),
-                          width: columnWidth,
-                        }}
-                      />
-                    );
-                  }
-                  // read-only: just show the value
-                  return (
-                    <td key={column.fieldKey} 
-                        className={`${tableCellClass} ${stickyClass}`}
-                        style={{ ...freeze.style, width: columnWidth }}
-                    >
-                      {column.kind === "number"
-                        ? formatCellValue(
-                            column,
-                            parseNumber(row[column.fieldKey]),
-                          )
-                        : (row[column.fieldKey] ?? "")}
-                    </td>
-                  );
-                })}
-              </tr>
-            ))}
+                            width:
+                              columnWidth,
+                          }}
+                        >
+                          {column.kind ===
+                          "number"
+                            ? formatCellValue(
+                                column,
+                                parseNumber(
+                                  row[
+                                    column.fieldKey
+                                  ],
+                                ),
+                              )
+                            : (
+                                row[
+                                  column.fieldKey
+                                ] ??
+                                ""
+                              )}
+                        </td>
+                      );
+                    },
+                  )}
+                </tr>
+              ),
+            )}
           </tbody>
 
           {showTotalRow && (
@@ -834,88 +1295,169 @@ if (column.fieldKey === "advanceMatchConfirmed") {
               <tr>
                 {showActionColumn && (
                   <td
-                    className={sheetStyle.footerCellClass}
+                    className={
+                      sheetStyle.footerCellClass
+                    }
                     style={
                       freezeActionColumn
                         ? {
-                            position: "sticky",
+                            position:
+                              "sticky",
                             left: 0,
                             bottom: 0,
                             zIndex: 50,
-                            width: actionColumnWidth,
-                            minWidth: actionColumnWidth,
-                            maxWidth: actionColumnWidth,
+                            width:
+                              actionColumnWidth,
+                            minWidth:
+                              actionColumnWidth,
+                            maxWidth:
+                              actionColumnWidth,
                           }
                         : undefined
                     }
                   />
                 )}
-                {leafColumns.map((column, columnIndex) => {
-                  if (mergeFooterLabel && columnIndex > 0 && columnIndex < 2) {
-                    return null;
-                  }
 
-                  const freeze = getColumnFreezeProps(
+                {leafColumns.map(
+                  (
+                    column,
                     columnIndex,
-                    frozenColumnOffsets,
-                    frozenColumnCount,
-                    getColumnWidth(columnIndex),
-                  );
-                  const zIndex = freeze.isFrozen ? 50 : 40;
-                  const isPinnedRight = isPinnedRightColumn(columnIndex);
-                  const isTotalLabel = columnIndex === 0;
-                  const footerStickyClass = `sticky ${freeze.className} ${isPinnedRight ? "z-40 sheet-frozen-cell" : ""} ${sheetStyle.footerCellClass} border border-border px-2 py-3 font-semibold ${column.kind === "calculated" ? tableCalculatedCellClass : ""} ${isTotalLabel ? "!text-center" : ""}`;
-                  const freezeBoundaryClass =
-                    (isTotalLabel && mergeFooterLabel) ||
-                    (frozenColumnCount > 0 &&
-                      columnIndex === frozenColumnCount - 1)
-                      ? "sheet-freeze-boundary"
-                      : "";
-                  const footerStyle = isTotalLabel && mergeFooterLabel
-                    ? {
-                        ...freeze.style,
-                        width: totalLabelWidth,
-                        minWidth: totalLabelWidth,
-                        maxWidth: totalLabelWidth,
-                      }
-                    : freeze.style;
+                  ) => {
+                    if (
+                      mergeFooterLabel &&
+                      columnIndex >
+                        0 &&
+                      columnIndex <
+                        2
+                    ) {
+                      return null;
+                    }
 
-                  return (
-                    <td
-                      key={column.fieldKey}
-                      colSpan={
-                        isTotalLabel && mergeFooterLabel
-                          ? Math.min(2, leafColumns.length)
-                          : undefined
-                      }
-                      className={`${footerStickyClass} ${freezeBoundaryClass}`}
-                      style={{
-                        ...footerStyle,
-                        ...getPinnedRightStyle(
+                    const freeze =
+                      getColumnFreezeProps(
+                        columnIndex,
+                        frozenColumnOffsets,
+                        frozenColumnCount,
+                        getColumnWidth(
                           columnIndex,
-                          isPinnedRight ? 50 : zIndex,
                         ),
-                        width: isTotalLabel && mergeFooterLabel
-                          ? totalLabelWidth
-                          : getColumnWidth(columnIndex),
-                        position: "sticky",
-                        bottom: 0,
-                        zIndex: freeze.isFrozen || isPinnedRight ? 50 : zIndex,
-                        borderTop: "2px solid var(--sheet-border)",
-                        boxShadow: `${freezeBoundaryClass ? "inset -2px 0 0 var(--border), " : ""}0 -2px 6px rgb(0 0 0 / 0.15)`,
-                      }}
-                    >
-                   {isTotalLabel
-  ? "Total"
-  : column.kind === "text" ||
-      column.kind === "reconciliation"
-    ? ""
-    : formatCellValue(column, totalOfColumn(column))}
-                    </td>
-                  )
-                })
+                      );
 
-                }
+                    const zIndex =
+                      freeze.isFrozen
+                        ? 50
+                        : 40;
+
+                    const isPinnedRight =
+                      isPinnedRightColumn(
+                        columnIndex,
+                      );
+
+                    const isTotalLabel =
+                      columnIndex ===
+                      0;
+
+                    const footerStickyClass = `sticky ${freeze.className} ${
+                      isPinnedRight
+                        ? "z-40 sheet-frozen-cell"
+                        : ""
+                    } ${
+                      sheetStyle.footerCellClass
+                    } border border-border px-2 py-3 font-semibold`;
+
+                    const freezeBoundaryClass =
+                      (
+                        isTotalLabel &&
+                        mergeFooterLabel
+                      ) ||
+                      (
+                        frozenColumnCount >
+                          0 &&
+                        columnIndex ===
+                          frozenColumnCount -
+                            1
+                      )
+                        ? "sheet-freeze-boundary"
+                        : "";
+
+                    const footerStyle =
+                      isTotalLabel &&
+                      mergeFooterLabel
+                        ? {
+                            ...freeze.style,
+                            width:
+                              totalLabelWidth,
+                            minWidth:
+                              totalLabelWidth,
+                            maxWidth:
+                              totalLabelWidth,
+                          }
+                        : freeze.style;
+
+                    return (
+                      <td
+                        key={
+                          column.fieldKey
+                        }
+                        colSpan={
+                          isTotalLabel &&
+                          mergeFooterLabel
+                            ? Math.min(
+                                2,
+                                leafColumns.length,
+                              )
+                            : undefined
+                        }
+                        className={`${footerStickyClass} ${freezeBoundaryClass}`}
+                        style={{
+                          ...footerStyle,
+                          ...getPinnedRightStyle(
+                            columnIndex,
+                            isPinnedRight
+                              ? 50
+                              : zIndex,
+                          ),
+                          width:
+                            isTotalLabel &&
+                            mergeFooterLabel
+                              ? totalLabelWidth
+                              : getColumnWidth(
+                                  columnIndex,
+                                ),
+                          position:
+                            "sticky",
+                          bottom: 0,
+                          zIndex:
+                            freeze.isFrozen ||
+                            isPinnedRight
+                              ? 50
+                              : zIndex,
+                          borderTop:
+                            "2px solid var(--sheet-border)",
+                          boxShadow: `${
+                            freezeBoundaryClass
+                              ? "inset -2px 0 0 var(--border), "
+                              : ""
+                          }0 -2px 6px rgb(0 0 0 / 0.15)`,
+                        }}
+                      >
+                        {isTotalLabel
+                          ? "Total"
+                          : column.kind ===
+                                "text" ||
+                              column.kind ===
+                                "reconciliation"
+                            ? ""
+                            : formatCellValue(
+                                column,
+                                totalOfColumn(
+                                  column,
+                                ),
+                              )}
+                      </td>
+                    );
+                  },
+                )}
               </tr>
             </tfoot>
           )}

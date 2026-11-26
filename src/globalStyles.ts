@@ -51,7 +51,7 @@ export const tableClass =
   "w-full border-collapse overflow-none";
 export const sheetTableClass = "w-full";
 
-export const tableHeaderRowClass = "bg-table-header border border-table-border";
+export const tableHeaderRowClass = "bg-table-header border border-table-border py-2.5";
 
 export const tableHeaderCellClass =
   "px-2 py-2 text-sm text-center  text-table-text  border border-table-border";
@@ -64,15 +64,15 @@ export const tableTotalRowClass = " bg-table-footer text-table-text text-right  
 
 export const tableTotalCellClass = `${tableCellClass} font-bold!  `
 
-export const tableCalculatedCellClass = `${tableCellClass} font-semibold! bg-calculated/40`;
+export const tableCalculatedCellClass = `${tableCellClass} font-bold! bg-calculated/40`;
 
-export const tableMirrorCellClass = `${tableCellClass} px-0 font-semibold bg-calculated/20`;
+export const tableMirrorCellClass = `${tableCellClass} px-0  bg-calculated/20`;
 
-export const tableRowClass ="transition-colors duration-200 bg-table-body even:bg-table-row-alt hover:bg-table-row-hover ";
+export const tableRowClass ="transition-colors duration-200 bg-table-body even:bg-table-row-alt hover:bg-table-row-hover text-table-row-text placeholder:text-table-row-text/30";
 
-export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 text-sm text-table-row-text outline-none transition-colors placeholder:text-table-row-text/30 focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
+export const tableInputClass = `${tableCellClass} rounded-md border-table-border  h-full w-full min-w-[50px] border-0 bg-transparent px-2 py-2 outline-none transition-colors focus:bg-input-focus focus:ring-inset focus:ring-2 focus:ring-focus`;
 
-export const amountInputClass = `${tableCellClass} text-right text-table-text outline-none placeholder:text-table-row-text/30 focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
+export const amountInputClass = `${tableCellClass} text-right outline-none  focus-visible:ring-2 focus-visible:ring-focus focus:ring-inset`;
 
 export const summaryRowClass ="flex justify-between border-b border-dashed border-b-table-border font-semibold py-1 px-2 tracking-wide text-card-text";
 

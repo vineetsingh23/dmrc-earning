@@ -35,13 +35,13 @@
 
   /* table colors */
   --table-body: #a5e6dd;
-  --table-header: #83b1a5;
-  --table-row-text: #172923;
+  --table-header: #5c9786;
+  --table-row-text: #373f3c;
   --table-row-alt: #95dace;
   --table-row-hover: #42ffc3;
   --table-footer: var(--table-header);
   --table-border: #648286;
-  --table-text: #2e2e30;
+  --table-text: #2c3d2c;
   --table-text-muted: #2e2121;
   --table-shadow: #0d0c0c;
   --calculated: #29e1c2;
@@ -98,7 +98,7 @@
 
   /* card colors */
   --card: linear-gradient(to top, #3d3838, #5f5041, #504c4c);
-  --card-text: #d7fcdf;
+  --card-text: #b7c7ba;
   --card-border: #7d4211;
   --card-shadow: rgb(3, 2, 2);
   --card-hover: #rgb(223, 223, 223);
@@ -112,7 +112,7 @@
   --table-header: #1a1209;
   --table-body: #312c26;
   --table-row-alt: #2b241b;
-  --table-row-text: #e4d5c0;
+  --table-row-text: #dad7d3;
   --table-row-hover: #5a442d;
   --table-footer: var(--table-header);
   --table-border: #5a5353;

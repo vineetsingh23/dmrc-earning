@@ -172,7 +172,7 @@ function buildHeaderRows(
   let leafIndexCounter = 0;
 
   const earningHeaderStyle = isEarningGrid
-    ? "border border-table-border bg-table-header text-table-header-text"
+    ? tableHeaderRowClass
     : "";
 
   function addHeaders(
@@ -216,7 +216,7 @@ function buildHeaderRows(
           isFrozen || isPinnedRight ? "sheet-frozen-header" : ""
         } ${freezeBoundaryClass} ${sheetStyle.headerCellClass} ${
           sheetStyle.headerColorClasses[colorIndex]
-        } whitespace-normal break-normal text-center !px-1 !py-2 !text-xs !leading-tight !font-bold ${earningHeaderStyle}`;
+        } whitespace-normal break-normal text-center  ${earningHeaderStyle}`;
 
         headerRows[levelIndex].push(
           <th
@@ -1446,7 +1446,9 @@ export default function EarningSheetTable({
                           : column.kind ===
                                 "text" ||
                               column.kind ===
-                                "reconciliation"
+                                "reconciliation" ||
+                              column.fieldKey ===
+                                "advanceMatchConfirmed"
                             ? ""
                             : formatCellValue(
                                 column,

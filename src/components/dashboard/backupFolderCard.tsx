@@ -23,10 +23,10 @@ export default function BackupFolderCard({ backupStatus, folderName, lastBackupT
         <b>Automatic weekly backup (JSON)</b>
         </div>
       
-      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-danger' : 'text-card-text'}`}>{statusTexts[backupStatus]}</p>
-      {folderName && <p className="text-sm">Folder: <b>{folderName}</b></p>}
-      {lastBackupTime && <p className="text-sm">Last backup: <b>{new Date(lastBackupTime).toLocaleString()}</b></p>}
-      {backupMessage && <p className="text-xs">{backupMessage}</p>}
+      <p className={`text-sm ${backupStatus === 'error' || backupStatus === 'needsPermission' ? 'text-danger' : 'text-success-text'}`}>{statusTexts[backupStatus]}</p>
+      {folderName && <p className="text-sm text-card-text">Folder: <b>{folderName}</b></p>}
+      {lastBackupTime && <p className="text-sm text-card-text">Last backup: <b>{new Date(lastBackupTime).toLocaleString()}</b></p>}
+      {backupMessage && <p className="text-xs text-card-text">{backupMessage}</p>}
       {backupStatus !== 'unsupported' && (
         <div className="mt-2 flex flex-wrap gap-2">
           <button className={buttonClass} onClick={onChooseFolder}>{folderName ? 'Change folder' : 'Choose backup folder'}</button>

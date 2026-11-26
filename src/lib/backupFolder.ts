@@ -17,7 +17,7 @@ const settingsDatabaseName = 'dmrc-earning-settings';   // a small database of i
 const settingsStoreName = 'settings';
 const folderHandleKey = 'backupFolderHandle';
 const lastBackupTimeKey = 'lastBackupTime';
-export const backupIntervalDays = 7;
+export const backupIntervalDays = 1;
 const backupFilesKept = 12;
 
 function openSettingsDatabase(): Promise<IDBDatabase> {

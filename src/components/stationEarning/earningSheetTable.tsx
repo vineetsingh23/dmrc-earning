@@ -1085,7 +1085,7 @@ export default function EarningSheetTable({
                             key={
                               column.fieldKey
                             }
-                            className={`${tableCellClass} ${stickyClass} text-center`}
+                            className={`${tableCellClass} ${stickyClass} text-center!`}
                             style={{
                               ...freeze.style,
                               ...getPinnedRightStyle(
@@ -1097,7 +1097,7 @@ export default function EarningSheetTable({
                             }}
                           >
                             {isEligible ||
-                            isConfirmed ? (
+                            isConfirmed ? ( 
                               <input
                                 type="checkbox"
                                 checked={
@@ -1124,10 +1124,10 @@ export default function EarningSheetTable({
                                         : "",
                                     )
                                 }
-                                className="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-not-allowed"
+                                className="h-5 w-5 cursor-pointer accent-emerald-600 disabled:cursor-not-allowed items-center"
                               />
                             ) : (
-                              <span className="whitespace-nowrap text-sm font-semibold text-amber-600">
+                              <span className="whitespace-nowrap text-xs font-semibold text-amber-600 dark:text-amber-400">
                                 {difference ||
                                   "—"}
                               </span>

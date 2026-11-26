@@ -68,15 +68,15 @@ export default function SettingsPage({
               <small className={`${cardHeadingClass} text-xs italic capitalize! text-card-text!`}>
                 Designed, developed &amp; maintaining by
               </small>
-              <h2 className="mt-2 text-2xl font-bold tracking-tight text-primary">
+              <h2 className="mt-2 text-2xl font-bold tracking-tight text-big-number">
                 {info.name}
               </h2>
               <div className="mb-3 flex items-center justify-center gap-2 text-sm font-bold tracking-[0.12em]">
                 <span className="h-3 w-3 rounded-full bg-red-600"></span>
-                <p className="mt-1 text-sm text-primary">
+                <p className="mt-1 text-sm text-focus">
                   {info.emp}
                   <span className="mx-1.5 text-card-text"></span>{" "}
-                  <span className="font-mono text-primary">&amp; Emp ID: 12649</span>
+                  <span className="font-mono text-focus">&amp; Emp ID: 12649</span>
                 </p>
               </div>
               <div className="mt-4 rounded-xl border border-success-border  p-3 bg-success text-success-text">
@@ -133,7 +133,7 @@ export default function SettingsPage({
             >
               Database status
             </h2>
-            <p className="mt-1 text-sm text-mu">
+            <p className="mt-1 text-sm text-card-text">
               Your register data is stored locally in this browser using
               IndexedDB.
             </p>
@@ -171,11 +171,11 @@ export default function SettingsPage({
               </p>
               <h2
                 id="backup-tools-heading"
-                className="text-lg font-bold tracking-tight text-muted"
+                className="text-lg font-bold tracking-tight text-focus"
               >
                 Backups and register tools
               </h2>
-              <p className="mt-0.5 text-sm text-muted">
+              <p className="mt-0.5 text-sm text-card-text">
                 Manage your automatic backup and import or export register data.
               </p>
             </div>
@@ -191,18 +191,18 @@ export default function SettingsPage({
         className={`${cardTransition}  flex flex-wrap items-center justify-between gap-4 p-5 sm:p-6`}
       >
         <div>
-          <h2 className="font-semibold text-primary text-lg">Sign out</h2>
-          <p className="mt-1 text-sm text-muted">
+          <h2 className="font-semibold text-danger-text text-lg">Sign out</h2>
+          <p className="mt-1 text-sm text-danger-text/60 dark:text-danger">
             Return to the station selection screen.
           </p>
         </div>
         <button
           type="button"
           onClick={onLogout}
-          className="inline-flex min-h-10 items-center gap-2 rounded-lg border border-card-border bg-card px-4 py-2 text-sm font-semibold  transition hover:bg-card/30"
+          className="inline-flex min-h-10 items-center gap-2 text-danger-text rounded-lg border border-card-border bg-danger px-4 py-2 text-sm font-semibold  transition hover:bg-danger/30"
         >
           <LogOut
-            className="size-6 text-danger-text font-bold"
+            className="size-6 font-bold"
             aria-hidden="true"
           />
           Sign out

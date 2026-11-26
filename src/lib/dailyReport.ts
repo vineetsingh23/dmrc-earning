@@ -46,6 +46,7 @@ export const reportFields: ReportFieldDefinition[] = [
 // which register fields make up the report figures; change them here if your report counts differently
 const posFieldKeys = 'posAtCcc posAtTvm posAtRctm posAtScvm';
 const tomCcUpiFieldKeys = 'upiAtTomCc';
+// const tvmUpi = 'upiAtTvm'
 const penaltyQuantityFieldKeys = 'manualPenaltyQuantity hhtPenaltyCashQuantity hhtPenaltyPurseQuantity';
 const penaltyAmountFieldKeys = 'manualPenaltyAmount hhtPenaltyCashAmount hhtPenaltyPurseAmount';
 
@@ -66,6 +67,8 @@ export function buildDailyReportFigures(state: RegisterState, date: string) {
   const tvmQrSaleAmount = sumRows(tvmRows, row => parseNumber(row.tvmQrSaleAmount));
   const shiftQrSaleQuantity = sumRows(shiftRows, row => parseNumber(row.qrSaleQuantity));
   const shiftQrSaleAmount = sumRows(shiftRows, row => parseNumber(row.qrSaleAmount));
+  const tvmUpi = sumRows(tvmRows, row => parseNumber(row.upiAtTvm));
+  const tvmUpiPercent = percentOf(tvmUpi,afcEarning);
 
   const tvmRctmCashlessPercent = percentOf(tvmAndRctmSale, afcEarning);
   const tomCcUpiPercent = percentOf(sumRows(shiftRows, row => sumOfFields(row, tomCcUpiFieldKeys)), afcEarning);
@@ -75,7 +78,7 @@ export function buildDailyReportFigures(state: RegisterState, date: string) {
     tvmAndRctmSale + sumRows(shiftRows, row => sumOfFields(row, tomCcUpiFieldKeys) + sumOfFields(row, posFieldKeys)), afcEarning);
 
   return {
-    afcEarning, stationCashlessPercent, tvmRctmCashlessPercent, tomCcUpiPercent, posPercent,
+    afcEarning, stationCashlessPercent, tvmRctmCashlessPercent, tomCcUpiPercent, posPercent,tvmUpi,tvmUpiPercent,
     cscSaleQuantity: sumRows(shiftRows, row => sumOfFields(row, 'cscSaleSv2Sv6Quantity cscSaleT1T3Quantity')),
     ncmcAddValueQuantity: sumRows(shiftRows, row => parseNumber(row.addValueNcmcTomQuantity)) + sumRows(tvmRows, row => parseNumber(row.tvmNcmcAddValueQuantity)),
     ncmcAddValueAmount: sumRows(shiftRows, row => parseNumber(row.addValueNcmcTomAmount)) + sumRows(tvmRows, row => parseNumber(row.tvmNcmcAddValueAmount)),
@@ -91,7 +94,8 @@ export type DailyReportFigures = ReturnType<typeof buildDailyReportFigures>;
 
 export function buildDailyReportPaymentSummary(state: RegisterState, date: string) {
   const cashless = dailyCashlessStatisticsOfDate(state, date);
-  const afcEarning = buildDailyReportFigures(state, date).afcEarning;
+  const figures = buildDailyReportFigures(state, date);
+  const afcEarning = figures.afcEarning;
   const digitalPaymentPercent = (upi: number, pos: number, afc: number) =>
     afc > 0 ? ((upi + pos) / afc) * 100 : 0;
 
@@ -124,6 +128,9 @@ export function buildDailyReportPaymentSummary(state: RegisterState, date: strin
     tomUpi: cashless.tom5051Upi,
     ccUpi: cashless.tom8081Upi,
     tvmUpi: cashless.tvmUpi,
+    tvmUpiPercent: percentOf(cashless.tvmUpi,afcEarning),
+    tvmEarning: figures.tvmAndRctmSale,
+    tvmEarningPercent: percentOf(figures.tvmAndRctmSale, afcEarning),
     totalUpi: cashless.upiTotal,
     totalPos: cashless.posTotal,
     digitalPaymentPercent: digitalPaymentPercent(

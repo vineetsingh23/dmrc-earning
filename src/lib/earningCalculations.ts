@@ -112,7 +112,7 @@ export const dailyEarningOfDate = (state: RegisterState, date: string) =>
 // cashless: shift cashless details plus TVM payments by POS and UPI
 export const dailyCashlessOfDate = (state: RegisterState, date: string) =>
   sumOverRows(shiftRowsOfDate(state, date), cashlessTotal)
-  + sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmPaymentByPos) + parseNumber(row.tvmPaymentByUpi));
+  + sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmPaymentByPos) + parseNumber(row.upiAtTvm));
 export const dailyFinalCashDepositedOfDate = (state: RegisterState, date: string) =>
   sumOverRows(shiftRowsOfDate(state, date),cashDepositedByOperator) + sumOverRows(tvmRowsOfDate(state, date), tvmFinalTotal)
 export interface DailyCashlessStatistics {
@@ -139,7 +139,6 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
     const tvmUpi = parseNumber(row.upiAtTvm);
     const pos = ['posAtCcc', 'posAtTvm', 'posAtRctm', 'posAtScvm']
       .reduce((total, field) => total + parseNumber(row[field]), 0);
-
     statistics.afcEarning += afcCollectionTotal(row);
     statistics.upiTotal += tomUpi + tvmUpi;
     statistics.posTotal += pos;
@@ -151,7 +150,7 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
   });
 
   tvmRowsOfDate(state, date).forEach(row => {
-    const upi = parseNumber(row.tvmPaymentByUpi);
+    const upi = parseNumber(row.upiAtTvm);
     statistics.upiTotal += upi;
     statistics.tvmUpi += upi;
     statistics.posTotal += parseNumber(row.tvmPaymentByPos);
@@ -159,6 +158,8 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
 
   return statistics;
 };
+
+
 
 export const tvmQrSaleOfDate = (state: RegisterState, date: string) =>
   sumOverRows(tvmRowsOfDate(state, date), row => parseNumber(row.tvmQrSaleAmount));

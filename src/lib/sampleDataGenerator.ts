@@ -42,7 +42,7 @@ function createSampleTvmRow(rowIndex: number): RegisterRow {
     tvmAddValueQuantity: asText(addValueQuantity), tvmAddValueAmount: asText(addValueQuantity * 200),
     tvmNcmcAddValueQuantity: asText(ncmcQuantity), tvmNcmcAddValueAmount: asText(ncmcQuantity * 150),
     tvmRctmAddValueQuantity: asText(rctmQuantity), tvmRctmAddValueAmount: asText(rctmQuantity * 100),
-    tvmPaymentByPos: asText(randomBetween(0, 3) * 100), tvmPaymentByUpi: asText(randomBetween(0, 6) * 100), tvmOutstandingCurrent: asText(randomBetween(0, 2) * 50),
+    tvmPaymentByPos: asText(randomBetween(0, 3) * 100), upiAtTvm: asText(randomBetween(0, 6) * 100), tvmOutstandingCurrent: asText(randomBetween(0, 2) * 50),
   };
 }
 

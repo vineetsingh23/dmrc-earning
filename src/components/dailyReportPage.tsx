@@ -23,8 +23,8 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
   const paymentSummary = useMemo(
     () => buildDailyReportPaymentSummary(registerState, date),
     [registerState, date],
-
   );
+
   const summaryRows = [
     { label: 'Total AFC Earning', value: formatRupees(paymentSummary.afcEarning) },
     { label: 'Total TOM UPI', value: formatRupees(paymentSummary.tomUpi) },
@@ -47,9 +47,9 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
     {label: 'Percentage share of UPI' , value: `${(paymentSummary.totalUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
     {label: 'Percentage share of UPI + POS' , value: `${(paymentSummary.digitalPaymentPercent).toFixed(2)}%`},
     {label: 'Total TVM UPI' , value: formatRupees(paymentSummary.tvmUpi)},
-    {label: 'Total TVM Earning' , value: formatRupees(paymentSummary.tvmUpi)},
-    {label: 'Percentage share of TVM' , value: `${(paymentSummary.tvmUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
-    {label: 'Total CASHLESS EARNING' , value: `${((paymentSummary.totalUpi + paymentSummary.totalPos + paymentSummary.tvmUpi)*100 / paymentSummary.afcEarning).toFixed(2)}%`},
+    {label: 'Total TVM Earning' , value: formatRupees(paymentSummary.tvmEarning)},
+    {label: 'Percentage share of TVM' , value: `${paymentSummary.tvmEarningPercent.toFixed(2)}%`},
+    {label: 'Total CASHLESS EARNING' , value: `${paymentSummary.digitalPaymentPercent.toFixed(2)}%`},
   ]
 
   const typedValueOf = (fieldKey: string) => registerState.reportFields?.[date]?.[fieldKey] ?? '';

@@ -451,7 +451,7 @@ export default function RegisterWorkspace({
                   
                   ])}
                 </div>    
-                <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
+                {/* <div className="mb-4 grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-3">
                   {renderDetailList(
                     "Details of out-source earning",
                     "outsourceEarning",
@@ -461,7 +461,7 @@ export default function RegisterWorkspace({
                     "Reason",
                     "Amount",
                   ])}
-                </div>            
+                </div>             */}
 
               </div>
             }

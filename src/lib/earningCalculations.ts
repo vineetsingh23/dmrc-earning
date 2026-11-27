@@ -120,7 +120,7 @@ export interface DailyCashlessStatistics {
   upiTotal: number;
   posTotal: number;
   tom8081Upi: number;
-  tom5051Upi: number;
+  tom5152Upi: number;
   tvmUpi: number;
 }
 
@@ -130,7 +130,7 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
     upiTotal: 0,
     posTotal: 0,
     tom8081Upi: 0,
-    tom5051Upi: 0,
+    tom5152Upi: 0,
     tvmUpi: 0,
   };
 
@@ -144,9 +144,9 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
     statistics.posTotal += pos;
     statistics.tvmUpi += tvmUpi;
 
-    const tomNumber = row.cccNumber?.match(/(?:^|\D)(80|81|50|51)(?:\D|$)/)?.[1];
+    const tomNumber = row.cccNumber?.match(/(?:^|\D)(80|81|51|52)(?:\D|$)/)?.[1];
     if (tomNumber === '80' || tomNumber === '81') statistics.tom8081Upi += tomUpi;
-    if (tomNumber === '50' ||tomNumber === '51' ) statistics.tom5051Upi += tomUpi;
+    if (tomNumber === '51' ||tomNumber === '52' ) statistics.tom5152Upi += tomUpi;
   });
 
   tvmRowsOfDate(state, date).forEach(row => {

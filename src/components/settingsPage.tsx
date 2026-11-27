@@ -50,7 +50,7 @@ export default function SettingsPage({
   };
 
   return (
-    <section className="mx-auto w-full max-w-5xl">
+    <section className="mx-auto w-full max-w-5xl gap-4 flex flex-col gap-4">
       <section
         className={cardTransition}
         aria-labelledby="developer-profile-heading"

@@ -146,7 +146,7 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
 
     const tomNumber = row.cccNumber?.match(/(?:^|\D)(80|81|50|51|52)(?:\D|$)/)?.[1];
     if (tomNumber === '80' || tomNumber === '81') statistics.tom8081Upi += tomUpi;
-    if (tomNumber === '50' ||tomNumber === '51' || tomNumber === '52') statistics.tom5152Upi += tomUpi;
+    if (tomNumber === '50' ||tomNumber === '51' || tomNumber === '52') statistics.tom5051Upi += tomUpi;
   });
 
   tvmRowsOfDate(state, date).forEach(row => {

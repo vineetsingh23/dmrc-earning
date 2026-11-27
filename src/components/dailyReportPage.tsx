@@ -42,8 +42,8 @@ export default function DailyReportPage({ registerState, updateRegisterState, da
 
   const digitalPerformance = [
     {label: 'Total AFC Earning' , value: formatRupees(paymentSummary.afcEarning)},
-    {label: 'Total UPI Transaction (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi)},
-    {label: 'Total Cashless UPI & POS (TOM+CC)' , value: formatRupees(paymentSummary.totalUpi + paymentSummary.totalPos)},
+    {label: 'Total UPI Transaction (TOM+CC)' , value: formatRupees(paymentSummary.tomUpi + paymentSummary.ccUpi)},
+    {label: 'Total Cashless UPI & POS (TOM+CC)' , value: formatRupees(paymentSummary.tomUpi + paymentSummary.ccUpi + paymentSummary.totalPos)},
     {label: 'Percentage share of UPI' , value: `${(paymentSummary.totalUpi*100 / paymentSummary.afcEarning).toFixed(2)}%`},
     {label: 'Percentage share of UPI + POS' , value: `${(paymentSummary.digitalPaymentPercent).toFixed(2)}%`},
     {label: 'Total TVM UPI' , value: formatRupees(paymentSummary.tvmUpi)},

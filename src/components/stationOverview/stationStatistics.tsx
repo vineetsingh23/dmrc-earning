@@ -131,8 +131,8 @@ export default function StationStatisticsCard({
     },
     {
       title: "UPI by TOM 50 + 51",
-      current: currentCashlessStatistics.tom5051Upi,
-      previous: previousCashlessStatistics.tom5051Upi,
+      current: currentCashlessStatistics.tom5152Upi,
+      previous: previousCashlessStatistics.tom5152Upi,
     },
     {
       title: "UPI by TVM",
@@ -145,7 +145,7 @@ export default function StationStatisticsCard({
     label: string;
   }[] = [
     { key: "CC", label: "CC (80, 81, 82)" },
-    { key: "TOM", label: "TOM (50, 51, 52, ...)" },
+    { key: "TOM", label: "TOM (51, 52, ...)" },
     { key: "TVM", label: "TVM (1, 2, 3, ...)" },
     { key: "RCTM", label: "RCTM" },
     { key: "overall", label: "Overall total" },

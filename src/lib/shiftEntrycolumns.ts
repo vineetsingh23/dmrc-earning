@@ -117,7 +117,7 @@ export const shiftEntryColumns: ColumnNode[] = [
   calculatedColumn('cashDepositedByOperator', 'Total Cash Deposited by Operator', cashDepositedByOperator),
 mirrorColumn(
   'advanceMatchConfirmed',
-  'Advance Match (Prefer checked box here rather manual removal of Advance Received)',
+  'Advance Match.                                       (Prefer checked box here rather manual removal of Advance Received)',
   'advanceMatchConfirmed'
 ),
 ];

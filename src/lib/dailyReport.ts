@@ -125,7 +125,7 @@ export function buildDailyReportPaymentSummary(state: RegisterState, date: strin
 
   return {
     afcEarning,
-    tomUpi: cashless.tom5051Upi,
+    tomUpi: cashless.tom5152Upi,
     ccUpi: cashless.tom8081Upi,
     tvmUpi: cashless.tvmUpi,
     tvmUpiPercent: percentOf(cashless.tvmUpi,afcEarning),

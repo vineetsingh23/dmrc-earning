@@ -56,7 +56,7 @@ export const percentOf = (part: number, whole: number) => (whole > 0 ? Math.floo
 const sumRows = (rows: RegisterRow[], valueOfRow: (row: RegisterRow) => number) => rows.reduce((total, row) => total + valueOfRow(row), 0);
 const hasAnyValue = (row: RegisterRow) => Object.values(row).some(value => String(value ?? '').trim() !== '');
 
-// every number of the report that comes from the sheets of one date
+// every number of the report that comes from the sheets of one date and changes tom number to 5152
 export function buildDailyReportFigures(state: RegisterState, date: string) {
   const shiftRows = Object.values(state.shiftEntries[date] ?? {});
   const tvmRows = Object.values(state.tvmEntries?.[date] ?? {});

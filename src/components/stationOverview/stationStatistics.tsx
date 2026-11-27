@@ -130,7 +130,7 @@ export default function StationStatisticsCard({
       previous: previousCashlessStatistics.tom8081Upi,
     },
     {
-      title: "UPI by TOM 50 + 51",
+      title: "UPI by TOM 51 + 52",
       current: currentCashlessStatistics.tom5152Upi,
       previous: previousCashlessStatistics.tom5152Upi,
     },

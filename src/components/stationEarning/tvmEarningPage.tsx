@@ -15,9 +15,7 @@ export default function TvmEarningPage({ registerState,updateRegisterState, date
   return (
     <>
        <div className="flex justify-between mb-4">
-                <header className="page-intro">
-                 <h1 className="page-info">TVM Earning</h1>
-                </header>
+           
       <button className={`${primaryButtonClass}`}
         onClick={() => updateRegisterState(draftState => { draftState.tvmRowCount++; })}>
         + Add row

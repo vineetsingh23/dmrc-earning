@@ -41,7 +41,7 @@ export const cardHeaderClass =
 export const cardButtonClass =
   "inline-flex mb-2 items-center gap-1.5 rounded-lg border border-table-border bg-button text-white px-3.5 py-1.5 text-xs font-semibold  shadow-sm transition-all hover:border-danger hover:text-danger hover:shadow";
 
-export const cardTransition = `${cardClass} overflow-auto scrollbar-none`;
+export const cardTransition = `${cardClass} overflow-auto gap-4 scrollbar-none`;
 
 /* Tables */
 export const tableWrapperClass =

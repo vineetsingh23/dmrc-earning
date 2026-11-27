@@ -120,7 +120,7 @@ export interface DailyCashlessStatistics {
   upiTotal: number;
   posTotal: number;
   tom8081Upi: number;
-  tom505152Upi: number;
+  tom5051Upi: number;
   tvmUpi: number;
 }
 
@@ -130,7 +130,7 @@ export const dailyCashlessStatisticsOfDate = (state: RegisterState, date: string
     upiTotal: 0,
     posTotal: 0,
     tom8081Upi: 0,
-    tom505152Upi: 0,
+    tom5051Upi: 0,
     tvmUpi: 0,
   };
 

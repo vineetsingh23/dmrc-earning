@@ -10,7 +10,7 @@ export default class ErrorBoundary extends Component<ErrorBoundaryProps, ErrorBo
   static getDerivedStateFromError(error: unknown): ErrorBoundaryState {
     return { errorText: error instanceof Error ? `${error.name}: ${error.message}` : String(error) };
   }
-
+// error boundary
   componentDidCatch(error: unknown, info: ErrorInfo) {
     console.error('The app crashed:', error, info.componentStack);
   }

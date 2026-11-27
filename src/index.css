@@ -36,7 +36,7 @@
   /* table colors */
   --table-body: #a5e6dd;
   --table-header: #5c9786;
-  --table-row-text: #373f3c;
+  --table-row-text: #282E2C;
   --table-row-alt: #95dace;
   --table-row-hover: #42ffc3;
   --table-footer: var(--table-header);

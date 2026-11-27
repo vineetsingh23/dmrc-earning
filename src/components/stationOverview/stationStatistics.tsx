@@ -145,7 +145,7 @@ export default function StationStatisticsCard({
     label: string;
   }[] = [
     { key: "CC", label: "CC (80, 81, 82)" },
-    { key: "TOM", label: "TOM (50,51, 52, ...)" },
+    { key: "TOM", label: "TOM (51, 52, ...)" },
     { key: "TVM", label: "TVM (1, 2, 3, ...)" },
     { key: "RCTM", label: "RCTM" },
     { key: "overall", label: "Overall total" },

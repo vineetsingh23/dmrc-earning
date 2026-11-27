@@ -13,7 +13,8 @@ export default defineConfig(({ mode }) => ({
     VitePWA({
       filename: 'dmrc-sw.js',
       injectRegister: false,
-      registerType: 'prompt',
+      // Apply newly deployed app builds automatically instead of leaving users on a stale PWA version.
+      registerType: 'autoUpdate',
       manifest: {
         name: 'DMRC Station Earnings',
         short_name: 'DMRC Earnings',
@@ -57,6 +58,6 @@ export default defineConfig(({ mode }) => ({
     ...(mode === 'file' ? [viteSingleFile()] : []),
   ],
   define: {
-    __APP_VERSION__:JSON.stringify(packageJson.version),
+    __APP_VERSION__: JSON.stringify(packageJson.version),
   },
 }));

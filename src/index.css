@@ -10,13 +10,13 @@
 :root {
   color-scheme: light;
   /*  common colors used anywhere */
-  --background:  linear-gradient(to right, #2caced,#9fb8dc, #5b4f6b);
+  --background:  linear-gradient(to right, #b0d0e0,#ebedf0, #f0c8c8);
   --page-info: linear-gradient(to top, #850808, #064b60, #6d0960);
   --primary:#0c3eb4;
   --primary-foreground: #ffffff;
   --watermark-img: #ffffff;
   
-  --nav-header:linear-gradient(to top right, #81b1b1, #abaca1, #c8bd9c);
+  --nav-header:linear-gradient(to top right, #eebdac, #f1f1ec, #cfcdcd);
   --header-muted: #0f1f0f;
   --header-hover: #373a3d;
   --header-border: var(--card-border);
@@ -24,45 +24,45 @@
   
   
   /* card colors */
-  --card: linear-gradient(to top , #738795, #29456c, #7c8061);
-  --card-text: #080e0c;
+  --card: linear-gradient(to top right , #f5f5f5, hsl(192, 39%, 87%),#ffffff);
+  --card-text: #0a45e7;
   --card-border: inherit;
-  --card-shadow: rgb(52, 30, 30);
+  --card-shadow: rgb(85, 80, 80);
   --card-hover: #rgb(223, 223, 223);
   --card-header: inherit;
-  --muted:#324f59;
-  --header-text:#f8f1e7;
-  --big-number:#e3e1e4;
+  --muted:#c8e8f3;
+  --header-text:#db0000;
+  --big-number:#ee0537;
 
 
   /* table colors */
-  --table: #b4dcdc;
-  --table-header: #668b9e;
-  --table-row-alt: #c5f0f2;
-  --table-row-hover: #42ffc0;
+  --table: #fbfcff;
+  --table-header: #cfcfcf;
+  --table-row-alt: #eefdfd;
+  --table-row-hover: #fdc4da;
   --table-footer: var(--table-header);
-  --table-border: #bfbdbd;
-  --table-text: #2d2e2d;
+  --table-border: #b3aaaa;
+  --table-text: #3b3939;
   --table-text-muted:#ffffff;
   --table-shadow: #0d0c0c;
   --calculated: #29e1c2;
-  --focus: #3b82f6;
+  --focus: #3be0f6;
   --input-focus: #ece985;
 
   /* Buttons */
-  --button:rgb(31, 102, 122);
+  --button:rgb(212, 8, 52);
   --button-text:#f9f9f9;
-  --button-hover:rgb(8, 59, 190);
+  --button-hover:rgb(163, 13, 33);
   --button-border:#ffffff;
-  --isActive:#4f0583;
+  --isActive:#83056e;
 
  /* Feedback */
   --success: #a2f4c0;
-  --success-border: #b6fac5;
+  --success-border: #078523;
   --success-text: #166534;
-  --danger: #d68989;
-  --danger-border:#ae0412;
-  --danger-text:#ae0412;
+  --danger: #f3c0c0;
+  --danger-border:#e73241;
+  --danger-text:#c01725;
 
 
 }

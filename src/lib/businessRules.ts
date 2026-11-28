@@ -4,13 +4,32 @@ export const bankRoundingAmount = 100;
 
 // TOM operators: imprest is issued only to 80 and 81, the others get advance only
 export const tomOperators = [
-  { tomNumber: '80', imprestAmount: 500 },
-  { tomNumber: '81', imprestAmount: 500 },
-  { tomNumber: '51', imprestAmount: 0 },
-  { tomNumber: '52', imprestAmount: 0 },
+  { tomNumber: "80", imprestAmount: 500 },
+  { tomNumber: "81", imprestAmount: 500 },
+  { tomNumber: "51", imprestAmount: 0 },
+  { tomNumber: "52", imprestAmount: 0 },
+];
+
+export const operators = [
+  {
+    ccOperators: [
+      { tomNumber: 80, imprestAmount: 500 },
+      { tomNumber: 81, imprestAmount: 500 },
+      { tomNumber: 82, imprestAmount: 500 },
+    ],
+    ticketOperators: [
+      { tomNumber: 51, imprestAmount: 1000 },
+      { tomNumber: 52, imprestAmount: 1000 },
+      { tomNumber: 53, imprestAmount: 1000 },
+    ],
+  },
 ];
 
 // replace with the sections defined in your business rule
 export const penaltySections = [
-  'Travelling without valid ticket', 'Unauthorised entry / exit', 'Misuse of concession card', 'Excess travel / overstay', 'Other',
+  "Travelling without valid ticket",
+  "Unauthorised entry / exit",
+  "Misuse of concession card",
+  "Excess travel / overstay",
+  "Other",
 ];
